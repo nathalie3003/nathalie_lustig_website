@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import { Source_Serif_4, Inter } from "next/font/google";
 import "./globals.css";
-import { Nav } from "@/components/Nav";
-import { Footer } from "@/components/Footer";
+import { Chrome } from "@/components/Chrome";
 
 const serif = Source_Serif_4({ subsets: ["latin"], variable: "--font-serif", display: "swap" });
 const sans = Inter({ subsets: ["latin"], variable: "--font-sans", display: "swap" });
@@ -16,9 +15,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" className={`${serif.variable} ${sans.variable}`}>
       <body className="min-h-screen flex flex-col">
-        <Nav />
-        <main className="flex-1">{children}</main>
-        <Footer />
+        <Chrome>{children}</Chrome>
       </body>
     </html>
   );
