@@ -11,7 +11,7 @@ export default async function HomePage() {
         <div>
           <h1 className="font-serif text-5xl leading-tight mb-4">Nathalie Lustig</h1>
           <p className="text-xl text-ink/80 mb-6 max-w-xl">
-            Graduate aiming for DCM / Fixed Income Sales. Writing on bond markets twice a week.
+            Writing on bond markets, twice a week. LSE graduate, ex-J.P. Morgan, CFA Level I.
           </p>
           <a href="/cv.pdf" className="inline-block bg-navy text-background px-4 py-2 rounded hover:no-underline hover:bg-warm">
             Download CV
