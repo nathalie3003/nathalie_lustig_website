@@ -105,6 +105,8 @@ Things most likely to want refinement, in priority order:
 
 - File: `src/app/projects/page.tsx` + `src/components/ProjectCard.tsx`
 - Two cards in a 2-column grid (on `sm:` breakpoint and up). Image aspect 4:3, title in serif, description below. Hover state turns title warm-color.
+- **User request:** the LittleMissLondon card currently uses the LML logo banner as the main image, which reads more like "logo" than "product." The user wants the design pass to consider a richer card composition — e.g., a product photo (gold hoop earrings, available in `/Users/nathalielustig/Documents/LML/Logo and Images/B310903B-34EB-49E9-9FF8-2C47712DC5B7.JPG`) as the main visual, with the LML logo as a small badge or corner mark. Mock up 1-2 alternatives.
+- Note: the current LML image is on pure white; on the off-white site background this may look slightly off. A subtle inset or background-color tint on the card may help.
 
 ### 7. Footer
 
