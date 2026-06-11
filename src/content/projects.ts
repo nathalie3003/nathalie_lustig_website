@@ -15,15 +15,15 @@ export const projects: Project[] = [
   {
     slotId: "proj-lml",
     title: "Little Miss London Jewellery",
-    url: "little-miss-london.vercel.app",
-    href: "https://little-miss-london.vercel.app/",
+    url: "littlemisslondonjewellery.com",
+    href: "https://littlemisslondonjewellery.com/",
     live: true,
     status: "Live",
     statusNote: "Updated as the brand grows",
     faviconLabel: "LML",
     description:
       "The jewellery label I founded as a teenager — handmade pieces, a soft relaunch in progress.",
-    image: "/projects/lml.jpg",
+    image: "/projects/lml.png",
   },
   {
     slotId: "proj-books",
