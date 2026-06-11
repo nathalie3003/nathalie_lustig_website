@@ -24,6 +24,19 @@ export const bondNote = defineType({
       description: "Optional 1-line summary. Falls back to first ~25 words of body.",
       validation: (r) => r.max(200),
     }),
+    defineField({
+      name: "category",
+      title: "Category",
+      type: "string",
+      options: {
+        list: [
+          { title: "Rates", value: "rates" },
+          { title: "Credit", value: "credit" },
+          { title: "Sovereigns", value: "sovereigns" },
+        ],
+        layout: "radio",
+      },
+    }),
     defineField({ name: "coverImage", type: "image", options: { hotspot: true } }),
     defineField({
       name: "body",

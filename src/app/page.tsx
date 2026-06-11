@@ -1,36 +1,58 @@
 import Link from "next/link";
-import { getLatestNotes } from "@/lib/queries";
-import { NoteCard } from "@/components/NoteCard";
+import { getAllNotes } from "@/lib/queries";
+import { NoteRow } from "@/components/NoteCard";
+import { RightRail } from "@/components/RightRail";
+import { AboutSection } from "@/components/AboutSection";
+import { ProjectsSection } from "@/components/ProjectsSection";
+import { HashScroll } from "@/components/HashScroll";
+import { hero, notesHead, readLatest } from "@/content/tone";
 
 export default async function HomePage() {
-  const notes = await getLatestNotes(3);
+  const notes = await getAllNotes();
+  const latest = notes[0];
+  const latestHref = latest ? `/notes/${latest.slug}` : "/#notes";
 
   return (
-    <>
-      <section className="max-w-5xl mx-auto px-6 py-20 flex flex-col gap-10">
-        <div>
-          <h1 className="font-serif text-5xl leading-tight mb-4">Nathalie Lustig</h1>
-          <p className="text-xl text-ink/80 mb-6 max-w-xl">
-            Writing on bond markets, twice a week. LSE graduate, ex-J.P. Morgan, CFA Level I.
-          </p>
-          <a href="/cv.pdf" className="inline-block bg-navy text-background px-4 py-2 rounded hover:no-underline hover:bg-warm">
-            Download CV
-          </a>
-        </div>
-      </section>
+    <div className="scroll-home">
+      <HashScroll />
+      <div className="home" id="top">
+        <div className="home-main">
+          <section className="hero">
+            <span className="l-kicker hero-kicker">{hero.kicker}</span>
+            <h1 className="hero-name">Nathalie Lustig</h1>
+            <p className="hero-lead">{hero.lead}</p>
+            <span className="l-smallcaps hero-creds">{hero.creds}</span>
+            <div className="hero-cta">
+              <Link href={latestHref} className="l-btn l-btn-primary">
+                {readLatest}
+              </Link>
+              <Link href="/#about" className="l-btn l-btn-ghost">
+                About me →
+              </Link>
+            </div>
+          </section>
 
-      <section className="max-w-prose mx-auto px-6 pb-20">
-        <h2 className="font-serif text-2xl mb-2">Latest notes</h2>
-        <hr className="mb-2" />
-        {notes.length === 0 ? (
-          <p className="text-ink/60 italic mt-6">No notes published yet.</p>
-        ) : (
-          notes.map((n) => <NoteCard key={n._id} note={n} />)
-        )}
-        <div className="mt-6">
-          <Link href="/notes" className="smallcaps text-sm">All notes →</Link>
+          <section className="section" id="notes">
+            <div className="section-head">
+              <span className="l-eyebrow">{notesHead}</span>
+            </div>
+            <div className="notes">
+              {notes.length === 0 ? (
+                <p className="rail-block-note" style={{ padding: "20px 0" }}>
+                  No notes published yet.
+                </p>
+              ) : (
+                notes.map((n) => <NoteRow key={n._id} note={n} />)
+              )}
+            </div>
+          </section>
         </div>
-      </section>
-    </>
+
+        <RightRail latestSlug={latest?.slug ?? null} />
+      </div>
+
+      <AboutSection />
+      <ProjectsSection />
+    </div>
   );
 }

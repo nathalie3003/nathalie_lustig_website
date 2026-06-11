@@ -3,18 +3,29 @@ import { Source_Serif_4, Inter } from "next/font/google";
 import "./globals.css";
 import { Chrome } from "@/components/Chrome";
 
-const serif = Source_Serif_4({ subsets: ["latin"], variable: "--font-serif", display: "swap" });
-const sans = Inter({ subsets: ["latin"], variable: "--font-sans", display: "swap" });
+const serif = Source_Serif_4({
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
+  variable: "--font-serif",
+  display: "swap",
+});
+const sans = Inter({
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
+  variable: "--font-sans",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   title: "Nathalie Lustig",
-  description: "Writing on bond markets twice a week. Graduate aiming for DCM / Fixed Income Sales.",
+  description:
+    "Notes on rates, credit, and sovereign issuance — translating what I read across the market into my own analysis.",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={`${serif.variable} ${sans.variable}`}>
-      <body className="min-h-screen flex flex-col">
+      <body className="site">
         <Chrome>{children}</Chrome>
       </body>
     </html>

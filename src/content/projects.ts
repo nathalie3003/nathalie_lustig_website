@@ -1,21 +1,41 @@
 export type Project = {
-  name: string;
-  description: string;
+  slotId: string;
+  title: string;
+  url: string;
   href: string;
+  live: boolean;
+  status: string;
+  statusNote: string;
+  faviconLabel: string;
+  description: string;
   image: string;
 };
 
 export const projects: Project[] = [
   {
-    name: "LittleMissLondon",
-    description: "An independent jewelry brand I'm building — design, sourcing, and storefront.",
+    slotId: "proj-lml",
+    title: "Little Miss London Jewellery",
+    url: "little-miss-london.vercel.app",
     href: "https://little-miss-london.vercel.app/",
+    live: true,
+    status: "Live",
+    statusNote: "Updated as the brand grows",
+    faviconLabel: "LML",
+    description:
+      "The jewellery label I founded as a teenager — handmade pieces, a soft relaunch in progress.",
     image: "/projects/lml.jpg",
   },
   {
-    name: "Book Portfolio",
-    description: "Reviews of business and fiction books I've read since 2025.",
+    slotId: "proj-books",
+    title: "Book Portfolio",
+    url: "myportfolio.base44.app/Reviews",
     href: "https://myportfolio.base44.app/Reviews",
+    live: true,
+    status: "Live",
+    statusNote: "Updated as I read",
+    faviconLabel: "BP",
+    description:
+      "Short reviews of what I'm reading — behavioural finance, value investing, and the occasional novel.",
     image: "/projects/books.jpg",
   },
 ];

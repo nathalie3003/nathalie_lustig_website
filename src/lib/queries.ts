@@ -6,6 +6,7 @@ export type BondNoteCard = {
   slug: string;
   publishedAt: string;
   excerpt?: string;
+  category?: string;
   coverImage?: { asset: { _ref: string } };
 };
 
@@ -19,6 +20,7 @@ const CARD_FIELDS = `
   "slug": slug.current,
   publishedAt,
   excerpt,
+  category,
   coverImage
 `;
 
@@ -51,4 +53,14 @@ export async function getAllNoteSlugs(): Promise<string[]> {
     `*[_type == "bondNote" && defined(slug.current)].slug.current`,
   );
   return slugs;
+}
+
+// Returns the next note (chronologically newer-or-wrapped) after `slug`.
+// Used by the note-detail footer.
+export async function getAdjacentNote(slug: string): Promise<BondNoteCard | null> {
+  const all = await getAllNotes();
+  if (all.length === 0) return null;
+  const idx = all.findIndex((n) => n.slug === slug);
+  if (idx === -1) return all[0];
+  return all[(idx + 1) % all.length];
 }

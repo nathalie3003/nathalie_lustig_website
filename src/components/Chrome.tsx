@@ -1,7 +1,7 @@
 "use client";
 import { usePathname } from "next/navigation";
-import { Nav } from "./Nav";
-import { Footer } from "./Footer";
+import { TopBar } from "./Nav";
+import { ContactFooter } from "./Footer";
 
 export function Chrome({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
@@ -9,9 +9,9 @@ export function Chrome({ children }: { children: React.ReactNode }) {
   if (isStudio) return <>{children}</>;
   return (
     <>
-      <Nav />
-      <main className="flex-1">{children}</main>
-      <Footer />
+      <TopBar />
+      <main className="main">{children}</main>
+      <ContactFooter />
     </>
   );
 }

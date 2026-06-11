@@ -1,20 +1,32 @@
 import Link from "next/link";
 import type { BondNoteCard } from "@/lib/queries";
+import { noteCat } from "@/lib/noteCat";
 
-function formatDate(iso: string) {
+function formatDateShort(iso: string) {
+  // e.g. "9 Jun 2026"
   return new Date(iso).toLocaleDateString("en-GB", {
-    day: "numeric", month: "short", year: "numeric",
+    day: "numeric",
+    month: "short",
+    year: "numeric",
   });
 }
 
-export function NoteCard({ note }: { note: BondNoteCard }) {
+export function NoteRow({ note }: { note: BondNoteCard }) {
+  const { cat } = noteCat(note.category);
   return (
-    <article className="py-6 border-b border-rule">
-      <div className="smallcaps text-xs text-ink/60 mb-2">{formatDate(note.publishedAt)}</div>
-      <h3 className="font-serif text-2xl">
-        <Link href={`/notes/${note.slug}`}>{note.title}</Link>
-      </h3>
-      {note.excerpt && <p className="mt-2 text-ink/80">{note.excerpt}</p>}
-    </article>
+    <Link href={`/notes/${note.slug}`} className="note-row">
+      <span className="l-smallcaps note-date">{formatDateShort(note.publishedAt)}</span>
+      <span>
+        <span className="note-title" style={{ display: "block" }}>
+          {note.title}
+        </span>
+        {note.excerpt ? (
+          <span className="note-excerpt" style={{ display: "block" }}>
+            {note.excerpt}
+          </span>
+        ) : null}
+      </span>
+      <span className="l-tag note-tag">{cat}</span>
+    </Link>
   );
 }
