@@ -55,6 +55,108 @@ export async function getAllNoteSlugs(): Promise<string[]> {
   return slugs;
 }
 
+// --- Books ---------------------------------------------------------------
+
+export type Book = {
+  _id: string;
+  slotId: string;
+  title: string;
+  author: string;
+  status: string;
+  cover?: { asset: { _ref: string } };
+};
+
+export async function getBooks(): Promise<Book[]> {
+  return sanityClient.fetch(
+    `*[_type == "book"] | order(order asc, title asc){
+      _id,
+      "slotId": slotId.current,
+      title,
+      author,
+      status,
+      cover
+    }`,
+    {},
+    { next: { revalidate: 60, tags: ["book"] } },
+  );
+}
+
+// --- Projects ------------------------------------------------------------
+
+export type Project = {
+  _id: string;
+  slotId: string;
+  title: string;
+  url: string;
+  href: string;
+  live: boolean;
+  status: string;
+  statusNote: string;
+  faviconLabel: string;
+  description: string;
+  image?: { asset: { _ref: string } };
+};
+
+export async function getProjects(): Promise<Project[]> {
+  return sanityClient.fetch(
+    `*[_type == "project"] | order(order asc, title asc){
+      _id,
+      "slotId": slotId.current,
+      title,
+      url,
+      href,
+      live,
+      status,
+      statusNote,
+      faviconLabel,
+      description,
+      image
+    }`,
+    {},
+    { next: { revalidate: 60, tags: ["project"] } },
+  );
+}
+
+// --- Daily Reads ---------------------------------------------------------
+
+export type DailyRead = {
+  _id: string;
+  name: string;
+  url: string;
+  short: string;
+};
+
+export async function getDailyReads(): Promise<DailyRead[]> {
+  return sanityClient.fetch(
+    `*[_type == "dailyRead"] | order(order asc, name asc){
+      _id,
+      name,
+      url,
+      short
+    }`,
+    {},
+    { next: { revalidate: 60, tags: ["dailyRead"] } },
+  );
+}
+
+// --- Site Settings -------------------------------------------------------
+
+export type SiteSettings = {
+  aboutParagraphs: string[];
+  contact: { label: string; value: string; href: string }[];
+};
+
+export async function getSiteSettings(): Promise<SiteSettings | null> {
+  return sanityClient.fetch(
+    `*[_type == "siteSettings"][0]{
+      aboutParagraphs,
+      contact[]{ label, value, href }
+    }`,
+    {},
+    { next: { revalidate: 60, tags: ["siteSettings"] } },
+  );
+}
+
 // Returns the next note (chronologically newer-or-wrapped) after `slug`.
 // Used by the note-detail footer.
 export async function getAdjacentNote(slug: string): Promise<BondNoteCard | null> {

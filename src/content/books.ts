@@ -1,3 +1,4 @@
+// FALLBACK ONLY — edit via Sanity Studio at /studio
 export type Book = {
   slotId: string;
   title: string;

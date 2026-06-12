@@ -1,9 +1,14 @@
 "use client";
 import { usePathname } from "next/navigation";
 import { TopBar } from "./Nav";
-import { ContactFooter } from "./Footer";
 
-export function Chrome({ children }: { children: React.ReactNode }) {
+export function Chrome({
+  children,
+  footer,
+}: {
+  children: React.ReactNode;
+  footer: React.ReactNode;
+}) {
   const pathname = usePathname();
   const isStudio = pathname?.startsWith("/studio");
   if (isStudio) return <>{children}</>;
@@ -11,7 +16,7 @@ export function Chrome({ children }: { children: React.ReactNode }) {
     <>
       <TopBar />
       <main className="main">{children}</main>
-      <ContactFooter />
+      {footer}
     </>
   );
 }

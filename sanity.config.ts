@@ -10,6 +10,43 @@ export default defineConfig({
   projectId,
   dataset,
   basePath: "/studio",
-  plugins: [structureTool(), visionTool()],
+  plugins: [
+    structureTool({
+      structure: (S) =>
+        S.list()
+          .title("Content")
+          .items([
+            S.listItem()
+              .title("Site Settings")
+              .id("siteSettings")
+              .child(
+                S.document()
+                  .schemaType("siteSettings")
+                  .documentId("siteSettings.main"),
+              ),
+            S.divider(),
+            S.documentTypeListItem("bondNote").title("Bond Notes"),
+            S.documentTypeListItem("book").title("Books"),
+            S.documentTypeListItem("project").title("Projects"),
+            S.documentTypeListItem("dailyRead").title("Daily Reads"),
+          ]),
+    }),
+    visionTool(),
+  ],
   schema: { types: schemaTypes },
+  document: {
+    // For the siteSettings singleton, hide create/delete/duplicate actions.
+    actions: (input, context) =>
+      context.schemaType === "siteSettings"
+        ? input.filter(
+            ({ action }) =>
+              !!action && ["publish", "discardChanges", "restore"].includes(action),
+          )
+        : input,
+    // Don't let users create new siteSettings docs from the global "+" menu.
+    newDocumentOptions: (prev, { creationContext }) =>
+      creationContext.type === "global"
+        ? prev.filter((t) => t.templateId !== "siteSettings")
+        : prev,
+  },
 });

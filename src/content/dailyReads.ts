@@ -1,3 +1,4 @@
+// FALLBACK ONLY — edit via Sanity Studio at /studio
 export type DailyRead = { name: string; url: string; short: string };
 
 export const dailyReads: DailyRead[] = [

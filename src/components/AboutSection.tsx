@@ -2,8 +2,15 @@ import Image from "next/image";
 import Link from "next/link";
 import { about } from "@/content/about";
 import { cvLabel } from "@/content/tone";
+import { getSiteSettings } from "@/lib/queries";
 
-export function AboutSection() {
+export async function AboutSection() {
+  const settings = await getSiteSettings();
+  const paragraphs =
+    settings?.aboutParagraphs && settings.aboutParagraphs.length > 0
+      ? settings.aboutParagraphs
+      : about.paragraphs;
+
   return (
     <section className="band band-about" id="about">
       <div className="page-wide about">
@@ -11,7 +18,7 @@ export function AboutSection() {
         <h2 className="about-title">A bit more about me</h2>
         <div className="about-grid">
           <div className="about-bio">
-            {about.paragraphs.map((p, i) => (
+            {paragraphs.map((p, i) => (
               <p key={i}>{p}</p>
             ))}
             <div className="about-actions">

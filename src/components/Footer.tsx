@@ -1,13 +1,20 @@
 import { about } from "@/content/about";
 import { contactIntro } from "@/content/tone";
+import { getSiteSettings } from "@/lib/queries";
 
-export function ContactFooter() {
+export async function ContactFooter() {
+  const settings = await getSiteSettings();
+  const contact =
+    settings?.contact && settings.contact.length > 0
+      ? settings.contact
+      : about.contact;
+
   return (
     <footer className="foot">
       <div className="foot-inner">
         <h2 className="foot-lead">{contactIntro}</h2>
         <dl className="foot-contact">
-          {about.contact.map((c) => (
+          {contact.map((c) => (
             <div key={c.label} style={{ display: "contents" }}>
               <dt className="l-smallcaps">{c.label}</dt>
               <dd>

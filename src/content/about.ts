@@ -1,3 +1,4 @@
+// FALLBACK ONLY — edit via Sanity Studio at /studio
 export type Contact = { label: string; value: string; href: string };
 
 export const about = {

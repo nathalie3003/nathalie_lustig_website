@@ -1,12 +1,19 @@
 import Link from "next/link";
 import { about } from "@/content/about";
 import { hero } from "@/content/tone";
+import { getSiteSettings } from "@/lib/queries";
 
 export const metadata = {
   title: "Curriculum Vitae · Nathalie Lustig",
 };
 
-export default function CVPage() {
+export default async function CVPage() {
+  const settings = await getSiteSettings();
+  const paragraphs =
+    settings?.aboutParagraphs && settings.aboutParagraphs.length > 0
+      ? settings.aboutParagraphs
+      : about.paragraphs;
+
   return (
     <div className="page-full about" style={{ padding: "40px 56px 16px" }}>
       <Link href="/#top" className="read-back">← Back to site</Link>
@@ -22,7 +29,7 @@ export default function CVPage() {
         </Link>
       </div>
       <div className="about-bio" style={{ marginTop: "34px", maxWidth: "640px" }}>
-        {about.paragraphs.map((p, i) => (
+        {paragraphs.map((p, i) => (
           <p key={i}>{p}</p>
         ))}
       </div>
