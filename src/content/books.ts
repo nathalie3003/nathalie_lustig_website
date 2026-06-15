@@ -16,10 +16,10 @@ export const books: Book[] = [
     cover: "/books/age-of-innocence.jpg",
   },
   {
-    slotId: "book-investors-handbook",
-    title: "The Investor's Handbook",
-    author: "Graham Wallas",
+    slotId: "book-intelligent-investor",
+    title: "The Intelligent Investor",
+    author: "Benjamin Graham",
     status: "Next up, back in London",
-    cover: "/books/investors-handbook.jpg",
+    cover: "/books/intelligent-investor.jpg",
   },
 ];
