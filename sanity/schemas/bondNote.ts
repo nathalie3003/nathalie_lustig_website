@@ -30,9 +30,11 @@ export const bondNote = defineType({
       type: "string",
       options: {
         list: [
-          { title: "Rates", value: "rates" },
+          { title: "Rates & Macro", value: "rates-macro" },
           { title: "Credit", value: "credit" },
-          { title: "Sovereigns", value: "sovereigns" },
+          { title: "New Issues", value: "new-issues" },
+          { title: "Private Credit", value: "private-credit" },
+          { title: "Trade Ideas", value: "trade-ideas" },
         ],
         layout: "radio",
       },

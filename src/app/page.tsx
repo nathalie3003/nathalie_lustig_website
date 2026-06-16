@@ -1,16 +1,24 @@
 import Link from "next/link";
 import { getAllNotes } from "@/lib/queries";
-import { NoteRow } from "@/components/NoteCard";
 import { RightRail } from "@/components/RightRail";
 import { AboutSection } from "@/components/AboutSection";
 import { ProjectsSection } from "@/components/ProjectsSection";
 import { HashScroll } from "@/components/HashScroll";
-import { hero, notesHead, readLatest } from "@/content/tone";
+import { hero, readLatest } from "@/content/tone";
+import { noteCat } from "@/lib/noteCat";
+
+function formatDateShort(iso: string) {
+  return new Date(iso).toLocaleDateString("en-GB", {
+    day: "numeric",
+    month: "short",
+    year: "numeric",
+  });
+}
 
 export default async function HomePage() {
   const notes = await getAllNotes();
   const latest = notes[0];
-  const latestHref = latest ? `/notes/${latest.slug}` : "/#notes";
+  const latestHref = latest ? `/notes/${latest.slug}` : "/notes";
 
   return (
     <div className="scroll-home">
@@ -34,17 +42,39 @@ export default async function HomePage() {
 
           <section className="section" id="notes">
             <div className="section-head">
-              <span className="l-eyebrow">{notesHead}</span>
+              <span className="l-eyebrow">Latest note</span>
             </div>
-            <div className="notes">
-              {notes.length === 0 ? (
-                <p className="rail-block-note" style={{ padding: "20px 0" }}>
-                  No notes published yet.
-                </p>
-              ) : (
-                notes.map((n) => <NoteRow key={n._id} note={n} />)
-              )}
-            </div>
+            {latest ? (
+              <>
+                <Link
+                  href={`/notes/${latest.slug}`}
+                  className="latest-feature"
+                >
+                  <div className="latest-feature-row">
+                    <span className="latest-feature-cat">
+                      {noteCat(latest.category).cat}
+                    </span>
+                    <span className="latest-feature-date">
+                      {formatDateShort(latest.publishedAt)}
+                    </span>
+                  </div>
+                  <h2 className="latest-feature-title">{latest.title}</h2>
+                  {latest.excerpt ? (
+                    <p className="latest-feature-excerpt">{latest.excerpt}</p>
+                  ) : null}
+                  <span className="latest-feature-more">
+                    Read this note →
+                  </span>
+                </Link>
+                <Link href="/notes" className="view-all-notes">
+                  View all notes →
+                </Link>
+              </>
+            ) : (
+              <p className="rail-block-note" style={{ padding: "20px 0" }}>
+                No notes published yet.
+              </p>
+            )}
           </section>
         </div>
 
