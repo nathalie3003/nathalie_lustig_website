@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { dailyReads as fallbackDailyReads } from "@/content/dailyReads";
 import { books as fallbackBooks } from "@/content/books";
+import { rightNow, rightNowMeta } from "@/content/rightNow";
 import { railRole, readLatest, cvLabel, readsHead, readsNote } from "@/content/tone";
 import { readHost } from "@/lib/readHost";
 import { getBooks, getDailyReads } from "@/lib/queries";
@@ -72,6 +73,39 @@ export async function RightRail({ latestSlug }: { latestSlug?: string | null }) 
               </a>
             ))}
           </div>
+        </div>
+
+        <div className="rail-block">
+          <span className="l-eyebrow rail-block-head">{rightNowMeta.eyebrow}</span>
+          <p className="rail-block-note">{rightNowMeta.blurb}</p>
+          <dl className="right-now">
+            {rightNow.map((row) => (
+              <div className="rn-row" key={row.label}>
+                <dt className="rn-label">{row.label}</dt>
+                <dd className="rn-value">
+                  {row.value}
+                  {row.note && row.href ? (
+                    <>
+                      {" "}
+                      <a
+                        href={row.href}
+                        className="rn-aside"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <em>{row.note}</em> <span aria-hidden="true">→</span>
+                      </a>
+                    </>
+                  ) : row.note ? (
+                    <>
+                      {" "}
+                      <em className="rn-aside-static">{row.note}</em>
+                    </>
+                  ) : null}
+                </dd>
+              </div>
+            ))}
+          </dl>
         </div>
 
         <div className="rail-block">

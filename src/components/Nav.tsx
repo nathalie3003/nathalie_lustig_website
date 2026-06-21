@@ -88,6 +88,9 @@ export function TopBar() {
             <Link href="/#projects" className="top-link" onClick={jump("projects")}>
               Projects
             </Link>
+            <Link href="/#contact" className="top-link" onClick={jump("contact")}>
+              Contact
+            </Link>
 
             <div
               className="notes-menu"
@@ -153,6 +156,9 @@ export function TopBar() {
                 </Link>
                 <Link href="/#projects" className="menu-row" onClick={jump("projects")}>
                   <span className="mr-title">Projects</span>
+                </Link>
+                <Link href="/#contact" className="menu-row" onClick={jump("contact")}>
+                  <span className="mr-title">Contact</span>
                 </Link>
                 <Link
                   href="/notes"

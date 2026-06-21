@@ -3,6 +3,7 @@ import { getAllNotes } from "@/lib/queries";
 import { RightRail } from "@/components/RightRail";
 import { AboutSection } from "@/components/AboutSection";
 import { ProjectsSection } from "@/components/ProjectsSection";
+import { ContactSection } from "@/components/ContactSection";
 import { HashScroll } from "@/components/HashScroll";
 import { hero, readLatest } from "@/content/tone";
 import { noteCat } from "@/lib/noteCat";
@@ -83,6 +84,7 @@ export default async function HomePage() {
 
       <AboutSection />
       <ProjectsSection />
+      <ContactSection />
     </div>
   );
 }
