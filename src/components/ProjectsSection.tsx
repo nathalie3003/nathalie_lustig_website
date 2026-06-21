@@ -18,44 +18,59 @@ type CardData = {
 };
 
 function ProjectCard({ p }: { p: CardData }) {
+  // Whole card is clickable when the project is live.
+  const CardTag = p.live ? "a" : "article";
+  const linkProps = p.live
+    ? {
+        href: p.href,
+        target: "_blank" as const,
+        rel: "noopener noreferrer" as const,
+      }
+    : {};
   return (
-    <article className="proj-card">
-      {p.imageSrc ? (
-        <Image
-          src={p.imageSrc}
-          alt={`${p.title} logo`}
-          width={128}
-          height={128}
-          className="proj-favicon"
-        />
-      ) : (
-        <span className="proj-favicon" aria-hidden="true" style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", fontWeight: 600 }}>
-          {p.faviconLabel}
-        </span>
-      )}
-      <div className="proj-body">
-        <div className="proj-top">
-          <h3 className="proj-title">{p.title}</h3>
-          <span className={"proj-status " + (p.live ? "is-live" : "is-build")}>
-            {p.status}
-          </span>
-        </div>
-        {p.live ? (
-          <a
-            className="proj-url"
-            href={p.href}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            {p.url} ↗
-          </a>
+    <CardTag
+      className={`proj-card${p.live ? " is-clickable" : ""}`}
+      {...linkProps}
+    >
+      <div className="proj-card-resting">
+        {p.imageSrc ? (
+          <Image
+            src={p.imageSrc}
+            alt={`${p.title} logo`}
+            width={128}
+            height={128}
+            className="proj-favicon"
+          />
         ) : (
-          <span className="proj-url is-soon">{p.url}</span>
+          <span
+            className="proj-favicon"
+            aria-hidden="true"
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              justifyContent: "center",
+              fontWeight: 600,
+            }}
+          >
+            {p.faviconLabel}
+          </span>
         )}
-        <p className="proj-desc">{p.description}</p>
-        <span className="proj-note l-smallcaps">{p.statusNote}</span>
+        <h3 className="proj-title">{p.title}</h3>
+        <span className={"proj-status " + (p.live ? "is-live" : "is-build")}>
+          {p.status}
+        </span>
       </div>
-    </article>
+
+      <div className="proj-card-reveal" aria-hidden="true">
+        <p className="proj-desc">{p.description}</p>
+        <div className="proj-card-reveal-foot">
+          <span className="proj-url">
+            {p.live ? `${p.url} ↗` : p.url}
+          </span>
+          <span className="proj-note l-smallcaps">{p.statusNote}</span>
+        </div>
+      </div>
+    </CardTag>
   );
 }
 
