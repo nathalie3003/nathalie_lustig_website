@@ -24,7 +24,7 @@ export async function RightRail({ latestSlug }: { latestSlug?: string | null }) 
           title: b.title,
           author: b.author,
           status: b.status,
-          coverSrc: b.cover ? urlFor(b.cover).width(184).height(272).url() : undefined,
+          coverSrc: b.cover ? urlFor(b.cover).width(288).height(432).url() : undefined,
         }))
       : fallbackBooks.map((b) => ({
           key: b.slotId,
@@ -84,8 +84,8 @@ export async function RightRail({ latestSlug }: { latestSlug?: string | null }) 
                   <Image
                     src={b.coverSrc}
                     alt={`${b.title} cover`}
-                    width={92}
-                    height={136}
+                    width={192}
+                    height={288}
                     className="book-cover"
                   />
                 ) : (

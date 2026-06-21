@@ -3,13 +3,8 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { menu, cvLabel } from "@/content/tone";
-
-const CATEGORIES = [
-  { name: "Rates", sub: "Curves & central banks" },
-  { name: "Credit", sub: "Spreads & new issues" },
-  { name: "Sovereigns", sub: "Issuance & restructuring" },
-];
+import { CATEGORIES } from "@/lib/noteCat";
+import { cvLabel } from "@/content/tone";
 
 function scrollToId(id: string) {
   const el = document.getElementById(id);
@@ -22,18 +17,28 @@ function scrollToId(id: string) {
 }
 
 export function TopBar() {
-  const [open, setOpen] = useState(false);
-  const ref = useRef<HTMLDivElement>(null);
+  const [notesOpen, setNotesOpen] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const notesRef = useRef<HTMLDivElement>(null);
+  const mobileRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
   const router = useRouter();
   const onHome = pathname === "/";
 
   useEffect(() => {
     function onDoc(e: MouseEvent) {
-      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
+      if (notesRef.current && !notesRef.current.contains(e.target as Node)) {
+        setNotesOpen(false);
+      }
+      if (mobileRef.current && !mobileRef.current.contains(e.target as Node)) {
+        setMobileOpen(false);
+      }
     }
     function onKey(e: KeyboardEvent) {
-      if (e.key === "Escape") setOpen(false);
+      if (e.key === "Escape") {
+        setNotesOpen(false);
+        setMobileOpen(false);
+      }
     }
     document.addEventListener("mousedown", onDoc);
     document.addEventListener("keydown", onKey);
@@ -43,9 +48,9 @@ export function TopBar() {
     };
   }, []);
 
-  // Section jump: smooth-scroll on home, else route to home with the hash.
+  // Section jump for About/Projects: smooth-scroll on home, route otherwise.
   const jump = (id: string) => (e: React.MouseEvent) => {
-    setOpen(false);
+    setMobileOpen(false);
     e.preventDefault();
     if (onHome) {
       scrollToId(id);
@@ -57,59 +62,113 @@ export function TopBar() {
 
   return (
     <header className="top">
-      <div className="top-inner" ref={ref}>
+      <div className="top-inner">
         <Link href="/#top" className="top-name" onClick={jump("top")}>
           Nathalie Lustig
         </Link>
+
         <div className="top-right">
           <nav className="top-links">
-            <Link href="/#notes" className="top-link" onClick={jump("notes")}>Notes</Link>
-            <Link href="/#about" className="top-link" onClick={jump("about")}>About</Link>
-            <Link href="/#projects" className="top-link" onClick={jump("projects")}>Projects</Link>
+            <Link href="/#about" className="top-link" onClick={jump("about")}>
+              About
+            </Link>
+            <Link href="/#projects" className="top-link" onClick={jump("projects")}>
+              Projects
+            </Link>
+
+            <div
+              className="notes-menu"
+              ref={notesRef}
+              onMouseEnter={() => setNotesOpen(true)}
+              onMouseLeave={() => setNotesOpen(false)}
+            >
+              <Link
+                href="/notes"
+                className="top-link notes-trigger"
+                aria-expanded={notesOpen}
+                aria-haspopup="true"
+                onClick={() => setNotesOpen(false)}
+              >
+                Notes <span className="notes-caret" aria-hidden="true">▾</span>
+              </Link>
+              {notesOpen && (
+                <div className="notes-pop" role="menu">
+                  <Link
+                    href="/notes"
+                    className="np-row np-all"
+                    onClick={() => setNotesOpen(false)}
+                  >
+                    <span className="np-title">All notes</span>
+                    <span className="np-sub">Every post, newest first</span>
+                  </Link>
+                  <div className="np-rule" />
+                  {CATEGORIES.map((c) => (
+                    <Link
+                      key={c.slug}
+                      href={`/notes?category=${c.slug}`}
+                      className="np-row"
+                      onClick={() => setNotesOpen(false)}
+                    >
+                      <span className="np-title">{c.label}</span>
+                      <span className="np-sub">{c.blurb}</span>
+                    </Link>
+                  ))}
+                </div>
+              )}
+            </div>
           </nav>
-          <button
-            className="menu-btn"
-            aria-expanded={open}
-            aria-label="Menu"
-            onClick={() => setOpen((o) => !o)}
-          >
-            <span className="bars"><i></i><i></i><i></i></span>
-            Menu
-          </button>
-          <Link href="/cv" className="l-btn l-btn-primary l-btn-sm">
+
+          <Link href="/cv" className="l-btn l-btn-primary l-btn-sm cv-btn">
             {cvLabel}
           </Link>
 
-          {open && (
-            <div className="menu-pop" role="menu">
-              <Link href="/#notes" className="menu-row" onClick={jump("notes")}>
-                <span className="mr-title">Notes</span>
-                <span className="mr-sub">{menu.notes}</span>
-              </Link>
-              <div className="menu-cats">
-                {CATEGORIES.map((c) => (
-                  <Link
-                    href="/#notes"
-                    className="menu-cat"
-                    key={c.name}
-                    onClick={jump("notes")}
-                  >
-                    <span>{c.name}</span>
-                    <span className="mc-sub">{c.sub}</span>
-                  </Link>
-                ))}
+          <div className="mobile-menu" ref={mobileRef}>
+            <button
+              className="menu-btn"
+              aria-expanded={mobileOpen}
+              aria-label="Menu"
+              onClick={() => setMobileOpen((o) => !o)}
+            >
+              <span className="bars"><i></i><i></i><i></i></span>
+            </button>
+            {mobileOpen && (
+              <div className="menu-pop" role="menu">
+                <Link href="/#about" className="menu-row" onClick={jump("about")}>
+                  <span className="mr-title">About</span>
+                </Link>
+                <Link href="/#projects" className="menu-row" onClick={jump("projects")}>
+                  <span className="mr-title">Projects</span>
+                </Link>
+                <Link
+                  href="/notes"
+                  className="menu-row"
+                  onClick={() => setMobileOpen(false)}
+                >
+                  <span className="mr-title">Notes</span>
+                </Link>
+                <div className="menu-cats">
+                  {CATEGORIES.map((c) => (
+                    <Link
+                      key={c.slug}
+                      href={`/notes?category=${c.slug}`}
+                      className="menu-cat"
+                      onClick={() => setMobileOpen(false)}
+                    >
+                      <span>{c.label}</span>
+                    </Link>
+                  ))}
+                </div>
+                <div className="menu-rule" />
+                <Link
+                  href="/cv"
+                  className="menu-row"
+                  onClick={() => setMobileOpen(false)}
+                >
+                  <span className="mr-title">{cvLabel}</span>
+                </Link>
               </div>
-              <div className="menu-rule"></div>
-              <Link href="/#about" className="menu-row" onClick={jump("about")}>
-                <span className="mr-title">About</span>
-                <span className="mr-sub">{menu.about}</span>
-              </Link>
-              <Link href="/#projects" className="menu-row" onClick={jump("projects")}>
-                <span className="mr-title">Projects</span>
-                <span className="mr-sub">{menu.projects}</span>
-              </Link>
-            </div>
-          )}
+            )}
+          </div>
         </div>
       </div>
     </header>
