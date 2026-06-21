@@ -21,6 +21,19 @@ export function TopBar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const notesRef = useRef<HTMLDivElement>(null);
   const mobileRef = useRef<HTMLDivElement>(null);
+  const closeTimer = useRef<number | null>(null);
+
+  const openNotes = () => {
+    if (closeTimer.current) {
+      window.clearTimeout(closeTimer.current);
+      closeTimer.current = null;
+    }
+    setNotesOpen(true);
+  };
+  const closeNotesDelayed = () => {
+    if (closeTimer.current) window.clearTimeout(closeTimer.current);
+    closeTimer.current = window.setTimeout(() => setNotesOpen(false), 180);
+  };
   const pathname = usePathname();
   const router = useRouter();
   const onHome = pathname === "/";
@@ -79,8 +92,10 @@ export function TopBar() {
             <div
               className="notes-menu"
               ref={notesRef}
-              onMouseEnter={() => setNotesOpen(true)}
-              onMouseLeave={() => setNotesOpen(false)}
+              onMouseEnter={openNotes}
+              onMouseLeave={closeNotesDelayed}
+              onFocusCapture={openNotes}
+              onBlurCapture={closeNotesDelayed}
             >
               <Link
                 href="/notes"

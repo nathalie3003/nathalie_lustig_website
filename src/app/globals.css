@@ -132,11 +132,21 @@
   .notes-caret { font-size: 10px; color: var(--ink-45); transition: transform 160ms ease; line-height: 1; }
   .notes-trigger[aria-expanded="true"] .notes-caret { transform: rotate(-180deg); color: var(--ink); }
   .notes-pop {
-    position: absolute; top: calc(100% + 6px); right: 0; min-width: 280px;
-    background: var(--surface); border: 1px solid var(--rule); border-radius: var(--radius-card);
-    box-shadow: 0 18px 50px rgba(20,22,26,0.16); padding: 8px; z-index: 50;
+    position: absolute; top: 100%; right: 0; min-width: 280px;
+    /* Outer wrapper is transparent — visual card lives in ::before so the
+       full element area (including the bridge gap) is a stable hover zone. */
+    background: transparent; padding-top: 10px; z-index: 50;
     animation: nl-pop 140ms cubic-bezier(0.2,0.7,0.2,1);
   }
+  .notes-pop::after {
+    content: "";
+    position: absolute; inset: 10px 0 0 0;
+    background: var(--surface); border: 1px solid var(--rule); border-radius: var(--radius-card);
+    box-shadow: 0 18px 50px rgba(20,22,26,0.16);
+    z-index: -1;
+  }
+  .notes-pop > * { position: relative; }
+  .notes-pop { padding-left: 8px; padding-right: 8px; padding-bottom: 8px; }
   .np-row {
     display: flex; flex-direction: column; align-items: flex-start; gap: 2px;
     padding: 10px 13px; border-radius: var(--radius-sm);
@@ -423,8 +433,9 @@
   .proj-card:hover { border-color: color-mix(in oklab, var(--accent) 35%, var(--rule)); box-shadow: 0 8px 24px rgba(20,22,26,0.07); transform: translateY(-1px); }
   .proj-favicon {
     display: block; width: 64px; height: 64px; border-radius: 13px;
-    box-shadow: 0 1px 4px rgba(20,22,26,0.10); background: var(--accent-soft);
-    object-fit: cover;
+    box-shadow: 0 1px 4px rgba(20,22,26,0.10); background: #fff;
+    object-fit: contain;
+    padding: 6px;
   }
   .proj-body { min-width: 0; }
   .proj-top { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
