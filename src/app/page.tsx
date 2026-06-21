@@ -2,6 +2,7 @@ import Link from "next/link";
 import { getAllNotes } from "@/lib/queries";
 import { RightRail } from "@/components/RightRail";
 import { CredentialStrip } from "@/components/CredentialStrip";
+import { MarketTicker } from "@/components/MarketTicker";
 import { AboutSection } from "@/components/AboutSection";
 import { ProjectsSection } from "@/components/ProjectsSection";
 import { ContactSection } from "@/components/ContactSection";
@@ -43,6 +44,8 @@ export default async function HomePage() {
               </Link>
             </div>
           </section>
+
+          <MarketTicker />
 
           <section className="section section-notes" id="notes">
             <div className="section-head">

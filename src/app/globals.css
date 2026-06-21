@@ -336,6 +336,60 @@
     }
   }
 
+  /* MARKET TICKER — static reference band below the hero */
+  .market-ticker {
+    margin: 4px 0 28px;
+    border-top: 1px solid var(--ink);
+    border-bottom: 1px solid var(--rule);
+    background: var(--surface);
+  }
+  .mt-inner { padding: 14px 0 12px; }
+  .mt-rows { display: flex; flex-direction: column; gap: 8px; }
+  .mt-row {
+    display: grid; grid-template-columns: 76px 1fr;
+    align-items: baseline; gap: 14px;
+  }
+  .mt-row-label {
+    font-family: var(--font-sans), system-ui, sans-serif;
+    font-size: 10px; font-weight: 700; letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--ink-45);
+  }
+  .mt-row-ticks {
+    display: flex; flex-wrap: wrap; align-items: baseline;
+    gap: 6px 22px;
+    font-feature-settings: "tnum" 1, "lnum" 1;
+  }
+  .mt-tick { display: inline-flex; align-items: baseline; gap: 6px; white-space: nowrap; }
+  .mt-symbol {
+    font-family: var(--font-sans), system-ui, sans-serif;
+    font-size: 11.5px; font-weight: 600; color: var(--ink-72);
+    letter-spacing: 0.01em;
+  }
+  .mt-value {
+    font-family: var(--font-sans), ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 13px; font-weight: 600; color: var(--ink);
+    letter-spacing: -0.005em;
+  }
+  .mt-arrow { font-size: 11px; line-height: 1; }
+  .mt-up .mt-arrow { color: #1F7A4D; }
+  .mt-down .mt-arrow { color: #B33A2C; }
+  .mt-flat .mt-arrow { color: var(--ink-45); }
+  .mt-meta {
+    display: flex; justify-content: space-between; align-items: baseline;
+    margin-top: 12px; padding-top: 10px; border-top: 1px dashed var(--rule);
+    font-family: var(--font-sans), system-ui, sans-serif;
+    font-size: 10.5px; letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--ink-45);
+  }
+  .mt-placeholder {
+    color: #B33A2C; font-weight: 600;
+  }
+
+  @media (max-width: 760px) {
+    .mt-row { grid-template-columns: 1fr; gap: 4px; }
+    .mt-row-ticks { gap: 4px 14px; }
+  }
+
   /* CREDENTIAL STRIP — top of every page */
   .cred-strip {
     border-bottom: 1px solid var(--rule);
