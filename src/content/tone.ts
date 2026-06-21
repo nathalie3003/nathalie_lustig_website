@@ -2,7 +2,7 @@
 
 export const hero = {
   kicker: "Fixed income notes",
-  lead: "Notes on rates, credit, and sovereign issuance — translating what I read across the market into my own analysis.",
+  lead: "Short notes on rates, credit, and FX.",
   creds: "LSE Economics · ex-J.P. Morgan Private Bank · CFA Level I",
 };
 

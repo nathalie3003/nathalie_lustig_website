@@ -1,15 +1,12 @@
 import Image from "next/image";
-import Link from "next/link";
 import { dailyReads as fallbackDailyReads } from "@/content/dailyReads";
 import { books as fallbackBooks } from "@/content/books";
-import { railRole, readLatest, cvLabel, readsHead, readsNote } from "@/content/tone";
+import { readsHead, readsNote } from "@/content/tone";
 import { readHost } from "@/lib/readHost";
 import { getBooks, getDailyReads } from "@/lib/queries";
 import { urlFor } from "@/lib/sanity.client";
 
-export async function RightRail({ latestSlug }: { latestSlug?: string | null }) {
-  const latestHref = latestSlug ? `/notes/${latestSlug}` : "/#notes";
-
+export async function RightRail() {
   const [cmsBooks, cmsReads] = await Promise.all([getBooks(), getDailyReads()]);
 
   const reads =
@@ -45,15 +42,6 @@ export async function RightRail({ latestSlug }: { latestSlug?: string | null }) 
           className="rail-portrait"
           priority
         />
-        <p className="rail-role">{railRole}</p>
-        <div className="rail-actions">
-          <Link href={latestHref} className="l-btn l-btn-primary">
-            {readLatest}
-          </Link>
-          <Link href="/cv" className="l-btn l-btn-ghost">
-            {cvLabel}
-          </Link>
-        </div>
 
         <div className="rail-block">
           <span className="l-eyebrow rail-block-head">{readsHead}</span>

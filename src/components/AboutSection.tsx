@@ -1,8 +1,8 @@
-import Image from "next/image";
 import Link from "next/link";
 import { about } from "@/content/about";
 import { cvLabel } from "@/content/tone";
 import { getSiteSettings } from "@/lib/queries";
+import { RightNowBlock } from "./RightNowBlock";
 
 export async function AboutSection() {
   const settings = await getSiteSettings();
@@ -30,15 +30,7 @@ export async function AboutSection() {
               </Link>
             </div>
           </div>
-          <div className="about-portrait-wrap">
-            <Image
-              src="/about-portrait.jpg"
-              alt="Portrait of Nathalie Lustig"
-              width={600}
-              height={800}
-              className="about-portrait"
-            />
-          </div>
+          <RightNowBlock />
         </div>
       </div>
     </section>
