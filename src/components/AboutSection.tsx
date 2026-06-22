@@ -1,6 +1,4 @@
-import Link from "next/link";
 import { about } from "@/content/about";
-import { cvLabel } from "@/content/tone";
 import { getSiteSettings } from "@/lib/queries";
 import { RightNowBlock } from "./RightNowBlock";
 import { ScrollReveal } from "./ScrollReveal";
@@ -22,14 +20,6 @@ export async function AboutSection() {
             {paragraphs.map((p, i) => (
               <p key={i}>{p}</p>
             ))}
-            <div className="about-actions">
-              <a href="/cv.pdf" download className="l-btn l-btn-cv">
-                {cvLabel}
-              </a>
-              <Link href="/#projects" className="l-btn l-btn-ghost">
-                See my projects →
-              </Link>
-            </div>
           </div>
           <RightNowBlock />
         </div>
