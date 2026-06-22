@@ -3,7 +3,6 @@ export type DailyRead = { name: string; url: string; short: string };
 
 export const dailyReads: DailyRead[] = [
   { name: "Financial Times", url: "https://www.ft.com", short: "FT" },
-  { name: "Bloomberg", url: "https://www.bloomberg.com", short: "BB" },
   {
     name: "Points of Return (John Authers)",
     url: "https://www.bloomberg.com/account/newsletters/points-of-return",

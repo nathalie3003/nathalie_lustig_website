@@ -19,7 +19,7 @@ export const books: Book[] = [
     slotId: "book-intelligent-investor",
     title: "The Intelligent Investor",
     author: "Benjamin Graham",
-    status: "Next up, back in London",
+    status: "Next up",
     cover: "/books/intelligent-investor.jpg",
   },
 ];

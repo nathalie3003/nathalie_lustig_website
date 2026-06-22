@@ -12,7 +12,7 @@ export const railRole =
 export const notesHead = "Latest notes";
 export const readLatest = "Read the latest →";
 export const cvLabel = "Download CV";
-export const readsHead = "What I'm reading";
+export const readsHead = "My go-to resources";
 export const readsNote = "The newsletters and papers these notes lean on.";
 export const contactIntro = "Happy to chat about bonds, books, or anything in between.";
 
