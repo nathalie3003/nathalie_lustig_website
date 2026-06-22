@@ -7,10 +7,8 @@ import { getCommodityQuotes, getFxQuotes, getRateQuotes, todayCaption, type Quot
 const PLACEHOLDER_RATES: Quote[] = [
   { sym: "UST 10Y", val: "4.23%", dir: "up" },
   { sym: "Gilt 10Y", val: "4.51%", dir: "down" },
-  { sym: "Bund 10Y", val: "2.34%", dir: "up" },
   { sym: "ILGB 10Y", val: "4.12%", dir: "up" },
   { sym: "SOFR", val: "5.31%", dir: null },
-  { sym: "EUR Swap 10Y", val: "2.58%", dir: "up" },
 ];
 
 const PLACEHOLDER_FX: Quote[] = [
@@ -22,7 +20,6 @@ const PLACEHOLDER_FX: Quote[] = [
 ];
 
 const PLACEHOLDER_COMM: Quote[] = [
-  { sym: "Brent", val: "$84.50", dir: "up" },
   { sym: "Gold", val: "$2,317", dir: "down" },
 ];
 
