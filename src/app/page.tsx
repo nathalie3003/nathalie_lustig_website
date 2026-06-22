@@ -36,9 +36,9 @@ export default async function HomePage() {
               <Link href={latestHref} className="l-btn l-btn-primary">
                 {readLatest}
               </Link>
-              <Link href="/cv" className="l-btn l-btn-ghost">
+              <a href="/cv.pdf" download className="l-btn l-btn-cv">
                 {cvLabel}
-              </Link>
+              </a>
             </div>
           </section>
 
