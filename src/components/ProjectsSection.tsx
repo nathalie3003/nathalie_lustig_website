@@ -2,6 +2,7 @@ import Image from "next/image";
 import { projects as fallbackProjects } from "@/content/projects";
 import { getProjects } from "@/lib/queries";
 import { urlFor } from "@/lib/sanity.client";
+import { ScrollReveal } from "./ScrollReveal";
 
 type CardData = {
   key: string;
@@ -91,7 +92,7 @@ export async function ProjectsSection() {
     <section className="band band-projects" id="projects">
       <div className="page-wide projects">
         <span className="l-kicker">Projects</span>
-        <h2 className="projects-title">Things I&apos;m building</h2>
+        <ScrollReveal as="h2" className="projects-title">{"Things I'm building"}</ScrollReveal>
         <div className="proj-list">
           {items.map((p) => (
             <ProjectCard key={p.key} p={p} />

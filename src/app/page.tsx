@@ -7,6 +7,7 @@ import { HashScroll } from "@/components/HashScroll";
 import { MarketTickerPlaceholder } from "@/components/MarketTickerPlaceholder";
 import { hero, readLatest, cvLabel } from "@/content/tone";
 import { noteCat } from "@/lib/noteCat";
+import { ScrollReveal } from "@/components/ScrollReveal";
 
 function formatDateShort(iso: string) {
   return new Date(iso).toLocaleDateString("en-GB", {
@@ -44,7 +45,9 @@ export default async function HomePage() {
 
           <section className="section" id="notes">
             <div className="section-head">
-              <span className="l-eyebrow">Recent commentary</span>
+              <ScrollReveal as="span" className="l-eyebrow" stagger={18}>
+                Recent commentary
+              </ScrollReveal>
             </div>
             {latest ? (
               <>
@@ -60,7 +63,7 @@ export default async function HomePage() {
                       {formatDateShort(latest.publishedAt)}
                     </span>
                   </div>
-                  <h2 className="latest-feature-title">{latest.title}</h2>
+                  <ScrollReveal as="h2" className="latest-feature-title">{latest.title}</ScrollReveal>
                   {latest.excerpt ? (
                     <p className="latest-feature-excerpt">{latest.excerpt}</p>
                   ) : null}
