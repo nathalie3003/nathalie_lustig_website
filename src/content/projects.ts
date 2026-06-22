@@ -18,12 +18,12 @@ export const projects: Project[] = [
     title: "Little Miss London Jewellery",
     url: "littlemisslondonjewellery.com",
     href: "https://littlemisslondonjewellery.com/",
-    live: true,
-    status: "Live",
-    statusNote: "Updated as the brand grows",
+    live: false,
+    status: "Rebuilding",
+    statusNote: "Back soon",
     faviconLabel: "LML",
     description:
-      "The jewellery label I founded as a teenager — handmade pieces, a soft relaunch in progress.",
+      "The jewellery label I founded as a teenager — currently rebuilding. New site dropping later this year.",
     image: "/projects/lml.png",
   },
   {

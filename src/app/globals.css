@@ -546,18 +546,25 @@
   .projects-title { font-size: 38px; font-weight: 600; letter-spacing: -0.022em; margin: 10px 0 0; }
   .proj-list { display: flex; flex-direction: column; gap: 16px; margin-top: 32px; max-width: 760px; }
   .proj-card {
-    display: grid; grid-template-columns: 64px minmax(0,1fr); gap: 20px; align-items: start;
+    display: block;
     background: var(--surface); border: 1px solid var(--rule); border-radius: var(--radius-card);
-    padding: 22px 24px; transition: border-color 140ms ease, box-shadow 140ms ease, transform 140ms ease;
+    padding: 22px 24px;
+    transition: border-color 140ms ease, box-shadow 140ms ease;
+    text-decoration: none; color: inherit;
   }
-  .proj-card:hover { border-color: color-mix(in oklab, var(--accent) 35%, var(--rule)); box-shadow: 0 8px 24px rgba(20,22,26,0.07); transform: translateY(-1px); }
+  .proj-card.is-clickable { cursor: pointer; }
+  .proj-card.is-build { cursor: default; }
+  .proj-card:hover { border-color: color-mix(in oklab, var(--accent) 35%, var(--rule)); box-shadow: 0 8px 24px rgba(20,22,26,0.07); }
+
+  .proj-card-head {
+    display: grid; grid-template-columns: 64px minmax(0,1fr); gap: 20px; align-items: center;
+  }
+  .proj-card-headline { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; min-width: 0; }
   .proj-favicon {
     display: block; width: 64px; height: 64px; border-radius: 13px;
-    box-shadow: 0 1px 4px rgba(20,22,26,0.10); background: var(--accent-soft);
-    object-fit: cover;
+    box-shadow: 0 1px 4px rgba(20,22,26,0.10); background: #fff;
+    object-fit: contain; padding: 6px;
   }
-  .proj-body { min-width: 0; }
-  .proj-top { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
   .proj-title { font-size: 20px; font-weight: 600; letter-spacing: -0.012em; margin: 0; }
   .proj-status {
     font-family: var(--font-sans), system-ui, sans-serif; font-size: 11px; font-weight: 600; letter-spacing: 0.04em;
@@ -565,12 +572,50 @@
   }
   .proj-status.is-live { color: #1F7A4D; background: #E6F4EC; }
   .proj-status.is-build { color: #9A6B00; background: #FBF1DC; }
-  .proj-url { display: inline-block; font-family: var(--font-sans), system-ui, sans-serif; font-size: 13px; font-weight: 500; color: var(--accent); margin-top: 6px; }
-  .proj-url:hover { text-decoration: underline; }
+
+  /* Hover reveal — expands card height; description fades in (B + ii) */
+  .proj-card-reveal {
+    display: grid;
+    grid-template-rows: 0fr;
+    opacity: 0;
+    transition: grid-template-rows 320ms cubic-bezier(0.2, 0.7, 0.2, 1),
+                opacity 220ms ease;
+  }
+  .proj-card-reveal-inner {
+    overflow: hidden;
+    min-height: 0;
+    padding-top: 0;
+    transition: padding-top 320ms cubic-bezier(0.2, 0.7, 0.2, 1);
+  }
+  .proj-card:hover .proj-card-reveal,
+  .proj-card:focus-visible .proj-card-reveal {
+    grid-template-rows: 1fr;
+    opacity: 1;
+  }
+  .proj-card:hover .proj-card-reveal-inner,
+  .proj-card:focus-visible .proj-card-reveal-inner {
+    padding-top: 14px;
+  }
+  .proj-card-reveal-foot {
+    display: flex; align-items: baseline; justify-content: space-between; gap: 14px;
+    margin-top: 12px;
+  }
+  .proj-url { font-family: var(--font-sans), system-ui, sans-serif; font-size: 13px; font-weight: 500; color: var(--accent); }
   .proj-url.is-soon { color: var(--ink-45); }
-  .proj-url.is-soon:hover { text-decoration: none; }
-  .proj-desc { font-size: 15px; line-height: 1.6; color: var(--ink-60); margin: 10px 0 0; text-wrap: pretty; font-family: var(--font-serif), Georgia, serif; }
-  .proj-note { display: block; margin-top: 12px; }
+  .proj-desc { font-size: 15px; line-height: 1.6; color: var(--ink-60); margin: 0; text-wrap: pretty; font-family: var(--font-serif), Georgia, serif; }
+  .proj-note { display: inline-block; }
+
+  /* Touch / no-hover devices: always show the reveal (no hover to trigger). */
+  @media (hover: none), (max-width: 760px) {
+    .proj-card-reveal { grid-template-rows: 1fr; opacity: 1; }
+    .proj-card-reveal-inner { padding-top: 14px; }
+  }
+
+  /* Reduced motion: skip the grid-row animation. */
+  @media (prefers-reduced-motion: reduce) {
+    .proj-card-reveal,
+    .proj-card-reveal-inner { transition: none; }
+  }
 
   /* CONTACT FOOTER */
   .foot { flex-shrink: 0; border-top: 1px solid var(--rule); background: var(--surface); margin-top: 64px; }
