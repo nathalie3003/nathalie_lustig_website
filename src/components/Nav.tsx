@@ -21,9 +21,25 @@ export function TopBar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const notesRef = useRef<HTMLDivElement>(null);
   const mobileRef = useRef<HTMLDivElement>(null);
+  const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const pathname = usePathname();
   const router = useRouter();
   const onHome = pathname === "/";
+
+  const cancelCloseNotes = () => {
+    if (closeTimer.current) {
+      clearTimeout(closeTimer.current);
+      closeTimer.current = null;
+    }
+  };
+  const openNotes = () => {
+    cancelCloseNotes();
+    setNotesOpen(true);
+  };
+  const scheduleCloseNotes = () => {
+    cancelCloseNotes();
+    closeTimer.current = setTimeout(() => setNotesOpen(false), 120);
+  };
 
   useEffect(() => {
     function onDoc(e: MouseEvent) {
@@ -45,6 +61,10 @@ export function TopBar() {
     return () => {
       document.removeEventListener("mousedown", onDoc);
       document.removeEventListener("keydown", onKey);
+      if (closeTimer.current) {
+        clearTimeout(closeTimer.current);
+        closeTimer.current = null;
+      }
     };
   }, []);
 
@@ -63,12 +83,20 @@ export function TopBar() {
   return (
     <header className="top">
       <div className="top-inner">
-        <Link href="/#top" className="top-name" onClick={jump("top")}>
-          Nathalie Lustig
+        <Link
+          href="/#top"
+          className="top-mark"
+          onClick={jump("top")}
+          aria-label="Home"
+        >
+          <img src="/icon.png" alt="" width={28} height={28} />
         </Link>
 
         <div className="top-right">
           <nav className="top-links">
+            <Link href="/#top" className="top-link" onClick={jump("top")}>
+              Home
+            </Link>
             <Link href="/#about" className="top-link" onClick={jump("about")}>
               About
             </Link>
@@ -79,8 +107,8 @@ export function TopBar() {
             <div
               className="notes-menu"
               ref={notesRef}
-              onMouseEnter={() => setNotesOpen(true)}
-              onMouseLeave={() => setNotesOpen(false)}
+              onMouseEnter={openNotes}
+              onMouseLeave={scheduleCloseNotes}
             >
               <Link
                 href="/notes"
@@ -92,7 +120,12 @@ export function TopBar() {
                 Notes <span className="notes-caret" aria-hidden="true">▾</span>
               </Link>
               {notesOpen && (
-                <div className="notes-pop" role="menu">
+                <div
+                  className="notes-pop"
+                  role="menu"
+                  onMouseEnter={cancelCloseNotes}
+                  onMouseLeave={scheduleCloseNotes}
+                >
                   <Link
                     href="/notes"
                     className="np-row np-all"
@@ -116,11 +149,19 @@ export function TopBar() {
                 </div>
               )}
             </div>
+
+            <a href="/cv.pdf" download className="top-link top-link-cv">
+              {cvLabel}
+            </a>
           </nav>
 
-          <a href="/cv.pdf" download className="l-btn l-btn-cv l-btn-sm cv-btn">
-            {cvLabel}
-          </a>
+          <Link
+            href="/#contact"
+            className="l-btn l-btn-hire"
+            onClick={jump("contact")}
+          >
+            Hire Me! <span aria-hidden="true">→</span>
+          </Link>
 
           <div className="mobile-menu" ref={mobileRef}>
             <button
@@ -133,6 +174,9 @@ export function TopBar() {
             </button>
             {mobileOpen && (
               <div className="menu-pop" role="menu">
+                <Link href="/#top" className="menu-row" onClick={jump("top")}>
+                  <span className="mr-title">Home</span>
+                </Link>
                 <Link href="/#about" className="menu-row" onClick={jump("about")}>
                   <span className="mr-title">About</span>
                 </Link>
@@ -167,6 +211,13 @@ export function TopBar() {
                 >
                   <span className="mr-title">{cvLabel}</span>
                 </a>
+                <Link
+                  href="/#contact"
+                  className="menu-row menu-row-hire"
+                  onClick={jump("contact")}
+                >
+                  <span className="mr-title">Hire Me! <span aria-hidden="true">→</span></span>
+                </Link>
               </div>
             )}
           </div>

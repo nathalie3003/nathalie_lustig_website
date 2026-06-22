@@ -122,12 +122,38 @@
     display: flex; align-items: center; justify-content: space-between; gap: 18px;
     position: relative;
   }
-  .top-name {
-    font-size: 17px; font-weight: 600; letter-spacing: -0.012em; white-space: nowrap;
-    background: none; border: 0; cursor: pointer; color: var(--ink); padding: 0;
-    font-family: var(--font-serif), Georgia, serif; text-decoration: none;
-  }
+  .top-mark { display: inline-flex; align-items: center; line-height: 0; }
+  .top-mark img { display: block; height: 28px; width: 28px; }
   .top-right { display: flex; align-items: center; gap: 12px; }
+  .top-link-cv { font-weight: inherit; }
+
+  .l-btn-hire {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 10px 16px;
+    border-radius: 999px;
+    background: var(--ink);
+    color: var(--surface);
+    text-decoration: none;
+    white-space: nowrap;
+    font-family: var(--font-sans), system-ui, sans-serif; font-size: 13.5px; font-weight: 500;
+    border: 1px solid var(--ink);
+  }
+  .l-btn-hire:hover { opacity: 0.9; color: var(--surface); }
+
+  /* Hover bridge so the Notes popover doesn't disappear when the cursor crosses the gap. */
+  .notes-pop { margin-top: 0; padding-top: 8px; }
+  .notes-pop::before {
+    content: "";
+    position: absolute;
+    top: -10px; left: 0; right: 0; height: 12px;
+    background: transparent;
+  }
+
+  .menu-row-hire {
+    background: var(--ink); color: var(--surface);
+    margin-top: 4px;
+  }
+  .menu-row-hire:hover { background: var(--ink); color: var(--surface); opacity: 0.92; }
   .top-links { display: flex; align-items: center; gap: 4px; margin-right: 6px; }
   .top-link {
     font-family: var(--font-sans), system-ui, sans-serif; font-size: 14px; font-weight: 500; color: var(--ink-72);
@@ -775,7 +801,7 @@
 }
 @media (max-width: 760px) {
   .top-links { display: none; }
-  .cv-btn { display: none; }
+  .l-btn-hire { display: none; }
   .mobile-menu { display: inline-flex; }
 }
 @media (max-width: 560px) {
