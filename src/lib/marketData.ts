@@ -119,6 +119,51 @@ export async function getRateQuotes(): Promise<{ ust10y: Quote | null; sofr: Quo
   };
 }
 
+// ---------- Twelve Data (commodities) — free API key required ----------
+// Set TWELVE_DATA_API_KEY in env. Free tier covers precious metals
+// (XAU/USD, XAG/USD) but NOT commodity futures (BRENT, WTI), so Brent
+// stays a placeholder until we move tiers or pick another source.
+
+type TwelveValues = { values?: { close: string }[]; status?: string };
+
+async function fetchTwelveData(symbols: string[]): Promise<Record<string, [number, number]> | null> {
+  const key = process.env.TWELVE_DATA_API_KEY;
+  if (!key) return null;
+  const url =
+    `https://api.twelvedata.com/time_series` +
+    `?symbol=${encodeURIComponent(symbols.join(","))}` +
+    `&interval=1day&outputsize=2&apikey=${key}`;
+  try {
+    const res = await fetch(url, { next: { revalidate: DAY } });
+    if (!res.ok) return null;
+    const data = (await res.json()) as Record<string, TwelveValues>;
+    const out: Record<string, [number, number]> = {};
+    // Single-symbol responses are flat; multi-symbol responses are keyed by symbol.
+    const entries = symbols.length === 1 ? [[symbols[0], data as TwelveValues]] as const : Object.entries(data);
+    for (const [sym, payload] of entries) {
+      if (!payload || payload.status === "error" || !payload.values || payload.values.length < 2) continue;
+      const latest = Number(payload.values[0].close);
+      const prev = Number(payload.values[1].close);
+      if (Number.isFinite(latest) && Number.isFinite(prev)) out[sym] = [prev, latest];
+    }
+    return Object.keys(out).length ? out : null;
+  } catch {
+    return null;
+  }
+}
+
+function fmtUsd(n: number): string {
+  return `$${n.toLocaleString("en-US", { maximumFractionDigits: 0 })}`;
+}
+
+export async function getCommodityQuotes(): Promise<{ gold: Quote | null }> {
+  const data = await fetchTwelveData(["XAU/USD"]);
+  const gold = data?.["XAU/USD"];
+  return {
+    gold: gold ? { sym: "Gold", val: fmtUsd(gold[1]), dir: dirOf(...gold) } : null,
+  };
+}
+
 export function todayCaption(): string {
   const now = new Date();
   const fmt = new Intl.DateTimeFormat("en-GB", {
