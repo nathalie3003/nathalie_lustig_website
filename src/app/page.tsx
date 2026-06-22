@@ -4,8 +4,10 @@ import { RightRail } from "@/components/RightRail";
 import { AboutSection } from "@/components/AboutSection";
 import { ProjectsSection } from "@/components/ProjectsSection";
 import { HashScroll } from "@/components/HashScroll";
-import { hero, readLatest } from "@/content/tone";
+import { MarketTickerPlaceholder } from "@/components/MarketTickerPlaceholder";
+import { hero, readLatest, cvLabel } from "@/content/tone";
 import { noteCat } from "@/lib/noteCat";
+import { ScrollReveal } from "@/components/ScrollReveal";
 
 function formatDateShort(iso: string) {
   return new Date(iso).toLocaleDateString("en-GB", {
@@ -18,31 +20,34 @@ function formatDateShort(iso: string) {
 export default async function HomePage() {
   const notes = await getAllNotes();
   const latest = notes[0];
-  const latestHref = latest ? `/notes/${latest.slug}` : "/notes";
+  const recent = notes.slice(1, 3);
+  const latestHref = latest ? `/notes/${latest.slug}` : "/#notes";
 
   return (
     <div className="scroll-home">
       <HashScroll />
       <div className="home" id="top">
         <div className="home-main">
-          <section className="hero">
-            <span className="l-kicker hero-kicker">{hero.kicker}</span>
+          <section className="hero hero-slim">
             <h1 className="hero-name">Nathalie Lustig</h1>
             <p className="hero-lead">{hero.lead}</p>
-            <span className="l-smallcaps hero-creds">{hero.creds}</span>
             <div className="hero-cta">
               <Link href={latestHref} className="l-btn l-btn-primary">
                 {readLatest}
               </Link>
-              <Link href="/#about" className="l-btn l-btn-ghost">
-                About me →
+              <Link href="/cv" className="l-btn l-btn-ghost">
+                {cvLabel}
               </Link>
             </div>
           </section>
 
+          <MarketTickerPlaceholder />
+
           <section className="section" id="notes">
             <div className="section-head">
-              <span className="l-eyebrow">Latest note</span>
+              <ScrollReveal as="span" className="l-eyebrow" stagger={18}>
+                Recent commentary
+              </ScrollReveal>
             </div>
             {latest ? (
               <>
@@ -58,7 +63,7 @@ export default async function HomePage() {
                       {formatDateShort(latest.publishedAt)}
                     </span>
                   </div>
-                  <h2 className="latest-feature-title">{latest.title}</h2>
+                  <ScrollReveal as="h2" className="latest-feature-title">{latest.title}</ScrollReveal>
                   {latest.excerpt ? (
                     <p className="latest-feature-excerpt">{latest.excerpt}</p>
                   ) : null}
@@ -66,6 +71,28 @@ export default async function HomePage() {
                     Read this note →
                   </span>
                 </Link>
+
+                {recent.length > 0 ? (
+                  <ul className="recent-list">
+                    {recent.map((n) => (
+                      <li key={n._id} className="recent-row">
+                        <Link
+                          href={`/notes/${n.slug}`}
+                          className="recent-link"
+                        >
+                          <span className="recent-cat">
+                            {noteCat(n.category).cat}
+                          </span>
+                          <span className="recent-title">{n.title}</span>
+                          <span className="recent-date">
+                            {formatDateShort(n.publishedAt)}
+                          </span>
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                ) : null}
+
                 <Link href="/notes" className="view-all-notes">
                   View all notes →
                 </Link>
@@ -78,7 +105,7 @@ export default async function HomePage() {
           </section>
         </div>
 
-        <RightRail latestSlug={latest?.slug ?? null} />
+        <RightRail />
       </div>
 
       <AboutSection />

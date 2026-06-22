@@ -2,6 +2,7 @@ import Link from "next/link";
 import { getAllNotes } from "@/lib/queries";
 import { NoteRow } from "@/components/NoteCard";
 import { CATEGORIES, categoryFromSlug } from "@/lib/noteCat";
+import { ScrollReveal } from "@/components/ScrollReveal";
 
 export const metadata = {
   title: "Notes — Nathalie Lustig",
@@ -30,9 +31,9 @@ export default async function NotesIndexPage({
     <div className="page-wide notes-index">
       <header className="notes-index-head">
         <span className="l-kicker">All notes</span>
-        <h1 className="notes-index-title">
+        <ScrollReveal as="h1" className="notes-index-title">
           {active ? active.label : "Every note, newest first"}
-        </h1>
+        </ScrollReveal>
         <p className="notes-index-lede">
           {active
             ? active.blurb + "."

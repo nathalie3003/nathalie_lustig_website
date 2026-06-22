@@ -1,8 +1,9 @@
-import Image from "next/image";
 import Link from "next/link";
 import { about } from "@/content/about";
 import { cvLabel } from "@/content/tone";
 import { getSiteSettings } from "@/lib/queries";
+import { RightNowBlock } from "./RightNowBlock";
+import { ScrollReveal } from "./ScrollReveal";
 
 export async function AboutSection() {
   const settings = await getSiteSettings();
@@ -15,7 +16,7 @@ export async function AboutSection() {
     <section className="band band-about" id="about">
       <div className="page-wide about">
         <span className="l-kicker">About</span>
-        <h2 className="about-title">A bit more about me</h2>
+        <ScrollReveal as="h2" className="about-title">A bit more about me</ScrollReveal>
         <div className="about-grid">
           <div className="about-bio">
             {paragraphs.map((p, i) => (
@@ -30,15 +31,7 @@ export async function AboutSection() {
               </Link>
             </div>
           </div>
-          <div className="about-portrait-wrap">
-            <Image
-              src="/about-portrait.jpg"
-              alt="Portrait of Nathalie Lustig"
-              width={600}
-              height={800}
-              className="about-portrait"
-            />
-          </div>
+          <RightNowBlock />
         </div>
       </div>
     </section>
