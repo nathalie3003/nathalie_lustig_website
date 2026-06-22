@@ -471,32 +471,28 @@
 
   /* Left column — direct contact */
   .contact-direct { display: flex; flex-direction: column; gap: 16px; }
-  .contact-email {
-    display: grid; grid-template-columns: auto 1fr auto;
-    grid-template-rows: auto auto; gap: 4px 10px;
-    align-items: baseline; padding: 14px 16px;
-    background: var(--surface); border: 1px solid var(--rule); border-radius: var(--radius);
-    cursor: pointer; text-align: left; font: inherit;
-    transition: border-color 140ms ease, background 140ms ease;
+  .contact-link-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    align-items: stretch;
   }
-  .contact-email:hover { border-color: var(--ink); background: rgba(47,111,237,0.03); }
-  .contact-email-label {
-    grid-column: 1; grid-row: 1;
-    font-family: var(--font-sans), system-ui, sans-serif; font-size: 10.5px; font-weight: 600;
-    letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-45);
+  .contact-link-btn {
+    appearance: none;
+    background: none;
+    border: inherit;
+    font: inherit;
+    color: inherit;
+    text-align: left;
+    cursor: pointer;
+    width: 100%;
   }
-  .contact-email-action {
-    grid-column: 3; grid-row: 1;
-    font-family: var(--font-sans), system-ui, sans-serif; font-size: 10.5px; font-weight: 700;
-    letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent);
-  }
-  .contact-email-value {
-    grid-column: 1 / -1; grid-row: 2;
-    font-family: var(--font-serif), Georgia, serif; font-size: 16px;
-    color: var(--ink); word-break: break-all;
+  .contact-link .cl-action { display: block; margin-top: 6px; }
+
+  @media (max-width: 720px) {
+    .contact-link-grid { grid-template-columns: 1fr; }
   }
 
-  .contact-elsewhere { display: flex; flex-direction: column; }
   .contact-link {
     display: flex; justify-content: space-between; align-items: baseline; gap: 14px;
     padding: 12px 0; border-bottom: 1px solid var(--rule);

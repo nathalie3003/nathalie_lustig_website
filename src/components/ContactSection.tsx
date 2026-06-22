@@ -1,9 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
 import { about } from "@/content/about";
-import { cvLabel } from "@/content/tone";
 import { ScrollReveal } from "./ScrollReveal";
 
 const EMAIL = "nathalie.lustig03@gmail.com";
@@ -51,37 +49,30 @@ export function ContactSection() {
         </div>
 
         <div className="contact-grid">
-          <div className="contact-direct">
+          <div className="contact-direct contact-link-grid">
             <button
               type="button"
-              className="contact-email"
+              className="contact-link contact-link-btn"
               onClick={onCopy}
               aria-label={`Copy email address ${EMAIL}`}
             >
-              <span className="contact-email-label">Email</span>
-              <span className="contact-email-value">{EMAIL}</span>
-              <span className="contact-email-action">
-                {copied ? "Copied ✓" : "Copy →"}
-              </span>
+              <span className="cl-label">Email</span>
+              <span className="cl-value">{EMAIL}</span>
+              <span className="cl-action">{copied ? "Copied ✓" : "Copy →"}</span>
             </button>
 
-            <div className="contact-elsewhere">
-              {linkedIn ? (
-                <a
-                  className="contact-link"
-                  href={linkedIn.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <span className="cl-label">LinkedIn</span>
-                  <span className="cl-value">{linkedIn.value} ↗</span>
-                </a>
-              ) : null}
-              <a href="/cv.pdf" download className="contact-link">
-                <span className="cl-label">CV</span>
-                <span className="cl-value">{cvLabel} →</span>
+            {linkedIn ? (
+              <a
+                className="contact-link"
+                href={linkedIn.href}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <span className="cl-label">LinkedIn</span>
+                <span className="cl-value">{linkedIn.value}</span>
+                <span className="cl-action">Open ↗</span>
               </a>
-            </div>
+            ) : null}
           </div>
 
           <form className="contact-form" onSubmit={onSubmit}>
