@@ -5,7 +5,6 @@ import { AboutSection } from "@/components/AboutSection";
 import { ProjectsSection } from "@/components/ProjectsSection";
 import { ContactSection } from "@/components/ContactSection";
 import { HashScroll } from "@/components/HashScroll";
-import { MarketTickerPlaceholder } from "@/components/MarketTickerPlaceholder";
 import { Hero } from "@/components/Hero";
 import { noteCat } from "@/lib/noteCat";
 import { ScrollReveal } from "@/components/ScrollReveal";
@@ -89,7 +88,6 @@ export default async function HomePage() {
         </div>
       </section>
 
-      <MarketTickerPlaceholder />
       <ContactSection />
     </>
   );

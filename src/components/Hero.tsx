@@ -12,6 +12,7 @@ export function Hero({ latestHref }: { latestHref: string }) {
             Nathalie Lustig<span className="hero-v2-dot">.</span>
           </h1>
           <p className="hero-v2-lead">{hero.lead}</p>
+          <p className="hero-v2-creds">LSE Economics · CFA Level I</p>
           <div className="hero-v2-cta">
             <Link href={latestHref} className="l-btn l-btn-primary">
               {readLatest}
