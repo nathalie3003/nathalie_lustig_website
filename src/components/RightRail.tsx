@@ -32,18 +32,9 @@ export async function RightRail() {
         }));
 
   return (
-    <aside className="home-rail">
-      <div className="rail-card">
-        <Image
-          src="/rail-portrait.jpg"
-          alt="Portrait of Nathalie Lustig"
-          width={600}
-          height={600}
-          className="rail-portrait"
-          priority
-        />
-
-        <div className="rail-block">
+    <section className="band band-rightnow">
+      <div className="page-wide rightnow-strip">
+        <div className="rail-block rs-block">
           <span className="l-eyebrow rail-block-head">{readsHead}</span>
           <p className="rail-block-note">{readsNote}</p>
           <div className="reads">
@@ -62,7 +53,7 @@ export async function RightRail() {
           </div>
         </div>
 
-        <div className="rail-block">
+        <div className="rail-block rs-block">
           <span className="l-eyebrow rail-block-head">On the bedside table</span>
           <p className="rail-block-note">The books I&apos;m working through right now.</p>
           <div className="books">
@@ -89,6 +80,6 @@ export async function RightRail() {
           </div>
         </div>
       </div>
-    </aside>
+    </section>
   );
 }
