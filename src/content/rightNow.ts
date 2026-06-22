@@ -15,7 +15,7 @@ export const rightNow: RightNowRow[] = [
     label: "Drinking",
     value: "a cappuccino",
     note: "Want to question every coffee you will ever buy?",
-    // href intentionally omitted until the dissertation file is in /public.
+    href: "/files/44151.pdf",
   },
   { label: "Trying to learn", value: "Für Elise on the piano" },
   {
