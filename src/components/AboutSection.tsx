@@ -23,9 +23,9 @@ export async function AboutSection() {
               <p key={i}>{p}</p>
             ))}
             <div className="about-actions">
-              <Link href="/cv" className="l-btn l-btn-primary">
+              <a href="/cv.pdf" download className="l-btn l-btn-cv">
                 {cvLabel}
-              </Link>
+              </a>
               <Link href="/#projects" className="l-btn l-btn-ghost">
                 See my projects →
               </Link>

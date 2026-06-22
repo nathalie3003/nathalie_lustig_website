@@ -118,9 +118,9 @@ export function TopBar() {
             </div>
           </nav>
 
-          <Link href="/cv" className="l-btn l-btn-primary l-btn-sm cv-btn">
+          <a href="/cv.pdf" download className="l-btn l-btn-cv l-btn-sm cv-btn">
             {cvLabel}
-          </Link>
+          </a>
 
           <div className="mobile-menu" ref={mobileRef}>
             <button
@@ -159,13 +159,14 @@ export function TopBar() {
                   ))}
                 </div>
                 <div className="menu-rule" />
-                <Link
-                  href="/cv"
+                <a
+                  href="/cv.pdf"
+                  download
                   className="menu-row"
                   onClick={() => setMobileOpen(false)}
                 >
                   <span className="mr-title">{cvLabel}</span>
-                </Link>
+                </a>
               </div>
             )}
           </div>

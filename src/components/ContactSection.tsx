@@ -77,10 +77,10 @@ export function ContactSection() {
                   <span className="cl-value">{linkedIn.value} ↗</span>
                 </a>
               ) : null}
-              <Link href="/cv" className="contact-link">
+              <a href="/cv.pdf" download className="contact-link">
                 <span className="cl-label">CV</span>
                 <span className="cl-value">{cvLabel} →</span>
-              </Link>
+              </a>
             </div>
           </div>
 

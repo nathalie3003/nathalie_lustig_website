@@ -1,38 +1,8 @@
-import Link from "next/link";
-import { about } from "@/content/about";
-import { hero } from "@/content/tone";
-import { getSiteSettings } from "@/lib/queries";
+import { permanentRedirect } from "next/navigation";
 
-export const metadata = {
-  title: "Curriculum Vitae · Nathalie Lustig",
-};
-
-export default async function CVPage() {
-  const settings = await getSiteSettings();
-  const paragraphs =
-    settings?.aboutParagraphs && settings.aboutParagraphs.length > 0
-      ? settings.aboutParagraphs
-      : about.paragraphs;
-
-  return (
-    <div className="page-full about" style={{ padding: "40px 56px 16px" }}>
-      <Link href="/#top" className="read-back">← Back to site</Link>
-      <span className="l-kicker">Curriculum Vitae</span>
-      <h1 className="about-title">Nathalie Lustig</h1>
-      <p className="hero-lead" style={{ marginTop: "10px" }}>{hero.creds}</p>
-      <div style={{ marginTop: "22px", display: "flex", gap: "12px", flexWrap: "wrap" }}>
-        <a className="l-btn l-btn-primary" href="/cv.pdf" download>
-          Download PDF
-        </a>
-        <Link href="/#about" className="l-btn l-btn-ghost">
-          Read the long version →
-        </Link>
-      </div>
-      <div className="about-bio" style={{ marginTop: "34px", maxWidth: "640px" }}>
-        {paragraphs.map((p, i) => (
-          <p key={i}>{p}</p>
-        ))}
-      </div>
-    </div>
-  );
+// /cv is no longer a standalone page. The button now downloads the PDF
+// directly. We keep this route so any existing /cv links land somewhere
+// sensible (the PDF file in /public).
+export default function CVRedirect() {
+  permanentRedirect("/cv.pdf");
 }
