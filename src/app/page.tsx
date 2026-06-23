@@ -30,7 +30,7 @@ export default async function HomePage() {
 
   const liveCurve = await getYieldCurve();
   const curve = liveCurve ?? FALLBACK_CURVE;
-  const curveSource: "FRED" | "snapshot" = liveCurve ? "FRED" : "snapshot";
+  const curveSource: "Treasury" | "snapshot" = liveCurve ? "Treasury" : "snapshot";
 
   return (
     <div className="scroll-home">

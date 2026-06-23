@@ -6,7 +6,7 @@ import type { YieldCurvePoint } from "@/lib/marketData";
 type Props = {
   points: YieldCurvePoint[];
   asOf: string; // ISO date YYYY-MM-DD
-  source: "FRED" | "snapshot";
+  source: "Treasury" | "snapshot";
 };
 
 const VB_W = 640;
