@@ -1,5 +1,7 @@
+import Image from "next/image";
 import Link from "next/link";
 import { getAllNotes } from "@/lib/queries";
+import { urlFor } from "@/lib/sanity.client";
 import { RightRail } from "@/components/RightRail";
 import { AboutSection } from "@/components/AboutSection";
 import { ProjectsSection } from "@/components/ProjectsSection";
@@ -47,22 +49,43 @@ export default async function HomePage() {
             {recent.length > 0 ? (
               <>
                 <ul className="recent-list">
-                  {recent.map((n) => (
-                    <li key={n._id} className="recent-row">
-                      <Link
-                        href={`/notes/${n.slug}`}
-                        className="recent-link"
-                      >
-                        <span className="recent-cat">
-                          {noteCat(n.category).cat}
-                        </span>
-                        <span className="recent-title">{n.title}</span>
-                        <span className="recent-date">
-                          {formatDateShort(n.publishedAt)}
-                        </span>
-                      </Link>
-                    </li>
-                  ))}
+                  {recent.map((n) => {
+                    const thumbUrl = n.coverImage
+                      ? urlFor(n.coverImage).width(160).height(160).url()
+                      : null;
+                    return (
+                      <li key={n._id} className="recent-row">
+                        <Link
+                          href={`/notes/${n.slug}`}
+                          className="recent-link"
+                        >
+                          {thumbUrl ? (
+                            <Image
+                              src={thumbUrl}
+                              alt=""
+                              width={80}
+                              height={80}
+                              className="recent-thumb"
+                            />
+                          ) : null}
+                          <div className="recent-body">
+                            <div className="recent-top">
+                              <span className="recent-cat">
+                                {noteCat(n.category).cat}
+                              </span>
+                              <span className="recent-date">
+                                {formatDateShort(n.publishedAt)}
+                              </span>
+                            </div>
+                            <span className="recent-title">{n.title}</span>
+                            {n.excerpt ? (
+                              <span className="recent-excerpt">{n.excerpt}</span>
+                            ) : null}
+                          </div>
+                        </Link>
+                      </li>
+                    );
+                  })}
                 </ul>
 
                 <Link href="/notes" className="view-all-notes">
