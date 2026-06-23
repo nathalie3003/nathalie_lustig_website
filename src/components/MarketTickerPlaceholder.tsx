@@ -2,15 +2,13 @@
 // no key). UST 10Y + SOFR come live from FRED when FRED_API_KEY is set.
 // Everything else is a static placeholder until a data source is wired.
 
-import { getFxQuotes, getRateQuotes, todayCaption, type Quote } from "@/lib/marketData";
+import { getCommodityQuotes, getFxQuotes, getRateQuotes, todayCaption, type Quote } from "@/lib/marketData";
 
 const PLACEHOLDER_RATES: Quote[] = [
   { sym: "UST 10Y", val: "4.23%", dir: "up" },
   { sym: "Gilt 10Y", val: "4.51%", dir: "down" },
-  { sym: "Bund 10Y", val: "2.34%", dir: "up" },
   { sym: "ILGB 10Y", val: "4.12%", dir: "up" },
   { sym: "SOFR", val: "5.31%", dir: null },
-  { sym: "EUR Swap 10Y", val: "2.58%", dir: "up" },
 ];
 
 const PLACEHOLDER_FX: Quote[] = [
@@ -22,7 +20,6 @@ const PLACEHOLDER_FX: Quote[] = [
 ];
 
 const PLACEHOLDER_COMM: Quote[] = [
-  { sym: "Brent", val: "$84.50", dir: "up" },
   { sym: "Gold", val: "$2,317", dir: "down" },
 ];
 
@@ -63,7 +60,7 @@ function byOrder(live: Quote[] | null, order: string[], fallback: Quote[]): Quot
 }
 
 export async function MarketTickerPlaceholder() {
-  const [fx, rates] = await Promise.all([getFxQuotes(), getRateQuotes()]);
+  const [fx, rates, comm] = await Promise.all([getFxQuotes(), getRateQuotes(), getCommodityQuotes()]);
 
   const rateItems = PLACEHOLDER_RATES.map((q) => {
     if (q.sym === "UST 10Y" && rates.ust10y) return rates.ust10y;
@@ -73,24 +70,17 @@ export async function MarketTickerPlaceholder() {
 
   const fxItems = byOrder(fx, ["Cable", "EUR/USD", "EUR/GBP", "USD/ILS", "GBP/ILS"], PLACEHOLDER_FX);
 
+  const commItems = PLACEHOLDER_COMM.map((q) => {
+    if (q.sym === "Gold" && comm.gold) return comm.gold;
+    return q;
+  });
+
   return (
     <aside className="ticker-placeholder" aria-label="Reference rates, FX, and commodities">
       <div className="tp-rows">
         <Row short="Rates" items={rateItems} />
         <Row short="FX" items={fxItems} />
-        <div className="tp-row">
-          <span className="tp-label">Comm</span>
-          <div className="tp-items">
-            {PLACEHOLDER_COMM.map((q, j) => (
-              <span key={q.sym} className="tp-item">
-                <span className="tp-sym">{q.sym}</span>
-                <span className="tp-val">{q.val}</span>
-                <Arrow dir={q.dir} />
-                {j < PLACEHOLDER_COMM.length - 1 && <span className="tp-sep" aria-hidden="true">·</span>}
-              </span>
-            ))}
-          </div>
-        </div>
+        <Row short="Comm" items={commItems} />
       </div>
       <div className="tp-foot">As of {todayCaption()}</div>
     </aside>
