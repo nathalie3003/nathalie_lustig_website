@@ -10,6 +10,9 @@ import { HashScroll } from "@/components/HashScroll";
 import { hero, readLatest } from "@/content/tone";
 import { CATEGORIES, noteCat } from "@/lib/noteCat";
 import { DeskNotesRotator } from "@/components/DeskNotesRotator";
+import { YieldCurve } from "@/components/YieldCurve";
+import { getYieldCurve } from "@/lib/marketData";
+import { FALLBACK_CURVE } from "@/content/yieldCurveFallback";
 
 function formatDateShort(iso: string) {
   return new Date(iso).toLocaleDateString("en-GB", {
@@ -24,6 +27,10 @@ export default async function HomePage() {
   const latest = notes[0];
   const recent = notes.slice(0, 3);
   const latestHref = latest ? `/notes/${latest.slug}` : "/#notes";
+
+  const liveCurve = await getYieldCurve();
+  const curve = liveCurve ?? FALLBACK_CURVE;
+  const curveSource: "FRED" | "snapshot" = liveCurve ? "FRED" : "snapshot";
 
   return (
     <div className="scroll-home">
@@ -98,6 +105,12 @@ export default async function HomePage() {
               </p>
             )}
           </section>
+
+          <YieldCurve
+            points={curve.points}
+            asOf={curve.asOf}
+            source={curveSource}
+          />
         </div>
 
         <RightRail />

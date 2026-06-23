@@ -119,6 +119,54 @@ export async function getRateQuotes(): Promise<{ ust10y: Quote | null; sofr: Quo
   };
 }
 
+// ---------- Yield curve (FRED, four tenors) ----------
+
+export type YieldCurvePoint = { tenorLabel: string; tenorYears: number; yield: number };
+export type YieldCurve = { points: YieldCurvePoint[]; asOf: string };
+
+async function fetchFredLatest(
+  seriesId: string,
+): Promise<{ value: number; date: string } | null> {
+  const key = process.env.FRED_API_KEY;
+  if (!key) return null;
+  const url =
+    `https://api.stlouisfed.org/fred/series/observations` +
+    `?series_id=${seriesId}&api_key=${key}&file_type=json` +
+    `&sort_order=desc&limit=5`;
+  try {
+    const res = await fetch(url, { next: { revalidate: DAY } });
+    if (!res.ok) return null;
+    const data = (await res.json()) as FredResp;
+    for (const obs of data.observations) {
+      const v = Number(obs.value);
+      if (Number.isFinite(v)) return { value: v, date: obs.date };
+    }
+    return null;
+  } catch {
+    return null;
+  }
+}
+
+export async function getYieldCurve(): Promise<YieldCurve | null> {
+  const [t2, t5, t10, t30] = await Promise.all([
+    fetchFredLatest("DGS2"),
+    fetchFredLatest("DGS5"),
+    fetchFredLatest("DGS10"),
+    fetchFredLatest("DGS30"),
+  ]);
+  if (!t2 || !t5 || !t10 || !t30) return null;
+  const earliest = [t2.date, t5.date, t10.date, t30.date].sort()[0];
+  return {
+    points: [
+      { tenorLabel: "2Y", tenorYears: 2, yield: t2.value },
+      { tenorLabel: "5Y", tenorYears: 5, yield: t5.value },
+      { tenorLabel: "10Y", tenorYears: 10, yield: t10.value },
+      { tenorLabel: "30Y", tenorYears: 30, yield: t30.value },
+    ],
+    asOf: earliest,
+  };
+}
+
 // ---------- Twelve Data (commodities) — free API key required ----------
 // Set TWELVE_DATA_API_KEY in env. Free tier covers precious metals
 // (XAU/USD, XAG/USD) but NOT commodity futures (BRENT, WTI), so Brent
