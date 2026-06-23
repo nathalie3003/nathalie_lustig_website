@@ -64,16 +64,13 @@ export function TopBar() {
     <header className="top">
       <div className="top-inner">
         <Link href="/#top" className="top-name" onClick={jump("top")}>
-          Nathalie Lustig
+          NL
         </Link>
 
         <div className="top-right">
           <nav className="top-links">
-            <Link href="/#about" className="top-link" onClick={jump("about")}>
-              About
-            </Link>
-            <Link href="/#projects" className="top-link" onClick={jump("projects")}>
-              Projects
+            <Link href="/#top" className="top-link" onClick={jump("top")}>
+              Home
             </Link>
 
             <div
@@ -116,11 +113,26 @@ export function TopBar() {
                 </div>
               )}
             </div>
+
+            <Link href="/#about" className="top-link" onClick={jump("about")}>
+              About
+            </Link>
+            <Link href="/#projects" className="top-link" onClick={jump("projects")}>
+              Projects
+            </Link>
           </nav>
 
           <a href="/cv.pdf" download className="l-btn l-btn-cv l-btn-sm cv-btn">
             {cvLabel}
           </a>
+
+          <Link
+            href="/#contact"
+            className="l-btn l-btn-primary l-btn-sm cv-btn"
+            onClick={jump("contact")}
+          >
+            Let&apos;s talk more →
+          </Link>
 
           <div className="mobile-menu" ref={mobileRef}>
             <button
@@ -133,11 +145,8 @@ export function TopBar() {
             </button>
             {mobileOpen && (
               <div className="menu-pop" role="menu">
-                <Link href="/#about" className="menu-row" onClick={jump("about")}>
-                  <span className="mr-title">About</span>
-                </Link>
-                <Link href="/#projects" className="menu-row" onClick={jump("projects")}>
-                  <span className="mr-title">Projects</span>
+                <Link href="/#top" className="menu-row" onClick={jump("top")}>
+                  <span className="mr-title">Home</span>
                 </Link>
                 <Link
                   href="/notes"
@@ -158,6 +167,12 @@ export function TopBar() {
                     </Link>
                   ))}
                 </div>
+                <Link href="/#about" className="menu-row" onClick={jump("about")}>
+                  <span className="mr-title">About</span>
+                </Link>
+                <Link href="/#projects" className="menu-row" onClick={jump("projects")}>
+                  <span className="mr-title">Projects</span>
+                </Link>
                 <div className="menu-rule" />
                 <a
                   href="/cv.pdf"
@@ -167,6 +182,9 @@ export function TopBar() {
                 >
                   <span className="mr-title">{cvLabel}</span>
                 </a>
+                <Link href="/#contact" className="menu-row" onClick={jump("contact")}>
+                  <span className="mr-title">Let&apos;s talk more →</span>
+                </Link>
               </div>
             )}
           </div>

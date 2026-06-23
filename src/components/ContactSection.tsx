@@ -1,9 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
 import { about } from "@/content/about";
-import { cvLabel } from "@/content/tone";
 import { ScrollReveal } from "./ScrollReveal";
 
 const EMAIL = "nathalie.lustig03@gmail.com";
@@ -52,20 +50,18 @@ export function ContactSection() {
 
         <div className="contact-grid">
           <div className="contact-direct">
-            <button
-              type="button"
-              className="contact-email"
-              onClick={onCopy}
-              aria-label={`Copy email address ${EMAIL}`}
-            >
-              <span className="contact-email-label">Email</span>
-              <span className="contact-email-value">{EMAIL}</span>
-              <span className="contact-email-action">
-                {copied ? "Copied ✓" : "Copy →"}
-              </span>
-            </button>
-
             <div className="contact-elsewhere">
+              <button
+                type="button"
+                className="contact-link contact-link-btn"
+                onClick={onCopy}
+                aria-label={`Copy email address ${EMAIL}`}
+              >
+                <span className="cl-label">Email</span>
+                <span className="cl-value">
+                  {EMAIL} {copied ? "Copied ✓" : "Copy →"}
+                </span>
+              </button>
               {linkedIn ? (
                 <a
                   className="contact-link"
@@ -77,10 +73,6 @@ export function ContactSection() {
                   <span className="cl-value">{linkedIn.value} ↗</span>
                 </a>
               ) : null}
-              <a href="/cv.pdf" download className="contact-link">
-                <span className="cl-label">CV</span>
-                <span className="cl-value">{cvLabel} →</span>
-              </a>
             </div>
           </div>
 
