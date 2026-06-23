@@ -147,22 +147,29 @@ async function fetchFredLatest(
   }
 }
 
+const CURVE_TENORS: { label: string; years: number; series: string }[] = [
+  { label: "1Y", years: 1, series: "DGS1" },
+  { label: "2Y", years: 2, series: "DGS2" },
+  { label: "3Y", years: 3, series: "DGS3" },
+  { label: "5Y", years: 5, series: "DGS5" },
+  { label: "7Y", years: 7, series: "DGS7" },
+  { label: "10Y", years: 10, series: "DGS10" },
+  { label: "20Y", years: 20, series: "DGS20" },
+  { label: "30Y", years: 30, series: "DGS30" },
+];
+
 export async function getYieldCurve(): Promise<YieldCurve | null> {
-  const [t2, t5, t10, t30] = await Promise.all([
-    fetchFredLatest("DGS2"),
-    fetchFredLatest("DGS5"),
-    fetchFredLatest("DGS10"),
-    fetchFredLatest("DGS30"),
-  ]);
-  if (!t2 || !t5 || !t10 || !t30) return null;
-  const earliest = [t2.date, t5.date, t10.date, t30.date].sort()[0];
+  const results = await Promise.all(
+    CURVE_TENORS.map((t) => fetchFredLatest(t.series)),
+  );
+  if (results.some((r) => !r)) return null;
+  const earliest = results.map((r) => r!.date).sort()[0];
   return {
-    points: [
-      { tenorLabel: "2Y", tenorYears: 2, yield: t2.value },
-      { tenorLabel: "5Y", tenorYears: 5, yield: t5.value },
-      { tenorLabel: "10Y", tenorYears: 10, yield: t10.value },
-      { tenorLabel: "30Y", tenorYears: 30, yield: t30.value },
-    ],
+    points: CURVE_TENORS.map((t, i) => ({
+      tenorLabel: t.label,
+      tenorYears: t.years,
+      yield: results[i]!.value,
+    })),
     asOf: earliest,
   };
 }

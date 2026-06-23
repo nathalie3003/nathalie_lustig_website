@@ -9,11 +9,13 @@ type Props = {
   source: "FRED" | "snapshot";
 };
 
-const VB_W = 600;
-const VB_H = 240;
-const PAD_X = 56;
+const VB_W = 640;
+const VB_H = 260;
+const PAD_LEFT = 72;
+const PAD_RIGHT = 24;
 const PAD_TOP = 28;
-const PAD_BOTTOM = 44;
+const PAD_BOTTOM = 64;
+const DRAW_DURATION = 1.1; // seconds — must match the CSS keyframe
 
 function formatAsOf(iso: string): string {
   const d = new Date(iso);
@@ -42,22 +44,35 @@ export function YieldCurve({ points, asOf, source }: Props) {
   const [replayKey, setReplayKey] = useState(0);
   const [activeIdx, setActiveIdx] = useState<number | null>(null);
 
-  // Coordinate math: tenor on x (linear by index, equally spaced),
-  // yield on y with a 0.25% pad on each side so the curve doesn't kiss the edges.
+  // X positions reflect actual tenor years (1, 2, 3, 5, 7, 10, 20, 30) so the
+  // chart looks like a real yield curve — compressed on the long end.
   const layout = useMemo(() => {
     const yields = points.map((p) => p.yield);
     const minY = Math.min(...yields) - 0.25;
     const maxY = Math.max(...yields) + 0.25;
-    const xStep = (VB_W - PAD_X * 2) / (points.length - 1);
+    const yearsMin = points[0].tenorYears;
+    const yearsMax = points[points.length - 1].tenorYears;
+    const xSpan = VB_W - PAD_LEFT - PAD_RIGHT;
+    const ySpan = VB_H - PAD_TOP - PAD_BOTTOM;
     const yRange = maxY - minY;
-    const coords = points.map((p, i) => ({
-      x: PAD_X + i * xStep,
-      y: PAD_TOP + ((maxY - p.yield) / yRange) * (VB_H - PAD_TOP - PAD_BOTTOM),
+    const coords = points.map((p) => ({
+      x: PAD_LEFT + ((p.tenorYears - yearsMin) / (yearsMax - yearsMin)) * xSpan,
+      y: PAD_TOP + ((maxY - p.yield) / yRange) * ySpan,
     }));
     return { coords, minY, maxY };
   }, [points]);
 
   const path = useMemo(() => catmullRomPath(layout.coords), [layout]);
+  const pathId = `yield-path-${replayKey}`;
+
+  // For each tenor dot, time its pop-in to roughly match when the tracer
+  // reaches its x position along the path. Linear approximation by x is
+  // close enough for a Catmull-Rom curve at these proportions.
+  const tracerProgress = useMemo(() => {
+    const minX = layout.coords[0].x;
+    const maxX = layout.coords[layout.coords.length - 1].x;
+    return layout.coords.map((c) => (c.x - minX) / (maxX - minX));
+  }, [layout]);
 
   const onRedraw = () => {
     setReplayKey((k) => k + 1);
@@ -68,7 +83,7 @@ export function YieldCurve({ points, asOf, source }: Props) {
       <div className="yield-head">
         <span className="l-eyebrow">The curve</span>
         <p className="yield-sub">
-          US Treasury yield curve · 2Y → 30Y · updated daily
+          US Treasury yield curve · 1Y → 30Y · updated daily
         </p>
         <span className="yield-caption">
           As of {formatAsOf(asOf)} · source: {source}
@@ -84,8 +99,8 @@ export function YieldCurve({ points, asOf, source }: Props) {
         >
           {/* baseline */}
           <line
-            x1={PAD_X}
-            x2={VB_W - PAD_X}
+            x1={PAD_LEFT}
+            x2={VB_W - PAD_RIGHT}
             y1={VB_H - PAD_BOTTOM}
             y2={VB_H - PAD_BOTTOM}
             className="yield-baseline"
@@ -93,7 +108,7 @@ export function YieldCurve({ points, asOf, source }: Props) {
 
           {/* y-axis labels (top + bottom of visible range) */}
           <text
-            x={PAD_X - 10}
+            x={PAD_LEFT - 10}
             y={PAD_TOP + 4}
             textAnchor="end"
             className="yield-y-label"
@@ -101,12 +116,23 @@ export function YieldCurve({ points, asOf, source }: Props) {
             {layout.maxY.toFixed(1)}%
           </text>
           <text
-            x={PAD_X - 10}
+            x={PAD_LEFT - 10}
             y={VB_H - PAD_BOTTOM + 4}
             textAnchor="end"
             className="yield-y-label"
           >
             {layout.minY.toFixed(1)}%
+          </text>
+
+          {/* y-axis title — rotated, runs up the left edge */}
+          <text
+            x={20}
+            y={PAD_TOP + (VB_H - PAD_TOP - PAD_BOTTOM) / 2}
+            textAnchor="middle"
+            transform={`rotate(-90, 20, ${PAD_TOP + (VB_H - PAD_TOP - PAD_BOTTOM) / 2})`}
+            className="yield-axis-title"
+          >
+            Yield (%)
           </text>
 
           {/* tenor labels */}
@@ -122,6 +148,16 @@ export function YieldCurve({ points, asOf, source }: Props) {
             </text>
           ))}
 
+          {/* x-axis title — sits below the tenor labels */}
+          <text
+            x={PAD_LEFT + (VB_W - PAD_LEFT - PAD_RIGHT) / 2}
+            y={VB_H - PAD_BOTTOM + 48}
+            textAnchor="middle"
+            className="yield-axis-title"
+          >
+            Maturity
+          </text>
+
           {/* active vertical guide */}
           {activeIdx !== null && (
             <line
@@ -133,15 +169,27 @@ export function YieldCurve({ points, asOf, source }: Props) {
             />
           )}
 
-          {/* the curve */}
+          {/* the curve (CSS draws it in via stroke-dasharray) */}
           <path
             key={`path-${replayKey}`}
+            id={pathId}
             d={path}
             fill="none"
             className="yield-line yield-line-draw"
           />
 
-          {/* dots */}
+          {/* tracer dot — rides along the path in sync with the draw animation */}
+          <circle
+            key={`tracer-${replayKey}`}
+            r={6}
+            className="yield-tracer"
+          >
+            <animateMotion dur={`${DRAW_DURATION}s`} begin="0s" fill="freeze">
+              <mpath href={`#${pathId}`} />
+            </animateMotion>
+          </circle>
+
+          {/* fixed dots — each pops in as the tracer passes its tenor */}
           {points.map((p, i) => {
             const c = layout.coords[i];
             return (
@@ -150,14 +198,14 @@ export function YieldCurve({ points, asOf, source }: Props) {
                 className="yield-dot-group"
                 style={{
                   transformOrigin: `${c.x}px ${c.y}px`,
-                  animationDelay: `${1.1 + i * 0.12}s`,
+                  animationDelay: `${tracerProgress[i] * DRAW_DURATION}s`,
                 }}
                 onMouseEnter={() => setActiveIdx(i)}
                 onMouseLeave={() => setActiveIdx(null)}
                 onClick={() => setActiveIdx(activeIdx === i ? null : i)}
               >
                 <circle cx={c.x} cy={c.y} r={9} className="yield-dot-hit" />
-                <circle cx={c.x} cy={c.y} r={5} className="yield-dot" />
+                <circle cx={c.x} cy={c.y} r={4.5} className="yield-dot" />
               </g>
             );
           })}
@@ -166,9 +214,9 @@ export function YieldCurve({ points, asOf, source }: Props) {
           {activeIdx !== null && (
             <g className="yield-pill">
               <rect
-                x={layout.coords[activeIdx].x - 38}
+                x={layout.coords[activeIdx].x - 40}
                 y={layout.coords[activeIdx].y - 36}
-                width={76}
+                width={80}
                 height={22}
                 rx={6}
                 ry={6}
