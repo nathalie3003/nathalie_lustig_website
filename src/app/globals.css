@@ -306,6 +306,91 @@
   .section { padding: 46px 0; border-top: 1px solid var(--rule); }
   .section-head { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 22px; }
 
+  /* Yield curve section — homepage signature moment */
+  .yield-section { margin-top: 56px; }
+  .yield-head { display: flex; flex-direction: column; gap: 4px; margin-bottom: 18px; position: relative; }
+  .yield-sub {
+    margin: 0; font-family: var(--font-serif), Georgia, serif;
+    font-size: 14.5px; color: var(--ink-45); line-height: 1.4;
+  }
+  .yield-caption {
+    position: absolute; right: 0; top: 0;
+    font-family: var(--font-sans), system-ui, sans-serif; font-size: 11px;
+    color: var(--ink-45); letter-spacing: 0.04em;
+  }
+  .yield-chart {
+    position: relative; border: 1px solid var(--rule); border-radius: 10px;
+    padding: 20px 16px 16px; background: rgba(255,255,255,0.4);
+  }
+  .yield-svg { display: block; width: 100%; height: auto; max-height: 280px; }
+  .yield-baseline { stroke: var(--rule); stroke-width: 1; }
+  .yield-y-label, .yield-tenor {
+    font-family: var(--font-sans), system-ui, sans-serif; font-size: 10.5px;
+    font-weight: 600; letter-spacing: 0.08em; fill: var(--ink-45);
+    text-transform: uppercase;
+  }
+  .yield-axis-title {
+    font-family: var(--font-sans), system-ui, sans-serif; font-size: 11px;
+    font-weight: 600; letter-spacing: 0.12em; fill: var(--ink-45);
+    text-transform: uppercase;
+  }
+  .yield-tracer {
+    fill: var(--accent); stroke: #fff; stroke-width: 2;
+    filter: drop-shadow(0 1px 3px rgba(47, 111, 237, 0.45));
+  }
+  .yield-line {
+    stroke: var(--accent); stroke-width: 2;
+    stroke-linecap: round; stroke-linejoin: round;
+  }
+  .yield-line-draw {
+    stroke-dasharray: 1000;
+    stroke-dashoffset: 1000;
+    /* Slow, seamless ease-in-out — matches the 21st.dev pen-stroke feel. */
+    animation: yieldDraw 3s cubic-bezier(0.42, 0, 0.58, 1) forwards;
+  }
+  @keyframes yieldDraw {
+    from { opacity: 0.6; stroke-dashoffset: 1000; }
+    to   { opacity: 1; stroke-dashoffset: 0; }
+  }
+  .yield-dot-group {
+    opacity: 0; transform: scale(0);
+    animation: yieldDot 0.28s ease-out forwards;
+    cursor: pointer;
+  }
+  @keyframes yieldDot {
+    to { opacity: 1; transform: scale(1); }
+  }
+  .yield-gridline {
+    stroke: var(--rule); stroke-width: 1; stroke-dasharray: 2 4; opacity: 0.55;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .yield-line-draw { stroke-dasharray: none; stroke-dashoffset: 0; animation: none; }
+    .yield-dot-group { opacity: 1; transform: scale(1); animation: none; }
+    .yield-tracer { display: none; }
+  }
+  .yield-dot { fill: var(--accent); stroke: #fff; stroke-width: 2; }
+  .yield-dot-hit { fill: transparent; cursor: pointer; }
+  .yield-guide { stroke: var(--rule); stroke-width: 1; stroke-dasharray: 3 3; }
+  .yield-pill rect { fill: var(--ink); }
+  .yield-pill-text {
+    font-family: var(--font-sans), system-ui, sans-serif; font-size: 11px;
+    font-weight: 600; fill: #fff; letter-spacing: 0.02em;
+  }
+  .yield-redraw {
+    position: absolute; right: 14px; bottom: 12px;
+    display: inline-flex; align-items: center; gap: 6px;
+    background: transparent; border: 1px solid var(--rule); border-radius: 6px;
+    padding: 7px 14px; cursor: pointer;
+    font-family: var(--font-sans), system-ui, sans-serif; font-size: 11.5px;
+    color: var(--ink); letter-spacing: 0.04em;
+    transition: background 160ms ease, border-color 160ms ease, color 160ms ease;
+  }
+  .yield-redraw:hover { background: rgba(47,111,237,0.06); border-color: var(--accent); color: var(--accent); }
+  .yield-redraw:disabled { opacity: 0.4; cursor: not-allowed; }
+  @media (max-width: 720px) {
+    .yield-caption { position: static; margin-top: 2px; }
+  }
+
   /* Desk notes rotator — small editorial line with slot-machine word swap */
   .dnr {
     margin: 0; font-family: var(--font-serif), Georgia, serif;
