@@ -306,6 +306,27 @@
   .section { padding: 46px 0; border-top: 1px solid var(--rule); }
   .section-head { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 22px; }
 
+  /* Desk notes rotator — small editorial line with slot-machine word swap */
+  .dnr {
+    margin: 0; font-family: var(--font-serif), Georgia, serif;
+    font-size: 17px; line-height: 1.4; color: var(--ink-45);
+  }
+  .dnr-lead { color: var(--ink-45); }
+  .dnr-slot {
+    position: relative; display: inline-block;
+    overflow: hidden; vertical-align: bottom;
+    line-height: 1.4;
+  }
+  .dnr-sizer {
+    visibility: hidden; display: inline-block; white-space: nowrap;
+    font: inherit; font-weight: 600;
+  }
+  .dnr-word {
+    position: absolute; left: 0; top: 0;
+    font: inherit; font-weight: 600; letter-spacing: -0.005em;
+    color: var(--ink); white-space: nowrap;
+  }
+
   .notes { display: flex; flex-direction: column; }
   .note-row {
     display: grid; grid-template-columns: 124px minmax(0,1fr) auto; gap: 22px;
