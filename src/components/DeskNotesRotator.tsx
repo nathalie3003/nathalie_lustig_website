@@ -14,14 +14,14 @@ export function DeskNotesRotator({ words }: { words: string[] }) {
     return () => clearTimeout(id);
   }, [index, words.length]);
 
-  const longest = words.reduce((a, b) => (b.length > a.length ? b : a), "");
-
   return (
     <p className="dnr">
       <span className="dnr-lead">I write bond notes about </span>
       <span className="dnr-slot" aria-live="polite">
         <span className="dnr-sizer" aria-hidden="true">
-          {longest}
+          {words.map((w) => (
+            <span key={w}>{w}</span>
+          ))}
         </span>
         {words.map((w, i) => (
           <motion.span

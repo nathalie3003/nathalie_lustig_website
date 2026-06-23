@@ -4,7 +4,6 @@ import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { CATEGORIES } from "@/lib/noteCat";
-import { cvLabel } from "@/content/tone";
 
 function scrollToId(id: string) {
   const el = document.getElementById(id);
@@ -69,10 +68,6 @@ export function TopBar() {
 
         <div className="top-right">
           <nav className="top-links">
-            <Link href="/#top" className="top-link" onClick={jump("top")}>
-              Home
-            </Link>
-
             <div
               className="notes-menu"
               ref={notesRef}
@@ -122,10 +117,6 @@ export function TopBar() {
             </Link>
           </nav>
 
-          <a href="/cv.pdf" download className="l-btn l-btn-cv l-btn-sm cv-btn">
-            {cvLabel}
-          </a>
-
           <Link
             href="/#contact"
             className="l-btn l-btn-primary l-btn-sm cv-btn"
@@ -145,9 +136,6 @@ export function TopBar() {
             </button>
             {mobileOpen && (
               <div className="menu-pop" role="menu">
-                <Link href="/#top" className="menu-row" onClick={jump("top")}>
-                  <span className="mr-title">Home</span>
-                </Link>
                 <Link
                   href="/notes"
                   className="menu-row"
@@ -174,14 +162,6 @@ export function TopBar() {
                   <span className="mr-title">Projects</span>
                 </Link>
                 <div className="menu-rule" />
-                <a
-                  href="/cv.pdf"
-                  download
-                  className="menu-row"
-                  onClick={() => setMobileOpen(false)}
-                >
-                  <span className="mr-title">{cvLabel}</span>
-                </a>
                 <Link href="/#contact" className="menu-row" onClick={jump("contact")}>
                   <span className="mr-title">Let&apos;s talk more →</span>
                 </Link>
