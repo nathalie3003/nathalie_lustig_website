@@ -345,18 +345,23 @@
   .yield-line-draw {
     stroke-dasharray: 1000;
     stroke-dashoffset: 1000;
-    animation: yieldDraw 1.1s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    /* Slow, seamless ease-in-out — matches the 21st.dev pen-stroke feel. */
+    animation: yieldDraw 3s cubic-bezier(0.42, 0, 0.58, 1) forwards;
   }
   @keyframes yieldDraw {
-    to { stroke-dashoffset: 0; }
+    from { opacity: 0.6; stroke-dashoffset: 1000; }
+    to   { opacity: 1; stroke-dashoffset: 0; }
   }
   .yield-dot-group {
     opacity: 0; transform: scale(0);
-    animation: yieldDot 0.22s ease-out forwards;
+    animation: yieldDot 0.28s ease-out forwards;
     cursor: pointer;
   }
   @keyframes yieldDot {
     to { opacity: 1; transform: scale(1); }
+  }
+  .yield-gridline {
+    stroke: var(--rule); stroke-width: 1; stroke-dasharray: 2 4; opacity: 0.55;
   }
   @media (prefers-reduced-motion: reduce) {
     .yield-line-draw { stroke-dasharray: none; stroke-dashoffset: 0; animation: none; }

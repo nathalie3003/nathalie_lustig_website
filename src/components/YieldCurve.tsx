@@ -15,7 +15,8 @@ const PAD_LEFT = 72;
 const PAD_RIGHT = 24;
 const PAD_TOP = 28;
 const PAD_BOTTOM = 64;
-const DRAW_DURATION = 1.1; // seconds — must match the CSS keyframe
+const DRAW_DURATION = 3; // seconds — slow easeInOut, must match the CSS keyframe
+const Y_STEP = 0.2; // percent — y-axis tick interval
 
 function formatAsOf(iso: string): string {
   const d = new Date(iso);
@@ -46,10 +47,14 @@ export function YieldCurve({ points, asOf, source }: Props) {
 
   // X positions reflect actual tenor years (1, 2, 3, 5, 7, 10, 20, 30) so the
   // chart looks like a real yield curve — compressed on the long end.
+  // Y range is snapped to Y_STEP intervals so the gridlines and tick labels line
+  // up with the chart edges and step in regular 0.2% increments.
   const layout = useMemo(() => {
     const yields = points.map((p) => p.yield);
-    const minY = Math.min(...yields) - 0.25;
-    const maxY = Math.max(...yields) + 0.25;
+    const rawMin = Math.min(...yields) - 0.2;
+    const rawMax = Math.max(...yields) + 0.2;
+    const minY = Math.floor(rawMin / Y_STEP) * Y_STEP;
+    const maxY = Math.ceil(rawMax / Y_STEP) * Y_STEP;
     const yearsMin = points[0].tenorYears;
     const yearsMax = points[points.length - 1].tenorYears;
     const xSpan = VB_W - PAD_LEFT - PAD_RIGHT;
@@ -59,7 +64,15 @@ export function YieldCurve({ points, asOf, source }: Props) {
       x: PAD_LEFT + ((p.tenorYears - yearsMin) / (yearsMax - yearsMin)) * xSpan,
       y: PAD_TOP + ((maxY - p.yield) / yRange) * ySpan,
     }));
-    return { coords, minY, maxY };
+    const ticks: { value: number; y: number }[] = [];
+    for (let v = minY; v <= maxY + 0.001; v += Y_STEP) {
+      const rounded = Math.round(v * 10) / 10;
+      ticks.push({
+        value: rounded,
+        y: PAD_TOP + ((maxY - v) / yRange) * ySpan,
+      });
+    }
+    return { coords, minY, maxY, ticks };
   }, [points]);
 
   const path = useMemo(() => catmullRomPath(layout.coords), [layout]);
@@ -106,23 +119,26 @@ export function YieldCurve({ points, asOf, source }: Props) {
             className="yield-baseline"
           />
 
-          {/* y-axis labels (top + bottom of visible range) */}
-          <text
-            x={PAD_LEFT - 10}
-            y={PAD_TOP + 4}
-            textAnchor="end"
-            className="yield-y-label"
-          >
-            {layout.maxY.toFixed(1)}%
-          </text>
-          <text
-            x={PAD_LEFT - 10}
-            y={VB_H - PAD_BOTTOM + 4}
-            textAnchor="end"
-            className="yield-y-label"
-          >
-            {layout.minY.toFixed(1)}%
-          </text>
+          {/* y-axis grid + labels at every Y_STEP */}
+          {layout.ticks.map((t) => (
+            <g key={t.value}>
+              <line
+                x1={PAD_LEFT}
+                x2={VB_W - PAD_RIGHT}
+                y1={t.y}
+                y2={t.y}
+                className="yield-gridline"
+              />
+              <text
+                x={PAD_LEFT - 10}
+                y={t.y + 3.5}
+                textAnchor="end"
+                className="yield-y-label"
+              >
+                {t.value.toFixed(1)}%
+              </text>
+            </g>
+          ))}
 
           {/* y-axis title — rotated, runs up the left edge */}
           <text
