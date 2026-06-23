@@ -6,8 +6,8 @@ import { ProjectsSection } from "@/components/ProjectsSection";
 import { ContactSection } from "@/components/ContactSection";
 import { HashScroll } from "@/components/HashScroll";
 import { hero, readLatest } from "@/content/tone";
-import { noteCat } from "@/lib/noteCat";
-import { ScrollReveal } from "@/components/ScrollReveal";
+import { CATEGORIES, noteCat } from "@/lib/noteCat";
+import { DeskNotesRotator } from "@/components/DeskNotesRotator";
 
 function formatDateShort(iso: string) {
   return new Date(iso).toLocaleDateString("en-GB", {
@@ -40,9 +40,9 @@ export default async function HomePage() {
 
           <section className="section" id="notes">
             <div className="section-head">
-              <ScrollReveal as="span" className="l-eyebrow" stagger={18}>
-                Desk notes
-              </ScrollReveal>
+              <DeskNotesRotator
+                words={CATEGORIES.map((c) => c.label.toLowerCase())}
+              />
             </div>
             {recent.length > 0 ? (
               <>
