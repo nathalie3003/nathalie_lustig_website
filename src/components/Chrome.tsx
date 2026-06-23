@@ -2,13 +2,7 @@
 import { usePathname } from "next/navigation";
 import { TopBar } from "./Nav";
 
-export function Chrome({
-  children,
-  footer,
-}: {
-  children: React.ReactNode;
-  footer: React.ReactNode;
-}) {
+export function Chrome({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const isStudio = pathname?.startsWith("/studio");
   if (isStudio) return <>{children}</>;
@@ -16,7 +10,6 @@ export function Chrome({
     <>
       <TopBar />
       <main className="main">{children}</main>
-      {footer}
     </>
   );
 }

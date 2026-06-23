@@ -33,10 +33,14 @@ export default async function HomePage() {
 
       <section className="band band-notes" id="notes">
         <div className="page-wide">
-          <div className="section-head">
-            <ScrollReveal as="span" className="l-eyebrow" stagger={18}>
-              Recent commentary
+          <div className="notes-head">
+            <ScrollReveal as="h2" className="notes-head-title" stagger={18}>
+              Notes
             </ScrollReveal>
+            <p className="notes-head-lede">
+              Where I think out loud about the bond market. Written for fun, and to
+              keep me sharp.
+            </p>
           </div>
           {latest ? (
             <>

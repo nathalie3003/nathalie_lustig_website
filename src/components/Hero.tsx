@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { hero, readLatest } from "@/content/tone";
+import { readLatest } from "@/content/tone";
 
 export function Hero({ latestHref }: { latestHref: string }) {
   return (
@@ -8,11 +8,12 @@ export function Hero({ latestHref }: { latestHref: string }) {
       <div className="hero-v2-inner">
         <div className="hero-v2-left">
           <span className="hero-v2-eyebrow">PORTFOLIO · 2026</span>
-          <h1 className="hero-v2-name">
-            Nathalie Lustig<span className="hero-v2-dot">.</span>
-          </h1>
-          <p className="hero-v2-lead">{hero.lead}</p>
-          <p className="hero-v2-creds">LSE Economics · CFA Level I</p>
+          <h1 className="hero-v2-name">Nathalie Lustig</h1>
+          <p className="hero-v2-lead">
+            Notes on rates, credit, and FX from London. LSE Economics, CFA Level I.
+            I write these for fun, and to keep me sharp on the market I find most
+            interesting.
+          </p>
           <div className="hero-v2-cta">
             <Link href={latestHref} className="l-btn l-btn-primary">
               {readLatest}
