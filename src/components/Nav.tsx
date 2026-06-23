@@ -160,7 +160,7 @@ export function TopBar() {
             className="l-btn l-btn-hire"
             onClick={jump("contact")}
           >
-            Hire Me! <span aria-hidden="true">→</span>
+            Let&apos;s talk more! <span aria-hidden="true">→</span>
           </Link>
 
           <div className="mobile-menu" ref={mobileRef}>
@@ -216,7 +216,7 @@ export function TopBar() {
                   className="menu-row menu-row-hire"
                   onClick={jump("contact")}
                 >
-                  <span className="mr-title">Hire Me! <span aria-hidden="true">→</span></span>
+                  <span className="mr-title">Let&apos;s talk more! <span aria-hidden="true">→</span></span>
                 </Link>
               </div>
             )}
