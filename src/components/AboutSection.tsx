@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { about } from "@/content/about";
 import { getSiteSettings } from "@/lib/queries";
 import { RightNowBlock } from "./RightNowBlock";
@@ -21,11 +20,6 @@ export async function AboutSection() {
             {paragraphs.map((p, i) => (
               <p key={i}>{p}</p>
             ))}
-            <div className="about-actions">
-              <Link href="/#projects" className="l-btn l-btn-primary">
-                See my projects →
-              </Link>
-            </div>
           </div>
           <RightNowBlock />
         </div>

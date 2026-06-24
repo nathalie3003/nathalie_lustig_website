@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { motion, useReducedMotion } from "framer-motion";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 
 export function DeskNotesRotator({ words }: { words: string[] }) {
   const [index, setIndex] = useState(0);
@@ -18,32 +18,29 @@ export function DeskNotesRotator({ words }: { words: string[] }) {
     <p className="dnr">
       <span className="dnr-lead">I write bond notes about </span>
       <span className="dnr-slot" aria-live="polite">
+        {/* Sizer: renders every word stacked (hidden) so the slot's width
+            auto-fits the visually widest word. */}
         <span className="dnr-sizer" aria-hidden="true">
           {words.map((w) => (
             <span key={w}>{w}</span>
           ))}
         </span>
-        {words.map((w, i) => (
+        <AnimatePresence initial={false} mode="popLayout">
           <motion.span
-            key={w}
+            key={words[index]}
             className="dnr-word"
-            initial={false}
-            animate={
-              reduce
-                ? { opacity: i === index ? 1 : 0, y: 0 }
-                : i === index
-                  ? { y: "0%", opacity: 1 }
-                  : { y: i < index ? "-120%" : "120%", opacity: 0 }
-            }
+            initial={reduce ? { y: 0, opacity: 0 } : { y: "-120%", opacity: 0 }}
+            animate={{ y: "0%", opacity: 1 }}
+            exit={reduce ? { y: 0, opacity: 0 } : { y: "120%", opacity: 0 }}
             transition={
               reduce
                 ? { duration: 0.18 }
                 : { type: "spring", stiffness: 50 }
             }
           >
-            {w}
+            {words[index]}
           </motion.span>
-        ))}
+        </AnimatePresence>
       </span>
     </p>
   );

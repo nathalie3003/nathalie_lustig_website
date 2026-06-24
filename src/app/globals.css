@@ -411,7 +411,7 @@
   .dnr-word {
     position: absolute; left: 0; top: 0;
     font: inherit; font-weight: 600;
-    color: var(--accent); white-space: nowrap;
+    color: var(--ink); white-space: nowrap;
   }
 
   .notes { display: flex; flex-direction: column; }
