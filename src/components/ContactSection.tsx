@@ -58,8 +58,37 @@ export function ContactSection() {
                 aria-label={`Copy email address ${EMAIL}`}
               >
                 <span className="cl-label">Email</span>
-                <span className="cl-value">
-                  {EMAIL} {copied ? "Copied ✓" : "Copy →"}
+                <span className="cl-value">{EMAIL}</span>
+                <span className="cl-action" aria-hidden="true">
+                  {copied ? (
+                    <>
+                      <svg width="12" height="12" viewBox="0 0 16 16" fill="none">
+                        <path
+                          d="M3 8.5L6.5 12L13 4.5"
+                          stroke="currentColor"
+                          strokeWidth="1.8"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                      </svg>
+                      Copied
+                    </>
+                  ) : (
+                    <>
+                      <svg width="12" height="12" viewBox="0 0 16 16" fill="none">
+                        <rect
+                          x="5" y="5" width="9" height="9" rx="1.5"
+                          stroke="currentColor" strokeWidth="1.4"
+                        />
+                        <path
+                          d="M11 5V3.5A1.5 1.5 0 0 0 9.5 2h-6A1.5 1.5 0 0 0 2 3.5v6A1.5 1.5 0 0 0 3.5 11H5"
+                          stroke="currentColor" strokeWidth="1.4"
+                          strokeLinecap="round"
+                        />
+                      </svg>
+                      Copy
+                    </>
+                  )}
                 </span>
               </button>
               {linkedIn ? (
@@ -70,7 +99,17 @@ export function ContactSection() {
                   rel="noopener noreferrer"
                 >
                   <span className="cl-label">LinkedIn</span>
-                  <span className="cl-value">{linkedIn.value} ↗</span>
+                  <span className="cl-value">{linkedIn.value}</span>
+                  <span className="cl-action" aria-hidden="true">
+                    Open
+                    <svg width="11" height="11" viewBox="0 0 16 16" fill="none">
+                      <path
+                        d="M5 11L11 5M11 5H6M11 5V10"
+                        stroke="currentColor" strokeWidth="1.6"
+                        strokeLinecap="round" strokeLinejoin="round"
+                      />
+                    </svg>
+                  </span>
                 </a>
               ) : null}
             </div>

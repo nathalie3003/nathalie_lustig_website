@@ -391,24 +391,26 @@
     .yield-caption { position: static; margin-top: 2px; }
   }
 
-  /* Desk notes rotator — small editorial line with slot-machine word swap */
+  /* Desk notes rotator — editorial line with slot-machine word swap */
   .dnr {
     margin: 0; font-family: var(--font-serif), Georgia, serif;
-    font-size: 17px; line-height: 1.4; color: var(--ink-45);
+    font-size: 24px; line-height: 1.35; color: var(--ink);
+    letter-spacing: -0.01em;
   }
-  .dnr-lead { color: var(--ink-45); }
+  .dnr-lead { color: var(--ink-45); font-weight: 400; }
   .dnr-slot {
     position: relative; display: inline-block;
     overflow: hidden; vertical-align: bottom;
-    line-height: 1.4;
+    line-height: 1.35;
   }
   .dnr-sizer {
-    visibility: hidden; display: inline-block; white-space: nowrap;
+    visibility: hidden; display: inline-grid; grid-auto-flow: row;
     font: inherit; font-weight: 600;
   }
+  .dnr-sizer > span { grid-area: 1 / 1; white-space: nowrap; }
   .dnr-word {
     position: absolute; left: 0; top: 0;
-    font: inherit; font-weight: 600; letter-spacing: -0.005em;
+    font: inherit; font-weight: 600;
     color: var(--ink); white-space: nowrap;
   }
 
@@ -603,8 +605,9 @@
 
   .contact-elsewhere { display: flex; flex-direction: column; }
   .contact-link {
-    display: flex; justify-content: space-between; align-items: baseline; gap: 14px;
-    padding: 12px 0; border-bottom: 1px solid var(--rule);
+    display: grid; grid-template-columns: 80px 1fr auto;
+    gap: 14px; align-items: center;
+    padding: 14px 0; border-bottom: 1px solid var(--rule);
     text-decoration: none; color: var(--ink);
     transition: padding 140ms ease;
   }
@@ -618,7 +621,18 @@
     font-family: var(--font-sans), system-ui, sans-serif; font-size: 10.5px; font-weight: 600;
     letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-45);
   }
-  .cl-value { font-family: var(--font-serif), Georgia, serif; font-size: 14.5px; color: var(--ink); }
+  .cl-value {
+    font-family: var(--font-serif), Georgia, serif; font-size: 14.5px; color: var(--ink);
+    min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  }
+  .cl-action {
+    display: inline-flex; align-items: center; gap: 5px;
+    font-family: var(--font-sans), system-ui, sans-serif; font-size: 10.5px;
+    font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--ink-45); transition: color 140ms ease;
+  }
+  .contact-link:hover .cl-action { color: var(--accent); }
+  .cl-action svg { display: block; }
 
   /* Right column — form */
   .contact-form { display: flex; flex-direction: column; gap: 14px; }
