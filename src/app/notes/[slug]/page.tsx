@@ -44,7 +44,6 @@ export default async function NotePage({
         </div>
         <h1 className="read-title">{note.title}</h1>
         {note.excerpt && <p className="read-excerpt">{note.excerpt}</p>}
-        <span className="read-byline">By Nathalie Lustig</span>
       </header>
 
       <div className="read-body">
