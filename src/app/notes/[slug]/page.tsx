@@ -1,6 +1,8 @@
+import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getNoteBySlug, getAllNoteSlugs, getAdjacentNote } from "@/lib/queries";
+import { urlFor } from "@/lib/sanity.client";
 import { PortableText } from "@/components/PortableText";
 import { noteCat } from "@/lib/noteCat";
 import { readTime } from "@/lib/readTime";
@@ -45,6 +47,18 @@ export default async function NotePage({
         <h1 className="read-title">{note.title}</h1>
         {note.excerpt && <p className="read-excerpt">{note.excerpt}</p>}
       </header>
+
+      {note.coverImage && (
+        <figure className="read-cover">
+          <Image
+            src={urlFor(note.coverImage).width(1600).height(900).fit("crop").url()}
+            alt=""
+            width={1600}
+            height={900}
+            priority
+          />
+        </figure>
+      )}
 
       <div className="read-body">
         <PortableText value={note.body} />
