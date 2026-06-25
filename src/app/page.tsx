@@ -7,7 +7,7 @@ import { AboutSection } from "@/components/AboutSection";
 import { ProjectsSection } from "@/components/ProjectsSection";
 import { ContactSection } from "@/components/ContactSection";
 import { HashScroll } from "@/components/HashScroll";
-import { hero, readLatest } from "@/content/tone";
+import { readLatest } from "@/content/tone";
 import { CATEGORIES, noteCat } from "@/lib/noteCat";
 import { DeskNotesRotator } from "@/components/DeskNotesRotator";
 import { YieldCurve } from "@/components/YieldCurve";
@@ -20,16 +20,6 @@ function formatDateShort(iso: string) {
     month: "short",
     year: "numeric",
   });
-}
-
-function formatMastheadDate(iso: string) {
-  return new Date(iso)
-    .toLocaleDateString("en-GB", {
-      day: "numeric",
-      month: "short",
-      year: "numeric",
-    })
-    .toUpperCase();
 }
 
 export default async function HomePage() {
@@ -50,13 +40,8 @@ export default async function HomePage() {
           <section className="hero hero-slim">
             <span className="hero-eyebrow">
               <span>Bond Notes</span>
-              <span className="hero-eyebrow-dot" aria-hidden="true" />
-              <span>
-                Updated {latest ? formatMastheadDate(latest.publishedAt) : "—"}
-              </span>
             </span>
             <h1 className="hero-name">Nathalie Lustig</h1>
-            <p className="hero-lead">{hero.lead}</p>
             <p className="hero-standfirst">
               Bonds sit at the intersection of finance and macroeconomics and
               that is why I write about them. For me, they are a lens to see
