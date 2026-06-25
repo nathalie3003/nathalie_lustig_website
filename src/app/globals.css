@@ -7,8 +7,8 @@
   --color-ink-72: rgba(20, 22, 26, 0.72);
   --color-ink-60: rgba(20, 22, 26, 0.60);
   --color-ink-45: rgba(20, 22, 26, 0.45);
-  --color-accent: #2F6FED;
-  --color-accent-soft: #EAF1FE;
+  --color-accent: #1A2B4A;
+  --color-accent-soft: #E8ECF3;
   --color-rule: #E6E8EC;
 
   --font-serif: var(--font-serif), Georgia, serif;
@@ -23,8 +23,8 @@
     --ink-72: rgba(20, 22, 26, 0.72);
     --ink-60: rgba(20, 22, 26, 0.60);
     --ink-45: rgba(20, 22, 26, 0.45);
-    --accent: #2F6FED;
-    --accent-soft: #EAF1FE;
+    --accent: #1A2B4A;
+    --accent-soft: #E8ECF3;
     --rule: #E6E8EC;
     --nav-bg: #EFE7D6;
     --radius: 12px;
@@ -62,9 +62,15 @@
   .wrap { max-width: var(--maxw); margin: 0 auto; width: 100%; padding: 0 var(--pad); }
 
   /* shared atoms */
+  /* Signature gesture: section labels and editorial eyebrows are set in
+     small-caps navy ink and sit above a 1px navy hairline that runs the
+     column. Repeated everywhere a section opens, this is the move that
+     makes the site read as a publication. */
   .l-kicker {
+    display: block; padding-bottom: 10px; margin-bottom: 18px;
+    border-bottom: 1px solid var(--accent);
     font-family: var(--font-sans), system-ui, sans-serif; font-size: 12px; font-weight: 600;
-    letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent);
+    letter-spacing: 0.16em; text-transform: uppercase; color: var(--accent);
   }
   .l-smallcaps {
     font-family: var(--font-sans), system-ui, sans-serif; font-size: 12px; font-weight: 500;
@@ -72,8 +78,10 @@
     font-feature-settings: 'tnum';
   }
   .l-eyebrow {
+    display: block; padding-bottom: 10px; margin-bottom: 14px;
+    border-bottom: 1px solid var(--accent);
     font-size: 13px; font-family: var(--font-sans), system-ui, sans-serif; font-weight: 600;
-    letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-45);
+    letter-spacing: 0.16em; text-transform: uppercase; color: var(--accent);
   }
   .l-btn {
     display: inline-flex; align-items: center; gap: 8px;
@@ -86,9 +94,9 @@
   .l-btn:hover { transform: translateY(-1px); }
   .l-btn-primary {
     color: #fff; background: var(--accent); border-color: var(--accent);
-    box-shadow: 0 2px 8px rgba(47,111,237,0.22);
+    box-shadow: 0 2px 8px rgba(26,43,74,0.22);
   }
-  .l-btn-primary:hover { box-shadow: 0 6px 16px rgba(47,111,237,0.28); color: #fff; }
+  .l-btn-primary:hover { box-shadow: 0 6px 16px rgba(26,43,74,0.28); color: #fff; }
   .l-btn-ghost { color: var(--ink); background: var(--surface); border: 1px solid var(--rule); }
   .l-btn-ghost:hover { border-color: var(--ink-45); color: var(--ink); }
   .l-btn-sm { padding: 9px 16px; font-size: 13px; }
@@ -103,10 +111,12 @@
     background: var(--ink); color: var(--surface);
     transform: translateY(-1px);
   }
+  /* Category labels: small-caps navy text, no pill, no fill — the editorial
+     read of "department label" rather than a SaaS badge. */
   .l-tag {
     display: inline-block; font-family: var(--font-sans), system-ui, sans-serif; font-size: 11px;
-    font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase;
-    color: var(--accent); background: var(--accent-soft); padding: 4px 10px; border-radius: 999px;
+    font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--accent); background: none; padding: 0; border: 0; border-radius: 0;
   }
   .l-link { font-family: var(--font-sans), system-ui, sans-serif; font-size: 13.5px; font-weight: 500; color: var(--accent); text-decoration: none; cursor: pointer; }
   .l-link:hover { text-decoration: underline; }
@@ -159,7 +169,7 @@
     color: var(--ink); text-decoration: none; transition: background 120ms ease;
   }
   .np-row:hover { background: var(--accent-soft); }
-  .np-all { background: rgba(47,111,237,0.04); }
+  .np-all { background: rgba(26,43,74,0.04); }
   .np-title { font-family: var(--font-serif), Georgia, serif; font-size: 15px; font-weight: 600; letter-spacing: -0.005em; }
   .np-sub { font-family: var(--font-sans), system-ui, sans-serif; font-size: 11.5px; color: var(--ink-45); }
   .np-rule { height: 1px; background: var(--rule); margin: 6px 6px; }
@@ -237,7 +247,7 @@
   .cat-chip:hover { color: var(--ink); border-color: var(--ink-45); }
   .cat-chip-active {
     color: #fff; background: var(--accent); border-color: var(--accent);
-    box-shadow: 0 2px 8px rgba(47,111,237,0.22);
+    box-shadow: 0 2px 8px rgba(26,43,74,0.22);
   }
   .cat-chip-active:hover { color: #fff; border-color: var(--accent); }
   .notes-index-list { gap: 0; }
@@ -302,8 +312,27 @@
   /* hero */
   .hero { padding: 72px 0 26px; }
   .hero-kicker { display: block; margin-bottom: 18px; }
-  .hero-name { font-size: 56px; font-weight: 600; letter-spacing: -0.028em; line-height: 1.0; margin-bottom: 20px; }
+  /* Masthead device — small-caps navy date strip with a navy hairline below.
+     The signature gesture appears here too. */
+  .hero-eyebrow {
+    display: flex; align-items: center; gap: 12px;
+    padding-bottom: 12px; margin-bottom: 22px;
+    border-bottom: 1px solid var(--accent);
+    font-family: var(--font-sans), system-ui, sans-serif; font-size: 11.5px;
+    font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--accent);
+  }
+  .hero-eyebrow-dot { width: 4px; height: 4px; background: var(--accent); border-radius: 999px; }
+  .hero-name { font-size: 56px; font-weight: 600; letter-spacing: -0.028em; line-height: 1.0; margin-bottom: 24px; }
   .hero-lead { font-size: 21px; line-height: 1.5; color: var(--ink-72); max-width: 22em; margin: 0 0 16px; text-wrap: pretty; }
+  /* Editorial standfirst: serif italic, slightly larger than body, narrower
+     than the main column so it reads as the publication's voice. */
+  .hero-standfirst {
+    font-family: var(--font-serif), Georgia, serif;
+    font-size: 19px; line-height: 1.55; font-style: italic;
+    color: var(--ink); max-width: 38ch; margin: 0 0 28px;
+    text-wrap: pretty;
+  }
   .hero-creds { display: block; margin-bottom: 28px; }
   .hero-cta { display: flex; gap: 12px; flex-wrap: wrap; }
 
@@ -341,7 +370,7 @@
   }
   .yield-tracer {
     fill: var(--accent); stroke: #fff; stroke-width: 2;
-    filter: drop-shadow(0 1px 3px rgba(47, 111, 237, 0.45));
+    filter: drop-shadow(0 1px 3px rgba(26, 43, 74, 0.45));
   }
   .yield-line {
     stroke: var(--accent); stroke-width: 2;
@@ -390,7 +419,7 @@
     color: var(--ink); letter-spacing: 0.04em;
     transition: background 160ms ease, border-color 160ms ease, color 160ms ease;
   }
-  .yield-redraw:hover { background: rgba(47,111,237,0.06); border-color: var(--accent); color: var(--accent); }
+  .yield-redraw:hover { background: rgba(26,43,74,0.06); border-color: var(--accent); color: var(--accent); }
   .yield-redraw:disabled { opacity: 0.4; cursor: not-allowed; }
   @media (max-width: 720px) {
     .yield-caption { position: static; margin-top: 2px; }
@@ -504,7 +533,13 @@
   }
   .read-back:hover { color: var(--accent); }
   .read-head { border-bottom: 1px solid var(--rule); padding-bottom: 26px; margin-bottom: 30px; }
-  .read-meta-top { display: flex; align-items: center; gap: 14px; margin-bottom: 16px; }
+  /* Signature gesture on the note detail: meta strip sits above a navy
+     hairline and is set in the same small-caps navy ink as section labels. */
+  .read-meta-top {
+    display: flex; align-items: center; gap: 14px; margin-bottom: 18px;
+    padding-bottom: 12px; border-bottom: 1px solid var(--accent);
+  }
+  .read-meta-top .l-smallcaps { color: var(--accent); font-weight: 600; letter-spacing: 0.18em; }
   .read-title { font-size: 42px; font-weight: 600; letter-spacing: -0.024em; line-height: 1.06; margin: 0 0 16px; text-wrap: balance; }
   .read-excerpt { font-size: 20px; line-height: 1.5; color: var(--ink-72); margin: 0 0 16px; text-wrap: pretty; font-family: var(--font-serif), Georgia, serif; }
   .read-byline { font-family: var(--font-sans), system-ui, sans-serif; font-size: 13px; color: var(--ink-45); }
@@ -596,7 +631,7 @@
     cursor: pointer; text-align: left; font: inherit;
     transition: border-color 140ms ease, background 140ms ease;
   }
-  .contact-email:hover { border-color: var(--ink); background: rgba(47,111,237,0.03); }
+  .contact-email:hover { border-color: var(--ink); background: rgba(26,43,74,0.03); }
   .contact-email-label {
     grid-column: 1; grid-row: 1;
     font-family: var(--font-sans), system-ui, sans-serif; font-size: 10.5px; font-weight: 600;
@@ -745,8 +780,8 @@
     display: flex; justify-content: space-between; align-items: baseline; gap: 12px;
   }
   .recent-cat {
-    font-family: var(--font-sans), system-ui, sans-serif; font-size: 10.5px; font-weight: 600;
-    letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent);
+    font-family: var(--font-sans), system-ui, sans-serif; font-size: 10.5px; font-weight: 700;
+    letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent);
   }
   .recent-title {
     font-family: var(--font-serif), Georgia, serif; font-size: 19px;
