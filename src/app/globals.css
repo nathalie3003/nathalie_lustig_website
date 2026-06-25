@@ -329,12 +329,13 @@
   .hero-eyebrow-dot { width: 4px; height: 4px; background: var(--accent); border-radius: 999px; }
   .hero-name { font-size: 56px; font-weight: 600; letter-spacing: -0.028em; line-height: 1.0; margin-bottom: 24px; }
   .hero-lead { font-size: 21px; line-height: 1.5; color: var(--ink-72); max-width: 22em; margin: 0 0 16px; text-wrap: pretty; }
-  /* Editorial standfirst: serif, set in ink, slightly larger than body and
-     narrower than the main column so it reads as the publication's voice. */
+  /* Editorial standfirst: serif, set in ink, slightly larger than body.
+     Fills the main column to the right rail — no narrower cap, so lines
+     wrap on the column edge rather than under the name. */
   .hero-standfirst {
     font-family: var(--font-serif), Georgia, serif;
     font-size: 19px; line-height: 1.55;
-    color: var(--ink); max-width: 38ch; margin: 0 0 28px;
+    color: var(--ink); margin: 0 0 28px;
     text-wrap: pretty;
   }
   .hero-creds { display: block; margin-bottom: 28px; }
