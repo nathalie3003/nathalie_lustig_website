@@ -7,7 +7,7 @@ import { AboutSection } from "@/components/AboutSection";
 import { ProjectsSection } from "@/components/ProjectsSection";
 import { ContactSection } from "@/components/ContactSection";
 import { HashScroll } from "@/components/HashScroll";
-import { hero, readLatest } from "@/content/tone";
+import { readLatest } from "@/content/tone";
 import { CATEGORIES, noteCat } from "@/lib/noteCat";
 import { DeskNotesRotator } from "@/components/DeskNotesRotator";
 import { YieldCurve } from "@/components/YieldCurve";
@@ -38,8 +38,18 @@ export default async function HomePage() {
       <div className="home" id="top">
         <div className="home-main">
           <section className="hero hero-slim">
+            <span className="hero-eyebrow">
+              <span>Bond Notes</span>
+            </span>
             <h1 className="hero-name">Nathalie Lustig</h1>
-            <p className="hero-lead">{hero.lead}</p>
+            <p className="hero-standfirst">
+              Bonds sit at the intersection of finance and macroeconomics and
+              that is why I write about them. For me, they are a lens to see
+              how interest rates, inflation, and geopolitical risks shape the
+              broader economy. This ability to see both the big picture and
+              the granular details is what drives my passion for bonds, and
+              why I want to build my career in capital markets.
+            </p>
             <div className="hero-cta">
               <Link href={latestHref} className="l-btn l-btn-primary">
                 {readLatest}
@@ -48,6 +58,7 @@ export default async function HomePage() {
           </section>
 
           <section className="section" id="notes">
+            <span className="l-kicker">Notes</span>
             <div className="section-head">
               <DeskNotesRotator
                 words={CATEGORIES.map((c) => c.label.toLowerCase())}
