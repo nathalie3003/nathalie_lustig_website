@@ -20,9 +20,22 @@ export function TopBar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const notesRef = useRef<HTMLDivElement>(null);
   const mobileRef = useRef<HTMLDivElement>(null);
+  const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const pathname = usePathname();
   const router = useRouter();
   const onHome = pathname === "/";
+
+  const openNotes = () => {
+    if (closeTimer.current) {
+      clearTimeout(closeTimer.current);
+      closeTimer.current = null;
+    }
+    setNotesOpen(true);
+  };
+  const scheduleCloseNotes = () => {
+    if (closeTimer.current) clearTimeout(closeTimer.current);
+    closeTimer.current = setTimeout(() => setNotesOpen(false), 140);
+  };
 
   useEffect(() => {
     function onDoc(e: MouseEvent) {
@@ -44,6 +57,7 @@ export function TopBar() {
     return () => {
       document.removeEventListener("mousedown", onDoc);
       document.removeEventListener("keydown", onKey);
+      if (closeTimer.current) clearTimeout(closeTimer.current);
     };
   }, []);
 
@@ -62,17 +76,17 @@ export function TopBar() {
   return (
     <header className="top">
       <div className="top-inner">
-        <Link href="/#top" className="top-name" onClick={jump("top")}>
-          NL
-        </Link>
+        <div className="top-left">
+          <Link href="/#top" className="top-name" onClick={jump("top")}>
+            NL
+          </Link>
 
-        <div className="top-right">
           <nav className="top-links">
             <div
               className="notes-menu"
               ref={notesRef}
-              onMouseEnter={() => setNotesOpen(true)}
-              onMouseLeave={() => setNotesOpen(false)}
+              onMouseEnter={openNotes}
+              onMouseLeave={scheduleCloseNotes}
             >
               <Link
                 href="/notes"
@@ -84,7 +98,12 @@ export function TopBar() {
                 Notes <span className="notes-caret" aria-hidden="true">▾</span>
               </Link>
               {notesOpen && (
-                <div className="notes-pop" role="menu">
+                <div
+                  className="notes-pop"
+                  role="menu"
+                  onMouseEnter={openNotes}
+                  onMouseLeave={scheduleCloseNotes}
+                >
                   <Link
                     href="/notes"
                     className="np-row np-all"
@@ -116,7 +135,9 @@ export function TopBar() {
               Projects
             </Link>
           </nav>
+        </div>
 
+        <div className="top-right">
           <Link
             href="/#contact"
             className="l-btn l-btn-primary l-btn-sm cv-btn"
