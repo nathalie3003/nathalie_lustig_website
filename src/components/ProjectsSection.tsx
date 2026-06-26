@@ -26,6 +26,7 @@ export async function ProjectsSection() {
           statusNote: p.statusNote,
           description: p.description,
           imageSrc: p.image,
+          imageFit: p.imageFit,
         }));
 
   return <StackingProjects projects={items} />;

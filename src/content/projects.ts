@@ -10,6 +10,7 @@ export type Project = {
   faviconLabel: string;
   description: string;
   image: string;
+  imageFit?: "cover" | "contain";
 };
 
 export const projects: Project[] = [
@@ -25,6 +26,7 @@ export const projects: Project[] = [
     description:
       "The jewellery label I founded as a teenager — currently rebuilding. New site dropping later this year.",
     image: "/projects/lml.png",
+    imageFit: "contain",
   },
   {
     slotId: "proj-books",

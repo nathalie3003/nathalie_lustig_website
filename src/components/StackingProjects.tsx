@@ -13,6 +13,7 @@ export type StackProject = {
   live: boolean;
   statusNote: string;
   imageSrc?: string;
+  imageFit?: "cover" | "contain";
 };
 
 interface CardProps {
@@ -42,7 +43,7 @@ function Card({ i, project, progress, range, targetScale }: CardProps) {
         }}
         className="stack-card"
       >
-        <div className="stack-card-media">
+        <div className={`stack-card-media is-${project.imageFit ?? "cover"}`}>
           {project.imageSrc ? (
             // eslint-disable-next-line @next/next/no-img-element
             <img src={project.imageSrc} alt={project.title} />
