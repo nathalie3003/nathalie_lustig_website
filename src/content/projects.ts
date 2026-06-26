@@ -25,8 +25,8 @@ export const projects: Project[] = [
     faviconLabel: "LML",
     description:
       "The jewellery label I founded as a teenager — currently rebuilding. New site dropping later this year.",
-    image: "/projects/lml.jpg",
-    imageFit: "contain",
+    image: "/projects/lml-site.png",
+    imageFit: "cover",
   },
   {
     slotId: "proj-books",
