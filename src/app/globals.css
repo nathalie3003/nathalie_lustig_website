@@ -1018,13 +1018,13 @@
 
 .stack-card {
   position: relative;
-  width: min(460px, 90vw);
-  height: min(720px, 84vh);
+  width: min(980px, 92vw);
+  height: min(480px, 72vh);
   background: var(--surface);
   border: 1px solid var(--rule);
   border-radius: 20px;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   overflow: hidden;
   transform-origin: top center;
   box-shadow: 0 30px 70px -32px rgba(20, 22, 26, 0.22);
@@ -1032,7 +1032,7 @@
 
 .stack-card-media {
   position: relative;
-  flex: 0 0 56%;
+  flex: 0 0 46%;
   background: var(--accent-soft);
   overflow: hidden;
 }
@@ -1060,9 +1060,9 @@
 .stack-card-content {
   display: flex;
   flex-direction: column;
-  padding: 24px 26px 26px;
+  padding: 36px 40px;
   flex: 1;
-  min-height: 0;
+  min-width: 0;
 }
 
 .stack-card-meta {
@@ -1146,7 +1146,15 @@
 
 @media (max-width: 720px) {
   .stack-card {
-    width: 88vw;
-    height: 78vh;
+    width: 92vw;
+    height: auto;
+    min-height: 80vh;
+    flex-direction: column;
+  }
+  .stack-card-media {
+    flex: 0 0 240px;
+  }
+  .stack-card-content {
+    padding: 24px;
   }
 }
