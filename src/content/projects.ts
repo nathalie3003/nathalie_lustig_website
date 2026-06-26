@@ -25,7 +25,7 @@ export const projects: Project[] = [
     faviconLabel: "LML",
     description:
       "The jewellery label I founded as a teenager — currently rebuilding. New site dropping later this year.",
-    image: "/projects/lml.png",
+    image: "/projects/lml.jpg",
     imageFit: "contain",
   },
   {
@@ -39,6 +39,6 @@ export const projects: Project[] = [
     faviconLabel: "BP",
     description:
       "Short reviews of what I'm reading — behavioural finance, value investing, and the occasional novel.",
-    image: "/projects/books.jpg",
+    image: "/projects/books.png",
   },
 ];
