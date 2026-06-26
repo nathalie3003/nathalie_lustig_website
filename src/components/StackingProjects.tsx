@@ -101,12 +101,9 @@ export default function StackingProjects({ projects }: { projects: StackProject[
   return (
     <ReactLenis root>
       <section ref={container} className="band band-stack" id="projects">
-        <div className="stack-intro">
-          <div className="stack-intro-inner">
-            <span className="l-kicker">Projects</span>
-            <h2 className="stack-intro-title">Things I&rsquo;m building</h2>
-            <p className="stack-intro-sub">Keep scrolling.</p>
-          </div>
+        <div className="page-wide stack-header">
+          <span className="l-kicker">Projects</span>
+          <h2 className="stack-header-title">Things I&rsquo;m building</h2>
         </div>
 
         <div className="stack-cards">

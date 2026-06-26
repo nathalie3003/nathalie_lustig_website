@@ -989,35 +989,18 @@
   background: var(--bg);
   border-top: 1px solid var(--rule);
   position: relative;
+  padding-top: 60px;
 }
 
-.stack-intro {
-  position: sticky;
-  top: 0;
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
+.stack-header {
+  padding-bottom: 24px;
 }
-.stack-intro-inner {
-  max-width: 720px;
-  padding: 0 var(--pad);
-}
-.stack-intro-title {
-  font-family: var(--font-serif);
-  font-size: clamp(48px, 7vw, 96px);
-  line-height: 1.05;
-  letter-spacing: -0.01em;
+.stack-header-title {
+  font-size: 38px;
+  font-weight: 600;
+  letter-spacing: -0.022em;
+  margin: 10px 0 0;
   color: var(--ink);
-  margin: 14px 0 18px;
-}
-.stack-intro-sub {
-  font-family: var(--font-sans);
-  font-size: 14px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--ink-45);
 }
 
 .stack-cards {
