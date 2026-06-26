@@ -10,6 +10,7 @@ export type Project = {
   faviconLabel: string;
   description: string;
   image: string;
+  imageFit?: "cover" | "contain";
 };
 
 export const projects: Project[] = [
@@ -24,7 +25,8 @@ export const projects: Project[] = [
     faviconLabel: "LML",
     description:
       "The jewellery label I founded as a teenager — currently rebuilding. New site dropping later this year.",
-    image: "/projects/lml.png",
+    image: "/projects/lml-site.png",
+    imageFit: "cover",
   },
   {
     slotId: "proj-books",
@@ -37,6 +39,6 @@ export const projects: Project[] = [
     faviconLabel: "BP",
     description:
       "Short reviews of what I'm reading — behavioural finance, value investing, and the occasional novel.",
-    image: "/projects/books.jpg",
+    image: "/projects/books.png",
   },
 ];
