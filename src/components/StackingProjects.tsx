@@ -24,20 +24,17 @@ interface CardProps {
 }
 
 function Card({ i, project, progress, range, targetScale }: CardProps) {
-  const container = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: container,
-    offset: ["start end", "start start"],
-  });
-
-  const imageScale = useTransform(scrollYProgress, [0, 1], [1.6, 1]);
   const scale = useTransform(progress, range, [1, targetScale]);
 
+  const StatusPill = (
+    <span className={`stack-pill ${project.live ? "is-live" : "is-soon"}`}>
+      <span className="stack-pill-dot" aria-hidden="true" />
+      {project.live ? "Live" : "Back soon"}
+    </span>
+  );
+
   return (
-    <div
-      ref={container}
-      className="stack-card-slot"
-    >
+    <div className="stack-card-slot">
       <motion.article
         style={{
           scale,
@@ -45,16 +42,21 @@ function Card({ i, project, progress, range, targetScale }: CardProps) {
         }}
         className="stack-card"
       >
-        <header className="stack-card-head">
-          <span className="l-kicker stack-card-kicker">
-            {project.live ? "Live" : project.statusNote}
-          </span>
-          <h3 className="stack-card-title">{project.title}</h3>
-        </header>
+        <div className="stack-card-media">
+          {project.imageSrc ? (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img src={project.imageSrc} alt={project.title} />
+          ) : (
+            <div className="stack-card-media-placeholder" aria-hidden="true" />
+          )}
+        </div>
 
-        <div className="stack-card-body">
-          <div className="stack-card-copy">
-            <p className="stack-card-desc">{project.description}</p>
+        <div className="stack-card-content">
+          <div className="stack-card-meta">{StatusPill}</div>
+          <h3 className="stack-card-title">{project.title}</h3>
+          <p className="stack-card-desc">{project.description}</p>
+
+          <div className="stack-card-foot">
             {project.live ? (
               <a
                 href={project.href}
@@ -71,18 +73,7 @@ function Card({ i, project, progress, range, targetScale }: CardProps) {
                 </svg>
               </a>
             ) : (
-              <span className="stack-card-soon">{project.url}</span>
-            )}
-          </div>
-
-          <div className="stack-card-media">
-            {project.imageSrc ? (
-              <motion.div className="stack-card-media-inner" style={{ scale: imageScale }}>
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={project.imageSrc} alt={project.title} />
-              </motion.div>
-            ) : (
-              <div className="stack-card-media-placeholder" aria-hidden="true" />
+              <span className="stack-card-url">{project.url}</span>
             )}
           </div>
         </div>

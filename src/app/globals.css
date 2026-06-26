@@ -1018,57 +1018,101 @@
 
 .stack-card {
   position: relative;
-  width: min(960px, 88vw);
-  height: 460px;
+  width: min(460px, 90vw);
+  height: min(720px, 84vh);
   background: var(--surface);
   border: 1px solid var(--rule);
-  border-radius: var(--radius-card);
-  padding: 36px 40px;
+  border-radius: 20px;
   display: flex;
   flex-direction: column;
+  overflow: hidden;
   transform-origin: top center;
-  box-shadow: 0 24px 60px -28px rgba(20, 22, 26, 0.18);
+  box-shadow: 0 30px 70px -32px rgba(20, 22, 26, 0.22);
 }
 
-.stack-card-head {
+.stack-card-media {
+  position: relative;
+  flex: 0 0 56%;
+  background: var(--accent-soft);
+  overflow: hidden;
+}
+.stack-card-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.stack-card-media-placeholder {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, var(--accent-soft), var(--rule));
+}
+
+.stack-card-content {
   display: flex;
   flex-direction: column;
-  gap: 6px;
-  padding-bottom: 18px;
-  border-bottom: 1px solid var(--rule);
-}
-.stack-card-kicker {
-  color: var(--accent);
-}
-.stack-card-title {
-  font-family: var(--font-serif);
-  font-size: clamp(28px, 3vw, 38px);
-  line-height: 1.1;
-  color: var(--ink);
-  margin: 0;
-}
-
-.stack-card-body {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr);
-  gap: 36px;
-  margin-top: 24px;
+  padding: 24px 26px 26px;
   flex: 1;
   min-height: 0;
 }
 
-.stack-card-copy {
+.stack-card-meta {
   display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  padding-top: 4px;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 14px;
 }
+
+.stack-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px 6px 10px;
+  border-radius: 999px;
+  font-family: var(--font-sans);
+  font-size: 12.5px;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+.stack-pill.is-soon {
+  background: rgba(20, 22, 26, 0.06);
+  color: var(--ink-72);
+}
+.stack-pill-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #2BA46A;
+  box-shadow: 0 0 0 3px rgba(43, 164, 106, 0.18);
+}
+.stack-pill.is-soon .stack-pill-dot {
+  background: var(--ink-45);
+  box-shadow: 0 0 0 3px rgba(20, 22, 26, 0.08);
+}
+
+.stack-card-title {
+  font-family: var(--font-serif);
+  font-size: clamp(24px, 2.4vw, 30px);
+  line-height: 1.15;
+  letter-spacing: -0.015em;
+  color: var(--ink);
+  margin: 0 0 10px;
+}
+
 .stack-card-desc {
   font-family: var(--font-serif);
-  font-size: 17px;
-  line-height: 1.55;
+  font-size: 15.5px;
+  line-height: 1.5;
   color: var(--ink-72);
   margin: 0;
+}
+
+.stack-card-foot {
+  margin-top: auto;
+  padding-top: 18px;
+  border-top: 1px solid var(--rule);
 }
 .stack-card-link {
   display: inline-flex;
@@ -1079,58 +1123,21 @@
   font-weight: 500;
   color: var(--accent);
   text-decoration: none;
-  margin-top: 18px;
 }
 .stack-card-link:hover { text-decoration: underline; }
 .stack-card-link svg { transition: transform 200ms ease; }
 .stack-card-link:hover svg { transform: translateX(3px); }
-
-.stack-card-soon {
-  display: inline-block;
-  margin-top: 18px;
+.stack-card-url {
   font-family: var(--font-sans);
   font-size: 13px;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.04em;
   text-transform: uppercase;
   color: var(--ink-45);
 }
 
-.stack-card-media {
-  position: relative;
-  border-radius: 10px;
-  overflow: hidden;
-  background: var(--accent-soft);
-  min-height: 0;
-}
-.stack-card-media-inner {
-  width: 100%;
-  height: 100%;
-}
-.stack-card-media-inner img {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-.stack-card-media-placeholder {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(135deg, var(--accent-soft), var(--rule));
-}
-
 @media (max-width: 720px) {
   .stack-card {
-    width: 92vw;
-    height: auto;
-    min-height: 70vh;
-    padding: 24px;
-  }
-  .stack-card-body {
-    grid-template-columns: 1fr;
-    gap: 20px;
-  }
-  .stack-card-media {
-    min-height: 200px;
+    width: 88vw;
+    height: 78vh;
   }
 }
