@@ -25,7 +25,7 @@ function formatDateShort(iso: string) {
 export default async function HomePage() {
   const notes = await getAllNotes();
   const latest = notes[0];
-  const recent = notes.slice(0, 3);
+  const recent = notes.slice(0, 4);
   const latestHref = latest ? `/notes/${latest.slug}` : "/#notes";
 
   const liveCurve = await getYieldCurve();
