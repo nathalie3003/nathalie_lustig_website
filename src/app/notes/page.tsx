@@ -5,7 +5,7 @@ import { CATEGORIES, categoryFromSlug } from "@/lib/noteCat";
 import { ScrollReveal } from "@/components/ScrollReveal";
 
 export const metadata = {
-  title: "Notes — Nathalie Lustig",
+  title: "Notes — The Basis Point",
   description:
     "Notes on rates, credit, new issues, private credit, and trade ideas.",
 };
