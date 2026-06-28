@@ -5,6 +5,7 @@ type Props = {
   axes?: boolean;
   animate?: boolean;
   className?: string;
+  decorative?: boolean;
 };
 
 // Hand-tuned path approximating a normal Treasury curve — gentle rise on the
@@ -18,6 +19,7 @@ export function BasisPointMark({
   axes = true,
   animate = true,
   className,
+  decorative = false,
 }: Props) {
   const cls = ["bp-mark", animate && "bp-mark-animate", className]
     .filter(Boolean)
@@ -28,9 +30,10 @@ export function BasisPointMark({
       width={size}
       height={Math.round((size * 32) / 40)}
       viewBox="0 0 40 32"
-      role="img"
-      aria-label="The Basis Point"
       className={cls}
+      {...(decorative
+        ? { "aria-hidden": true }
+        : { role: "img", "aria-label": "The Basis Point" })}
     >
       {axes && (
         <g className="bp-mark-axes">
