@@ -343,6 +343,9 @@
     font-family: var(--font-serif), Georgia, serif;
     font-size: 14.5px;
     color: var(--ink-60);
+    /* Negative top margin offsets .hero-slim .hero-name { margin-bottom: 14px }
+       so the byline visually groups with the masthead. If that h1 margin changes,
+       adjust this value to keep the same tight gap. */
     margin: -16px 0 22px;
     line-height: 1.3;
     font-weight: 400;
