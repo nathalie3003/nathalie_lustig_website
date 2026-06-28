@@ -1161,6 +1161,43 @@
   fill: var(--accent);
 }
 
+  @keyframes bp-mark-fade {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+  @keyframes bp-mark-draw {
+    from { stroke-dashoffset: 60; }
+    to   { stroke-dashoffset: 0; }
+  }
+
+  /* Animated variant: axes fade first, then the curve draws, then the dot
+     pops in. Static (.bp-mark without .bp-mark-animate) renders fully drawn. */
+  .bp-mark-animate .bp-mark-axes line {
+    opacity: 0;
+    animation: bp-mark-fade 250ms ease-out forwards;
+  }
+  .bp-mark-animate .bp-mark-curve {
+    stroke-dasharray: 60;
+    stroke-dashoffset: 60;
+    animation: bp-mark-draw 1200ms cubic-bezier(0.45, 0, 0.25, 1) forwards;
+    animation-delay: 200ms;
+  }
+  .bp-mark-animate .bp-mark-dot {
+    opacity: 0;
+    animation: bp-mark-fade 250ms ease-out forwards;
+    animation-delay: 1300ms;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .bp-mark-animate .bp-mark-axes line,
+    .bp-mark-animate .bp-mark-curve,
+    .bp-mark-animate .bp-mark-dot {
+      animation: none;
+      opacity: 1;
+      stroke-dashoffset: 0;
+    }
+  }
+
 @media (max-width: 720px) {
   .stack-card {
     width: 92vw;
