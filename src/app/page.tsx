@@ -25,7 +25,7 @@ function formatDateShort(iso: string) {
 export default async function HomePage() {
   const notes = await getAllNotes();
   const latest = notes[0];
-  const recent = notes.slice(0, 3);
+  const recent = notes.slice(0, 4);
   const latestHref = latest ? `/notes/${latest.slug}` : "/#notes";
 
   const liveCurve = await getYieldCurve();
@@ -41,7 +41,8 @@ export default async function HomePage() {
             <span className="hero-eyebrow">
               <span>Bond Notes</span>
             </span>
-            <h1 className="hero-name">Nathalie Lustig</h1>
+            <h1 className="hero-name">The Basis Point</h1>
+            <p className="hero-byline">Notes by Nathalie Lustig</p>
             <p className="hero-standfirst">
               Bonds sit at the intersection of finance and macroeconomics and
               that is why I write about them. For me, they are a lens to see

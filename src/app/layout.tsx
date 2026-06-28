@@ -18,9 +18,9 @@ const sans = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Nathalie Lustig",
+  title: "The Basis Point",
   description:
-    "Notes on rates, credit, and sovereign issuance — translating what I read across the market into my own analysis.",
+    "The Basis Point — notes on rates, credit, and sovereign issuance by Nathalie Lustig.",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
