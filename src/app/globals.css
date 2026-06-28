@@ -143,6 +143,20 @@
     background: none; border: 0; cursor: pointer; color: var(--ink); padding: 0;
     font-family: var(--font-serif), Georgia, serif; text-decoration: none;
   }
+  .top-name-mark {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    line-height: 1;
+  }
+  .top-name-mark .bp-mark { display: block; }
+  .top-name-word {
+    font-family: var(--font-serif), Georgia, serif;
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: -0.005em;
+    color: var(--ink);
+  }
   .top-right { display: flex; align-items: center; gap: 12px; }
   .top-links { display: flex; align-items: center; gap: 4px; }
   .top-link {
@@ -980,6 +994,7 @@
   .note-row { grid-template-columns: 1fr; gap: 8px; }
   .note-tag { display: none; }
   .menu-pop { right: 20px; left: 20px; width: auto; }
+  .top-name-word { display: none; }
 }
 
 /* ============================================================

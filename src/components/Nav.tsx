@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { CATEGORIES } from "@/lib/noteCat";
+import { BasisPointMark } from "@/components/BasisPointMark";
 
 function scrollToId(id: string) {
   const el = document.getElementById(id);
@@ -77,8 +78,14 @@ export function TopBar() {
     <header className="top">
       <div className="top-inner">
         <div className="top-left">
-          <Link href="/#top" className="top-name" onClick={jump("top")}>
-            NL
+          <Link
+            href="/#top"
+            className="top-name top-name-mark"
+            onClick={jump("top")}
+            aria-label="The Basis Point — home"
+          >
+            <BasisPointMark size={28} />
+            <span className="top-name-word">The Basis Point</span>
           </Link>
 
           <nav className="top-links">
