@@ -151,11 +151,8 @@
   }
   .top-name-mark .bp-mark { display: block; }
   .top-name-word {
-    font-family: var(--font-serif), Georgia, serif;
     font-size: 15px;
-    font-weight: 600;
     letter-spacing: -0.005em;
-    color: var(--ink);
   }
   .top-right { display: flex; align-items: center; gap: 12px; }
   .top-links { display: flex; align-items: center; gap: 4px; }
