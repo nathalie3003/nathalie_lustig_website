@@ -1144,6 +1144,23 @@
   color: var(--ink-45);
 }
 
+/* --- Basis Point brand mark ------------------------------------------ */
+.bp-mark { display: block; }
+.bp-mark-axes line {
+  stroke: var(--color-ink-45);
+  stroke-width: 0.5;
+  stroke-linecap: square;
+}
+.bp-mark-curve {
+  stroke: var(--color-accent);
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.bp-mark-dot {
+  fill: var(--color-accent);
+}
+
 @media (max-width: 720px) {
   .stack-card {
     width: 92vw;
