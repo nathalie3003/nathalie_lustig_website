@@ -1,5 +1,5 @@
 // Walk Portable Text blocks, count words in `block`-type spans,
-// return "${max(1, round(wpm/220))} min".
+// return "${max(1, round(wpm/225))} min".
 
 type Span = { _type?: string; text?: string };
 type Block = { _type?: string; children?: Span[] };
@@ -18,6 +18,6 @@ export function readTime(body: unknown): string {
       }
     }
   }
-  const minutes = Math.max(1, Math.round(words / 220));
+  const minutes = Math.max(1, Math.round(words / 225));
   return `${minutes} min`;
 }
