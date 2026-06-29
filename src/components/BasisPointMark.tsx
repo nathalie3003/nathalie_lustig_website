@@ -1,53 +1,59 @@
-"use client";
-
 type Props = {
   size?: number;
-  axes?: boolean;
-  animate?: boolean;
   className?: string;
   decorative?: boolean;
 };
 
-// Hand-tuned path approximating a normal Treasury curve — gentle rise on the
-// short end, accelerating into the long end. ViewBox is 40 wide × 32 tall;
-// padding leaves room for the axes on the left (x=6) and bottom (y=26).
-const CURVE_D = "M 8 24 C 14 23.4, 18 22.4, 22 20 S 30 11, 36 6";
-const DOT_END = { cx: 36, cy: 6 };
-
+// "+1bp" inside an aurora-rim circle. The gradient sweeps French Blue →
+// violet → pink → warm orange so the ring carries the brand accent (French
+// Blue) at the top and shifts through aurora colors around the arc.
+// Interior is the same deep ink the site uses elsewhere; the "+1" sits in
+// cream serif and the "bp" picks up the accent again at smaller size.
 export function BasisPointMark({
   size = 32,
-  axes = true,
-  animate = true,
   className,
   decorative = false,
 }: Props) {
-  const cls = ["bp-mark", animate && "bp-mark-animate", className]
-    .filter(Boolean)
-    .join(" ");
+  const cls = ["bp-mark", className].filter(Boolean).join(" ");
+  const gradientId = `bp-aurora-${size}`;
 
   return (
     <svg
       width={size}
-      height={Math.round((size * 32) / 40)}
-      viewBox="0 0 40 32"
+      height={size}
+      viewBox="0 0 32 32"
       className={cls}
       {...(decorative
         ? { "aria-hidden": true }
         : { role: "img", "aria-label": "The Basis Point" })}
     >
-      {axes && (
-        <g className="bp-mark-axes">
-          <line x1="6" y1="4" x2="6" y2="26" />
-          <line x1="6" y1="26" x2="38" y2="26" />
-        </g>
-      )}
-      <path className="bp-mark-curve" d={CURVE_D} fill="none" />
+      <defs>
+        <linearGradient id={gradientId} x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stopColor="#3A5F8A" />
+          <stop offset="35%" stopColor="#6B4FA0" />
+          <stop offset="65%" stopColor="#D67896" />
+          <stop offset="100%" stopColor="#E0A266" />
+        </linearGradient>
+      </defs>
       <circle
-        className="bp-mark-dot"
-        cx={DOT_END.cx}
-        cy={DOT_END.cy}
-        r="1.2"
+        cx="16"
+        cy="16"
+        r="14.5"
+        fill="#14161A"
+        stroke={`url(#${gradientId})`}
+        strokeWidth="1.5"
       />
+      <text
+        x="16"
+        y="17.5"
+        textAnchor="middle"
+        dominantBaseline="middle"
+        fontFamily="var(--font-serif), Georgia, 'Times New Roman', serif"
+        fontWeight="600"
+      >
+        <tspan fill="#F7F8FA" fontSize="13">+1</tspan>
+        <tspan fill="#3A5F8A" fontSize="7.5" dy="0.5">bp</tspan>
+      </text>
     </svg>
   );
 }
