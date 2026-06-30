@@ -34,15 +34,6 @@ export async function RightRail() {
   return (
     <aside className="home-rail">
       <div className="rail-card">
-        <Image
-          src="/rail-portrait.jpg"
-          alt="Portrait of Nathalie Lustig"
-          width={600}
-          height={600}
-          className="rail-portrait"
-          priority
-        />
-
         <div className="rail-block">
           <span className="l-eyebrow rail-block-head">{readsHead}</span>
           <p className="rail-block-note">{readsNote}</p>
