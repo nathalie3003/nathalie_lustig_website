@@ -6,13 +6,10 @@ type Props = {
   decorative?: boolean;
 };
 
-// "+1bp" inside an aurora-rim circle. Recreated pixel-for-pixel from the
-// design handoff in scratchpad: viewBox stays at 130×130 (preserves the
-// exact text positions from the reference), the visible size is set by
-// the `size` prop. The radial fill darkens center → edge; the linear rim
-// gradient sweeps blue → violet → pink → warm. Three separate <text>
-// elements give precise placement of "+", "1", and "bp" without relying
-// on text metrics.
+// "bp" wordmark inside an aurora-rim circle. Verbatim port of the handoff
+// reference SVG (design_handoff_bp_badge/README.md). The viewBox is kept
+// at 130×130 so font-size and stroke-width scale proportionally — the
+// rendered size is controlled by the `size` prop alone.
 export function BasisPointMark({
   size = 34,
   className,
@@ -64,33 +61,15 @@ export function BasisPointMark({
         opacity="0.9"
       />
       <text
-        x="33"
-        y="77"
-        fontFamily="var(--font-sans), Inter, system-ui, sans-serif"
-        fontSize="26"
-        fontWeight="300"
-        fill="rgba(255,255,255,0.85)"
-      >
-        +
-      </text>
-      <text
-        x="50"
-        y="82"
+        x="65"
+        y="65"
+        textAnchor="middle"
+        dominantBaseline="central"
         fontFamily="var(--font-serif), 'Source Serif 4', Georgia, serif"
-        fontSize="48"
+        fontSize="54"
         fontWeight="600"
+        letterSpacing="-1.08"
         fill="white"
-        dominantBaseline="auto"
-      >
-        1
-      </text>
-      <text
-        x="78"
-        y="73"
-        fontFamily="var(--font-sans), Inter, system-ui, sans-serif"
-        fontSize="17"
-        fontWeight="300"
-        fill="#5B9AE8"
       >
         bp
       </text>
