@@ -1000,6 +1000,7 @@
   .note-row { grid-template-columns: 1fr; gap: 8px; }
   .note-tag { display: none; }
   .menu-pop { right: 20px; left: 20px; width: auto; }
+  .menu-row { padding: 14px 13px; }
   .top-name-word { display: none; }
 }
 
