@@ -1,53 +1,78 @@
-"use client";
+import { useId } from "react";
 
 type Props = {
   size?: number;
-  axes?: boolean;
-  animate?: boolean;
   className?: string;
   decorative?: boolean;
 };
 
-// Hand-tuned path approximating a normal Treasury curve — gentle rise on the
-// short end, accelerating into the long end. ViewBox is 40 wide × 32 tall;
-// padding leaves room for the axes on the left (x=6) and bottom (y=26).
-const CURVE_D = "M 8 24 C 14 23.4, 18 22.4, 22 20 S 30 11, 36 6";
-const DOT_END = { cx: 36, cy: 6 };
-
+// "bp" wordmark inside an aurora-rim circle. Verbatim port of the handoff
+// reference SVG (design_handoff_bp_badge/README.md). The viewBox is kept
+// at 130×130 so font-size and stroke-width scale proportionally — the
+// rendered size is controlled by the `size` prop alone.
 export function BasisPointMark({
-  size = 32,
-  axes = true,
-  animate = true,
+  size = 34,
   className,
   decorative = false,
 }: Props) {
-  const cls = ["bp-mark", animate && "bp-mark-animate", className]
-    .filter(Boolean)
-    .join(" ");
+  const uid = useId().replace(/[:]/g, "");
+  const bgId = `bp-bg-${uid}`;
+  const rimId = `bp-rim-${uid}`;
+  const cls = ["bp-mark", className].filter(Boolean).join(" ");
 
   return (
     <svg
       width={size}
-      height={Math.round((size * 32) / 40)}
-      viewBox="0 0 40 32"
+      height={size}
+      viewBox="0 0 130 130"
+      fill="none"
       className={cls}
       {...(decorative
         ? { "aria-hidden": true }
         : { role: "img", "aria-label": "The Basis Point" })}
     >
-      {axes && (
-        <g className="bp-mark-axes">
-          <line x1="6" y1="4" x2="6" y2="26" />
-          <line x1="6" y1="26" x2="38" y2="26" />
-        </g>
-      )}
-      <path className="bp-mark-curve" d={CURVE_D} fill="none" />
+      <defs>
+        <radialGradient id={bgId} cx="50%" cy="58%" r="55%">
+          <stop offset="0%" stopColor="#0E1E45" />
+          <stop offset="100%" stopColor="#050B18" />
+        </radialGradient>
+        <linearGradient
+          id={rimId}
+          x1="0"
+          y1="0"
+          x2="130"
+          y2="130"
+          gradientUnits="userSpaceOnUse"
+        >
+          <stop offset="0%" stopColor="#4488FF" />
+          <stop offset="35%" stopColor="#8855FF" />
+          <stop offset="65%" stopColor="#FF44AA" />
+          <stop offset="100%" stopColor="#FF7733" />
+        </linearGradient>
+      </defs>
+      <circle cx="65" cy="65" r="64" fill={`url(#${bgId})`} />
       <circle
-        className="bp-mark-dot"
-        cx={DOT_END.cx}
-        cy={DOT_END.cy}
-        r="1.2"
+        cx="65"
+        cy="65"
+        r="62"
+        fill="none"
+        stroke={`url(#${rimId})`}
+        strokeWidth="2.5"
+        opacity="0.9"
       />
+      <text
+        x="65"
+        y="65"
+        textAnchor="middle"
+        dominantBaseline="central"
+        fontFamily="var(--font-serif), 'Source Serif 4', Georgia, serif"
+        fontSize="54"
+        fontWeight="600"
+        letterSpacing="-1.08"
+        fill="white"
+      >
+        bp
+      </text>
     </svg>
   );
 }

@@ -84,7 +84,7 @@ export function TopBar() {
             onClick={jump("top")}
             aria-label="The Basis Point — home"
           >
-            <BasisPointMark size={28} decorative />
+            <BasisPointMark size={34} decorative />
             <span className="top-name-word">The Basis Point</span>
           </Link>
 

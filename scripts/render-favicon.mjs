@@ -1,40 +1,41 @@
-// Renders the BasisPointMark to a 256×256 PNG and writes it to
-// src/app/icon.png — the Next.js App Router favicon path. Includes axes so
-// the favicon matches the inline mark visually. Re-run after any change to
-// the mark's path or colors.
+// Renders the BasisPointMark "bp" badge to a 256×256 PNG and writes it to
+// src/app/icon.png — the Next.js App Router favicon path. Verbatim port
+// of the handoff reference SVG (design_handoff_bp_badge/README.md). The
+// PNG canvas is square but only the circle paints (transparent corners),
+// so browsers render it as a circular mark. Re-run after any change to
+// the SVG.
 
 import sharp from "sharp";
 import { writeFile } from "node:fs/promises";
 
-// Keep this SVG visually in sync with src/components/BasisPointMark.tsx.
-// CSS variables don't apply when sharp rasterises, so colors are resolved
-// to concrete values: ACCENT = var(--accent), AXIS = var(--ink-45).
-// Stroke widths are bumped (curve 1.6→2.4, axes 0.5→1.0) so the lines stay
-// legible after the browser downsamples to 16×16 / 32×32 favicon sizes.
-const ACCENT = "#3A5F8A";
-const AXIS = "rgba(20,22,26,0.45)";
-const CURVE_D = "M 8 24 C 14 23.4, 18 22.4, 22 20 S 30 11, 36 6";
-
+// Source Serif 4 isn't installed on the rendering machine, so the rasteriser
+// falls back to Times New Roman / Georgia. Source Serif's metrics are close
+// enough to Times that the visual difference at favicon scale is invisible.
 const svg = `<?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 32" width="256" height="205">
-  <line x1="6" y1="4" x2="6" y2="26" stroke="${AXIS}" stroke-width="1.0" stroke-linecap="square"/>
-  <line x1="6" y1="26" x2="38" y2="26" stroke="${AXIS}" stroke-width="1.0" stroke-linecap="square"/>
-  <path d="${CURVE_D}" fill="none" stroke="${ACCENT}" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
-  <circle cx="36" cy="6" r="1.8" fill="${ACCENT}"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 130 130" width="256" height="256" fill="none">
+  <defs>
+    <radialGradient id="bg" cx="50%" cy="58%" r="55%">
+      <stop offset="0%"   stop-color="#0E1E45"/>
+      <stop offset="100%" stop-color="#050B18"/>
+    </radialGradient>
+    <linearGradient id="rim" x1="0" y1="0" x2="130" y2="130" gradientUnits="userSpaceOnUse">
+      <stop offset="0%"   stop-color="#4488FF"/>
+      <stop offset="35%"  stop-color="#8855FF"/>
+      <stop offset="65%"  stop-color="#FF44AA"/>
+      <stop offset="100%" stop-color="#FF7733"/>
+    </linearGradient>
+  </defs>
+  <circle cx="65" cy="65" r="64" fill="url(#bg)"/>
+  <circle cx="65" cy="65" r="62" fill="none" stroke="url(#rim)" stroke-width="2.5" opacity="0.9"/>
+  <text x="65" y="65"
+        text-anchor="middle" dominant-baseline="central"
+        font-family="Source Serif 4, Times New Roman, Times, Georgia, serif"
+        font-size="54" font-weight="600"
+        letter-spacing="-1.08"
+        fill="white">bp</text>
 </svg>`;
 
-// Render into a square 256×256 canvas with the curve centered vertically
-// (the natural aspect ratio is 40:32 = wider than tall, so center it on the
-// vertical axis to avoid a stretched look at favicon scale).
 const buf = await sharp(Buffer.from(svg))
-  .resize(256, 205, { fit: "contain", background: { r: 0, g: 0, b: 0, alpha: 0 } })
-  .extend({
-    top: 26,
-    bottom: 25,
-    left: 0,
-    right: 0,
-    background: { r: 0, g: 0, b: 0, alpha: 0 },
-  })
   .png()
   .toBuffer();
 
