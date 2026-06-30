@@ -865,7 +865,6 @@
   .rnb-row-link:hover .rnb-note { color: var(--accent); }
 
   /* ABOUT */
-  .about { padding: 0; }
   .about-title { font-size: 38px; font-weight: 600; letter-spacing: -0.022em; margin: 10px 0 0; }
   .about-grid { display: grid; grid-template-columns: minmax(0,1fr) 300px; gap: 56px; align-items: start; margin-top: 32px; }
   .about-bio p { font-size: 18px; line-height: 1.72; color: var(--ink-72); margin: 0 0 1.2em; text-wrap: pretty; font-family: var(--font-serif), Georgia, serif; }
