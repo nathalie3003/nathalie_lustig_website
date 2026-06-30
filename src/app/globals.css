@@ -175,8 +175,16 @@
     position: absolute; top: 100%; left: 0; min-width: 280px;
     background: var(--surface); border: 1px solid var(--rule); border-radius: var(--radius-card);
     box-shadow: 0 18px 50px rgba(20,22,26,0.16); padding: 14px 8px 8px; z-index: 50;
-    margin-top: -2px;
+    margin-top: 0;
     animation: nl-pop 140ms cubic-bezier(0.2,0.7,0.2,1);
+  }
+  .notes-pop::before {
+    content: "";
+    position: absolute;
+    top: -12px;
+    left: 0;
+    right: 0;
+    height: 12px;
   }
   .np-row {
     display: flex; flex-direction: column; align-items: flex-start; gap: 2px;

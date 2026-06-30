@@ -36,7 +36,7 @@ export function TopBar() {
   };
   const scheduleCloseNotes = () => {
     if (closeTimer.current) clearTimeout(closeTimer.current);
-    closeTimer.current = setTimeout(() => setNotesOpen(false), 140);
+    closeTimer.current = setTimeout(() => setNotesOpen(false), 120);
   };
 
   useEffect(() => {
@@ -104,7 +104,6 @@ export function TopBar() {
                 className="top-link notes-trigger"
                 aria-expanded={notesOpen}
                 aria-haspopup="true"
-                onClick={() => setNotesOpen(false)}
               >
                 Notes <span className="notes-caret" aria-hidden="true">▾</span>
               </Link>
