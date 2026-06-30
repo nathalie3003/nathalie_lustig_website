@@ -66,6 +66,11 @@ export function TopBar() {
     };
   }, []);
 
+  useEffect(() => {
+    setNotesOpen(false);
+    setMobileOpen(false);
+  }, [pathname]);
+
   // Section jump for About/Projects: smooth-scroll on home, route otherwise.
   const jump = (id: string) => (e: React.MouseEvent) => {
     setMobileOpen(false);

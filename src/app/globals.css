@@ -245,7 +245,7 @@
   .menu-rule { height: 1px; background: var(--rule); margin: 7px 6px; }
 
   /* NOTES INDEX PAGE */
-  .notes-index { padding: 64px 0 80px; }
+  .notes-index { padding-top: 64px; padding-bottom: 80px; }
   .notes-index-head { margin-bottom: 28px; max-width: 720px; }
   .notes-index-title {
     font-size: 44px; font-weight: 600; letter-spacing: -0.022em; line-height: 1.05;
