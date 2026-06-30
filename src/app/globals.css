@@ -633,7 +633,6 @@
     border-top: 1px solid var(--rule);
     padding: 64px 0 80px;
   }
-  .contact { padding: 0; }
   .contact-head { max-width: 720px; }
   .contact-title {
     font-size: 36px; font-weight: 600; letter-spacing: -0.02em; line-height: 1.1;
