@@ -552,7 +552,7 @@
   }
 
   /* NOTE DETAIL */
-  .read { padding: 40px 0 16px; }
+  .read { padding-top: 40px; padding-bottom: 16px; }
   .read-back {
     display: inline-flex; align-items: center; gap: 7px; font-family: var(--font-sans), system-ui, sans-serif;
     font-size: 13.5px; color: var(--ink-60); background: none; border: 0; cursor: pointer; padding: 0; margin-bottom: 30px;
