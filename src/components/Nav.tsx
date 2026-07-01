@@ -27,33 +27,21 @@ export function TopBar() {
   const router = useRouter();
   const onHome = pathname === "/";
 
-  const dbg = (msg: string, source?: string) => {
-    const t = Math.round(performance.now());
-    console.log(`[notes ${t}ms] ${msg}${source ? ` (${source})` : ""}`);
-  };
-  const openNotes = (source?: string) => {
+  const openNotes = () => {
     if (closeTimer.current) {
       clearTimeout(closeTimer.current);
       closeTimer.current = null;
-      dbg("OPEN — pending close cancelled", source);
-    } else {
-      dbg("OPEN", source);
     }
     setNotesOpen(true);
   };
-  const scheduleCloseNotes = (source?: string) => {
+  const scheduleCloseNotes = () => {
     if (closeTimer.current) clearTimeout(closeTimer.current);
-    dbg("scheduleClose (120ms timer started)", source);
-    closeTimer.current = setTimeout(() => {
-      dbg("TIMER FIRED — setNotesOpen(false)");
-      setNotesOpen(false);
-    }, 120);
+    closeTimer.current = setTimeout(() => setNotesOpen(false), 120);
   };
 
   useEffect(() => {
     function onDoc(e: MouseEvent) {
       if (notesRef.current && !notesRef.current.contains(e.target as Node)) {
-        dbg("document mousedown OUTSIDE notesRef — setNotesOpen(false)");
         setNotesOpen(false);
       }
       const target = e.target as Node;
@@ -65,7 +53,6 @@ export function TopBar() {
     }
     function onKey(e: KeyboardEvent) {
       if (e.key === "Escape") {
-        dbg("Escape pressed — setNotesOpen(false)");
         setNotesOpen(false);
         setMobileOpen(false);
       }
@@ -80,7 +67,6 @@ export function TopBar() {
   }, []);
 
   useEffect(() => {
-    dbg(`pathname changed → ${pathname} — setNotesOpen(false)`);
     setNotesOpen(false);
     setMobileOpen(false);
   }, [pathname]);
@@ -115,8 +101,8 @@ export function TopBar() {
             <div
               className="notes-menu"
               ref={notesRef}
-              onMouseEnter={() => openNotes("trigger-wrapper enter")}
-              onMouseLeave={() => scheduleCloseNotes("trigger-wrapper leave")}
+              onMouseEnter={openNotes}
+              onMouseLeave={scheduleCloseNotes}
             >
               <Link
                 href="/notes"
@@ -130,8 +116,8 @@ export function TopBar() {
                 <div
                   className="notes-pop"
                   role="menu"
-                  onMouseEnter={() => openNotes("popover enter")}
-                  onMouseLeave={() => scheduleCloseNotes("popover leave")}
+                  onMouseEnter={openNotes}
+                  onMouseLeave={scheduleCloseNotes}
                 >
                   <Link
                     href="/notes"
