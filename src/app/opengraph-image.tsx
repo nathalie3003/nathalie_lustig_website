@@ -19,56 +19,48 @@ export default async function OpengraphImage() {
           fontFamily: "Georgia, serif",
         }}
       >
-        <svg width="340" height="340" viewBox="0 0 130 130">
-          <defs>
-            <radialGradient id="bg" cx="50%" cy="58%" r="55%">
-              <stop offset="0%" stopColor="#0E1E45" />
-              <stop offset="100%" stopColor="#050B18" />
-            </radialGradient>
-            <linearGradient
-              id="rim"
-              x1="0"
-              y1="0"
-              x2="130"
-              y2="130"
-              gradientUnits="userSpaceOnUse"
-            >
-              <stop offset="0%" stopColor="#4488FF" />
-              <stop offset="35%" stopColor="#8855FF" />
-              <stop offset="65%" stopColor="#FF44AA" />
-              <stop offset="100%" stopColor="#FF7733" />
-            </linearGradient>
-          </defs>
-          <circle cx="65" cy="65" r="64" fill="url(#bg)" />
-          <circle
-            cx="65"
-            cy="65"
-            r="62"
-            fill="none"
-            stroke="url(#rim)"
-            strokeWidth="2.5"
-            opacity="0.9"
-          />
-          <text
-            x="65"
-            y="65"
-            textAnchor="middle"
-            dominantBaseline="central"
-            fontFamily="Georgia, serif"
-            fontSize="54"
-            fontWeight="600"
-            fill="white"
-          >
-            bp
-          </text>
-        </svg>
+        {/* Aurora-rim "bp" mark, recreated with nested divs so satori can
+            render it — an aurora linear-gradient ring wrapping a dark
+            radial-gradient inner circle with "bp" set in serif. */}
         <div
           style={{
-            marginTop: 40,
+            width: 340,
+            height: 340,
+            borderRadius: 340,
+            background:
+              "linear-gradient(135deg, #4488FF 0%, #8855FF 35%, #FF44AA 65%, #FF7733 100%)",
+            padding: 7,
+            display: "flex",
+          }}
+        >
+          <div
+            style={{
+              flex: 1,
+              borderRadius: 340,
+              background:
+                "radial-gradient(circle at 50% 58%, #0E1E45 0%, #050B18 65%)",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              color: "white",
+              fontFamily: "Georgia, serif",
+              fontSize: 148,
+              fontWeight: 600,
+              letterSpacing: "-3px",
+              lineHeight: 1,
+            }}
+          >
+            bp
+          </div>
+        </div>
+        <div
+          style={{
+            marginTop: 44,
             fontSize: 68,
             fontWeight: 600,
-            letterSpacing: "-0.02em",
+            letterSpacing: "-1.5px",
             color: "#14161A",
+            fontFamily: "Georgia, serif",
           }}
         >
           The Basis Point
@@ -78,7 +70,6 @@ export default async function OpengraphImage() {
             marginTop: 12,
             fontSize: 26,
             color: "rgba(20, 22, 26, 0.72)",
-            fontFamily: "system-ui, sans-serif",
           }}
         >
           Notes by Nathalie Lustig
