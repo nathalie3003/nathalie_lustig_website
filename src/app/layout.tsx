@@ -18,9 +18,24 @@ const sans = Inter({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://thebasispoint.finance"),
   title: "The Basis Point",
   description:
     "The Basis Point — notes on rates, credit, and sovereign issuance by Nathalie Lustig.",
+  openGraph: {
+    title: "The Basis Point",
+    description:
+      "Notes on rates, credit, and sovereign issuance by Nathalie Lustig.",
+    url: "https://thebasispoint.finance",
+    siteName: "The Basis Point",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "The Basis Point",
+    description:
+      "Notes on rates, credit, and sovereign issuance by Nathalie Lustig.",
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
