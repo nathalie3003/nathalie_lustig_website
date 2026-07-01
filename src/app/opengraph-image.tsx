@@ -4,6 +4,9 @@ export const alt = "The Basis Point — Notes by Nathalie Lustig";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
+// Satori (next/og's renderer) accepts TTF/OTF but not WOFF2. Google Fonts
+// serves WOFF2 to modern browsers; using an old-Firefox User-Agent gets it to
+// return the TTF URL instead.
 async function loadGoogleFont(
   family: string,
   weight: number,
@@ -13,7 +16,7 @@ async function loadGoogleFont(
   const css = await fetch(cssUrl, {
     headers: {
       "User-Agent":
-        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/106.0.0.0 Safari/537.36",
+        "Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.2.13) Gecko/20101203 Firefox/3.6.13",
     },
   }).then((r) => r.text());
   const match = css.match(/src: url\((https:\/\/fonts\.gstatic\.com\/[^)]+)\)/);
