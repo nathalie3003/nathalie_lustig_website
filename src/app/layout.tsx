@@ -3,6 +3,7 @@ import { Source_Serif_4, Inter } from "next/font/google";
 import "./globals.css";
 import { Chrome } from "@/components/Chrome";
 import { ContactFooter } from "@/components/Footer";
+import { Analytics } from "@vercel/analytics/next";
 
 const serif = Source_Serif_4({
   subsets: ["latin"],
@@ -43,6 +44,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en" className={`${serif.variable} ${sans.variable}`}>
       <body className="site">
         <Chrome footer={<ContactFooter />}>{children}</Chrome>
+        <Analytics />
       </body>
     </html>
   );
