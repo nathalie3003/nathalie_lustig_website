@@ -27,39 +27,21 @@ export function TopBar() {
   const router = useRouter();
   const onHome = pathname === "/";
 
-  const dbg = (msg: string, e?: React.MouseEvent | MouseEvent) => {
-    const t = Math.round(performance.now());
-    const trig = notesRef.current?.querySelector(".notes-trigger")?.getBoundingClientRect();
-    const pop = notesRef.current?.querySelector(".notes-pop")?.getBoundingClientRect();
-    const mouse = e ? `mouse=(${Math.round(e.clientX)},${Math.round(e.clientY)})` : "";
-    const trigStr = trig ? `trig=[${Math.round(trig.left)},${Math.round(trig.top)}→${Math.round(trig.right)},${Math.round(trig.bottom)}]` : "";
-    const popStr = pop ? `pop=[${Math.round(pop.left)},${Math.round(pop.top)}→${Math.round(pop.right)},${Math.round(pop.bottom)}]` : "no-pop";
-    console.log(`[notes ${t}ms v2] ${msg}  ${mouse} ${trigStr} ${popStr}`);
-  };
-  const openNotes = (e?: React.MouseEvent) => {
+  const openNotes = () => {
     if (closeTimer.current) {
       clearTimeout(closeTimer.current);
       closeTimer.current = null;
-      dbg("OPEN (cancelled pending close)", e);
-    } else {
-      dbg("OPEN", e);
     }
     setNotesOpen(true);
   };
-  const scheduleCloseNotes = (e?: React.MouseEvent) => {
+  const scheduleCloseNotes = () => {
     if (closeTimer.current) clearTimeout(closeTimer.current);
-    dbg("scheduleClose (120ms)", e);
-    closeTimer.current = setTimeout(() => {
-      dbg("TIMER FIRED → close");
-      setNotesOpen(false);
-    }, 120);
+    closeTimer.current = setTimeout(() => setNotesOpen(false), 100);
   };
 
   useEffect(() => {
-    console.log("[notes v2] TopBar mounted — animation is fade-only, ::before bridge active");
     function onDoc(e: MouseEvent) {
       if (notesRef.current && !notesRef.current.contains(e.target as Node)) {
-        dbg("doc mousedown OUTSIDE notesRef → close", e);
         setNotesOpen(false);
       }
       const target = e.target as Node;
@@ -71,7 +53,6 @@ export function TopBar() {
     }
     function onKey(e: KeyboardEvent) {
       if (e.key === "Escape") {
-        dbg("Escape → close");
         setNotesOpen(false);
         setMobileOpen(false);
       }
@@ -86,7 +67,6 @@ export function TopBar() {
   }, []);
 
   useEffect(() => {
-    dbg(`pathname → ${pathname} → close`);
     setNotesOpen(false);
     setMobileOpen(false);
   }, [pathname]);
@@ -121,8 +101,8 @@ export function TopBar() {
             <div
               className="notes-menu"
               ref={notesRef}
-              onMouseEnter={(e) => openNotes(e)}
-              onMouseLeave={(e) => { dbg("(wrapper mouseLeave fired)", e); scheduleCloseNotes(e); }}
+              onMouseEnter={openNotes}
+              onMouseLeave={scheduleCloseNotes}
             >
               <Link
                 href="/notes"
@@ -136,8 +116,6 @@ export function TopBar() {
                 <div
                   className="notes-pop"
                   role="menu"
-                  onMouseEnter={(e) => { dbg("(popover mouseEnter fired)", e); openNotes(e); }}
-                  onMouseLeave={(e) => { dbg("(popover mouseLeave fired)", e); scheduleCloseNotes(e); }}
                 >
                   <Link
                     href="/notes"
