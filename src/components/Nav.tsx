@@ -36,7 +36,7 @@ export function TopBar() {
   };
   const scheduleCloseNotes = () => {
     if (closeTimer.current) clearTimeout(closeTimer.current);
-    closeTimer.current = setTimeout(() => setNotesOpen(false), 140);
+    closeTimer.current = setTimeout(() => setNotesOpen(false), 100);
   };
 
   useEffect(() => {
@@ -65,6 +65,11 @@ export function TopBar() {
       if (closeTimer.current) clearTimeout(closeTimer.current);
     };
   }, []);
+
+  useEffect(() => {
+    setNotesOpen(false);
+    setMobileOpen(false);
+  }, [pathname]);
 
   // Section jump for About/Projects: smooth-scroll on home, route otherwise.
   const jump = (id: string) => (e: React.MouseEvent) => {
@@ -104,7 +109,6 @@ export function TopBar() {
                 className="top-link notes-trigger"
                 aria-expanded={notesOpen}
                 aria-haspopup="true"
-                onClick={() => setNotesOpen(false)}
               >
                 Notes <span className="notes-caret" aria-hidden="true">▾</span>
               </Link>
@@ -112,8 +116,6 @@ export function TopBar() {
                 <div
                   className="notes-pop"
                   role="menu"
-                  onMouseEnter={openNotes}
-                  onMouseLeave={scheduleCloseNotes}
                 >
                   <Link
                     href="/notes"
