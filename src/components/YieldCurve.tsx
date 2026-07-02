@@ -21,7 +21,7 @@ const Y_STEP = 0.2; // percent — y-axis tick interval
 function formatAsOf(iso: string): string {
   const d = new Date(iso);
   if (Number.isNaN(d.getTime())) return iso;
-  return d.toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" });
+  return d.toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric", timeZone: "UTC" });
 }
 
 function catmullRomPath(pts: { x: number; y: number }[]): string {

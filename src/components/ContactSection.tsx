@@ -4,7 +4,7 @@ import { useState } from "react";
 import { about } from "@/content/about";
 import { ScrollReveal } from "./ScrollReveal";
 
-const EMAIL = "nathalie.lustig03@gmail.com";
+const EMAIL = about.contact.find((c) => c.label === "Email")?.value ?? "";
 
 export function ContactSection() {
   const [copied, setCopied] = useState(false);

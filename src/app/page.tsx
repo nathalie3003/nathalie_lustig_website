@@ -23,12 +23,11 @@ function formatDateShort(iso: string) {
 }
 
 export default async function HomePage() {
-  const notes = await getAllNotes();
+  const [notes, liveCurve] = await Promise.all([getAllNotes(), getYieldCurve()]);
   const latest = notes[0];
   const recent = notes.slice(0, 4);
   const latestHref = latest ? `/notes/${latest.slug}` : "/#notes";
 
-  const liveCurve = await getYieldCurve();
   const curve = liveCurve ?? FALLBACK_CURVE;
   const curveSource: "Treasury" | "snapshot" = liveCurve ? "Treasury" : "snapshot";
 

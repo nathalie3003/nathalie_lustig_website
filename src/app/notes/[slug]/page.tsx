@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { getNoteBySlug, getAllNoteSlugs, getPrevNote, getNextNote } from "@/lib/queries";
+import { getNoteBySlug, getAllNoteSlugs, getAdjacentNotes } from "@/lib/queries";
 import { urlFor } from "@/lib/sanity.client";
 import { PortableText } from "@/components/PortableText";
 import { noteCat } from "@/lib/noteCat";
@@ -31,7 +31,7 @@ export default async function NotePage({
 
   const { cat } = noteCat(note.category);
   const minutes = readTime(note.body);
-  const [prev, next] = await Promise.all([getPrevNote(slug), getNextNote(slug)]);
+  const { prev, next } = await getAdjacentNotes(slug);
 
   return (
     <article className="page-full read">
@@ -66,13 +66,13 @@ export default async function NotePage({
 
       <footer className="read-foot">
         <div className="read-foot-grid">
-          {prev && prev.slug !== slug && (
+          {prev && (
             <Link href={`/notes/${prev.slug}`} className="read-foot-cell read-foot-prev">
               <span className="l-smallcaps">Previous note</span>
               <span className="read-foot-title">← {prev.title}</span>
             </Link>
           )}
-          {next && next.slug !== slug && (
+          {next && (
             <Link href={`/notes/${next.slug}`} className="read-foot-cell read-foot-next">
               <span className="l-smallcaps">Next note</span>
               <span className="read-foot-title">{next.title} →</span>

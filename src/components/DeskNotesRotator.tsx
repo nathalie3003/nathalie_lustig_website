@@ -8,16 +8,17 @@ export function DeskNotesRotator({ words }: { words: string[] }) {
   const reduce = useReducedMotion();
 
   useEffect(() => {
+    if (reduce) return;
     const id = setTimeout(() => {
       setIndex((i) => (i + 1) % words.length);
     }, 2000);
     return () => clearTimeout(id);
-  }, [index, words.length]);
+  }, [index, words.length, reduce]);
 
   return (
     <p className="dnr">
       <span className="dnr-lead">I write bond notes about </span>
-      <span className="dnr-slot" aria-live="polite">
+      <span className="dnr-slot">
         {/* Sizer: renders every word stacked (hidden) so the slot's width
             auto-fits the visually widest word. */}
         <span className="dnr-sizer" aria-hidden="true">
