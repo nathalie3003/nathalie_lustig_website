@@ -10,18 +10,26 @@ export const contentType = "image/png";
 async function loadGoogleFont(
   family: string,
   weight: number,
-): Promise<ArrayBuffer> {
-  const familyEnc = family.replace(/ /g, "+");
-  const cssUrl = `https://fonts.googleapis.com/css2?family=${familyEnc}:wght@${weight}`;
-  const css = await fetch(cssUrl, {
-    headers: {
-      "User-Agent":
-        "Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.2.13) Gecko/20101203 Firefox/3.6.13",
-    },
-  }).then((r) => r.text());
-  const match = css.match(/src: url\((https:\/\/fonts\.gstatic\.com\/[^)]+)\)/);
-  if (!match) throw new Error(`Font not found: ${family} ${weight}`);
-  return fetch(match[1]).then((r) => r.arrayBuffer());
+): Promise<ArrayBuffer | null> {
+  try {
+    const familyEnc = family.replace(/ /g, "+");
+    const cssUrl = `https://fonts.googleapis.com/css2?family=${familyEnc}:wght@${weight}`;
+    const res = await fetch(cssUrl, {
+      headers: {
+        "User-Agent":
+          "Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.2.13) Gecko/20101203 Firefox/3.6.13",
+      },
+    });
+    if (!res.ok) return null;
+    const css = await res.text();
+    const match = css.match(/src: url\((https:\/\/fonts\.gstatic\.com\/[^)]+)\)/);
+    if (!match) return null;
+    const font = await fetch(match[1]);
+    if (!font.ok) return null;
+    return font.arrayBuffer();
+  } catch {
+    return null;
+  }
 }
 
 export default async function OpengraphImage() {
@@ -29,6 +37,13 @@ export default async function OpengraphImage() {
     loadGoogleFont("Source Serif 4", 600),
     loadGoogleFont("Source Serif 4", 400),
   ]);
+
+  // Render with satori's built-in fallback font if Google Fonts is down —
+  // a slightly off-brand OG image beats a failed build or a 500.
+  type OgFont = { name: string; data: ArrayBuffer; weight: 400 | 600; style: "normal" };
+  const fonts: OgFont[] = [];
+  if (serif600) fonts.push({ name: "Source Serif 4", data: serif600, weight: 600, style: "normal" });
+  if (serif400) fonts.push({ name: "Source Serif 4", data: serif400, weight: 400, style: "normal" });
 
   return new ImageResponse(
     (
@@ -107,20 +122,7 @@ export default async function OpengraphImage() {
     ),
     {
       ...size,
-      fonts: [
-        {
-          name: "Source Serif 4",
-          data: serif600,
-          weight: 600,
-          style: "normal",
-        },
-        {
-          name: "Source Serif 4",
-          data: serif400,
-          weight: 400,
-          style: "normal",
-        },
-      ],
+      ...(fonts.length ? { fonts } : {}),
     },
   );
 }

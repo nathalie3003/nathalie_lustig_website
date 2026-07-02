@@ -22,22 +22,9 @@ export function TopBar() {
   const notesRef = useRef<HTMLDivElement>(null);
   const mobileBtnRef = useRef<HTMLDivElement>(null);
   const mobilePanelRef = useRef<HTMLDivElement>(null);
-  const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const pathname = usePathname();
   const router = useRouter();
   const onHome = pathname === "/";
-
-  const openNotes = () => {
-    if (closeTimer.current) {
-      clearTimeout(closeTimer.current);
-      closeTimer.current = null;
-    }
-    setNotesOpen(true);
-  };
-  const scheduleCloseNotes = () => {
-    if (closeTimer.current) clearTimeout(closeTimer.current);
-    closeTimer.current = setTimeout(() => setNotesOpen(false), 100);
-  };
 
   useEffect(() => {
     function onDoc(e: MouseEvent) {
@@ -62,7 +49,6 @@ export function TopBar() {
     return () => {
       document.removeEventListener("mousedown", onDoc);
       document.removeEventListener("keydown", onKey);
-      if (closeTimer.current) clearTimeout(closeTimer.current);
     };
   }, []);
 
@@ -101,14 +87,15 @@ export function TopBar() {
             <div
               className="notes-menu"
               ref={notesRef}
-              onMouseEnter={openNotes}
-              onMouseLeave={scheduleCloseNotes}
+              onMouseEnter={() => setNotesOpen(true)}
+              onMouseLeave={() => setNotesOpen(false)}
             >
               <Link
                 href="/notes"
                 className="top-link notes-trigger"
                 aria-expanded={notesOpen}
                 aria-haspopup="true"
+                onClick={() => setNotesOpen(false)}
               >
                 Notes <span className="notes-caret" aria-hidden="true">▾</span>
               </Link>

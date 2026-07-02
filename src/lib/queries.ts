@@ -157,18 +157,16 @@ export async function getSiteSettings(): Promise<SiteSettings | null> {
   );
 }
 
-export async function getPrevNote(slug: string): Promise<BondNoteCard | null> {
+export async function getAdjacentNotes(
+  slug: string,
+): Promise<{ prev: BondNoteCard | null; next: BondNoteCard | null }> {
   const all = await getAllNotes();
-  if (all.length === 0) return null;
   const idx = all.findIndex((n) => n.slug === slug);
-  if (idx === -1) return all[0];
-  return all[(idx + 1) % all.length];
-}
-
-export async function getNextNote(slug: string): Promise<BondNoteCard | null> {
-  const all = await getAllNotes();
-  if (all.length === 0) return null;
-  const idx = all.findIndex((n) => n.slug === slug);
-  if (idx === -1) return all[0];
-  return all[(idx - 1 + all.length) % all.length];
+  if (idx === -1) return { prev: null, next: null };
+  // Notes are ordered newest-first: "previous" is the older note (idx + 1),
+  // "next" is the newer one (idx - 1). No wrap-around at the ends.
+  return {
+    prev: all[idx + 1] ?? null,
+    next: all[idx - 1] ?? null,
+  };
 }

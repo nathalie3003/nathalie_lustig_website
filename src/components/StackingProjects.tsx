@@ -46,7 +46,7 @@ function Card({ i, project, progress, range, targetScale }: CardProps) {
         <div className={`stack-card-media is-${project.imageFit ?? "cover"}`}>
           {project.imageSrc ? (
             // eslint-disable-next-line @next/next/no-img-element
-            <img src={project.imageSrc} alt={project.title} />
+            <img src={project.imageSrc} alt={project.title} loading="lazy" decoding="async" />
           ) : (
             <div className="stack-card-media-placeholder" aria-hidden="true" />
           )}
@@ -100,7 +100,7 @@ export default function StackingProjects({ projects }: { projects: StackProject[
 
         <div className="stack-cards">
           {projects.map((project, i) => {
-            const targetScale = 1 - (projects.length - i) * 0.05;
+            const targetScale = 1 - (projects.length - 1 - i) * 0.05;
             return (
               <Card
                 key={project.key}

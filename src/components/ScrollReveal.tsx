@@ -62,7 +62,7 @@ export function ScrollReveal({
       {words.map((word, wi) => {
         const wordChars = Array.from(word);
         const node = (
-          <span className="sr-word" key={`w-${wi}`}>
+          <span className="sr-word" key={`w-${wi}`} aria-hidden="true">
             {wordChars.map((ch, ci) => {
               const delay = charIdx * stagger;
               charIdx += 1;
