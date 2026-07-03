@@ -51,7 +51,7 @@ export default async function NotePage({
     <div className="article-page">
       <ReadingProgress />
 
-      <header className="ap-head col-text">
+      <header className="ap-head col-wide">
         <Link href="/#notes" className="ap-back">
           <svg width="15" height="15" viewBox="0 0 15 15" fill="none" aria-hidden="true">
             <path
