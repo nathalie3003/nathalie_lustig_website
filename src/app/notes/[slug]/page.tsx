@@ -64,13 +64,11 @@ export default async function NotePage({
           </svg>
           All notes
         </Link>
-        <hr className="ap-rule" />
         <div className="ap-meta">
           {cat && <span className="l-tag">{cat}</span>}
-          {cat && <span className="ap-meta-sep" aria-hidden="true" />}
-          <span className="ap-meta-text">{formatDateLong(note.publishedAt)}</span>
-          <span className="ap-meta-sep" aria-hidden="true" />
-          <span className="ap-meta-text">{minutes} read</span>
+          <span className="l-smallcaps">
+            {formatDateLong(note.publishedAt)} · {minutes} read
+          </span>
         </div>
         <h1 className="ap-title">{note.title}</h1>
         {note.excerpt && <p className="ap-deck">{note.excerpt}</p>}
