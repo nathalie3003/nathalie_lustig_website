@@ -801,6 +801,25 @@
 
   /* CONTACT FOOTER */
   .foot { flex-shrink: 0; border-top: 1px solid var(--rule); background: var(--surface); margin-top: 64px; }
+  .foot-inner {
+    max-width: var(--maxw); margin: 0 auto; padding: 44px var(--pad) 36px;
+    display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 48px; align-items: start;
+  }
+  .foot-lead {
+    font-family: var(--font-serif), Georgia, serif;
+    font-size: 24px; font-weight: 600; letter-spacing: -0.016em; line-height: 1.28;
+    margin: 0; max-width: 14em; text-wrap: balance; color: var(--ink);
+  }
+  .foot-contact {
+    display: grid; grid-template-columns: 72px 1fr; row-gap: 11px; column-gap: 16px; align-self: center;
+  }
+  .foot-contact dt {
+    font-family: var(--font-sans), system-ui, sans-serif; font-size: 10px; font-weight: 600;
+    letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-45); padding-top: 3px;
+  }
+  .foot-contact dd { margin: 0; font-family: var(--font-sans), system-ui, sans-serif; font-size: 14px; }
+  .foot-contact dd a { color: var(--ink); }
+  .foot-contact dd a:hover { color: var(--accent); text-decoration: none; }
   .foot-bar { border-top: 1px solid var(--rule); }
   .foot-bar-inner {
     max-width: var(--maxw); margin: 0 auto; padding: 18px var(--pad) 22px;
@@ -1220,6 +1239,7 @@
   .recent-link { grid-template-columns: 1fr; gap: 4px; }
   .contact-grid { grid-template-columns: 1fr; gap: 32px; }
   .cf-row-pair { grid-template-columns: 1fr; }
+  .foot-inner { grid-template-columns: 1fr; gap: 28px; }
 }
 @media (max-width: 760px) {
   .top-links { display: none; }
