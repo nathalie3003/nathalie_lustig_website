@@ -28,6 +28,7 @@ export type TradeFields = {
 export type BondNote = BondNoteCard &
   TradeFields & {
     body: unknown[];
+    sources?: string[];
   };
 
 const CARD_FIELDS = `
@@ -58,7 +59,7 @@ export async function getAllNotes(): Promise<BondNoteCard[]> {
 
 export async function getNoteBySlug(slug: string): Promise<BondNote | null> {
   return sanityClient.fetch(
-    `*[_type == "bondNote" && slug.current == $slug][0]{ ${CARD_FIELDS}, body, tradeRecommendation, instrument, instrumentSub, horizon, nominalYield, realYield, realYieldSub, view, conviction, keyPoints, keyRisks, oneLiner }`,
+    `*[_type == "bondNote" && slug.current == $slug][0]{ ${CARD_FIELDS}, body, tradeRecommendation, instrument, instrumentSub, horizon, nominalYield, realYield, realYieldSub, view, conviction, keyPoints, keyRisks, oneLiner, sources }`,
     { slug },
     { next: { revalidate: 60, tags: ["bondNote"] } },
   );

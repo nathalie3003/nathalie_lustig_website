@@ -97,7 +97,59 @@ export const bondNote = defineType({
             prepare: ({ title, subtitle }) => ({ title: title || "Callout", subtitle }),
           },
         },
+        {
+          type: "object",
+          name: "annotation",
+          title: "Annotation",
+          fields: [
+            { name: "label", type: "string", title: "Label", initialValue: "Note" },
+            { name: "text", type: "text", title: "Text", rows: 4 },
+          ],
+          preview: {
+            select: { title: "label", subtitle: "text" },
+            prepare: ({ title, subtitle }) => ({ title: title || "Annotation", subtitle }),
+          },
+        },
+        {
+          type: "object",
+          name: "dataStrip",
+          title: "Data strip",
+          fields: [
+            {
+              name: "items",
+              title: "Stats",
+              type: "array",
+              validation: (r) => r.max(3),
+              of: [
+                {
+                  type: "object",
+                  fields: [
+                    { name: "value", type: "string", title: "Value" },
+                    { name: "label", type: "string", title: "Label" },
+                  ],
+                  preview: {
+                    select: { title: "value", subtitle: "label" },
+                  },
+                },
+              ],
+            },
+          ],
+          preview: {
+            select: { items: "items" },
+            prepare: ({ items }) => ({
+              title: "Data strip",
+              subtitle: (items || []).map((i: { value?: string }) => i.value).join(" · "),
+            }),
+          },
+        },
       ],
+    }),
+    defineField({
+      name: "sources",
+      title: "Sources",
+      type: "array",
+      of: [{ type: "string" }],
+      description: "Optional citation list shown at the end of the article.",
     }),
 
     // ── Trade Idea fields (shown only when category === "trade-ideas") ──
