@@ -7,6 +7,7 @@ import { PortableText } from "@/components/PortableText";
 import { noteCat } from "@/lib/noteCat";
 import { readTime } from "@/lib/readTime";
 import { TradeIdeaArticle } from "@/components/TradeIdeaArticle";
+import { ReadingProgress } from "@/components/ReadingProgress";
 
 export async function generateStaticParams() {
   const slugs = await getAllNoteSlugs();
@@ -47,52 +48,88 @@ export default async function NotePage({
   }
 
   return (
-    <article className="page-full read">
-      <Link href="/#notes" className="read-back">← All notes</Link>
+    <div className="article-page">
+      <ReadingProgress />
 
-      <header className="read-head">
-        <div className="read-meta-top">
-          <span className="l-tag">{cat}</span>
-          <span className="l-smallcaps">
-            {formatDateLong(note.publishedAt)} · {minutes} read
-          </span>
+      <header className="ap-head col-text">
+        <Link href="/#notes" className="ap-back">
+          <svg width="15" height="15" viewBox="0 0 15 15" fill="none" aria-hidden="true">
+            <path
+              d="M9.5 11.5L5.5 7.5L9.5 3.5"
+              stroke="currentColor"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+          All notes
+        </Link>
+        <hr className="ap-rule" />
+        <div className="ap-meta">
+          {cat && <span className="l-tag">{cat}</span>}
+          {cat && <span className="ap-meta-sep" aria-hidden="true" />}
+          <span className="ap-meta-text">{formatDateLong(note.publishedAt)}</span>
+          <span className="ap-meta-sep" aria-hidden="true" />
+          <span className="ap-meta-text">{minutes} read</span>
         </div>
-        <h1 className="read-title">{note.title}</h1>
-        {note.excerpt && <p className="read-excerpt">{note.excerpt}</p>}
+        <h1 className="ap-title">{note.title}</h1>
+        {note.excerpt && <p className="ap-deck">{note.excerpt}</p>}
       </header>
 
       {note.coverImage && (
-        <figure className="read-cover">
+        <div className="ap-hero">
           <Image
-            src={urlFor(note.coverImage).width(1600).height(900).fit("crop").url()}
+            src={urlFor(note.coverImage).width(1800).height(880).fit("crop").url()}
             alt=""
-            width={1600}
-            height={900}
+            width={1800}
+            height={880}
+            className="ap-hero-img"
             priority
           />
-        </figure>
+        </div>
       )}
 
-      <div className="read-body">
-        <PortableText value={note.body} />
-      </div>
+      <article className="ap-body">
+        <div className="ap-col">
+          <PortableText value={note.body} />
 
-      <footer className="read-foot">
-        <div className="read-foot-grid">
-          {prev && (
-            <Link href={`/notes/${prev.slug}`} className="read-foot-cell read-foot-prev">
-              <span className="l-smallcaps">Previous note</span>
-              <span className="read-foot-title">← {prev.title}</span>
-            </Link>
+          {note.sources && note.sources.length > 0 && (
+            <div className="sources">
+              <span className="sources-label">Sources</span>
+              <ol>
+                {note.sources.map((s, i) => (
+                  <li key={i}>{s}</li>
+                ))}
+              </ol>
+            </div>
           )}
-          {next && (
-            <Link href={`/notes/${next.slug}`} className="read-foot-cell read-foot-next">
-              <span className="l-smallcaps">Next note</span>
-              <span className="read-foot-title">{next.title} →</span>
-            </Link>
+
+          {(prev || next) && (
+            <nav className="ap-foot" aria-label="Article navigation">
+              <div className="ap-foot-item">
+                {prev && (
+                  <>
+                    <span className="ap-foot-label">← Previous note</span>
+                    <Link className="ap-foot-title" href={`/notes/${prev.slug}`}>
+                      {prev.title}
+                    </Link>
+                  </>
+                )}
+              </div>
+              <div className="ap-foot-item">
+                {next && (
+                  <>
+                    <span className="ap-foot-label">Next note →</span>
+                    <Link className="ap-foot-title" href={`/notes/${next.slug}`}>
+                      {next.title}
+                    </Link>
+                  </>
+                )}
+              </div>
+            </nav>
           )}
         </div>
-      </footer>
-    </article>
+      </article>
+    </div>
   );
 }

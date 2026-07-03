@@ -16,6 +16,24 @@ const components: PortableTextComponents = {
         <p>{value.text}</p>
       </div>
     ),
+    annotation: ({ value }) => (
+      <div className="annotation">
+        <span className="annotation-label">{value.label ?? "Note"}</span>
+        <p>{value.text}</p>
+      </div>
+    ),
+    dataStrip: ({ value }) => (
+      <div className="data-strip">
+        {(value.items ?? []).map(
+          (item: { value?: string; label?: string }, i: number) => (
+            <div className="ds-item" key={i}>
+              <div className="ds-val">{item.value}</div>
+              <div className="ds-label">{item.label}</div>
+            </div>
+          ),
+        )}
+      </div>
+    ),
     image: ({ value }) => {
       const url = urlFor(value).width(1600).url();
       return (
