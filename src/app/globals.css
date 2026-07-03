@@ -1031,10 +1031,6 @@
     transition: width 80ms linear; pointer-events: none;
   }
 
-  /* White reading surface — applied to the whole viewport on article routes only */
-  .article-page { background: var(--surface); }
-  .site:has(.article-page) { background: var(--surface); }
-
   .col-text { max-width: var(--col-text); margin: 0 auto; padding: 0 var(--pad); }
   .col-wide { max-width: var(--col-wide); margin: 0 auto; padding: 0 var(--pad); }
 
