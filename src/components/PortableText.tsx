@@ -4,6 +4,18 @@ import { urlFor } from "@/lib/sanity.client";
 
 const components: PortableTextComponents = {
   types: {
+    execSummary: ({ value }) => (
+      <div className="exec-summary">
+        <span className="exec-summary-label">Executive Summary</span>
+        <p>{value.text}</p>
+      </div>
+    ),
+    callout: ({ value }) => (
+      <div className="callout">
+        <span className="callout-label">{value.label ?? "Key Insight"}</span>
+        <p>{value.text}</p>
+      </div>
+    ),
     image: ({ value }) => {
       const url = urlFor(value).width(1600).url();
       return (
@@ -25,7 +37,7 @@ const components: PortableTextComponents = {
     normal: ({ children }) => <p>{children}</p>,
     h2: ({ children }) => <h2>{children}</h2>,
     h3: ({ children }) => <h2>{children}</h2>,
-    blockquote: ({ children }) => <p className="read-quote">{children}</p>,
+    blockquote: ({ children }) => <blockquote>{children}</blockquote>,
   },
   marks: {
     link: ({ children, value }) => (

@@ -10,9 +10,25 @@ export type BondNoteCard = {
   coverImage?: { asset: { _ref: string } };
 };
 
-export type BondNote = BondNoteCard & {
-  body: unknown[];
+export type TradeFields = {
+  tradeRecommendation?: string;
+  instrument?: string;
+  instrumentSub?: string;
+  horizon?: string;
+  nominalYield?: string;
+  realYield?: string;
+  realYieldSub?: string;
+  view?: string;
+  conviction?: number;
+  keyPoints?: string[];
+  keyRisks?: string[];
+  oneLiner?: string;
 };
+
+export type BondNote = BondNoteCard &
+  TradeFields & {
+    body: unknown[];
+  };
 
 const CARD_FIELDS = `
   _id,
@@ -42,7 +58,7 @@ export async function getAllNotes(): Promise<BondNoteCard[]> {
 
 export async function getNoteBySlug(slug: string): Promise<BondNote | null> {
   return sanityClient.fetch(
-    `*[_type == "bondNote" && slug.current == $slug][0]{ ${CARD_FIELDS}, body }`,
+    `*[_type == "bondNote" && slug.current == $slug][0]{ ${CARD_FIELDS}, body, tradeRecommendation, instrument, instrumentSub, horizon, nominalYield, realYield, realYieldSub, view, conviction, keyPoints, keyRisks, oneLiner }`,
     { slug },
     { next: { revalidate: 60, tags: ["bondNote"] } },
   );
