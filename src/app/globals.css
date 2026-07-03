@@ -28,6 +28,10 @@
     --accent-soft: #E7ECF3;
     --accent-warm: #A87B5C;
     --rule: #E6E8EC;
+    --rule-strong: #D4D7DD;
+    --card-dark: #0F1C2E;
+    --french-blue-soft: rgba(58,95,138,0.09);
+    --ink-20: rgba(20,22,26,0.18);
     --nav-bg: #FFFFFF;
     --radius: 12px;
     --radius-sm: 9px;
@@ -803,6 +807,216 @@
   }
   .foot-bar a { color: var(--ink-45); }
   .foot-bar a:hover { color: var(--accent); }
+
+  /* ============================================================
+     TRADE IDEA PAGE — article + sticky snapshot sidebar
+     ============================================================ */
+  .trade-wrap { max-width: 1100px; margin: 0 auto; padding: 0 var(--pad); }
+
+  .trade-back {
+    display: inline-flex; align-items: center; gap: 7px;
+    font-family: var(--font-sans), system-ui, sans-serif; font-size: 13px; font-weight: 500;
+    color: var(--ink-60); background: none; border: 0;
+    padding: 30px 0 0; text-decoration: none; transition: color 120ms ease;
+  }
+  .trade-back:hover { color: var(--accent); }
+
+  .trade-layout {
+    display: grid; grid-template-columns: minmax(0, 1fr) 304px;
+    gap: 68px; align-items: start; padding: 28px 0 80px;
+  }
+
+  /* Article header */
+  .article-meta-top {
+    display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+    margin-bottom: 18px; padding-bottom: 14px;
+    border-bottom: 1px solid var(--accent);
+  }
+  /* Scoped tag-pill — only inside the trade meta strip, so the global
+     .l-tag (small-caps navy, no pill) used elsewhere is untouched. */
+  .article-meta-top .l-tag {
+    font-weight: 600; letter-spacing: 0.06em;
+    background: var(--french-blue-soft); padding: 3px 9px; border-radius: 3px;
+  }
+  .article-meta-top .l-smallcaps { color: var(--ink-45); }
+  .article-h1 {
+    font-size: 40px; font-weight: 600; letter-spacing: -0.024em;
+    line-height: 1.08; margin: 0 0 16px; text-wrap: balance;
+  }
+  .article-deck {
+    font-size: 20px; line-height: 1.55; color: var(--ink-72);
+    margin: 0 0 22px; text-wrap: pretty;
+  }
+  /* Body */
+  .article-body { max-width: 68ch; margin-top: 30px; }
+  .article-body p {
+    font-size: 19px; line-height: 1.72; color: var(--ink);
+    margin: 0 0 1.25em; text-wrap: pretty; font-family: var(--font-serif), Georgia, serif;
+  }
+  .article-body h2 {
+    font-family: var(--font-serif), Georgia, serif; font-size: 22px; font-weight: 600;
+    letter-spacing: -0.012em; line-height: 1.2; margin: 2em 0 0.6em; color: var(--ink);
+  }
+  .article-body ul { margin: 0 0 1.25em; padding: 0 0 0 1.2em; }
+  .article-body ul li {
+    font-size: 19px; line-height: 1.68; color: var(--ink);
+    margin-bottom: 0.5em; padding-left: 0.2em; font-family: var(--font-serif), Georgia, serif;
+  }
+  .article-body strong { font-weight: 600; }
+  .article-body a { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }
+
+  /* Executive summary — dark navy card */
+  .exec-summary {
+    margin-bottom: 2.2em; padding: 22px 24px;
+    background: var(--card-dark); border-radius: var(--radius-sm);
+  }
+  .exec-summary-label {
+    display: block; margin-bottom: 12px;
+    font-family: var(--font-sans), system-ui, sans-serif; font-size: 10px; font-weight: 600;
+    letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.4);
+  }
+  .exec-summary p {
+    margin: 0; font-size: 17px; line-height: 1.65; color: rgba(255,255,255,0.88);
+    text-wrap: pretty; font-family: var(--font-serif), Georgia, serif;
+  }
+
+  /* Blockquote — the one sanctioned left stripe. Shared by standard notes
+     (.read-body) and trade articles (.article-body). */
+  .read-body blockquote,
+  .article-body blockquote {
+    margin: 1.6em 0; padding: 6px 0 6px 26px; border-left: 3px solid var(--accent);
+    font-size: 22px; line-height: 1.45; font-style: italic; color: var(--ink);
+    font-weight: 400; font-family: var(--font-serif), Georgia, serif; text-wrap: pretty;
+  }
+
+  /* Callout — hairline top/bottom, no left stripe */
+  .callout {
+    margin: 1.8em 0; padding: 16px 0;
+    border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule);
+  }
+  .callout-label {
+    display: block; margin-bottom: 8px;
+    font-family: var(--font-sans), system-ui, sans-serif; font-size: 10px; font-weight: 600;
+    letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent);
+  }
+  .callout p {
+    margin: 0; font-size: 17px; line-height: 1.62; color: var(--ink-72);
+    font-family: var(--font-serif), Georgia, serif;
+  }
+
+  /* Prev / next footer nav */
+  .article-foot {
+    margin-top: 48px; padding-top: 24px; border-top: 1px solid var(--rule);
+    display: grid; grid-template-columns: 1fr 1fr; gap: 24px;
+  }
+  .article-foot-item { display: flex; flex-direction: column; gap: 4px; }
+  .article-foot-item:last-child { text-align: right; }
+  .foot-nav-label {
+    font-family: var(--font-sans), system-ui, sans-serif; font-size: 10px; font-weight: 600;
+    letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-45);
+  }
+  .foot-nav-title {
+    font-family: var(--font-serif), Georgia, serif; font-size: 16px; font-weight: 600;
+    letter-spacing: -0.008em; color: var(--accent); line-height: 1.25;
+  }
+  .foot-nav-title:hover { text-decoration: underline; text-underline-offset: 3px; }
+
+  /* ── SIDEBAR: Trade Snapshot card ── */
+  .sidebar { position: sticky; top: 82px; }
+  .trade-card {
+    background: var(--surface); border: 1px solid var(--rule);
+    border-radius: var(--radius-card); overflow: hidden;
+  }
+  .tc-rec { background: var(--card-dark); padding: 16px 20px 15px; }
+  .tc-rec-label {
+    display: block; margin-bottom: 5px;
+    font-family: var(--font-sans), system-ui, sans-serif; font-size: 9.5px; font-weight: 600;
+    letter-spacing: 0.16em; text-transform: uppercase; color: rgba(255,255,255,0.42);
+  }
+  .tc-rec-action {
+    font-family: var(--font-sans), system-ui, sans-serif; font-size: 26px; font-weight: 600;
+    letter-spacing: -0.01em; color: #fff; line-height: 1;
+  }
+  .tc-instrument { padding: 13px 20px; border-bottom: 1px solid var(--rule); }
+  .tc-field-label {
+    display: block; margin-bottom: 4px;
+    font-family: var(--font-sans), system-ui, sans-serif; font-size: 9.5px; font-weight: 600;
+    letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-45);
+  }
+  .tc-instr-name {
+    font-family: var(--font-serif), Georgia, serif; font-size: 16px; font-weight: 600;
+    letter-spacing: -0.01em; color: var(--ink); line-height: 1.2;
+  }
+  .tc-instr-sub {
+    margin-top: 3px; font-family: var(--font-sans), system-ui, sans-serif;
+    font-size: 11.5px; color: var(--ink-45);
+  }
+  .tc-stats { display: grid; grid-template-columns: 1fr 1fr 1fr; border-bottom: 1px solid var(--rule); }
+  .tc-stat { padding: 12px 14px; border-right: 1px solid var(--rule); }
+  .tc-stat:last-child { border-right: 0; }
+  .tc-stat-val {
+    margin-top: 5px; font-family: var(--font-sans), system-ui, sans-serif;
+    font-size: 15px; font-weight: 600; color: var(--ink); line-height: 1;
+  }
+  .tc-stat-sub {
+    margin-top: 3px; font-family: var(--font-sans), system-ui, sans-serif;
+    font-size: 10.5px; color: var(--ink-45);
+  }
+  .tc-row {
+    padding: 11px 20px; border-bottom: 1px solid var(--rule);
+    display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  }
+  .tc-row-val {
+    font-family: var(--font-sans), system-ui, sans-serif; font-size: 13px; font-weight: 500;
+    color: var(--ink); text-align: right;
+  }
+  .tc-stars { display: flex; gap: 3px; }
+  .tc-star { font-size: 14px; line-height: 1; color: var(--ink-20); }
+  .tc-star.on { color: var(--accent); }
+  .tc-section { padding: 14px 20px; border-bottom: 1px solid var(--rule); }
+  .tc-bullets {
+    list-style: none; padding: 0; margin: 8px 0 0;
+    display: flex; flex-direction: column; gap: 7px;
+  }
+  .tc-bullets li {
+    display: flex; align-items: flex-start; gap: 8px;
+    font-family: var(--font-sans), system-ui, sans-serif; font-size: 12.5px;
+    line-height: 1.45; color: var(--ink-72);
+  }
+  .bull-icon {
+    flex-shrink: 0; font-size: 11px; margin-top: 1px;
+    color: var(--accent); font-weight: 600; font-style: normal;
+  }
+  .tc-bullets.risks .bull-icon { color: var(--ink-45); }
+  .tc-summary { padding: 16px 20px; background: var(--french-blue-soft); }
+  .tc-summary-text {
+    margin: 6px 0 0; font-family: var(--font-serif), Georgia, serif; font-size: 14px;
+    font-style: italic; line-height: 1.55; color: var(--ink-72);
+  }
+  .trade-disclaimer {
+    margin-top: 14px; font-family: var(--font-sans), system-ui, sans-serif;
+    font-size: 10.5px; line-height: 1.55; color: var(--ink-45);
+  }
+
+  /* Trade page responsive */
+  @media (max-width: 980px) {
+    .trade-layout { grid-template-columns: 1fr; gap: 0; }
+    .sidebar { position: static; margin-top: 44px; }
+    .trade-card { max-width: 480px; }
+    .article-h1 { font-size: 34px; }
+  }
+  @media (max-width: 560px) {
+    .article-h1 { font-size: 29px; }
+    .article-body p, .article-body ul li { font-size: 18px; }
+    .article-deck { font-size: 18px; }
+    .article-foot { grid-template-columns: 1fr; }
+    .article-foot-item:last-child { text-align: left; }
+    .tc-stats { grid-template-columns: 1fr 1fr; }
+    .tc-stats .tc-stat:nth-child(2) { border-right: 0; }
+    .tc-stats .tc-stat:nth-child(3) {
+      border-top: 1px solid var(--rule); grid-column: 1 / -1; border-right: 0;
+    }
+  }
 }
 
 @media (max-width: 920px) {

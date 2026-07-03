@@ -6,6 +6,7 @@ import { urlFor } from "@/lib/sanity.client";
 import { PortableText } from "@/components/PortableText";
 import { noteCat } from "@/lib/noteCat";
 import { readTime } from "@/lib/readTime";
+import { TradeIdeaArticle } from "@/components/TradeIdeaArticle";
 
 export async function generateStaticParams() {
   const slugs = await getAllNoteSlugs();
@@ -32,6 +33,18 @@ export default async function NotePage({
   const { cat } = noteCat(note.category);
   const minutes = readTime(note.body);
   const { prev, next } = await getAdjacentNotes(slug);
+
+  if (note.category === "trade-ideas") {
+    return (
+      <TradeIdeaArticle
+        note={note}
+        prev={prev}
+        next={next}
+        dateLabel={formatDateLong(note.publishedAt)}
+        readLabel={`${minutes} read`}
+      />
+    );
+  }
 
   return (
     <article className="page-full read">
