@@ -1077,7 +1077,7 @@
 
   /* Body */
   .ap-body { padding: 52px 0 0; }
-  .ap-col { max-width: var(--col-text); margin: 0 auto; padding: 0 var(--pad); }
+  .ap-col { max-width: var(--col-wide); margin: 0 auto; padding: 0 var(--pad); }
   .ap-col > p {
     font-family: var(--font-serif), Georgia, serif;
     font-size: 18.5px; line-height: 1.78; color: var(--ink); margin: 0 0 1.4em; text-wrap: pretty;
