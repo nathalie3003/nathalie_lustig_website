@@ -838,13 +838,18 @@
     display: inline-flex; align-items: center; gap: 7px;
     font-family: var(--font-sans), system-ui, sans-serif; font-size: 13px; font-weight: 500;
     color: var(--ink-60); background: none; border: 0;
-    padding: 30px 0 0; text-decoration: none; transition: color 120ms ease;
+    padding: 22px 0 0; text-decoration: none; transition: color 120ms ease;
   }
   .trade-back:hover { color: var(--accent); }
 
+  .trade-hero { border-bottom: 1px solid var(--rule); }
+  .trade-rule { border: 0; border-top: 1px solid var(--rule-strong); margin: 14px 0 20px; }
+  .trade-hero-img { height: 420px; overflow: hidden; margin-top: 8px; }
+  .trade-hero-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
   .trade-layout {
     display: grid; grid-template-columns: minmax(0, 1fr) 304px;
-    gap: 68px; align-items: start; padding: 28px 0 80px;
+    gap: 68px; align-items: start; padding: 48px 0 88px;
   }
 
   /* Article header */
@@ -861,12 +866,12 @@
   }
   .article-meta-top .l-smallcaps { color: var(--ink-45); }
   .article-h1 {
-    font-size: 40px; font-weight: 600; letter-spacing: -0.024em;
+    font-size: clamp(32px, 5vw, 52px); font-weight: 600; letter-spacing: -0.024em;
     line-height: 1.08; margin: 0 0 16px; text-wrap: balance;
   }
   .article-deck {
     font-size: 20px; line-height: 1.55; color: var(--ink-72);
-    margin: 0 0 22px; text-wrap: pretty;
+    margin: 0 0 22px; text-wrap: pretty; max-width: 62ch;
   }
   /* Body */
   .article-body { max-width: 68ch; margin-top: 30px; }
@@ -876,15 +881,52 @@
   }
   .article-body h2 {
     font-family: var(--font-serif), Georgia, serif; font-size: 22px; font-weight: 600;
-    letter-spacing: -0.012em; line-height: 1.2; margin: 2em 0 0.6em; color: var(--ink);
+    letter-spacing: -0.012em; line-height: 1.2; color: var(--ink);
+    margin: 2.4em 0 0.7em; padding-top: 1.4em; border-top: 1px solid var(--rule);
   }
-  .article-body ul { margin: 0 0 1.25em; padding: 0 0 0 1.2em; }
+  .article-body h2:first-of-type { margin-top: 0; }
+  /* French Blue section-label eyebrow — optional, sits above a heading.
+     Shared by trade (.article-body) and general (.ap-col) note bodies. */
+  .article-body .section-label-fb,
+  .ap-col .section-label-fb {
+    display: block;
+    font-family: var(--font-sans), system-ui, sans-serif;
+    font-size: 10px; font-weight: 600; letter-spacing: 0.14em;
+    text-transform: uppercase; color: var(--accent);
+    margin: 2.4em 0 0.55em; padding-top: 1.4em;
+    border-top: 1px solid var(--rule);
+  }
+  /* Eyebrow immediately above a heading: the rule sits above the eyebrow and
+     the heading attaches flush (rule → label → heading reads as one unit). */
+  .article-body .section-label-fb + h2,
+  .ap-col .section-label-fb + h2 {
+    margin-top: 0; padding-top: 0; border-top: 0;
+  }
+  /* Sub-heading (H3) — a lighter heading than the ruled H2. */
+  .article-body h3,
+  .ap-col h3 {
+    font-family: var(--font-serif), Georgia, serif;
+    font-size: 19px; font-weight: 600; letter-spacing: -0.008em;
+    line-height: 1.3; color: var(--ink); margin: 1.8em 0 0.5em;
+  }
+  .article-body ul {
+    margin: 0 0 1.3em; padding: 0; list-style: none;
+    display: flex; flex-direction: column; gap: 0.55em;
+  }
   .article-body ul li {
     font-size: 19px; line-height: 1.68; color: var(--ink);
-    margin-bottom: 0.5em; padding-left: 0.2em; font-family: var(--font-serif), Georgia, serif;
+    padding-left: 1.3em; position: relative; font-family: var(--font-serif), Georgia, serif;
+  }
+  .article-body ul li::before {
+    content: '—'; position: absolute; left: 0; color: var(--ink-45);
   }
   .article-body strong { font-weight: 600; }
   .article-body a { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }
+  .article-body > p:first-of-type::first-letter {
+    font-family: var(--font-serif), Georgia, serif;
+    font-size: 4.2em; font-weight: 600; float: left;
+    line-height: 0.78; padding-right: 10px; padding-top: 6px; color: var(--ink);
+  }
 
   /* Executive summary — dark navy card */
   .exec-summary {
@@ -925,6 +967,19 @@
     font-family: var(--font-serif), Georgia, serif;
   }
 
+  /* Data callout — dataStrip blocks inside the trade body */
+  .article-body .data-strip {
+    margin: 2em 0; padding: 20px 24px;
+    background: var(--bg); border-top: 2px solid var(--accent);
+    display: grid; grid-template-columns: repeat(3, 1fr);
+  }
+  .article-body .data-strip .ds-item {
+    padding-right: 20px; border-right: 1px solid var(--rule); margin-right: 20px;
+  }
+  .article-body .data-strip .ds-item:last-child { border-right: 0; padding-right: 0; margin-right: 0; }
+  .article-body .data-strip .ds-val { font-size: 28px; letter-spacing: -0.02em; }
+  .article-body .data-strip .ds-label { margin-top: 5px; }
+
   /* Prev / next footer nav */
   .article-foot {
     margin-top: 48px; padding-top: 24px; border-top: 1px solid var(--rule);
@@ -943,7 +998,33 @@
   .foot-nav-title:hover { text-decoration: underline; text-underline-offset: 3px; }
 
   /* ── SIDEBAR: Trade Snapshot card ── */
-  .sidebar { position: sticky; top: 82px; }
+  .sidebar {
+    position: sticky; top: 82px;
+    display: flex; flex-direction: column; gap: 18px;
+  }
+
+  /* Table of contents */
+  .toc {
+    background: var(--surface); border: 1px solid var(--rule);
+    border-radius: var(--radius-card); padding: 18px 20px;
+  }
+  .toc-label {
+    display: block; margin-bottom: 12px;
+    font-family: var(--font-sans), system-ui, sans-serif; font-size: 9.5px; font-weight: 600;
+    letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-45);
+  }
+  .toc-list { list-style: none; padding: 0; margin: 0; }
+  .toc-list li a {
+    display: block;
+    font-family: var(--font-sans), system-ui, sans-serif; font-size: 12.5px; font-weight: 500;
+    color: var(--ink-60); text-decoration: none;
+    padding: 7px 0; border-bottom: 1px solid var(--rule);
+    transition: color 100ms ease;
+  }
+  .toc-list li:last-child a { border-bottom: 0; }
+  .toc-list li a:hover,
+  .toc-list li a.active { color: var(--accent); }
+
   .trade-card {
     background: var(--surface); border: 1px solid var(--rule);
     border-radius: var(--radius-card); overflow: hidden;
@@ -1015,7 +1096,7 @@
     font-style: italic; line-height: 1.55; color: var(--ink-72);
   }
   .trade-disclaimer {
-    margin-top: 14px; font-family: var(--font-sans), system-ui, sans-serif;
+    margin-top: 0; font-family: var(--font-sans), system-ui, sans-serif;
     font-size: 10.5px; line-height: 1.55; color: var(--ink-45);
   }
 
@@ -1024,10 +1105,11 @@
     .trade-layout { grid-template-columns: 1fr; gap: 0; }
     .sidebar { position: static; margin-top: 44px; }
     .trade-card { max-width: 480px; }
-    .article-h1 { font-size: 34px; }
+    .toc { max-width: 480px; }
+    .trade-hero-img { height: 300px; }
   }
   @media (max-width: 560px) {
-    .article-h1 { font-size: 29px; }
+    .article-h1 { font-size: 30px; }
     .article-body p, .article-body ul li { font-size: 18px; }
     .article-deck { font-size: 18px; }
     .article-foot { grid-template-columns: 1fr; }
@@ -1037,6 +1119,7 @@
     .tc-stats .tc-stat:nth-child(3) {
       border-top: 1px solid var(--rule); grid-column: 1 / -1; border-right: 0;
     }
+    .trade-hero-img { height: 220px; }
   }
 
   /* ============================================================

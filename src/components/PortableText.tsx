@@ -1,6 +1,7 @@
 import { PortableText as PT, type PortableTextComponents } from "@portabletext/react";
 import Image from "next/image";
 import { urlFor } from "@/lib/sanity.client";
+import { blockText, headingId } from "@/lib/toc";
 
 const components: PortableTextComponents = {
   types: {
@@ -53,8 +54,13 @@ const components: PortableTextComponents = {
   },
   block: {
     normal: ({ children }) => <p>{children}</p>,
-    h2: ({ children }) => <h2>{children}</h2>,
-    h3: ({ children }) => <h2>{children}</h2>,
+    h2: ({ children, value }) => (
+      <h2 id={headingId(blockText(value as { children?: { text?: string }[] }))}>{children}</h2>
+    ),
+    h3: ({ children, value }) => (
+      <h3 id={headingId(blockText(value as { children?: { text?: string }[] }))}>{children}</h3>
+    ),
+    sectionLabel: ({ children }) => <p className="section-label-fb">{children}</p>,
     blockquote: ({ children }) => <blockquote>{children}</blockquote>,
   },
   marks: {

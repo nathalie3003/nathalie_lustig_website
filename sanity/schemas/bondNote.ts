@@ -65,10 +65,35 @@ export const bondNote = defineType({
       name: "body",
       type: "array",
       of: [
-        { type: "block" },
+        {
+          type: "block",
+          styles: [
+            { title: "Normal", value: "normal" },
+            { title: "Section heading", value: "h2" },
+            { title: "Sub-heading", value: "h3" },
+            { title: "Section label", value: "sectionLabel" },
+            { title: "Quote", value: "blockquote" },
+          ],
+          lists: [{ title: "Bullet", value: "bullet" }],
+          marks: {
+            decorators: [
+              { title: "Strong", value: "strong" },
+              { title: "Emphasis", value: "em" },
+            ],
+            annotations: [
+              {
+                name: "link",
+                type: "object",
+                title: "Link",
+                fields: [{ name: "href", type: "url", title: "URL" }],
+              },
+            ],
+          },
+        },
         {
           type: "image",
           options: { hotspot: true },
+          description: "Inline image with optional caption and alt text.",
           fields: [
             { name: "caption", type: "string", title: "Caption" },
             { name: "alt", type: "string", title: "Alt text" },
@@ -78,6 +103,7 @@ export const bondNote = defineType({
           type: "object",
           name: "execSummary",
           title: "Executive Summary",
+          description: "Dark navy summary card — the note's thesis in 2–4 sentences.",
           fields: [{ name: "text", type: "text", title: "Text", rows: 5 }],
           preview: {
             select: { subtitle: "text" },
@@ -88,6 +114,7 @@ export const bondNote = defineType({
           type: "object",
           name: "callout",
           title: "Callout",
+          description: "Hairline strip with a French Blue label — a key insight pulled from the flow.",
           fields: [
             { name: "label", type: "string", title: "Label", initialValue: "Key Insight" },
             { name: "text", type: "text", title: "Text", rows: 4 },
@@ -101,6 +128,7 @@ export const bondNote = defineType({
           type: "object",
           name: "annotation",
           title: "Annotation",
+          description: "Inset note with a French Blue label — a structural aside or caveat.",
           fields: [
             { name: "label", type: "string", title: "Label", initialValue: "Note" },
             { name: "text", type: "text", title: "Text", rows: 4 },
@@ -114,6 +142,7 @@ export const bondNote = defineType({
           type: "object",
           name: "dataStrip",
           title: "Data strip",
+          description: "Up to 3 headline figures side by side, with a French Blue top rule.",
           fields: [
             {
               name: "items",
