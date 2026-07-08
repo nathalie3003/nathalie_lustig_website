@@ -42,13 +42,21 @@ Replace the bare `{ type: "block" }` with an explicit config:
 - Lists: bullet only (design uses em-dash bullets; no numbered lists in body —
   the ordered Sources list is its own `sources` field).
 - Marks: Strong, Emphasis (defaults). Annotation: Link (url field).
-- `sectionLabel` and `h3` get custom Studio render components so they appear
-  French-Blue-small-caps / smaller **in the editor**.
+- Styles are declared `{ title, value }` only. Custom Studio render components
+  (in-editor French Blue preview) are **deferred** — the Sanity 4
+  `BlockStyleDefinition` type doesn't declare the `component` prop, and a wrong
+  Studio API risks breaking the live editor. Add later once `/studio` can be
+  verified interactively. The live-site rendering below does not depend on it.
 
 ### 2. Insert menu ("+") — relabel existing blocks
 
 Add plain-English `description`s to `execSummary`, `callout`, `annotation`,
 `dataStrip`, `image` so each is self-explanatory. No new block types.
+
+### 3a. Studio preview — DEFERRED
+
+In-editor French Blue / smaller rendering of the new styles is a follow-up
+(needs live `/studio` verification). Not in this pass.
 
 ### 3. Renderer (`src/components/PortableText.tsx`)
 
