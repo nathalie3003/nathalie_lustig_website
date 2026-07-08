@@ -58,8 +58,9 @@ const components: PortableTextComponents = {
       <h2 id={headingId(blockText(value as { children?: { text?: string }[] }))}>{children}</h2>
     ),
     h3: ({ children, value }) => (
-      <h2 id={headingId(blockText(value as { children?: { text?: string }[] }))}>{children}</h2>
+      <h3 id={headingId(blockText(value as { children?: { text?: string }[] }))}>{children}</h3>
     ),
+    sectionLabel: ({ children }) => <p className="section-label-fb">{children}</p>,
     blockquote: ({ children }) => <blockquote>{children}</blockquote>,
   },
   marks: {

@@ -21,7 +21,7 @@ export function extractHeadings(
   body: unknown[],
 ): { id: string; title: string }[] {
   return (body as Block[])
-    .filter((b) => b._type === "block" && (b.style === "h2" || b.style === "h3"))
+    .filter((b) => b._type === "block" && b.style === "h2")
     .map((b) => {
       const title = blockText(b);
       return { id: headingId(title), title };
