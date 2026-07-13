@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { PortableText } from "@/components/PortableText";
-import { urlFor } from "@/lib/sanity.client";
+import { urlFor, imageDimensions } from "@/lib/sanity.client";
 import { ReadingProgress } from "@/components/ReadingProgress";
 import { TradeToc } from "@/components/TradeToc";
 import { extractHeadings } from "@/lib/toc";
@@ -34,6 +34,7 @@ export function TradeIdeaArticle({
 }) {
   const conviction = Math.max(0, Math.min(5, note.conviction ?? 0));
   const headings = extractHeadings(note.body);
+  const coverDim = note.coverImage ? imageDimensions(note.coverImage) : null;
 
   return (
     <div className="trade-page">
@@ -68,10 +69,12 @@ export function TradeIdeaArticle({
           <div className="trade-wrap">
             <div className="trade-hero-img">
               <Image
-                src={urlFor(note.coverImage).width(2200).height(840).fit("crop").url()}
+                src={urlFor(note.coverImage).width(1600).fit("max").url()}
                 alt=""
-                width={2200}
-                height={840}
+                width={coverDim?.width ?? 1600}
+                height={coverDim?.height ?? 900}
+                className="cover-img"
+                sizes="(max-width: 980px) 100vw, 1050px"
                 priority
               />
             </div>
