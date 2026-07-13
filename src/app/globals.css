@@ -844,8 +844,9 @@
 
   .trade-hero { border-bottom: 1px solid var(--rule); }
   .trade-rule { border: 0; border-top: 1px solid var(--rule-strong); margin: 14px 0 20px; }
-  .trade-hero-img { height: 420px; overflow: hidden; margin-top: 8px; }
-  .trade-hero-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  /* Cover shows whole — frame follows the image's own aspect ratio, never cropped. */
+  .trade-hero-img { margin-top: 8px; }
+  .trade-hero-img .cover-img { width: 100%; height: auto; display: block; }
 
   .trade-layout {
     display: grid; grid-template-columns: minmax(0, 1fr) 304px;
@@ -1106,7 +1107,6 @@
     .sidebar { position: static; margin-top: 44px; }
     .trade-card { max-width: 480px; }
     .toc { max-width: 480px; }
-    .trade-hero-img { height: 300px; }
   }
   @media (max-width: 560px) {
     .article-h1 { font-size: 30px; }
@@ -1119,7 +1119,6 @@
     .tc-stats .tc-stat:nth-child(3) {
       border-top: 1px solid var(--rule); grid-column: 1 / -1; border-right: 0;
     }
-    .trade-hero-img { height: 220px; }
   }
 
   /* ============================================================
@@ -1165,11 +1164,11 @@
   }
 
   /* Hero image — col-wide */
+  /* Cover shows whole — frame follows the image's own aspect ratio, never cropped. */
   .ap-hero {
     max-width: var(--col-wide); margin: 36px auto 0; padding: 0 var(--pad);
-    height: 440px; overflow: hidden;
   }
-  .ap-hero-img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .ap-hero-img { width: 100%; height: auto; display: block; }
 
   /* Body */
   .ap-body { padding: 52px 0 0; }
@@ -1285,7 +1284,6 @@
   @media (max-width: 560px) {
     .ap-title { font-size: 28px; }
     .ap-deck { font-size: 17.5px; }
-    .ap-hero { height: 220px; }
     .ap-col > p, .ap-col > ul li { font-size: 17.5px; }
     .ap-col blockquote { font-size: 20px; }
     .ap-foot { grid-template-columns: 1fr; }

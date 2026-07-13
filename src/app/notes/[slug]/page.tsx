@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getNoteBySlug, getAllNoteSlugs, getAdjacentNotes } from "@/lib/queries";
-import { urlFor } from "@/lib/sanity.client";
+import { urlFor, imageDimensions } from "@/lib/sanity.client";
 import { PortableText } from "@/components/PortableText";
 import { noteCat } from "@/lib/noteCat";
 import { readTime } from "@/lib/readTime";
@@ -77,11 +77,12 @@ export default async function NotePage({
       {note.coverImage && (
         <div className="ap-hero">
           <Image
-            src={urlFor(note.coverImage).width(1800).height(880).fit("crop").url()}
+            src={urlFor(note.coverImage).width(1600).fit("max").url()}
             alt=""
-            width={1800}
-            height={880}
+            width={imageDimensions(note.coverImage)?.width ?? 1600}
+            height={imageDimensions(note.coverImage)?.height ?? 900}
             className="ap-hero-img"
+            sizes="(max-width: 980px) 100vw, 850px"
             priority
           />
         </div>
