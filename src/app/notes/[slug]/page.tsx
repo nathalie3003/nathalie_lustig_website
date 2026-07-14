@@ -74,7 +74,7 @@ export default async function NotePage({
             {formatDateLong(note.publishedAt)} · {minutes} read
           </span>
         </div>
-        <ScrollReveal as="h1" className="ap-title" trigger="mount" delay={520}>
+        <ScrollReveal key={slug} as="h1" className="ap-title" trigger="mount" delay={520}>
           {note.title}
         </ScrollReveal>
         {note.excerpt && <p className="ap-deck">{note.excerpt}</p>}

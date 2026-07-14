@@ -66,7 +66,7 @@ export function TradeIdeaArticle({
               {dateLabel} · {readLabel}
             </span>
           </div>
-          <ScrollReveal as="h1" className="article-h1" trigger="mount" delay={520}>
+          <ScrollReveal key={resetKey} as="h1" className="article-h1" trigger="mount" delay={520}>
             {note.title}
           </ScrollReveal>
           {note.excerpt && <p className="article-deck">{note.excerpt}</p>}
