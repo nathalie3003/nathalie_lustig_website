@@ -95,12 +95,10 @@ Implementation: a single `articleReady` class toggled on the article root on
 mount; CSS transitions on descendants use staggered `transition-delay`. Mirrors
 the `ScrollReveal` class-toggle approach already in the codebase.
 
-**Open detail to resolve in the plan:** `ScrollReveal` currently reveals on
-scroll-intersection. For the on-load title we either (a) add an opt-in
-`trigger="mount"` prop to `ScrollReveal`, or (b) let its existing 0.25 threshold
-fire immediately since the title is in view on load. Prefer (a) — an explicit
-mount trigger — so timing is deterministic and composes with the staggered
-sequence above. Decide in the implementation plan.
+**Resolved (Nathalie):** add an opt-in `trigger="mount"` prop to `ScrollReveal`.
+For the on-load title it fires on mount rather than scroll-intersection, so
+timing is deterministic and composes with the staggered sequence above. The
+existing scroll-intersection behavior stays the default for all other uses.
 
 ## Reduced motion & accessibility
 
