@@ -8,6 +8,10 @@ type Props = {
   className?: string;
   /** Stagger between characters, in ms. */
   stagger?: number;
+  /** "scroll" (default) reveals on viewport entry; "mount" reveals on load. */
+  trigger?: "scroll" | "mount";
+  /** Base delay before the first character animates, in ms. */
+  delay?: number;
 };
 
 // Headline scroll-reveal: words rise from behind a horizon line.
@@ -24,6 +28,8 @@ export function ScrollReveal({
   as = "h2",
   className,
   stagger = 25,
+  trigger = "scroll",
+  delay = 0,
 }: Props) {
   const ref = useRef<HTMLElement | null>(null);
   const Tag = as as ElementType;
@@ -35,6 +41,12 @@ export function ScrollReveal({
     if (reduce) {
       el.classList.add("sr-visible");
       return;
+    }
+    if (trigger === "mount") {
+      // Reveal on load. rAF ensures the hidden start state paints first,
+      // so the transition actually animates.
+      const raf = requestAnimationFrame(() => el.classList.add("sr-visible"));
+      return () => cancelAnimationFrame(raf);
     }
     const io = new IntersectionObserver(
       (entries) => {
@@ -49,7 +61,7 @@ export function ScrollReveal({
     );
     io.observe(el);
     return () => io.disconnect();
-  }, []);
+  }, [trigger]);
 
   const words = children.split(" ");
   let charIdx = 0;
@@ -64,13 +76,13 @@ export function ScrollReveal({
         const node = (
           <span className="sr-word" key={`w-${wi}`} aria-hidden="true">
             {wordChars.map((ch, ci) => {
-              const delay = charIdx * stagger;
+              const charDelay = delay + charIdx * stagger;
               charIdx += 1;
               return (
                 <span className="sr-mask" key={ci}>
                   <span
                     className="sr-char"
-                    style={{ transitionDelay: `${delay}ms` }}
+                    style={{ transitionDelay: `${charDelay}ms` }}
                   >
                     {ch}
                   </span>
