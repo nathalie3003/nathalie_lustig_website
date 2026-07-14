@@ -1196,6 +1196,72 @@
   }
   .ap-back:hover { color: var(--accent); }
   .ap-rule { border: 0; border-top: 1px solid var(--rule-strong); margin: 0 0 22px; }
+
+  /* ARTICLE-OPEN CHOREOGRAPHY (Tier B) — staggered entrance driven by the
+     display:contents .article-reveal wrapper (ArticleReveal.tsx), keyed per
+     note so it replays on each note-open. The title itself is handled by
+     ScrollReveal (trigger="mount"). */
+  .article-reveal { display: contents; }
+
+  .article-reveal .trade-back,
+  .article-reveal .ap-back,
+  .article-reveal .article-meta-top,
+  .article-reveal .ap-meta,
+  .article-reveal .article-deck,
+  .article-reveal .ap-deck,
+  .article-reveal .article-body > p:first-of-type,
+  .article-reveal .ap-col > p:first-of-type {
+    opacity: 0;
+    transform: translateY(6px);
+    transition:
+      opacity 0.5s ease,
+      transform 0.5s cubic-bezier(0.2, 0.7, 0.2, 1);
+  }
+  .article-reveal .trade-rule {
+    transform: scaleX(0);
+    transform-origin: left center;
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .article-reveal .trade-back,
+  .article-reveal .ap-back { transition-delay: 0.15s; }
+  .article-reveal .trade-rule { transition-delay: 0.25s; }
+  .article-reveal .article-meta-top,
+  .article-reveal .ap-meta { transition-delay: 0.4s; }
+  .article-reveal .article-deck,
+  .article-reveal .ap-deck { transition-delay: 1.05s; }
+  .article-reveal .article-body > p:first-of-type,
+  .article-reveal .ap-col > p:first-of-type { transition-delay: 1.2s; }
+
+  .article-reveal.is-ready .trade-back,
+  .article-reveal.is-ready .ap-back,
+  .article-reveal.is-ready .article-meta-top,
+  .article-reveal.is-ready .ap-meta,
+  .article-reveal.is-ready .article-deck,
+  .article-reveal.is-ready .ap-deck,
+  .article-reveal.is-ready .article-body > p:first-of-type,
+  .article-reveal.is-ready .ap-col > p:first-of-type {
+    opacity: 1;
+    transform: none;
+  }
+  .article-reveal.is-ready .trade-rule { transform: scaleX(1); }
+
+  @media (prefers-reduced-motion: reduce) {
+    .article-reveal .trade-back,
+    .article-reveal .ap-back,
+    .article-reveal .article-meta-top,
+    .article-reveal .ap-meta,
+    .article-reveal .article-deck,
+    .article-reveal .ap-deck,
+    .article-reveal .article-body > p:first-of-type,
+    .article-reveal .ap-col > p:first-of-type,
+    .article-reveal .trade-rule {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+  }
+
   /* Meta strip — left-aligned navy small-caps on a French-Blue hairline,
      matching the site's signature publication grammar. */
   .ap-meta {
