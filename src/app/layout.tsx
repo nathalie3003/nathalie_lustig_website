@@ -41,6 +41,11 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={`${serif.variable} ${sans.variable}`}>
+      <head>
+        <noscript>
+          <style>{`.top-name-mark .bp-mark{opacity:1;transform:none}.top-name-word{clip-path:none;transform:translateY(0)}`}</style>
+        </noscript>
+      </head>
       <body className="site">
         <Chrome footer={<ContactFooter />}>{children}</Chrome>
       </body>

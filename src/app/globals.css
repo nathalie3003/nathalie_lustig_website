@@ -182,6 +182,36 @@
     font-size: 15px;
     letter-spacing: -0.005em;
   }
+  /* Wordmark reveal — plays only on a genuine first visit per session
+     (JS-gated in Nav.tsx). Hidden start state mirrors the ScrollReveal model;
+     repeat visits and reduced motion render it statically via .wm-instant. */
+  .top-name-mark .bp-mark { opacity: 0; transform: scale(0.92); }
+  .top-name-word {
+    display: inline-block;
+    clip-path: inset(0 100% 0 0);
+    transform: translateY(5px);
+  }
+  .top-name-mark.wm-animate .bp-mark {
+    animation: wm-badge 0.5s cubic-bezier(0.2, 0.7, 0.2, 1) 0.35s both;
+  }
+  .top-name-mark.wm-animate .top-name-word {
+    animation: wm-word 0.55s cubic-bezier(0.4, 0, 0.2, 1) 0.5s both;
+  }
+  .top-name-mark.wm-instant .bp-mark { opacity: 1; transform: none; }
+  .top-name-mark.wm-instant .top-name-word {
+    clip-path: inset(0 0 0 0);
+    transform: none;
+  }
+  @keyframes wm-badge { to { opacity: 1; transform: scale(1); } }
+  @keyframes wm-word {
+    to { clip-path: inset(0 0 0 0); transform: translateY(0); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .top-name-mark .bp-mark { opacity: 1; transform: none; }
+    .top-name-word { clip-path: none; transform: none; }
+    .top-name-mark.wm-animate .bp-mark,
+    .top-name-mark.wm-animate .top-name-word { animation: none; }
+  }
   .top-right { display: flex; align-items: center; gap: 12px; }
   .top-links { display: flex; align-items: center; gap: 4px; }
   .top-link {
