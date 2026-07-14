@@ -138,6 +138,28 @@
     border-top: 3px solid var(--accent);
     border-bottom: 1px solid var(--rule);
   }
+  /* Masthead wipe — the accent rule draws in once on load. Pure CSS: the
+     one-shot animation runs on hard loads only; the persistent TopBar never
+     re-creates the element on client navigations, so it does not replay. */
+  .top { border-top-color: transparent; }
+  .top::before {
+    content: "";
+    position: absolute;
+    top: -3px;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--accent);
+    transform: scaleX(0);
+    transform-origin: left center;
+    animation: mast-wipe 0.55s cubic-bezier(0.4, 0, 0.2, 1) both;
+  }
+  @keyframes mast-wipe {
+    to { transform: scaleX(1); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .top::before { animation: none; transform: scaleX(1); }
+  }
   .top-inner {
     max-width: var(--maxw); margin: 0 auto; padding: 15px var(--pad);
     display: flex; align-items: center; justify-content: space-between; gap: 18px;
