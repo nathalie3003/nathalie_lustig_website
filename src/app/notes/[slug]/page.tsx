@@ -43,6 +43,7 @@ export default async function NotePage({
         next={next}
         dateLabel={formatDateLong(note.publishedAt)}
         readLabel={`${minutes} read`}
+        resetKey={slug}
       />
     );
   }
