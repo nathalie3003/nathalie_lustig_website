@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -12,6 +13,51 @@ import { ReadingProgress } from "@/components/ReadingProgress";
 export async function generateStaticParams() {
   const slugs = await getAllNoteSlugs();
   return slugs.map((slug) => ({ slug }));
+}
+
+const SITE_DESCRIPTION =
+  "Notes on rates, credit, and sovereign issuance by Nathalie Lustig.";
+
+// Per-article share metadata: gives LinkedIn/X/Slack this note's own title,
+// summary, and cover image. Notes without a cover fall back to the branded
+// default card from src/app/opengraph-image.tsx.
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+  const { slug } = await params;
+  const note = await getNoteBySlug(slug);
+  if (!note) return {};
+
+  const url = `https://thebasispoint.finance/notes/${slug}`;
+  const description = note.excerpt ?? SITE_DESCRIPTION;
+  const coverUrl = note.coverImage
+    ? urlFor(note.coverImage).width(1200).height(630).fit("crop").url()
+    : undefined;
+
+  return {
+    title: `${note.title} — The Basis Point`,
+    description,
+    alternates: { canonical: url },
+    openGraph: {
+      title: note.title,
+      description,
+      url,
+      siteName: "The Basis Point",
+      type: "article",
+      publishedTime: note.publishedAt,
+      ...(coverUrl
+        ? { images: [{ url: coverUrl, width: 1200, height: 630, alt: note.title }] }
+        : {}),
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: note.title,
+      description,
+      ...(coverUrl ? { images: [coverUrl] } : {}),
+    },
+  };
 }
 
 function formatDateLong(iso: string) {
