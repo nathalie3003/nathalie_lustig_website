@@ -36,7 +36,9 @@ export async function POST(req: NextRequest) {
         Authorization: `Token ${apiKey}`,
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ email_address: email }),
+      // type "regular" skips Buttondown's double opt-in, so no confirmation
+      // email is sent; the subscriber is active immediately.
+      body: JSON.stringify({ email_address: email, type: "regular" }),
     });
   } catch {
     return NextResponse.json(
@@ -45,11 +47,11 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  // 201: new subscriber created. Buttondown sends its own confirmation email.
+  // 201: new subscriber created and active immediately (no double opt-in).
   if (res.status === 201) {
     return NextResponse.json({
       ok: true,
-      message: "Almost there. Check your inbox to confirm.",
+      message: "You're on the list. The next note lands in your inbox.",
     });
   }
 
