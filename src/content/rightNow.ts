@@ -20,7 +20,7 @@ export const rightNow: RightNowRow[] = [
   { label: "Trying to learn", value: "Für Elise on the piano" },
   {
     label: "Defending in arguments",
-    value: "that bonds are interesting, actually",
+    value: "that 'boring' is the highest compliment a bond can earn",
   },
 ];
 

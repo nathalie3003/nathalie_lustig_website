@@ -6,6 +6,8 @@ import { ReadingProgress } from "@/components/ReadingProgress";
 import { TradeToc } from "@/components/TradeToc";
 import { extractHeadings } from "@/lib/toc";
 import type { BondNote, BondNoteCard } from "@/lib/queries";
+import { ArticleReveal } from "@/components/ArticleReveal";
+import { ScrollReveal } from "@/components/ScrollReveal";
 
 function Stars({ n }: { n: number }) {
   return (
@@ -25,12 +27,14 @@ export function TradeIdeaArticle({
   next,
   dateLabel,
   readLabel,
+  resetKey,
 }: {
   note: BondNote;
   prev: BondNoteCard | null;
   next: BondNoteCard | null;
   dateLabel: string;
   readLabel: string;
+  resetKey: string;
 }) {
   const conviction = Math.max(0, Math.min(5, note.conviction ?? 0));
   const headings = extractHeadings(note.body);
@@ -40,6 +44,7 @@ export function TradeIdeaArticle({
     <div className="trade-page">
       <ReadingProgress />
 
+      <ArticleReveal resetKey={resetKey}>
       <header className="trade-hero">
         <div className="trade-wrap">
           <Link href="/#notes" className="trade-back">
@@ -61,7 +66,9 @@ export function TradeIdeaArticle({
               {dateLabel} · {readLabel}
             </span>
           </div>
-          <h1 className="article-h1">{note.title}</h1>
+          <ScrollReveal key={resetKey} as="h1" className="article-h1" trigger="mount" delay={520}>
+            {note.title}
+          </ScrollReveal>
           {note.excerpt && <p className="article-deck">{note.excerpt}</p>}
         </div>
 
@@ -220,6 +227,7 @@ export function TradeIdeaArticle({
           </aside>
         </div>
       </div>
+      </ArticleReveal>
     </div>
   );
 }

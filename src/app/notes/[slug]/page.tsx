@@ -9,6 +9,8 @@ import { noteCat } from "@/lib/noteCat";
 import { readTime } from "@/lib/readTime";
 import { TradeIdeaArticle } from "@/components/TradeIdeaArticle";
 import { ReadingProgress } from "@/components/ReadingProgress";
+import { ArticleReveal } from "@/components/ArticleReveal";
+import { ScrollReveal } from "@/components/ScrollReveal";
 
 export async function generateStaticParams() {
   const slugs = await getAllNoteSlugs();
@@ -89,6 +91,7 @@ export default async function NotePage({
         next={next}
         dateLabel={formatDateLong(note.publishedAt)}
         readLabel={`${minutes} read`}
+        resetKey={slug}
       />
     );
   }
@@ -97,6 +100,7 @@ export default async function NotePage({
     <div className="article-page">
       <ReadingProgress />
 
+      <ArticleReveal resetKey={slug}>
       <header className="ap-head col-wide">
         <Link href="/#notes" className="ap-back">
           <svg width="15" height="15" viewBox="0 0 15 15" fill="none" aria-hidden="true">
@@ -116,7 +120,9 @@ export default async function NotePage({
             {formatDateLong(note.publishedAt)} · {minutes} read
           </span>
         </div>
-        <h1 className="ap-title">{note.title}</h1>
+        <ScrollReveal key={slug} as="h1" className="ap-title" trigger="mount" delay={520}>
+          {note.title}
+        </ScrollReveal>
         {note.excerpt && <p className="ap-deck">{note.excerpt}</p>}
       </header>
 
@@ -175,6 +181,7 @@ export default async function NotePage({
           )}
         </div>
       </article>
+      </ArticleReveal>
     </div>
   );
 }

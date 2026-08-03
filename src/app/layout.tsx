@@ -23,6 +23,11 @@ export const metadata: Metadata = {
   title: "The Basis Point",
   description:
     "The Basis Point — notes on rates, credit, and sovereign issuance by Nathalie Lustig.",
+  alternates: {
+    types: {
+      "application/rss+xml": [{ url: "/rss.xml", title: "The Basis Point" }],
+    },
+  },
   openGraph: {
     title: "The Basis Point",
     description:
@@ -43,6 +48,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" className={`${serif.variable} ${sans.variable}`}>
       <body className="site">
+        <noscript>
+          <style>{`.top-name-mark .bp-mark{opacity:1;transform:none}.top-name-word{clip-path:none;transform:none}.scroll-reveal .sr-char{transform:none}.article-reveal .ap-back,.article-reveal .trade-back,.article-reveal .ap-meta,.article-reveal .article-meta-top,.article-reveal .ap-deck,.article-reveal .article-deck,.article-reveal .ap-col>p:first-of-type,.article-reveal .article-body>p:first-of-type{opacity:1;transform:none}.article-reveal .trade-rule{transform:scaleX(1)}`}</style>
+        </noscript>
         <Chrome footer={<ContactFooter />}>{children}</Chrome>
         <Analytics />
       </body>

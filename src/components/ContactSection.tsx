@@ -8,9 +8,6 @@ const EMAIL = about.contact.find((c) => c.label === "Email")?.value ?? "";
 
 export function ContactSection() {
   const [copied, setCopied] = useState(false);
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [message, setMessage] = useState("");
 
   const onCopy = async () => {
     try {
@@ -21,16 +18,6 @@ export function ContactSection() {
       // Clipboard unavailable — fall back to opening mail client.
       window.location.href = `mailto:${EMAIL}`;
     }
-  };
-
-  const onSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    const subject = name ? `Hello from ${name}` : "Hello";
-    const replyLine = email ? `\n\nReply to: ${email}` : "";
-    const body = (message || "") + replyLine;
-    window.location.href = `mailto:${EMAIL}?subject=${encodeURIComponent(
-      subject,
-    )}&body=${encodeURIComponent(body)}`;
   };
 
   const linkedIn = about.contact.find((c) => c.label === "LinkedIn");
@@ -44,7 +31,7 @@ export function ContactSection() {
             {"Happy to talk bonds, books, or anything in between."}
           </ScrollReveal>
           <p className="contact-lede">
-            Reach me directly, or send a note from here. Both land in the same inbox.
+            Email is the best way to reach me — I read everything that comes in.
           </p>
         </div>
 
@@ -114,50 +101,6 @@ export function ContactSection() {
               ) : null}
             </div>
           </div>
-
-          <form className="contact-form" onSubmit={onSubmit}>
-            <div className="cf-row-pair">
-              <label className="cf-row">
-                <span className="cf-label">Your name</span>
-                <input
-                  className="cf-input"
-                  type="text"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  placeholder="Optional"
-                />
-              </label>
-              <label className="cf-row">
-                <span className="cf-label">Your email</span>
-                <input
-                  className="cf-input"
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="So I can reply"
-                />
-              </label>
-            </div>
-            <label className="cf-row">
-              <span className="cf-label">Message</span>
-              <textarea
-                className="cf-textarea"
-                rows={5}
-                value={message}
-                onChange={(e) => setMessage(e.target.value)}
-                placeholder="What's on your mind?"
-                required
-              />
-            </label>
-            <div className="cf-actions">
-              <button type="submit" className="l-btn l-btn-primary cf-send">
-                Send →
-              </button>
-              <span className="cf-hint">
-                Opens your email client with the note pre-filled.
-              </span>
-            </div>
-          </form>
         </div>
       </div>
     </section>

@@ -26,6 +26,20 @@ export function TopBar() {
   const router = useRouter();
   const onHome = pathname === "/";
 
+  const [wordmarkPhase, setWordmarkPhase] = useState<"" | "wm-animate" | "wm-instant">("");
+
+  useEffect(() => {
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    let seen = false;
+    try {
+      seen = sessionStorage.getItem("bp-wordmark-seen") === "1";
+    } catch {}
+    setWordmarkPhase(reduce || seen ? "wm-instant" : "wm-animate");
+    try {
+      sessionStorage.setItem("bp-wordmark-seen", "1");
+    } catch {}
+  }, []);
+
   useEffect(() => {
     function onDoc(e: MouseEvent) {
       if (notesRef.current && !notesRef.current.contains(e.target as Node)) {
@@ -75,7 +89,7 @@ export function TopBar() {
         <div className="top-left">
           <Link
             href="/#top"
-            className="top-name top-name-mark"
+            className={`top-name top-name-mark ${wordmarkPhase}`.trim()}
             onClick={jump("top")}
             aria-label="The Basis Point — home"
           >
