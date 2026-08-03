@@ -667,7 +667,7 @@
     font-family: var(--font-serif), Georgia, serif;
   }
   .contact-grid {
-    display: grid; grid-template-columns: minmax(0, 320px) minmax(0, 1fr);
+    display: grid; grid-template-columns: minmax(0, 460px);
     gap: 40px; margin-top: 32px; align-items: start;
   }
 

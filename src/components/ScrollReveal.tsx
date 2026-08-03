@@ -70,6 +70,7 @@ export function ScrollReveal({
     <Tag
       ref={ref as unknown as React.Ref<HTMLHeadingElement>}
       className={`scroll-reveal ${className ?? ""}`.trim()}
+      aria-label={children}
     >
       {words.map((word, wi) => {
         const wordChars = Array.from(word);
@@ -98,8 +99,6 @@ export function ScrollReveal({
           </Fragment>
         );
       })}
-      {/* Accessible plain-text fallback for screen readers. */}
-      <span className="sr-sr-only">{children}</span>
     </Tag>
   );
 }

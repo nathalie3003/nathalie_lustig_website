@@ -43,12 +43,9 @@ export default async function HomePage() {
             <h1 className="hero-name">The Basis Point</h1>
             <p className="hero-byline">Notes by Nathalie Lustig</p>
             <p className="hero-standfirst">
-              Bonds sit at the intersection of finance and macroeconomics and
-              that is why I write about them. For me, they are a lens to see
-              how interest rates, inflation, and geopolitical risks shape the
-              broader economy. This ability to see both the big picture and
-              the granular details is what drives my passion for bonds, and
-              why I want to build my career in capital markets.
+              Bond markets are the most honest real-time read on the economy.
+              I write these notes to work out what the market is pricing in,
+              and what it might be missing.
             </p>
             <div className="hero-cta">
               <Link href={latestHref} className="l-btn l-btn-primary">
