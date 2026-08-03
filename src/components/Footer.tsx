@@ -44,7 +44,10 @@ export function ContactFooter() {
       <div className="foot-bar">
         <div className="foot-bar-inner">
           <span>© 2026 Nathalie Lustig</span>
-          <span>Notes on the fixed income market</span>
+          <span className="foot-bar-right">
+            <span>Notes on the fixed income market</span>
+            <a href="/rss.xml">RSS</a>
+          </span>
         </div>
       </div>
     </footer>

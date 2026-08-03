@@ -22,6 +22,11 @@ export const metadata: Metadata = {
   title: "The Basis Point",
   description:
     "The Basis Point — notes on rates, credit, and sovereign issuance by Nathalie Lustig.",
+  alternates: {
+    types: {
+      "application/rss+xml": [{ url: "/rss.xml", title: "The Basis Point" }],
+    },
+  },
   openGraph: {
     title: "The Basis Point",
     description:
