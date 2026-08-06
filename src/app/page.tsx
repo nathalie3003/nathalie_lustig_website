@@ -10,7 +10,6 @@ import { HashScroll } from "@/components/HashScroll";
 import { readLatest } from "@/content/tone";
 import { CATEGORIES, noteCat } from "@/lib/noteCat";
 import { DeskNotesRotator } from "@/components/DeskNotesRotator";
-import { SubscribeForm } from "@/components/SubscribeForm";
 import { YieldCurve } from "@/components/YieldCurve";
 import { getYieldCurve } from "@/lib/marketData";
 import { FALLBACK_CURVE } from "@/content/yieldCurveFallback";
@@ -49,11 +48,10 @@ export default async function HomePage() {
               and what it might be missing.
             </p>
             <div className="hero-cta">
-              <Link href={latestHref} className="l-btn l-btn-ghost">
+              <Link href={latestHref} className="l-btn l-btn-primary">
                 {readLatest}
               </Link>
             </div>
-            <SubscribeForm />
           </section>
 
           <section className="section" id="notes">
