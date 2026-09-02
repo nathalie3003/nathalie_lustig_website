@@ -33,8 +33,13 @@ export default async function HomePage() {
   const latest = notes[0];
 
   // The latest note already leads the page as the featured card, so it is not
-  // repeated in the list directly beneath it.
-  const rows: HomeNote[] = notes.slice(1).map((n) => ({
+  // repeated in the list directly beneath it. The rest are capped: the homepage
+  // is a front page, not the archive, and "All notes" is one click away. Six is
+  // the count that leaves the list a little taller than the rail beside it, so
+  // the rail never ends up setting the section height and stranding empty space
+  // under the notes. The category tabs are built from whatever lands in this
+  // slice, so a tab never offers a filter the visible rows cannot satisfy.
+  const rows: HomeNote[] = notes.slice(1, 7).map((n) => ({
     id: n._id,
     slug: n.slug,
     title: n.title,

@@ -6,6 +6,14 @@ import { rightNow, rightNowMeta } from "@/content/rightNow";
 import { getBooks, getDailyReads } from "@/lib/queries";
 import { urlFor } from "@/lib/sanity.client";
 
+// The rail sits beside the note list, and a grid row is as tall as its taller
+// column. "Right now" is the tallest block in the rail, so showing all of it
+// here would leave dead space under the notes. The homepage takes the first
+// few rows and the About page carries the full set, which is where the
+// personal detail belongs anyway. Ordering in content/rightNow.ts therefore
+// decides what surfaces on the homepage.
+const HOME_RIGHT_NOW_ROWS = 4;
+
 export async function RightRail() {
   const [cmsBooks, cmsReads] = await Promise.all([getBooks(), getDailyReads()]);
 
@@ -74,7 +82,7 @@ export async function RightRail() {
         <div className="rail-block">
           <span className="l-eyebrow rail-block-head">{rightNowMeta.eyebrow}</span>
           <div className="rail-now">
-            {rightNow.map((r) => (
+            {rightNow.slice(0, HOME_RIGHT_NOW_ROWS).map((r) => (
               <div className="rail-now-row" key={r.label}>
                 <div className="rail-now-label">{r.label}</div>
                 <div className="rail-now-value">{r.value}</div>
