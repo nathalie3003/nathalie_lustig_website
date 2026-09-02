@@ -2,7 +2,13 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { getNoteBySlug, getAllNoteSlugs, getAdjacentNotes } from "@/lib/queries";
+import {
+  getNoteBySlug,
+  getAllNoteSlugs,
+  getAdjacentNotes,
+  getReplies,
+  type BondNoteCard,
+} from "@/lib/queries";
 import { urlFor, imageDimensions } from "@/lib/sanity.client";
 import { PortableText } from "@/components/PortableText";
 import { noteCat } from "@/lib/noteCat";
@@ -11,6 +17,7 @@ import { TradeIdeaArticle } from "@/components/TradeIdeaArticle";
 import { ReadingProgress } from "@/components/ReadingProgress";
 import { ArticleReveal } from "@/components/ArticleReveal";
 import { ScrollReveal } from "@/components/ScrollReveal";
+import { Replies } from "@/components/Replies";
 
 export async function generateStaticParams() {
   const slugs = await getAllNoteSlugs();
@@ -70,6 +77,49 @@ function formatDateLong(iso: string) {
   });
 }
 
+function formatDateShort(iso: string) {
+  return new Date(iso).toLocaleDateString("en-GB", {
+    day: "numeric",
+    month: "short",
+    year: "numeric",
+  });
+}
+
+// One keep-reading section for both article layouts. Previously each layout
+// carried its own prev/next nav, which meant a trade idea and a standard note
+// ended a reader's journey differently for no reason.
+function KeepReading({
+  prev,
+  next,
+}: {
+  prev: BondNoteCard | null;
+  next: BondNoteCard | null;
+}) {
+  if (!prev && !next) return null;
+  const cards: { note: BondNoteCard; dir: string }[] = [];
+  if (prev) cards.push({ note: prev, dir: "← Previous note" });
+  if (next) cards.push({ note: next, dir: "Next note →" });
+
+  return (
+    <section className="keep-reading" aria-label="Keep reading">
+      <div className="keep-reading-inner">
+        <span className="keep-reading-label">Keep reading</span>
+        <div className="keep-reading-grid">
+          {cards.map(({ note, dir }) => (
+            <Link key={note._id} href={`/notes/${note.slug}`} className="keep-card">
+              <span className="keep-card-dir">{dir}</span>
+              <span className="keep-card-kicker">
+                {noteCat(note.category).cat} · {formatDateShort(note.publishedAt)}
+              </span>
+              <span className="keep-card-title">{note.title}</span>
+            </Link>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
 export default async function NotePage({
   params,
 }: {
@@ -81,107 +131,88 @@ export default async function NotePage({
 
   const { cat } = noteCat(note.category);
   const minutes = readTime(note.body);
-  const { prev, next } = await getAdjacentNotes(slug);
+  const [{ prev, next }, replies] = await Promise.all([
+    getAdjacentNotes(slug),
+    getReplies(note._id),
+  ]);
 
-  if (note.category === "trade-ideas") {
-    return (
+  const article =
+    note.category === "trade-ideas" ? (
       <TradeIdeaArticle
         note={note}
-        prev={prev}
-        next={next}
         dateLabel={formatDateLong(note.publishedAt)}
         readLabel={`${minutes} read`}
         resetKey={slug}
       />
-    );
-  }
+    ) : (
+      <div className="article-page">
+        <ReadingProgress />
 
-  return (
-    <div className="article-page">
-      <ReadingProgress />
+        <ArticleReveal resetKey={slug}>
+          <header className="ap-head col-wide">
+            <Link href="/notes" className="ap-back">
+              <svg width="15" height="15" viewBox="0 0 15 15" fill="none" aria-hidden="true">
+                <path
+                  d="M9.5 11.5L5.5 7.5L9.5 3.5"
+                  stroke="currentColor"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+              All notes
+            </Link>
+            <div className="ap-meta">
+              {cat && <span className="l-tag">{cat}</span>}
+              <span className="l-smallcaps">
+                {formatDateLong(note.publishedAt)} · {minutes} read
+              </span>
+            </div>
+            <ScrollReveal key={slug} as="h1" className="ap-title" trigger="mount" delay={520}>
+              {note.title}
+            </ScrollReveal>
+            {note.excerpt && <p className="ap-deck">{note.excerpt}</p>}
+          </header>
 
-      <ArticleReveal resetKey={slug}>
-      <header className="ap-head col-wide">
-        <Link href="/#notes" className="ap-back">
-          <svg width="15" height="15" viewBox="0 0 15 15" fill="none" aria-hidden="true">
-            <path
-              d="M9.5 11.5L5.5 7.5L9.5 3.5"
-              stroke="currentColor"
-              strokeWidth="1.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
-          All notes
-        </Link>
-        <div className="ap-meta">
-          {cat && <span className="l-tag">{cat}</span>}
-          <span className="l-smallcaps">
-            {formatDateLong(note.publishedAt)} · {minutes} read
-          </span>
-        </div>
-        <ScrollReveal key={slug} as="h1" className="ap-title" trigger="mount" delay={520}>
-          {note.title}
-        </ScrollReveal>
-        {note.excerpt && <p className="ap-deck">{note.excerpt}</p>}
-      </header>
-
-      {note.coverImage && (
-        <div className="ap-hero">
-          <Image
-            src={urlFor(note.coverImage).width(1600).fit("max").url()}
-            alt=""
-            width={imageDimensions(note.coverImage)?.width ?? 1600}
-            height={imageDimensions(note.coverImage)?.height ?? 900}
-            className="ap-hero-img"
-            sizes="(max-width: 980px) 100vw, 850px"
-            priority
-          />
-        </div>
-      )}
-
-      <article className="ap-body">
-        <div className="ap-col">
-          <PortableText value={note.body} />
-
-          {note.sources && note.sources.length > 0 && (
-            <div className="sources">
-              <span className="sources-label">Sources</span>
-              <ol>
-                {note.sources.map((s, i) => (
-                  <li key={i}>{s}</li>
-                ))}
-              </ol>
+          {note.coverImage && (
+            <div className="ap-hero">
+              <Image
+                src={urlFor(note.coverImage).width(1600).fit("max").url()}
+                alt=""
+                width={imageDimensions(note.coverImage)?.width ?? 1600}
+                height={imageDimensions(note.coverImage)?.height ?? 900}
+                className="ap-hero-img"
+                sizes="(max-width: 980px) 100vw, 850px"
+                priority
+              />
             </div>
           )}
 
-          {(prev || next) && (
-            <nav className="ap-foot" aria-label="Article navigation">
-              <div className="ap-foot-item">
-                {prev && (
-                  <>
-                    <span className="ap-foot-label">← Previous note</span>
-                    <Link className="ap-foot-title" href={`/notes/${prev.slug}`}>
-                      {prev.title}
-                    </Link>
-                  </>
-                )}
-              </div>
-              <div className="ap-foot-item">
-                {next && (
-                  <>
-                    <span className="ap-foot-label">Next note →</span>
-                    <Link className="ap-foot-title" href={`/notes/${next.slug}`}>
-                      {next.title}
-                    </Link>
-                  </>
-                )}
-              </div>
-            </nav>
-          )}
-        </div>
-      </article>
-      </ArticleReveal>
-    </div>
+          <article className="ap-body">
+            <div className="ap-col">
+              <PortableText value={note.body} />
+
+              {note.sources && note.sources.length > 0 && (
+                <div className="sources">
+                  <span className="sources-label">Sources</span>
+                  <ol>
+                    {note.sources.map((s, i) => (
+                      <li key={i}>{s}</li>
+                    ))}
+                  </ol>
+                </div>
+              )}
+            </div>
+          </article>
+        </ArticleReveal>
+      </div>
+    );
+
+  return (
+    <>
+      {article}
+      <Replies noteId={note._id} initial={replies} />
+      <KeepReading prev={prev} next={next} />
+    </>
   );
 }

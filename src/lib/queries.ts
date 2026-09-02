@@ -176,6 +176,28 @@ export async function getSiteSettings(): Promise<SiteSettings | null> {
   );
 }
 
+// --- Replies ---------------------------------------------------------------
+
+export type Reply = {
+  _id: string;
+  name?: string;
+  text: string;
+  createdAt: string;
+};
+
+export async function getReplies(noteId: string): Promise<Reply[]> {
+  return sanityClient.fetch(
+    `*[_type == "reply" && note._ref == $noteId && hidden != true] | order(createdAt asc){
+      _id,
+      name,
+      text,
+      createdAt
+    }`,
+    { noteId },
+    { next: { revalidate: 30, tags: ["reply"] } },
+  );
+}
+
 export async function getAdjacentNotes(
   slug: string,
 ): Promise<{ prev: BondNoteCard | null; next: BondNoteCard | null }> {

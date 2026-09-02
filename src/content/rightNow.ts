@@ -1,5 +1,7 @@
-// Hardcoded for now. Edit this file to update the "Right Now" rows, which
-// appear in the homepage rail and on the About page.
+// Two lists, one per surface. The homepage rail and the About page used to
+// share these rows, which made About read as a repeat of something the visitor
+// had already seen. The rail stays short and factual; About gets the longer,
+// more characterful version.
 
 export type RightNowRow = {
   label: string;
@@ -8,6 +10,9 @@ export type RightNowRow = {
   href?: string;
 };
 
+// Homepage rail. Kept to four short rows: the rail sits beside the note list,
+// and a grid row is as tall as its taller column, so a longer list here strands
+// empty space under the notes. RightRail caps at four regardless.
 export const rightNow: RightNowRow[] = [
   { label: "Based in", value: "London, writing from a coffee shop in Hanoi" },
   {
@@ -21,10 +26,34 @@ export const rightNow: RightNowRow[] = [
     label: "Trying to learn",
     value: "How to stop confusing 'hello' and 'sorry' in Vietnamese",
   },
-  { label: "Reading", value: "The Age of Innocence, mostly for the footnotes" },
+];
+
+// About page. Deliberately different copy from the rail above, so the two
+// surfaces do not read as duplicates.
+export const aboutNow: RightNowRow[] = [
+  {
+    label: "Based in",
+    value:
+      "London, drinking too much Vietnamese coffee and questioning every coffee you will ever buy.",
+    href: "/files/44151.pdf",
+  },
+  {
+    label: "Away from the desk",
+    value:
+      "Skiing, which is non-negotiable, and a self-proclaimed professional pool game.",
+  },
+  {
+    label: "Still learning",
+    value:
+      "Für Elise, and how to stop confusing 'hello' and 'sorry' in Vietnamese.",
+  },
+  {
+    label: "Reading",
+    value: "The Age of Innocence, mostly for the footnotes.",
+  },
   {
     label: "Still arguing that",
-    value: "'Boring' is the highest compliment a bond can earn",
+    value: "'Boring' is the highest compliment a bond can earn.",
   },
 ];
 
