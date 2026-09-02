@@ -1,45 +1,47 @@
 @import "tailwindcss";
 
 @theme {
-  --color-bg: #F7F8FA;
-  --color-surface: #FFFFFF;
-  --color-ink: #14161A;
-  --color-ink-72: rgba(20, 22, 26, 0.72);
-  --color-ink-60: rgba(20, 22, 26, 0.60);
-  --color-ink-45: rgba(20, 22, 26, 0.45);
-  --color-accent: #3A5F8A;
-  --color-accent-soft: #E7ECF3;
-  --color-accent-warm: #A87B5C;
-  --color-rule: #E6E8EC;
+  --color-bg: #FCFAF9;
+  --color-surface: #FFF7F9;
+  --color-ink: #191316;
+  --color-ink-72: rgba(25, 19, 22, 0.72);
+  --color-ink-60: rgba(25, 19, 22, 0.60);
+  --color-ink-45: rgba(25, 19, 22, 0.45);
+  --color-accent: #B23A63;
+  --color-accent-soft: #F7ECEF;
+  --color-rule: #EADFDD;
 
   --font-serif: var(--font-serif), Georgia, serif;
   --font-sans: var(--font-sans), -apple-system, system-ui, sans-serif;
+  --font-mono: var(--font-mono), ui-monospace, SFMono-Regular, monospace;
 }
 
 @layer base {
   :root {
-    --bg: #F7F8FA;
-    --surface: #FFFFFF;
-    --ink: #14161A;
-    --ink-72: rgba(20, 22, 26, 0.72);
-    --ink-60: rgba(20, 22, 26, 0.60);
-    --ink-45: rgba(20, 22, 26, 0.45);
-    --accent: #3A5F8A;
-    --accent-soft: #E7ECF3;
-    --accent-warm: #A87B5C;
-    --rule: #E6E8EC;
-    --rule-strong: #D4D7DD;
-    --card-dark: #0F1C2E;
-    --french-blue-soft: rgba(58,95,138,0.09);
-    --ink-20: rgba(20,22,26,0.18);
+    --bg: #FCFAF9;
+    --surface: #FFF7F9;
+    --tint: #F5EBEA;
+    --ink: #191316;
+    --ink-72: rgba(25, 19, 22, 0.72);
+    --ink-60: rgba(25, 19, 22, 0.60);
+    --ink-45: rgba(25, 19, 22, 0.45);
+    --ink-20: rgba(25, 19, 22, 0.18);
+    --accent: #B23A63;
+    --accent-deep: #7A2246;
+    --accent-soft: #F7ECEF;
+    --petal: #F7D9E3;
+    --rule: #EADFDD;
+    --rule-strong: #E0C6CE;
+    --card-dark: #191316;
+    --accent-tint: rgba(178, 58, 99, 0.09);
     --col-text: 680px;
     --col-wide: 900px;
-    --nav-bg: #FFFFFF;
+    --nav-bg: #FCFAF9;
     --radius: 12px;
     --radius-sm: 9px;
     --radius-card: 16px;
-    --maxw: 1180px;
-    --pad: 56px;
+    --maxw: 1120px;
+    --pad: 32px;
   }
 
   * { box-sizing: border-box; }
@@ -59,6 +61,7 @@
   h1, h2, h3 { font-family: var(--font-serif), Georgia, serif; margin: 0; }
   button { font: inherit; }
   a { color: var(--accent); text-decoration: none; }
+  ::selection { background: var(--petal); }
 
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
@@ -71,7 +74,7 @@
 
   /* shared atoms */
   /* Signature gesture: section labels and editorial eyebrows are set in
-     small-caps navy ink and sit above a 1px navy hairline that runs the
+     mono small-caps raspberry and sit above a 1px raspberry hairline that runs the
      column. Repeated everywhere a section opens, this is the move that
      makes the site read as a publication. */
   .l-kicker {
@@ -81,7 +84,7 @@
     letter-spacing: 0.16em; text-transform: uppercase; color: var(--accent);
   }
   .l-smallcaps {
-    font-family: var(--font-sans), system-ui, sans-serif; font-size: 12px; font-weight: 500;
+    font-family: var(--font-mono), ui-monospace, monospace; font-size: 12px; font-weight: 500;
     letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-45);
     font-feature-settings: 'tnum';
   }
@@ -102,12 +105,20 @@
   .l-btn:hover { transform: translateY(-1px); }
   .l-btn-primary {
     color: #fff; background: var(--accent); border-color: var(--accent);
-    box-shadow: 0 2px 8px rgba(58,95,138,0.22);
+    box-shadow: 0 2px 8px rgba(178,58,99,0.22);
   }
-  .l-btn-primary:hover { box-shadow: 0 6px 16px rgba(58,95,138,0.28); color: #fff; }
+  .l-btn-primary:hover { box-shadow: 0 6px 16px rgba(178,58,99,0.28); color: #fff; }
   .l-btn-ghost { color: var(--ink); background: var(--surface); border: 1px solid var(--rule); }
   .l-btn-ghost:hover { border-color: var(--ink-45); color: var(--ink); }
   .l-btn-sm { padding: 9px 16px; font-size: 13px; }
+  /* Outline variant — the header's "Get in touch" action. Fills on hover. */
+  .l-btn-outline {
+    color: var(--accent); background: transparent;
+    border: 1px solid var(--accent); box-shadow: none;
+  }
+  .l-btn-outline:hover {
+    background: var(--accent); color: var(--surface); box-shadow: none;
+  }
   /* Editorial CV button — ink on paper, hairline border, no fill */
   .l-btn-cv {
     color: var(--ink); background: var(--surface);
@@ -119,17 +130,17 @@
     background: var(--ink); color: var(--surface);
     transform: translateY(-1px);
   }
-  /* Category labels: small-caps navy text, no pill, no fill — the editorial
+  /* Category labels: mono small-caps raspberry, no pill, no fill — the editorial
      read of "department label" rather than a SaaS badge. */
   .l-tag {
-    display: inline-block; font-family: var(--font-sans), system-ui, sans-serif; font-size: 11px;
+    display: inline-block; font-family: var(--font-mono), ui-monospace, monospace; font-size: 11px;
     font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase;
     color: var(--accent); background: none; padding: 0; border: 0; border-radius: 0;
   }
   .l-link { font-family: var(--font-sans), system-ui, sans-serif; font-size: 13.5px; font-weight: 500; color: var(--accent); text-decoration: none; cursor: pointer; }
   .l-link:hover { text-decoration: underline; }
 
-  /* TOP BAR — cream with a French Blue masthead rule across the very top
+  /* TOP BAR: blush with a raspberry masthead rule across the very top
      (the publication grammar move: Economist's red bar, FT's salmon strip). */
   .top {
     position: sticky; top: 0; z-index: 40;
@@ -161,15 +172,17 @@
     .top::before { animation: none; transform: scaleX(1); }
   }
   .top-inner {
-    max-width: var(--maxw); margin: 0 auto; padding: 15px var(--pad);
-    display: flex; align-items: center; justify-content: space-between; gap: 18px;
+    max-width: var(--maxw); margin: 0 auto; padding: 0 var(--pad);
+    min-height: 66px;
+    display: grid; grid-template-columns: 1fr auto 1fr;
+    align-items: center; gap: 24px;
     position: relative;
   }
-  .top-left { display: flex; align-items: center; gap: 22px; }
   .top-name {
     font-size: 17px; font-weight: 600; letter-spacing: -0.012em; white-space: nowrap;
     background: none; border: 0; cursor: pointer; color: var(--ink); padding: 0;
     font-family: var(--font-serif), Georgia, serif; text-decoration: none;
+    justify-self: start;
   }
   .top-name-mark {
     display: inline-flex;
@@ -179,8 +192,8 @@
   }
   .top-name-mark .bp-mark { display: block; }
   .top-name-word {
-    font-size: 15px;
-    letter-spacing: -0.005em;
+    font-size: 19px;
+    letter-spacing: -0.01em;
   }
   /* Wordmark reveal — plays only on a genuine first visit per session
      (JS-gated in Nav.tsx). Hidden start state mirrors the ScrollReveal model;
@@ -212,11 +225,11 @@
     .top-name-mark.wm-animate .bp-mark,
     .top-name-mark.wm-animate .top-name-word { animation: none; }
   }
-  .top-right { display: flex; align-items: center; gap: 12px; }
-  .top-links { display: flex; align-items: center; gap: 4px; }
+  .top-right { display: flex; align-items: center; gap: 8px; justify-self: end; }
+  .top-links { display: flex; align-items: center; gap: 4px; justify-self: center; }
   .top-link {
-    font-family: var(--font-sans), system-ui, sans-serif; font-size: 14px; font-weight: 500; color: var(--ink-72);
-    background: none; border: 0; cursor: pointer; padding: 8px 12px; border-radius: var(--radius-sm);
+    font-family: var(--font-sans), system-ui, sans-serif; font-size: 14.5px; font-weight: 500; color: var(--ink);
+    background: none; border: 0; cursor: pointer; padding: 8px 14px; border-radius: 6px;
     transition: color 120ms ease, background 120ms ease;
     text-decoration: none;
   }
@@ -232,7 +245,7 @@
   .notes-pop {
     position: absolute; top: 100%; left: 0; min-width: 280px;
     background: var(--surface); border: 1px solid var(--rule); border-radius: var(--radius-card);
-    box-shadow: 0 18px 50px rgba(20,22,26,0.16); padding: 14px 8px 8px; z-index: 50;
+    box-shadow: 0 18px 50px rgba(25,19,22,0.16); padding: 14px 8px 8px; z-index: 50;
     margin-top: 0;
     animation: nl-pop 140ms cubic-bezier(0.2,0.7,0.2,1);
   }
@@ -242,7 +255,7 @@
     color: var(--ink); text-decoration: none; transition: background 120ms ease;
   }
   .np-row:hover { background: var(--accent-soft); }
-  .np-all { background: rgba(58,95,138,0.04); }
+  .np-all { background: rgba(178,58,99,0.05); }
   .np-title { font-family: var(--font-serif), Georgia, serif; font-size: 15px; font-weight: 600; letter-spacing: -0.005em; }
   .np-sub { font-family: var(--font-sans), system-ui, sans-serif; font-size: 11.5px; color: var(--ink-45); }
   .np-rule { height: 1px; background: var(--rule); margin: 6px 6px; }
@@ -269,7 +282,7 @@
   .menu-pop {
     position: absolute; top: calc(100% + 10px); right: var(--pad); width: 280px;
     background: var(--surface); border: 1px solid var(--rule); border-radius: var(--radius-card);
-    box-shadow: 0 18px 50px rgba(20,22,26,0.16); padding: 8px; z-index: 50;
+    box-shadow: 0 18px 50px rgba(25,19,22,0.16); padding: 8px; z-index: 50;
     animation: nl-pop 140ms cubic-bezier(0.2,0.7,0.2,1);
   }
   @keyframes nl-pop { from { opacity: 0; } to { opacity: 1; } }
@@ -320,7 +333,7 @@
   .cat-chip:hover { color: var(--ink); border-color: var(--ink-45); }
   .cat-chip-active {
     color: #fff; background: var(--accent); border-color: var(--accent);
-    box-shadow: 0 2px 8px rgba(58,95,138,0.22);
+    box-shadow: 0 2px 8px rgba(178,58,99,0.22);
   }
   .cat-chip-active:hover { color: #fff; border-color: var(--accent); }
   .notes-index-list { gap: 0; }
@@ -354,7 +367,7 @@
 
   /* hero */
   .hero { padding: 72px 0 26px; }
-  /* Masthead device — small-caps navy date strip with a navy hairline below.
+  /* Masthead device: mono small-caps date strip with a raspberry hairline below.
      The signature gesture appears here too. */
   .hero-eyebrow {
     display: flex; align-items: center; gap: 12px;
@@ -447,7 +460,7 @@
   }
   .yield-tracer {
     fill: var(--accent); stroke: #fff; stroke-width: 2;
-    filter: drop-shadow(0 1px 3px rgba(58, 95, 138, 0.45));
+    filter: drop-shadow(0 1px 3px rgba(178, 58, 99, 0.45));
   }
   .yield-line {
     stroke: var(--accent); stroke-width: 2;
@@ -496,7 +509,7 @@
     color: var(--ink); letter-spacing: 0.04em;
     transition: background 160ms ease, border-color 160ms ease, color 160ms ease;
   }
-  .yield-redraw:hover { background: rgba(58,95,138,0.06); border-color: var(--accent); color: var(--accent); }
+  .yield-redraw:hover { background: rgba(178,58,99,0.06); border-color: var(--accent); color: var(--accent); }
   .yield-redraw:disabled { opacity: 0.4; cursor: not-allowed; }
   @media (max-width: 720px) {
     .yield-caption { position: static; margin-top: 2px; }
@@ -569,8 +582,8 @@
   .book-cover {
     display: block; width: 96px; height: 144px; border-radius: 4px;
     box-shadow:
-      0 1px 2px rgba(20,22,26,0.10),
-      0 8px 22px rgba(20,22,26,0.18);
+      0 1px 2px rgba(25,19,22,0.10),
+      0 8px 22px rgba(25,19,22,0.18);
     background: var(--accent-soft); object-fit: cover;
     transition: transform 260ms cubic-bezier(0.2,0.7,0.2,1),
                 box-shadow 260ms cubic-bezier(0.2,0.7,0.2,1);
@@ -578,8 +591,8 @@
   .book:hover .book-cover {
     transform: translateY(-3px) rotate(-1.2deg);
     box-shadow:
-      0 2px 4px rgba(20,22,26,0.12),
-      0 14px 32px rgba(20,22,26,0.22);
+      0 2px 4px rgba(25,19,22,0.12),
+      0 14px 32px rgba(25,19,22,0.24);
   }
   .book-meta { display: flex; flex-direction: column; gap: 3px; min-width: 0; padding-top: 4px; }
   .book-status {
@@ -602,8 +615,8 @@
   }
   .read-back:hover { color: var(--accent); }
   .read-head { border-bottom: 1px solid var(--rule); padding-bottom: 26px; margin-bottom: 30px; }
-  /* Signature gesture on the note detail: meta strip sits above a navy
-     hairline and is set in the same small-caps navy ink as section labels. */
+  /* Signature gesture on the note detail: meta strip sits above a raspberry
+     hairline and is set in the same mono small-caps raspberry as section labels. */
   .read-meta-top {
     display: flex; align-items: center; gap: 14px; margin-bottom: 18px;
     padding-bottom: 12px; border-bottom: 1px solid var(--accent);
@@ -676,104 +689,81 @@
     .sr-char { transform: none; transition: none; }
   }
 
-  /* CONTACT SECTION (below Projects) */
+  /* CONTACT BAND — sky photograph under a gradient wash, folding in on scroll.
+     Rendered site-wide from Chrome.tsx, directly above the footer. */
   .band-contact {
-    background: var(--surface);
-    border-top: 1px solid var(--rule);
-    padding: 64px 0 80px;
+    position: relative; overflow: hidden;
+    background: #EFE6DC; color: var(--ink);
+    border-top: 0; padding: 0;
   }
-  .contact-head { max-width: 720px; }
-  .contact-title {
-    font-size: 36px; font-weight: 600; letter-spacing: -0.02em; line-height: 1.1;
-    margin: 8px 0 12px; text-wrap: balance;
+  .contact-sky {
+    object-fit: cover; object-position: center 58%;
   }
-  .contact-lede {
-    font-size: 16px; line-height: 1.5; color: var(--ink-72); margin: 0; max-width: 60ch;
-    font-family: var(--font-serif), Georgia, serif;
+  .contact-wash {
+    position: absolute; inset: 0;
+    background: linear-gradient(180deg, rgba(252,247,246,0.62), rgba(255,247,249,0.8));
+  }
+  .contact-inner {
+    position: relative;
+    max-width: var(--maxw); margin: 0 auto; padding: 84px var(--pad);
   }
   .contact-grid {
-    display: grid; grid-template-columns: minmax(0, 460px);
-    gap: 40px; margin-top: 32px; align-items: start;
+    display: grid; grid-template-columns: minmax(0,1.2fr) minmax(0,1fr);
+    gap: 72px; align-items: end;
   }
-
-  /* Left column — direct contact */
-  .contact-direct { display: flex; flex-direction: column; gap: 16px; }
-  .contact-email {
-    display: grid; grid-template-columns: auto 1fr auto;
-    grid-template-rows: auto auto; gap: 4px 10px;
-    align-items: baseline; padding: 14px 16px;
-    background: var(--surface); border: 1px solid var(--rule); border-radius: var(--radius);
-    cursor: pointer; text-align: left; font: inherit;
-    transition: border-color 140ms ease, background 140ms ease;
+  .contact-eyebrow {
+    display: block;
+    font-family: var(--font-mono), ui-monospace, monospace;
+    font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--accent);
   }
-  .contact-email:hover { border-color: var(--ink); background: rgba(58,95,138,0.03); }
-  .contact-email-label {
-    grid-column: 1; grid-row: 1;
-    font-family: var(--font-sans), system-ui, sans-serif; font-size: 10.5px; font-weight: 600;
-    letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-45);
+  .contact-title {
+    font-size: 38px; line-height: 1.15; font-weight: 600; letter-spacing: -0.026em;
+    margin: 16px 0 0; max-width: 26ch; text-wrap: pretty;
   }
-  .contact-email-action {
-    grid-column: 3; grid-row: 1;
-    font-family: var(--font-sans), system-ui, sans-serif; font-size: 10.5px; font-weight: 700;
-    letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent);
+  .contact-lede {
+    font-family: var(--font-serif), Georgia, serif; font-style: italic;
+    font-size: 20px; line-height: 1.45; font-weight: 400; color: var(--ink-60);
+    margin: 14px 0 0; max-width: 40ch;
   }
-  .contact-email-value {
-    grid-column: 1 / -1; grid-row: 2;
-    font-family: var(--font-serif), Georgia, serif; font-size: 16px;
-    color: var(--ink); word-break: break-all;
+  .contact-direct { display: flex; flex-direction: column; gap: 14px; }
+  .contact-row {
+    display: flex; align-items: center; justify-content: space-between; gap: 16px;
+    padding: 18px 0; border-top: 1px solid rgba(25,19,22,0.2);
+    color: var(--ink); text-decoration: none;
+    transition: color 160ms ease;
   }
-
-  .contact-elsewhere { display: flex; flex-direction: column; }
-  .contact-link {
-    display: grid; grid-template-columns: 80px 1fr auto;
-    gap: 14px; align-items: center;
-    padding: 14px 0; border-bottom: 1px solid var(--rule);
-    text-decoration: none; color: var(--ink);
-    transition: padding 140ms ease;
-  }
-  .contact-link:last-child { border-bottom: 0; }
-  .contact-link:hover { padding-left: 6px; }
-  .contact-link-btn {
-    background: none; border: 0; border-bottom: 1px solid var(--rule);
-    width: 100%; font: inherit; text-align: left; cursor: pointer;
-  }
+  a.contact-row:hover { color: var(--accent); }
   .cl-label {
-    font-family: var(--font-sans), system-ui, sans-serif; font-size: 10.5px; font-weight: 600;
-    letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-45);
+    display: block;
+    font-family: var(--font-mono), ui-monospace, monospace;
+    font-size: 10.5px; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--ink-45);
   }
   .cl-value {
-    font-family: var(--font-serif), Georgia, serif; font-size: 14.5px; color: var(--ink);
-    min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+    display: block; font-family: var(--font-serif), Georgia, serif;
+    font-size: 18px; margin-top: 5px; color: inherit;
   }
-  .cl-action {
-    display: inline-flex; align-items: center; gap: 5px;
-    font-family: var(--font-sans), system-ui, sans-serif; font-size: 10.5px;
-    font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase;
-    color: var(--ink-45); transition: color 140ms ease;
+  .contact-copy {
+    padding: 9px 15px; border-radius: 6px;
+    border: 1px solid rgba(25,19,22,0.32); background: rgba(255,255,255,0.35);
+    color: var(--ink); font-family: var(--font-sans), system-ui, sans-serif;
+    font-size: 13px; font-weight: 500; cursor: pointer; white-space: nowrap;
+    transition: background 160ms ease;
   }
-  .contact-link:hover .cl-action { color: var(--accent); }
-  .cl-action svg { display: block; }
+  .contact-copy:hover { background: rgba(255,255,255,0.75); }
+  .contact-arrow { font-size: 15px; color: var(--ink-45); }
 
-  /* Right column — form */
-  .contact-form { display: flex; flex-direction: column; gap: 14px; }
-  .cf-row-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-  .cf-row { display: flex; flex-direction: column; gap: 5px; }
-  .cf-label {
-    font-family: var(--font-sans), system-ui, sans-serif; font-size: 10.5px; font-weight: 600;
-    letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-45);
+  /* Fold-in — children rise and unrotate once the band enters the viewport.
+     ContactSection.tsx adds .fold-in; per-item stagger via inline animationDelay. */
+  @keyframes bp-fold {
+    from { opacity: 0; transform: translateY(16px) rotateX(14deg); }
+    to   { opacity: 1; transform: none; }
   }
-  .cf-input, .cf-textarea {
-    font-family: var(--font-serif), Georgia, serif; font-size: 15px; line-height: 1.5;
-    color: var(--ink); background: var(--surface);
-    border: 1px solid var(--rule); border-radius: var(--radius-sm);
-    padding: 10px 12px; transition: border-color 140ms ease;
-  }
-  .cf-input:focus, .cf-textarea:focus { outline: none; border-color: var(--ink); }
-  .cf-textarea { resize: vertical; min-height: 120px; }
-  .cf-actions { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; margin-top: 4px; }
-  .cf-hint {
-    font-family: var(--font-sans), system-ui, sans-serif; font-size: 11.5px;
-    color: var(--ink-45); font-style: italic;
+  .fold { transform-origin: 50% 100%; opacity: 0; }
+  .fold.fold-in { animation: bp-fold 780ms cubic-bezier(0.22,0.61,0.36,1) both; }
+  @media (prefers-reduced-motion: reduce) {
+    .fold, .fold.fold-in { opacity: 1; transform: none; animation: none; }
   }
 
   /* SLIM HERO — name + 1-line tagline + 2 CTAs only */
@@ -792,7 +782,7 @@
   .recent-row:last-child { border-bottom: 0; }
   .recent-row:hover {
     transform: translateY(-2px);
-    box-shadow: 0 6px 18px rgba(15, 18, 28, 0.06);
+    box-shadow: 0 6px 18px rgba(25, 19, 22, 0.08);
   }
   .recent-link {
     display: flex; gap: 16px; align-items: flex-start;
@@ -807,7 +797,7 @@
     display: flex; justify-content: space-between; align-items: baseline; gap: 12px;
   }
   .recent-cat {
-    font-family: var(--font-sans), system-ui, sans-serif; font-size: 10.5px; font-weight: 700;
+    font-family: var(--font-mono), ui-monospace, monospace; font-size: 10.5px; font-weight: 700;
     letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent);
   }
   .recent-title {
@@ -822,7 +812,7 @@
     overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
   }
   .recent-date {
-    font-family: var(--font-sans), system-ui, sans-serif; font-size: 11.5px;
+    font-family: var(--font-mono), ui-monospace, monospace; font-size: 11.5px;
     color: var(--ink-45); letter-spacing: 0.04em; white-space: nowrap;
   }
   @media (prefers-reduced-motion: reduce) {
@@ -876,35 +866,21 @@
   }
   .about-portrait-wrap { position: sticky; top: 90px; }
 
-  /* CONTACT FOOTER */
-  .foot { flex-shrink: 0; border-top: 1px solid var(--rule); background: var(--surface); margin-top: 64px; }
-  .foot-inner {
-    max-width: var(--maxw); margin: 0 auto; padding: 44px var(--pad) 36px;
-    display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 48px; align-items: start;
+  /* FOOTER — single bar. The contact band above it carries the real content. */
+  .foot {
+    flex-shrink: 0; border-top: 1px solid var(--rule);
+    background: #FFFFFF; margin-top: 0;
   }
-  .foot-lead {
-    font-family: var(--font-serif), Georgia, serif;
-    font-size: 24px; font-weight: 600; letter-spacing: -0.016em; line-height: 1.28;
-    margin: 0; max-width: 14em; text-wrap: balance; color: var(--ink);
-  }
-  .foot-contact {
-    display: grid; grid-template-columns: 72px 1fr; row-gap: 11px; column-gap: 16px; align-self: center;
-  }
-  .foot-contact dt {
-    font-family: var(--font-sans), system-ui, sans-serif; font-size: 10px; font-weight: 600;
-    letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-45); padding-top: 3px;
-  }
-  .foot-contact dd { margin: 0; font-family: var(--font-sans), system-ui, sans-serif; font-size: 14px; }
-  .foot-contact dd a { color: var(--ink); }
-  .foot-contact dd a:hover { color: var(--accent); text-decoration: none; }
-  .foot-bar { border-top: 1px solid var(--rule); }
+  .foot-bar { border-top: 0; }
   .foot-bar-inner {
-    max-width: var(--maxw); margin: 0 auto; padding: 18px var(--pad) 22px;
-    display: flex; align-items: center; justify-content: space-between; gap: 16px;
-    font-family: var(--font-sans), system-ui, sans-serif; font-size: 12.5px; color: var(--ink-45);
+    max-width: var(--maxw); margin: 0 auto; padding: 24px var(--pad);
+    display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
+    gap: 16px;
+    font-family: var(--font-sans), system-ui, sans-serif; font-size: 13px;
+    color: var(--ink-60);
   }
-  .foot-bar-right { display: inline-flex; align-items: center; gap: 16px; }
-  .foot-bar a { color: var(--ink-45); }
+  .foot-bar-right { display: inline-flex; align-items: center; gap: 22px; }
+  .foot-bar a { color: var(--ink-60); }
   .foot-bar a:hover { color: var(--accent); }
 
   /* ============================================================
@@ -938,10 +914,10 @@
     border-bottom: 1px solid var(--accent);
   }
   /* Scoped tag-pill — only inside the trade meta strip, so the global
-     .l-tag (small-caps navy, no pill) used elsewhere is untouched. */
+     .l-tag (mono small-caps raspberry, no pill) used elsewhere is untouched. */
   .article-meta-top .l-tag {
     font-weight: 600; letter-spacing: 0.06em;
-    background: var(--french-blue-soft); padding: 3px 9px; border-radius: 3px;
+    background: var(--accent-tint); padding: 3px 9px; border-radius: 3px;
   }
   .article-meta-top .l-smallcaps { color: var(--ink-45); }
   .article-h1 {
@@ -964,10 +940,10 @@
     margin: 2.4em 0 0.7em; padding-top: 1.4em; border-top: 1px solid var(--rule);
   }
   .article-body h2:first-of-type { margin-top: 0; }
-  /* French Blue section-label eyebrow — optional, sits above a heading.
+  /* Raspberry section-label eyebrow, optional, sits above a heading.
      Shared by trade (.article-body) and general (.ap-col) note bodies. */
-  .article-body .section-label-fb,
-  .ap-col .section-label-fb {
+  .article-body .section-label,
+  .ap-col .section-label {
     display: block;
     font-family: var(--font-sans), system-ui, sans-serif;
     font-size: 10px; font-weight: 600; letter-spacing: 0.14em;
@@ -977,8 +953,8 @@
   }
   /* Eyebrow immediately above a heading: the rule sits above the eyebrow and
      the heading attaches flush (rule → label → heading reads as one unit). */
-  .article-body .section-label-fb + h2,
-  .ap-col .section-label-fb + h2 {
+  .article-body .section-label + h2,
+  .ap-col .section-label + h2 {
     margin-top: 0; padding-top: 0; border-top: 0;
   }
   /* Sub-heading (H3) — a lighter heading than the ruled H2. */
@@ -1007,7 +983,7 @@
     line-height: 0.78; padding-right: 10px; padding-top: 6px; color: var(--ink);
   }
 
-  /* Executive summary — dark navy card */
+  /* Executive summary: dark ink card */
   .exec-summary {
     margin-bottom: 2.2em; padding: 22px 24px;
     background: var(--card-dark); border-radius: var(--radius-sm);
@@ -1169,7 +1145,7 @@
     color: var(--accent); font-weight: 600; font-style: normal;
   }
   .tc-bullets.risks .bull-icon { color: var(--ink-45); }
-  .tc-summary { padding: 16px 20px; background: var(--french-blue-soft); }
+  .tc-summary { padding: 16px 20px; background: var(--accent-tint); }
   .tc-summary-text {
     margin: 6px 0 0; font-family: var(--font-serif), Georgia, serif; font-size: 14px;
     font-style: italic; line-height: 1.55; color: var(--ink-72);
@@ -1288,7 +1264,7 @@
     }
   }
 
-  /* Meta strip — left-aligned navy small-caps on a French-Blue hairline,
+  /* Meta strip: left-aligned mono small-caps on a raspberry hairline,
      matching the site's signature publication grammar. */
   .ap-meta {
     display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
@@ -1457,8 +1433,6 @@
   .read-title { font-size: 34px; }
   .recent-link { grid-template-columns: 1fr; gap: 4px; }
   .contact-grid { grid-template-columns: 1fr; gap: 32px; }
-  .cf-row-pair { grid-template-columns: 1fr; }
-  .foot-inner { grid-template-columns: 1fr; gap: 28px; }
 }
 @media (max-width: 760px) {
   .top-links { display: none; }
@@ -1521,7 +1495,7 @@
   flex-direction: row;
   overflow: hidden;
   transform-origin: top center;
-  box-shadow: 0 30px 70px -32px rgba(20, 22, 26, 0.22);
+  box-shadow: 0 30px 70px -32px rgba(25, 19, 22, 0.24);
 }
 
 .stack-card-media {
@@ -1539,7 +1513,7 @@
   object-fit: cover;
 }
 .stack-card-media.is-contain {
-  background: #FAF6EF;
+  background: var(--tint);
 }
 .stack-card-media.is-contain img {
   object-fit: contain;
@@ -1580,7 +1554,7 @@
   color: var(--accent);
 }
 .stack-pill.is-soon {
-  background: rgba(20, 22, 26, 0.06);
+  background: rgba(25, 19, 22, 0.06);
   color: var(--ink-72);
 }
 .stack-pill-dot {
@@ -1592,7 +1566,7 @@
 }
 .stack-pill.is-soon .stack-pill-dot {
   background: var(--ink-45);
-  box-shadow: 0 0 0 3px rgba(20, 22, 26, 0.08);
+  box-shadow: 0 0 0 3px rgba(25, 19, 22, 0.08);
 }
 
 .stack-card-title {
