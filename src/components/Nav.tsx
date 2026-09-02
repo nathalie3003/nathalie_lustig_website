@@ -141,7 +141,7 @@ export function TopBar() {
             )}
           </div>
 
-          <Link href="/#about" className="top-link" onClick={jump("about")}>
+          <Link href="/about" className="top-link">
             About
           </Link>
           <Link href="/#projects" className="top-link" onClick={jump("projects")}>
@@ -190,7 +190,7 @@ export function TopBar() {
                 </Link>
               ))}
             </div>
-            <Link href="/#about" className="menu-row" onClick={jump("about")}>
+            <Link href="/about" className="menu-row" onClick={() => setMobileOpen(false)}>
               <span className="mr-title">About</span>
             </Link>
             <Link href="/#projects" className="menu-row" onClick={jump("projects")}>

@@ -52,11 +52,13 @@ typography:
     letterSpacing: "0.14em"
     fontFeature: "uppercase"
 rounded:
+  hair: "3px"
+  xs: "6px"
   sm: "9px"
   md: "12px"
   card: "16px"
+  stack: "20px"
   pill: "999px"
-  sharp: "4px"
 spacing:
   xs: "4px"
   sm: "12px"
@@ -175,6 +177,16 @@ a near-black warm ink do all the signalling work.
 - **Petal** (#F7D9E3): Text selection and the light end of the rail's accent
   gradient. It is a tint, never a text or border colour.
 - **Accent Soft** (#F7ECEF): Hover fills behind nav links and dropdown rows.
+
+### State
+Two colours exist outside the palette because they encode state rather than
+brand, and only ever appear as a 6px dot beside a mono status line on a project
+card. They are the single sanctioned exception to the one-working-colour rule.
+- **Live** (#4C7A54): A project that is up and reachable.
+- **In progress** (#C8A96A): A project being rebuilt.
+
+The dot is never the only signal; the status word beside it carries the same
+meaning, so the pair stays readable without colour vision.
 
 ### Named Rules
 **The One Working Color Rule.** Raspberry is the only saturated colour on any given

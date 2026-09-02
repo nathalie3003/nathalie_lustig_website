@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import "./home.css";
 
 @theme {
   --color-bg: #FCFAF9;
@@ -37,9 +38,13 @@
     --col-text: 680px;
     --col-wide: 900px;
     --nav-bg: #FCFAF9;
-    --radius: 12px;
+    --radius-hair: 3px;
+    --radius-xs: 6px;
     --radius-sm: 9px;
+    --radius: 12px;
     --radius-card: 16px;
+    --radius-stack: 20px;
+    --radius-pill: 999px;
     --maxw: 1120px;
     --pad: 32px;
   }
@@ -357,50 +362,6 @@
   .band-projects { background: var(--bg); padding: 60px 0 72px; }
   #top, #notes { scroll-margin-top: 70px; }
 
-  .home {
-    max-width: var(--maxw); margin: 0 auto; padding: 0 var(--pad);
-    display: grid; grid-template-columns: minmax(0,1fr) 312px; gap: 60px;
-    align-items: start;
-  }
-  .home-main { min-width: 0; }
-  .home-rail { position: sticky; top: 86px; }
-
-  /* hero */
-  .hero { padding: 72px 0 26px; }
-  /* Masthead device: mono small-caps date strip with a raspberry hairline below.
-     The signature gesture appears here too. */
-  .hero-eyebrow {
-    display: flex; align-items: center; gap: 12px;
-    padding-bottom: 12px; margin-bottom: 22px;
-    border-bottom: 1px solid var(--accent);
-    font-family: var(--font-sans), system-ui, sans-serif; font-size: 11.5px;
-    font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase;
-    color: var(--accent);
-  }
-  .hero-eyebrow-dot { width: 4px; height: 4px; background: var(--accent); border-radius: 999px; }
-  .hero-name { font-size: 56px; font-weight: 600; letter-spacing: -0.028em; line-height: 1.0; margin-bottom: 24px; }
-  .hero-byline {
-    font-family: var(--font-serif), Georgia, serif;
-    font-size: 14.5px;
-    color: var(--ink-60);
-    /* Negative top margin offsets .hero-slim .hero-name { margin-bottom: 14px }
-       so the byline visually groups with the masthead. If that h1 margin changes,
-       adjust this value to keep the same tight gap. */
-    margin: -16px 0 22px;
-    line-height: 1.3;
-    font-weight: 400;
-  }
-  /* Editorial standfirst: serif, set in ink, slightly larger than body.
-     Fills the main column to the right rail — no narrower cap, so lines
-     wrap on the column edge rather than under the name. */
-  .hero-standfirst {
-    font-family: var(--font-serif), Georgia, serif;
-    font-size: 19px; line-height: 1.55;
-    color: var(--ink); margin: 0 0 28px;
-    text-wrap: pretty;
-  }
-  .hero-cta { display: flex; gap: 12px; flex-wrap: wrap; }
-
   /* email capture */
   .hero-subscribe { margin-top: 22px; max-width: 440px; }
   .subscribe-label {
@@ -429,91 +390,6 @@
   /* notes list */
   .section { padding: 46px 0; border-top: 1px solid var(--rule); }
   .section-head { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 22px; }
-
-  /* Yield curve section — homepage signature moment */
-  .yield-section { margin-top: 56px; }
-  .yield-head { display: flex; flex-direction: column; gap: 4px; margin-bottom: 18px; position: relative; }
-  .yield-sub {
-    margin: 0; font-family: var(--font-serif), Georgia, serif;
-    font-size: 14.5px; color: var(--ink-45); line-height: 1.4;
-  }
-  .yield-caption {
-    position: absolute; right: 0; top: 0;
-    font-family: var(--font-sans), system-ui, sans-serif; font-size: 11px;
-    color: var(--ink-45); letter-spacing: 0.04em;
-  }
-  .yield-chart {
-    position: relative; border: 1px solid var(--rule); border-radius: 10px;
-    padding: 20px 16px 16px; background: rgba(255,255,255,0.4);
-  }
-  .yield-svg { display: block; width: 100%; height: auto; max-height: 280px; }
-  .yield-baseline { stroke: var(--rule); stroke-width: 1; }
-  .yield-y-label, .yield-tenor {
-    font-family: var(--font-sans), system-ui, sans-serif; font-size: 10.5px;
-    font-weight: 600; letter-spacing: 0.08em; fill: var(--ink-45);
-    text-transform: uppercase;
-  }
-  .yield-axis-title {
-    font-family: var(--font-sans), system-ui, sans-serif; font-size: 11px;
-    font-weight: 600; letter-spacing: 0.12em; fill: var(--ink-45);
-    text-transform: uppercase;
-  }
-  .yield-tracer {
-    fill: var(--accent); stroke: #fff; stroke-width: 2;
-    filter: drop-shadow(0 1px 3px rgba(178, 58, 99, 0.45));
-  }
-  .yield-line {
-    stroke: var(--accent); stroke-width: 2;
-    stroke-linecap: round; stroke-linejoin: round;
-  }
-  .yield-line-draw {
-    stroke-dasharray: 1000;
-    stroke-dashoffset: 1000;
-    /* Slow, seamless ease-in-out — matches the 21st.dev pen-stroke feel. */
-    animation: yieldDraw 3s cubic-bezier(0.42, 0, 0.58, 1) forwards;
-  }
-  @keyframes yieldDraw {
-    from { opacity: 0.6; stroke-dashoffset: 1000; }
-    to   { opacity: 1; stroke-dashoffset: 0; }
-  }
-  .yield-dot-group {
-    opacity: 0; transform: scale(0);
-    animation: yieldDot 0.28s ease-out forwards;
-    cursor: pointer;
-  }
-  @keyframes yieldDot {
-    to { opacity: 1; transform: scale(1); }
-  }
-  .yield-gridline {
-    stroke: var(--rule); stroke-width: 1; stroke-dasharray: 2 4; opacity: 0.55;
-  }
-  @media (prefers-reduced-motion: reduce) {
-    .yield-line-draw { stroke-dasharray: none; stroke-dashoffset: 0; animation: none; }
-    .yield-dot-group { opacity: 1; transform: scale(1); animation: none; }
-    .yield-tracer { display: none; }
-  }
-  .yield-dot { fill: var(--accent); stroke: #fff; stroke-width: 2; }
-  .yield-dot-hit { fill: transparent; cursor: pointer; }
-  .yield-guide { stroke: var(--rule); stroke-width: 1; stroke-dasharray: 3 3; }
-  .yield-pill rect { fill: var(--ink); }
-  .yield-pill-text {
-    font-family: var(--font-sans), system-ui, sans-serif; font-size: 11px;
-    font-weight: 600; fill: #fff; letter-spacing: 0.02em;
-  }
-  .yield-redraw {
-    position: absolute; right: 14px; bottom: 12px;
-    display: inline-flex; align-items: center; gap: 6px;
-    background: transparent; border: 1px solid var(--rule); border-radius: 6px;
-    padding: 7px 14px; cursor: pointer;
-    font-family: var(--font-sans), system-ui, sans-serif; font-size: 11.5px;
-    color: var(--ink); letter-spacing: 0.04em;
-    transition: background 160ms ease, border-color 160ms ease, color 160ms ease;
-  }
-  .yield-redraw:hover { background: rgba(178,58,99,0.06); border-color: var(--accent); color: var(--accent); }
-  .yield-redraw:disabled { opacity: 0.4; cursor: not-allowed; }
-  @media (max-width: 720px) {
-    .yield-caption { position: static; margin-top: 2px; }
-  }
 
   /* Desk notes rotator — editorial line with slot-machine word swap */
   .dnr {
@@ -764,59 +640,6 @@
   .fold.fold-in { animation: bp-fold 780ms cubic-bezier(0.22,0.61,0.36,1) both; }
   @media (prefers-reduced-motion: reduce) {
     .fold, .fold.fold-in { opacity: 1; transform: none; animation: none; }
-  }
-
-  /* SLIM HERO — name + 1-line tagline + 2 CTAs only */
-  .hero-slim { padding: 56px 0 22px; }
-  .hero-slim .hero-name { margin-bottom: 14px; }
-
-  /* RECENT NOTES (below featured) */
-  .recent-list {
-    list-style: none; padding: 0; margin: 18px 0 8px;
-    display: flex; flex-direction: column;
-  }
-  .recent-row {
-    border-bottom: 1px solid var(--rule);
-    transition: transform 180ms ease, box-shadow 180ms ease;
-  }
-  .recent-row:last-child { border-bottom: 0; }
-  .recent-row:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 18px rgba(25, 19, 22, 0.08);
-  }
-  .recent-link {
-    display: flex; gap: 16px; align-items: flex-start;
-    padding: 20px 8px; text-decoration: none; color: var(--ink);
-  }
-  .recent-thumb {
-    width: 80px; height: 80px; flex-shrink: 0;
-    border-radius: 8px; object-fit: cover;
-  }
-  .recent-body { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 6px; }
-  .recent-top {
-    display: flex; justify-content: space-between; align-items: baseline; gap: 12px;
-  }
-  .recent-cat {
-    font-family: var(--font-mono), ui-monospace, monospace; font-size: 10.5px; font-weight: 700;
-    letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent);
-  }
-  .recent-title {
-    font-family: var(--font-serif), Georgia, serif; font-size: 19px;
-    font-weight: 600; letter-spacing: -0.005em; line-height: 1.3; color: var(--ink);
-    transition: color 180ms ease;
-  }
-  .recent-link:hover .recent-title { color: var(--accent); }
-  .recent-excerpt {
-    font-family: var(--font-serif), Georgia, serif; font-size: 14.5px;
-    color: var(--ink-45); line-height: 1.4;
-    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
-  }
-  .recent-date {
-    font-family: var(--font-mono), ui-monospace, monospace; font-size: 11.5px;
-    color: var(--ink-45); letter-spacing: 0.04em; white-space: nowrap;
-  }
-  @media (prefers-reduced-motion: reduce) {
-    .recent-row, .recent-row:hover { transform: none; transition: none; }
   }
 
   /* RIGHT NOW BLOCK (sticky right column of About section) */
@@ -1422,16 +1245,11 @@
 
 @media (max-width: 920px) {
   :root { --pad: 32px; }
-  .home { grid-template-columns: 1fr; gap: 0; }
-  .home-rail { position: static; }
-  .rail-card { margin-top: 40px; }
   .about-grid { grid-template-columns: 1fr; gap: 32px; }
   .about-portrait { position: static; max-width: 280px; }
   .about-portrait-wrap { position: static; }
   .right-now-block { position: static; }
-  .hero-name { font-size: 46px; }
   .read-title { font-size: 34px; }
-  .recent-link { grid-template-columns: 1fr; gap: 4px; }
   .contact-grid { grid-template-columns: 1fr; gap: 32px; }
 }
 @media (max-width: 760px) {
@@ -1540,35 +1358,6 @@
   margin-bottom: 14px;
 }
 
-.stack-pill {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 6px 12px 6px 10px;
-  border-radius: 999px;
-  font-family: var(--font-sans);
-  font-size: 12.5px;
-  font-weight: 500;
-  letter-spacing: 0.01em;
-  background: var(--accent-soft);
-  color: var(--accent);
-}
-.stack-pill.is-soon {
-  background: rgba(25, 19, 22, 0.06);
-  color: var(--ink-72);
-}
-.stack-pill-dot {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: #2BA46A;
-  box-shadow: 0 0 0 3px rgba(43, 164, 106, 0.18);
-}
-.stack-pill.is-soon .stack-pill-dot {
-  background: var(--ink-45);
-  box-shadow: 0 0 0 3px rgba(25, 19, 22, 0.08);
-}
-
 .stack-card-title {
   font-family: var(--font-serif);
   font-size: clamp(24px, 2.4vw, 30px);
@@ -1584,32 +1373,6 @@
   line-height: 1.5;
   color: var(--ink-72);
   margin: 0;
-}
-
-.stack-card-foot {
-  margin-top: auto;
-  padding-top: 18px;
-  border-top: 1px solid var(--rule);
-}
-.stack-card-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  font-family: var(--font-sans);
-  font-size: 13.5px;
-  font-weight: 500;
-  color: var(--accent);
-  text-decoration: none;
-}
-.stack-card-link:hover { text-decoration: underline; }
-.stack-card-link svg { transition: transform 200ms ease; }
-.stack-card-link:hover svg { transform: translateX(3px); }
-.stack-card-url {
-  font-family: var(--font-sans);
-  font-size: 13px;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  color: var(--ink-45);
 }
 
 /* --- Basis Point brand mark ------------------------------------------ */

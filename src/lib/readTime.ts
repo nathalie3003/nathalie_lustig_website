@@ -21,3 +21,12 @@ export function readTime(body: unknown): string {
   const minutes = Math.max(1, Math.round(words / 225));
   return `${minutes} min`;
 }
+
+// Card queries ask Sanity for `length(pt::text(body))` rather than pulling every
+// note's full body just to count words. Converting characters to words at 5.5
+// characters per word lands within a minute of readTime() on real notes, which
+// is well inside the precision a "5 min read" label claims.
+export function readTimeFromChars(chars?: number): string {
+  const minutes = Math.max(1, Math.round((chars ?? 0) / 5.5 / 225));
+  return `${minutes} min`;
+}
