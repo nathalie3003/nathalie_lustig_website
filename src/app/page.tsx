@@ -5,7 +5,6 @@ import { urlFor } from "@/lib/sanity.client";
 import { RightRail } from "@/components/RightRail";
 import { AboutSection } from "@/components/AboutSection";
 import { ProjectsSection } from "@/components/ProjectsSection";
-import { ContactSection } from "@/components/ContactSection";
 import { HashScroll } from "@/components/HashScroll";
 import { readLatest } from "@/content/tone";
 import { CATEGORIES, noteCat } from "@/lib/noteCat";
@@ -126,7 +125,6 @@ export default async function HomePage() {
 
       <AboutSection />
       <ProjectsSection />
-      <ContactSection />
     </div>
   );
 }

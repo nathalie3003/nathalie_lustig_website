@@ -1,13 +1,37 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 import { about } from "@/content/about";
-import { ScrollReveal } from "./ScrollReveal";
 
 const EMAIL = about.contact.find((c) => c.label === "Email")?.value ?? "";
+const LINKEDIN = about.contact.find((c) => c.label === "LinkedIn");
 
 export function ContactSection() {
   const [copied, setCopied] = useState(false);
+  const sectionRef = useRef<HTMLElement>(null);
+
+  // One observer for the whole band: when it scrolls into view every
+  // [data-fold] child starts its animation, staggered by inline delay.
+  useEffect(() => {
+    const root = sectionRef.current;
+    if (!root) return;
+    const items = Array.from(
+      root.querySelectorAll<HTMLElement>("[data-fold]"),
+    );
+    if (!items.length) return;
+
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (!entries.some((e) => e.isIntersecting)) return;
+        items.forEach((el) => el.classList.add("fold-in"));
+        io.disconnect();
+      },
+      { rootMargin: "0px 0px -12% 0px", threshold: 0.15 },
+    );
+    io.observe(root);
+    return () => io.disconnect();
+  }, []);
 
   const onCopy = async () => {
     try {
@@ -15,91 +39,83 @@ export function ContactSection() {
       setCopied(true);
       window.setTimeout(() => setCopied(false), 1600);
     } catch {
-      // Clipboard unavailable — fall back to opening mail client.
+      // Clipboard unavailable — fall back to opening the mail client.
       window.location.href = `mailto:${EMAIL}`;
     }
   };
 
-  const linkedIn = about.contact.find((c) => c.label === "LinkedIn");
-
   return (
-    <section className="band band-contact" id="contact">
-      <div className="page-wide contact">
-        <div className="contact-head">
-          <span className="l-kicker">Get in touch</span>
-          <ScrollReveal as="h2" className="contact-title">
-            {"Happy to talk bonds, books, or anything in between."}
-          </ScrollReveal>
-          <p className="contact-lede">
-            Email is the best way to reach me — I read everything that comes in.
-          </p>
-        </div>
-
+    <section className="band band-contact" id="contact" ref={sectionRef}>
+      <Image
+        src="/sky-lilies.jpeg"
+        alt=""
+        fill
+        sizes="100vw"
+        className="contact-sky"
+      />
+      <div className="contact-wash" />
+      <div className="contact-inner">
         <div className="contact-grid">
-          <div className="contact-direct">
-            <div className="contact-elsewhere">
+          <div>
+            <span
+              className="contact-eyebrow fold"
+              data-fold
+              style={{ animationDelay: "0ms" }}
+            >
+              Get in touch
+            </span>
+            <h2
+              className="contact-title fold"
+              data-fold
+              style={{ animationDelay: "90ms" }}
+            >
+              Happy to talk bonds, books, or anything in between.
+            </h2>
+            <p
+              className="contact-lede fold"
+              data-fold
+              style={{ animationDelay: "190ms" }}
+            >
+              If something here resonates, I&apos;d like to hear from you.
+            </p>
+          </div>
+
+          <div
+            className="contact-direct fold"
+            data-fold
+            style={{ animationDelay: "280ms" }}
+          >
+            <div className="contact-row">
+              <div>
+                <span className="cl-label">Email</span>
+                <span className="cl-value">{EMAIL}</span>
+              </div>
               <button
                 type="button"
-                className="contact-link contact-link-btn"
+                className="contact-copy"
                 onClick={onCopy}
                 aria-label={`Copy email address ${EMAIL}`}
               >
-                <span className="cl-label">Email</span>
-                <span className="cl-value">{EMAIL}</span>
-                <span className="cl-action" aria-hidden="true">
-                  {copied ? (
-                    <>
-                      <svg width="12" height="12" viewBox="0 0 16 16" fill="none">
-                        <path
-                          d="M3 8.5L6.5 12L13 4.5"
-                          stroke="currentColor"
-                          strokeWidth="1.8"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        />
-                      </svg>
-                      Copied
-                    </>
-                  ) : (
-                    <>
-                      <svg width="12" height="12" viewBox="0 0 16 16" fill="none">
-                        <rect
-                          x="5" y="5" width="9" height="9" rx="1.5"
-                          stroke="currentColor" strokeWidth="1.4"
-                        />
-                        <path
-                          d="M11 5V3.5A1.5 1.5 0 0 0 9.5 2h-6A1.5 1.5 0 0 0 2 3.5v6A1.5 1.5 0 0 0 3.5 11H5"
-                          stroke="currentColor" strokeWidth="1.4"
-                          strokeLinecap="round"
-                        />
-                      </svg>
-                      Copy
-                    </>
-                  )}
-                </span>
+                {copied ? "Copied" : "Copy"}
               </button>
-              {linkedIn ? (
-                <a
-                  className="contact-link"
-                  href={linkedIn.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <span className="cl-label">LinkedIn</span>
-                  <span className="cl-value">{linkedIn.value}</span>
-                  <span className="cl-action" aria-hidden="true">
-                    Open
-                    <svg width="11" height="11" viewBox="0 0 16 16" fill="none">
-                      <path
-                        d="M5 11L11 5M11 5H6M11 5V10"
-                        stroke="currentColor" strokeWidth="1.6"
-                        strokeLinecap="round" strokeLinejoin="round"
-                      />
-                    </svg>
-                  </span>
-                </a>
-              ) : null}
             </div>
+
+            {LINKEDIN ? (
+              <a
+                className="contact-row"
+                href={LINKEDIN.href}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <div>
+                  <span className="cl-label">LinkedIn</span>
+                  <span className="cl-value">{LINKEDIN.value}</span>
+                </div>
+                <span className="contact-arrow" aria-hidden="true">
+                  ↗
+                </span>
+              </a>
+            ) : null}
           </div>
         </div>
       </div>

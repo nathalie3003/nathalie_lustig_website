@@ -51,7 +51,7 @@ export default async function OpengraphImage() {
         style={{
           width: "100%",
           height: "100%",
-          background: "#F7F8FA",
+          background: "#FCFAF9",
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
@@ -59,39 +59,25 @@ export default async function OpengraphImage() {
           fontFamily: '"Source Serif 4", Georgia, serif',
         }}
       >
-        {/* Aurora-rim "bp" mark — nested divs match the SVG BasisPointMark:
-            outer aurora linear-gradient wrapping a dark radial-gradient inner
-            circle, with "bp" set in Source Serif 4 600. */}
+        {/* "bp" on a flat ink disc — matches the SVG BasisPointMark. */}
         <div
           style={{
             width: 340,
             height: 340,
             borderRadius: 340,
-            background:
-              "linear-gradient(135deg, #4488FF 0%, #8855FF 35%, #FF44AA 65%, #FF7733 100%)",
-            padding: 7,
+            background: "#191316",
             display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            color: "#FCFAF9",
+            fontFamily: '"Source Serif 4", Georgia, serif',
+            fontWeight: 600,
+            fontSize: 148,
+            letterSpacing: "-0.028em",
+            lineHeight: 1,
           }}
         >
-          <div
-            style={{
-              flex: 1,
-              borderRadius: 340,
-              background:
-                "radial-gradient(circle at 50% 58%, #0E1E45 0%, #050B18 55%)",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              color: "white",
-              fontFamily: '"Source Serif 4", Georgia, serif',
-              fontWeight: 600,
-              fontSize: 141,
-              letterSpacing: "-0.028em",
-              lineHeight: 1,
-            }}
-          >
-            bp
-          </div>
+          bp
         </div>
         <div
           style={{
@@ -100,7 +86,7 @@ export default async function OpengraphImage() {
             fontWeight: 600,
             fontSize: 84,
             letterSpacing: "-0.028em",
-            color: "#14161A",
+            color: "#191316",
             lineHeight: 1,
           }}
         >
@@ -112,7 +98,7 @@ export default async function OpengraphImage() {
             fontFamily: '"Source Serif 4", Georgia, serif',
             fontWeight: 400,
             fontSize: 30,
-            color: "rgba(20, 22, 26, 0.60)",
+            color: "rgba(25, 19, 22, 0.60)",
             lineHeight: 1.3,
           }}
         >

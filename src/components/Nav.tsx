@@ -86,78 +86,76 @@ export function TopBar() {
   return (
     <header className="top">
       <div className="top-inner">
-        <div className="top-left">
-          <Link
-            href="/#top"
-            className={`top-name top-name-mark ${wordmarkPhase}`.trim()}
-            onClick={jump("top")}
-            aria-label="The Basis Point — home"
-          >
-            <BasisPointMark size={34} decorative />
-            <span className="top-name-word">The Basis Point</span>
-          </Link>
+        <Link
+          href="/#top"
+          className={`top-name top-name-mark ${wordmarkPhase}`.trim()}
+          onClick={jump("top")}
+          aria-label="The Basis Point — home"
+        >
+          <BasisPointMark size={30} decorative />
+          <span className="top-name-word">The Basis Point</span>
+        </Link>
 
-          <nav className="top-links">
-            <div
-              className="notes-menu"
-              ref={notesRef}
-              onMouseEnter={() => setNotesOpen(true)}
-              onMouseLeave={() => setNotesOpen(false)}
+        <nav className="top-links">
+          <div
+            className="notes-menu"
+            ref={notesRef}
+            onMouseEnter={() => setNotesOpen(true)}
+            onMouseLeave={() => setNotesOpen(false)}
+          >
+            <Link
+              href="/notes"
+              className="top-link notes-trigger"
+              aria-expanded={notesOpen}
+              aria-haspopup="true"
+              onClick={() => setNotesOpen(false)}
             >
-              <Link
-                href="/notes"
-                className="top-link notes-trigger"
-                aria-expanded={notesOpen}
-                aria-haspopup="true"
-                onClick={() => setNotesOpen(false)}
+              Notes <span className="notes-caret" aria-hidden="true">▾</span>
+            </Link>
+            {notesOpen && (
+              <div
+                className="notes-pop"
+                role="menu"
               >
-                Notes <span className="notes-caret" aria-hidden="true">▾</span>
-              </Link>
-              {notesOpen && (
-                <div
-                  className="notes-pop"
-                  role="menu"
+                <Link
+                  href="/notes"
+                  className="np-row np-all"
+                  onClick={() => setNotesOpen(false)}
                 >
+                  <span className="np-title">All notes</span>
+                  <span className="np-sub">Every post, newest first</span>
+                </Link>
+                <div className="np-rule" />
+                {CATEGORIES.map((c) => (
                   <Link
-                    href="/notes"
-                    className="np-row np-all"
+                    key={c.slug}
+                    href={`/notes?category=${c.slug}`}
+                    className="np-row"
                     onClick={() => setNotesOpen(false)}
                   >
-                    <span className="np-title">All notes</span>
-                    <span className="np-sub">Every post, newest first</span>
+                    <span className="np-title">{c.label}</span>
+                    <span className="np-sub">{c.blurb}</span>
                   </Link>
-                  <div className="np-rule" />
-                  {CATEGORIES.map((c) => (
-                    <Link
-                      key={c.slug}
-                      href={`/notes?category=${c.slug}`}
-                      className="np-row"
-                      onClick={() => setNotesOpen(false)}
-                    >
-                      <span className="np-title">{c.label}</span>
-                      <span className="np-sub">{c.blurb}</span>
-                    </Link>
-                  ))}
-                </div>
-              )}
-            </div>
+                ))}
+              </div>
+            )}
+          </div>
 
-            <Link href="/#about" className="top-link" onClick={jump("about")}>
-              About
-            </Link>
-            <Link href="/#projects" className="top-link" onClick={jump("projects")}>
-              Projects
-            </Link>
-          </nav>
-        </div>
+          <Link href="/#about" className="top-link" onClick={jump("about")}>
+            About
+          </Link>
+          <Link href="/#projects" className="top-link" onClick={jump("projects")}>
+            Projects
+          </Link>
+        </nav>
 
         <div className="top-right">
           <Link
             href="/#contact"
-            className="l-btn l-btn-primary l-btn-sm cv-btn"
+            className="l-btn l-btn-outline l-btn-sm cv-btn"
             onClick={jump("contact")}
           >
-            Let&apos;s talk more →
+            Get in touch
           </Link>
 
           <div className="mobile-menu" ref={mobileBtnRef}>
