@@ -1,8 +1,7 @@
 import Link from "next/link";
 import { getAllNotes } from "@/lib/queries";
-import { NoteRow } from "@/components/NoteCard";
-import { CATEGORIES, categoryFromSlug } from "@/lib/noteCat";
-import { ScrollReveal } from "@/components/ScrollReveal";
+import { CATEGORIES, categoryFromSlug, noteCat } from "@/lib/noteCat";
+import { readTimeFromChars } from "@/lib/readTime";
 
 export const metadata = {
   title: "Notes — The Basis Point",
@@ -11,6 +10,14 @@ export const metadata = {
 };
 
 type SearchParams = Promise<{ category?: string }>;
+
+function formatDateShort(iso: string) {
+  return new Date(iso).toLocaleDateString("en-GB", {
+    day: "numeric",
+    month: "short",
+    year: "numeric",
+  });
+}
 
 export default async function NotesIndexPage({
   searchParams,
@@ -22,29 +29,26 @@ export default async function NotesIndexPage({
 
   const allNotes = await getAllNotes();
   const notes = active
-    ? allNotes.filter(
-        (n) => categoryFromSlug(n.category)?.slug === active.slug,
-      )
+    ? allNotes.filter((n) => categoryFromSlug(n.category)?.slug === active.slug)
     : allNotes;
 
   return (
-    <div className="page-wide notes-index">
-      <header className="notes-index-head">
-        <span className="l-kicker">All notes</span>
-        <ScrollReveal as="h1" className="notes-index-title">
-          {active ? active.label : "Every note, newest first"}
-        </ScrollReveal>
-        <p className="notes-index-lede">
+    <div className="archive">
+      <header>
+        <span className="archive-eyebrow">Archive</span>
+        <h1 className="archive-title">{active ? active.label : "Notes"}</h1>
+        <p className="archive-lede">
           {active
-            ? active.blurb + "."
-            : "Working notebook on rates, credit, and the markets in between — filter by topic below."}
+            ? `${active.blurb}.`
+            : "Everything I've written, newest first. Filter by what you came for."}
         </p>
       </header>
 
-      <nav className="cat-strip" aria-label="Filter by category">
+      <nav className="archive-filters" aria-label="Filter by category">
         <Link
           href="/notes"
-          className={`cat-chip${!active ? " cat-chip-active" : ""}`}
+          className={`archive-pill${!active ? " is-active" : ""}`}
+          aria-current={!active ? "page" : undefined}
         >
           All
         </Link>
@@ -52,23 +56,44 @@ export default async function NotesIndexPage({
           <Link
             key={c.slug}
             href={`/notes?category=${c.slug}`}
-            className={`cat-chip${active?.slug === c.slug ? " cat-chip-active" : ""}`}
+            className={`archive-pill${active?.slug === c.slug ? " is-active" : ""}`}
+            aria-current={active?.slug === c.slug ? "page" : undefined}
           >
             {c.label}
           </Link>
         ))}
       </nav>
 
-      <section className="notes notes-index-list">
-        {notes.length === 0 ? (
-          <p className="rail-block-note notes-empty">
-            No notes in this category yet.{" "}
-            <Link href="/notes" className="l-link">See all notes →</Link>
-          </p>
-        ) : (
-          notes.map((n) => <NoteRow key={n._id} note={n} />)
-        )}
-      </section>
+      {notes.length === 0 ? (
+        <p className="archive-empty">
+          Nothing filed under this category yet. It is on the list.{" "}
+          <Link href="/notes" className="l-link">
+            See all notes →
+          </Link>
+        </p>
+      ) : (
+        <div className="archive-list">
+          {notes.map((n) => (
+            <Link key={n._id} href={`/notes/${n.slug}`} className="archive-row">
+              <span className="archive-date">
+                {formatDateShort(n.publishedAt)}
+              </span>
+              <span className="archive-row-body">
+                {/* With a filter on, every row would carry the same label, so
+                    the heading above already says it. */}
+                {active ? null : (
+                  <span className="archive-cat">{noteCat(n.category).cat}</span>
+                )}
+                <span className="archive-row-title">{n.title}</span>
+                {n.excerpt ? (
+                  <span className="archive-deck">{n.excerpt}</span>
+                ) : null}
+              </span>
+              <span className="archive-read">{readTimeFromChars(n.readChars)}</span>
+            </Link>
+          ))}
+        </div>
+      )}
     </div>
   );
 }
