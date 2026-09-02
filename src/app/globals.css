@@ -33,7 +33,7 @@
     --rule: #EADFDD;
     --rule-strong: #E0C6CE;
     --card-dark: #191316;
-    --french-blue-soft: rgba(178, 58, 99, 0.09);
+    --accent-tint: rgba(178, 58, 99, 0.09);
     --col-text: 680px;
     --col-wide: 900px;
     --nav-bg: #FCFAF9;
@@ -74,7 +74,7 @@
 
   /* shared atoms */
   /* Signature gesture: section labels and editorial eyebrows are set in
-     small-caps navy ink and sit above a 1px navy hairline that runs the
+     mono small-caps raspberry and sit above a 1px raspberry hairline that runs the
      column. Repeated everywhere a section opens, this is the move that
      makes the site read as a publication. */
   .l-kicker {
@@ -130,7 +130,7 @@
     background: var(--ink); color: var(--surface);
     transform: translateY(-1px);
   }
-  /* Category labels: small-caps navy text, no pill, no fill — the editorial
+  /* Category labels: mono small-caps raspberry, no pill, no fill — the editorial
      read of "department label" rather than a SaaS badge. */
   .l-tag {
     display: inline-block; font-family: var(--font-mono), ui-monospace, monospace; font-size: 11px;
@@ -140,7 +140,7 @@
   .l-link { font-family: var(--font-sans), system-ui, sans-serif; font-size: 13.5px; font-weight: 500; color: var(--accent); text-decoration: none; cursor: pointer; }
   .l-link:hover { text-decoration: underline; }
 
-  /* TOP BAR — cream with a French Blue masthead rule across the very top
+  /* TOP BAR: blush with a raspberry masthead rule across the very top
      (the publication grammar move: Economist's red bar, FT's salmon strip). */
   .top {
     position: sticky; top: 0; z-index: 40;
@@ -367,7 +367,7 @@
 
   /* hero */
   .hero { padding: 72px 0 26px; }
-  /* Masthead device — small-caps navy date strip with a navy hairline below.
+  /* Masthead device: mono small-caps date strip with a raspberry hairline below.
      The signature gesture appears here too. */
   .hero-eyebrow {
     display: flex; align-items: center; gap: 12px;
@@ -615,8 +615,8 @@
   }
   .read-back:hover { color: var(--accent); }
   .read-head { border-bottom: 1px solid var(--rule); padding-bottom: 26px; margin-bottom: 30px; }
-  /* Signature gesture on the note detail: meta strip sits above a navy
-     hairline and is set in the same small-caps navy ink as section labels. */
+  /* Signature gesture on the note detail: meta strip sits above a raspberry
+     hairline and is set in the same mono small-caps raspberry as section labels. */
   .read-meta-top {
     display: flex; align-items: center; gap: 14px; margin-bottom: 18px;
     padding-bottom: 12px; border-bottom: 1px solid var(--accent);
@@ -914,10 +914,10 @@
     border-bottom: 1px solid var(--accent);
   }
   /* Scoped tag-pill — only inside the trade meta strip, so the global
-     .l-tag (small-caps navy, no pill) used elsewhere is untouched. */
+     .l-tag (mono small-caps raspberry, no pill) used elsewhere is untouched. */
   .article-meta-top .l-tag {
     font-weight: 600; letter-spacing: 0.06em;
-    background: var(--french-blue-soft); padding: 3px 9px; border-radius: 3px;
+    background: var(--accent-tint); padding: 3px 9px; border-radius: 3px;
   }
   .article-meta-top .l-smallcaps { color: var(--ink-45); }
   .article-h1 {
@@ -940,10 +940,10 @@
     margin: 2.4em 0 0.7em; padding-top: 1.4em; border-top: 1px solid var(--rule);
   }
   .article-body h2:first-of-type { margin-top: 0; }
-  /* French Blue section-label eyebrow — optional, sits above a heading.
+  /* Raspberry section-label eyebrow, optional, sits above a heading.
      Shared by trade (.article-body) and general (.ap-col) note bodies. */
-  .article-body .section-label-fb,
-  .ap-col .section-label-fb {
+  .article-body .section-label,
+  .ap-col .section-label {
     display: block;
     font-family: var(--font-sans), system-ui, sans-serif;
     font-size: 10px; font-weight: 600; letter-spacing: 0.14em;
@@ -953,8 +953,8 @@
   }
   /* Eyebrow immediately above a heading: the rule sits above the eyebrow and
      the heading attaches flush (rule → label → heading reads as one unit). */
-  .article-body .section-label-fb + h2,
-  .ap-col .section-label-fb + h2 {
+  .article-body .section-label + h2,
+  .ap-col .section-label + h2 {
     margin-top: 0; padding-top: 0; border-top: 0;
   }
   /* Sub-heading (H3) — a lighter heading than the ruled H2. */
@@ -983,7 +983,7 @@
     line-height: 0.78; padding-right: 10px; padding-top: 6px; color: var(--ink);
   }
 
-  /* Executive summary — dark navy card */
+  /* Executive summary: dark ink card */
   .exec-summary {
     margin-bottom: 2.2em; padding: 22px 24px;
     background: var(--card-dark); border-radius: var(--radius-sm);
@@ -1145,7 +1145,7 @@
     color: var(--accent); font-weight: 600; font-style: normal;
   }
   .tc-bullets.risks .bull-icon { color: var(--ink-45); }
-  .tc-summary { padding: 16px 20px; background: var(--french-blue-soft); }
+  .tc-summary { padding: 16px 20px; background: var(--accent-tint); }
   .tc-summary-text {
     margin: 6px 0 0; font-family: var(--font-serif), Georgia, serif; font-size: 14px;
     font-style: italic; line-height: 1.55; color: var(--ink-72);
@@ -1264,7 +1264,7 @@
     }
   }
 
-  /* Meta strip — left-aligned navy small-caps on a French-Blue hairline,
+  /* Meta strip: left-aligned mono small-caps on a raspberry hairline,
      matching the site's signature publication grammar. */
   .ap-meta {
     display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
