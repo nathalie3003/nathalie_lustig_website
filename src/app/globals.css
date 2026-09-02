@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @import "./home.css";
+@import "./notes.css";
 
 @theme {
   --color-bg: #FCFAF9;
@@ -312,45 +313,6 @@
   .menu-cat .mc-sub { font-size: 11px; color: var(--ink-45); }
   .menu-rule { height: 1px; background: var(--rule); margin: 7px 6px; }
 
-  /* NOTES INDEX PAGE */
-  .page-wide.notes-index { padding-top: 64px; padding-bottom: 80px; }
-  .notes-index-head { margin-bottom: 28px; max-width: 720px; }
-  .notes-index-title {
-    font-size: 44px; font-weight: 600; letter-spacing: -0.022em; line-height: 1.05;
-    margin: 8px 0 12px; text-wrap: balance;
-  }
-  .notes-index-lede {
-    font-size: 17px; line-height: 1.55; color: var(--ink-72);
-    margin: 0; max-width: 60ch; font-family: var(--font-serif), Georgia, serif;
-  }
-  .cat-strip {
-    display: flex; flex-wrap: wrap; gap: 8px; margin: 8px 0 36px;
-    padding-bottom: 22px; border-bottom: 1px solid var(--rule);
-  }
-  .cat-chip {
-    display: inline-flex; align-items: center;
-    font-family: var(--font-sans), system-ui, sans-serif; font-size: 12.5px; font-weight: 500;
-    color: var(--ink-72); background: var(--surface);
-    border: 1px solid var(--rule); border-radius: 999px;
-    padding: 7px 14px; text-decoration: none;
-    transition: border-color 140ms ease, color 140ms ease, background 140ms ease;
-  }
-  .cat-chip:hover { color: var(--ink); border-color: var(--ink-45); }
-  .cat-chip-active {
-    color: #fff; background: var(--accent); border-color: var(--accent);
-    box-shadow: 0 2px 8px rgba(178,58,99,0.22);
-  }
-  .cat-chip-active:hover { color: #fff; border-color: var(--accent); }
-  .notes-index-list { gap: 0; }
-  .notes-empty { padding: 28px 0; }
-
-  .view-all-notes {
-    display: inline-flex; align-items: center; gap: 6px; margin-top: 10px;
-    font-family: var(--font-sans), system-ui, sans-serif; font-size: 13px; font-weight: 500;
-    color: var(--accent); text-decoration: none;
-  }
-  .view-all-notes:hover { text-decoration: underline; }
-
   /* PAGE SCAFFOLD */
   .main { flex: 1 0 auto; }
   .page-full { max-width: 880px; margin: 0 auto; padding: 0 var(--pad); }
@@ -413,22 +375,6 @@
     font: inherit; font-weight: 600;
     color: var(--ink); white-space: nowrap;
   }
-
-  .notes { display: flex; flex-direction: column; }
-  .note-row {
-    display: grid; grid-template-columns: 124px minmax(0,1fr) auto; gap: 22px;
-    align-items: baseline; padding: 22px 0; border-bottom: 1px solid var(--rule);
-    cursor: pointer; text-align: left; background: none; border-left: 0; border-right: 0; border-top: 0;
-    width: 100%; transition: background 120ms ease;
-    color: var(--ink); text-decoration: none;
-  }
-  .note-row:first-child { padding-top: 4px; }
-  .note-row:last-child { border-bottom: 0; }
-  .note-row:hover .note-title { color: var(--accent); }
-  .note-date { padding-top: 5px; }
-  .note-title { font-size: 23px; font-weight: 600; letter-spacing: -0.014em; line-height: 1.22; margin-bottom: 6px; transition: color 120ms ease; font-family: var(--font-serif), Georgia, serif; }
-  .note-excerpt { font-size: 16px; line-height: 1.5; color: var(--ink-60); margin: 0; text-wrap: pretty; font-family: var(--font-serif), Georgia, serif; }
-  .note-tag { align-self: center; }
 
   /* RIGHT RAIL */
   .rail-card {
@@ -1259,8 +1205,6 @@
 }
 @media (max-width: 560px) {
   :root { --pad: 20px; }
-  .note-row { grid-template-columns: 1fr; gap: 8px; }
-  .note-tag { display: none; }
   .menu-pop { right: var(--pad); left: var(--pad); width: auto; }
   .menu-row { padding: 14px 13px; }
   .top-name-word { display: none; }
