@@ -1,5 +1,5 @@
-// Hardcoded for now. Edit this file to update the "Right Now" block
-// that sits sticky on the right side of the About section.
+// Hardcoded for now. Edit this file to update the "Right Now" rows, which
+// appear in the homepage rail and on the About page.
 
 export type RightNowRow = {
   label: string;
@@ -9,18 +9,22 @@ export type RightNowRow = {
 };
 
 export const rightNow: RightNowRow[] = [
-  { label: "Listening to", value: "Tame Impala, Chopin when I'm studying" },
-  { label: "Based in", value: "London" },
+  { label: "Based in", value: "London, writing from a coffee shop in Hanoi" },
   {
     label: "Drinking",
-    value: "a cappuccino",
+    value: "Vietnamese egg coffee",
     note: "Want to question every coffee you will ever buy?",
     href: "/files/44151.pdf",
   },
-  { label: "Trying to learn", value: "Für Elise on the piano" },
+  { label: "Listening to", value: "Lo-fi, Chopin when I'm writing" },
   {
-    label: "Defending in arguments",
-    value: "that 'boring' is the highest compliment a bond can earn",
+    label: "Trying to learn",
+    value: "How to stop confusing 'hello' and 'sorry' in Vietnamese",
+  },
+  { label: "Reading", value: "The Age of Innocence, mostly for the footnotes" },
+  {
+    label: "Still arguing that",
+    value: "'Boring' is the highest compliment a bond can earn",
   },
 ];
 
