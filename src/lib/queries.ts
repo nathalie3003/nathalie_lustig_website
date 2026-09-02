@@ -8,6 +8,7 @@ export type BondNoteCard = {
   excerpt?: string;
   category?: string;
   coverImage?: { asset: { _ref: string } };
+  readChars?: number;
 };
 
 export type TradeFields = {
@@ -38,7 +39,8 @@ const CARD_FIELDS = `
   publishedAt,
   excerpt,
   category,
-  coverImage
+  coverImage,
+  "readChars": length(pt::text(body))
 `;
 
 export async function getLatestNotes(limit = 3): Promise<BondNoteCard[]> {

@@ -2,7 +2,7 @@ import Image from "next/image";
 import { dailyReads as fallbackDailyReads } from "@/content/dailyReads";
 import { books as fallbackBooks } from "@/content/books";
 import { readsHead, readsNote } from "@/content/tone";
-import { readHost } from "@/lib/readHost";
+import { rightNow, rightNowMeta } from "@/content/rightNow";
 import { getBooks, getDailyReads } from "@/lib/queries";
 import { urlFor } from "@/lib/sanity.client";
 
@@ -11,8 +11,8 @@ export async function RightRail() {
 
   const reads =
     cmsReads.length > 0
-      ? cmsReads.map((r) => ({ key: r._id, name: r.name, url: r.url }))
-      : fallbackDailyReads.map((r) => ({ key: r.name, name: r.name, url: r.url }));
+      ? cmsReads.map((r) => ({ key: r._id, name: r.name, url: r.url, short: r.short }))
+      : fallbackDailyReads.map((r) => ({ key: r.name, name: r.name, url: r.url, short: r.short }));
 
   const books =
     cmsBooks.length > 0
@@ -34,6 +34,24 @@ export async function RightRail() {
   return (
     <aside className="home-rail">
       <div className="rail-card">
+        <div className="rail-id">
+          <Image
+            src="/rail-portrait.jpg"
+            alt="Nathalie Lustig"
+            width={176}
+            height={176}
+            className="rail-portrait"
+          />
+          <div>
+            <div className="rail-name">Nathalie Lustig</div>
+            <div className="rail-cred">
+              LSE Economics · CFA Level I
+              <br />
+              London
+            </div>
+          </div>
+        </div>
+        <div className="rail-accent" aria-hidden="true" />
         <div className="rail-block">
           <span className="l-eyebrow rail-block-head">{readsHead}</span>
           <p className="rail-block-note">{readsNote}</p>
@@ -47,8 +65,20 @@ export async function RightRail() {
                 rel="noopener noreferrer"
               >
                 <span className="read-name">{r.name.replace(/\s*\(.*\)$/, "")}</span>
-                <span className="read-url">{readHost(r.url)}</span>
+                <span className="read-url">{r.short}</span>
               </a>
+            ))}
+          </div>
+        </div>
+
+        <div className="rail-block">
+          <span className="l-eyebrow rail-block-head">{rightNowMeta.eyebrow}</span>
+          <div className="rail-now">
+            {rightNow.map((r) => (
+              <div className="rail-now-row" key={r.label}>
+                <div className="rail-now-label">{r.label}</div>
+                <div className="rail-now-value">{r.value}</div>
+              </div>
             ))}
           </div>
         </div>

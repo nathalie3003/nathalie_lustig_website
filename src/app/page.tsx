@@ -3,14 +3,15 @@ import Link from "next/link";
 import { getAllNotes } from "@/lib/queries";
 import { urlFor } from "@/lib/sanity.client";
 import { RightRail } from "@/components/RightRail";
-import { AboutSection } from "@/components/AboutSection";
+import { RailScroll } from "@/components/RailScroll";
 import { ProjectsSection } from "@/components/ProjectsSection";
 import { HashScroll } from "@/components/HashScroll";
-import { readLatest } from "@/content/tone";
 import { CATEGORIES, noteCat } from "@/lib/noteCat";
 import { DeskNotesRotator } from "@/components/DeskNotesRotator";
-import { YieldCurve } from "@/components/YieldCurve";
-import { getYieldCurve } from "@/lib/marketData";
+import { CurveCard } from "@/components/CurveCard";
+import { HomeNotes, type HomeNote } from "@/components/HomeNotes";
+import { getYieldCurve, getAllTenorHistories } from "@/lib/marketData";
+import { readTimeFromChars } from "@/lib/readTime";
 import { FALLBACK_CURVE } from "@/content/yieldCurveFallback";
 
 function formatDateShort(iso: string) {
@@ -22,108 +23,109 @@ function formatDateShort(iso: string) {
 }
 
 export default async function HomePage() {
-  const [notes, liveCurve] = await Promise.all([getAllNotes(), getYieldCurve()]);
-  const latest = notes[0];
-  const recent = notes.slice(0, 4);
-  const latestHref = latest ? `/notes/${latest.slug}` : "/#notes";
+  const [notes, liveCurve, histories] = await Promise.all([
+    getAllNotes(),
+    getYieldCurve(),
+    getAllTenorHistories(),
+  ]);
 
   const curve = liveCurve ?? FALLBACK_CURVE;
-  const curveSource: "Treasury" | "snapshot" = liveCurve ? "Treasury" : "snapshot";
+  const latest = notes[0];
+
+  // The latest note already leads the page as the featured card, so it is not
+  // repeated in the list directly beneath it.
+  const rows: HomeNote[] = notes.slice(1).map((n) => ({
+    id: n._id,
+    slug: n.slug,
+    title: n.title,
+    excerpt: n.excerpt,
+    category: n.category ?? "",
+    catLabel: noteCat(n.category).cat,
+    date: formatDateShort(n.publishedAt),
+    read: readTimeFromChars(n.readChars),
+    thumbUrl: n.coverImage
+      ? urlFor(n.coverImage).width(192).height(192).url()
+      : undefined,
+  }));
+
+  const latestCover = latest?.coverImage
+    ? urlFor(latest.coverImage).width(900).height(760).url()
+    : null;
 
   return (
     <div className="scroll-home">
       <HashScroll />
-      <div className="home" id="top">
-        <div className="home-main">
-          <section className="hero hero-slim">
-            <span className="hero-eyebrow">
-              <span>Bond Notes</span>
-            </span>
-            <h1 className="hero-name">The Basis Point</h1>
-            <p className="hero-byline">Notes by Nathalie Lustig</p>
-            <p className="hero-standfirst">
-              Bond markets are the most honest real-time read on the economy.
-              I write these notes to work out what the market is pricing in,
-              and what it might be missing.
-            </p>
-            <div className="hero-cta">
-              <Link href={latestHref} className="l-btn l-btn-primary">
-                {readLatest}
+      <RailScroll />
+
+      <section className="hero-grid" id="top">
+        <div className="hero-copy">
+          <span className="hero-eyebrow">
+            <span className="hero-eyebrow-rule" aria-hidden="true" />
+            Bond notes since 2026
+          </span>
+          <h1 className="hero-display">The Basis Point</h1>
+          <p className="hero-standfirst">
+            Bond markets are the most honest real-time read on the economy. I
+            write these notes to work out what the market is pricing in, and
+            what it might be missing.
+          </p>
+          <DeskNotesRotator words={CATEGORIES.map((c) => c.label.toLowerCase())} />
+          <div className="hero-cta">
+            {latest ? (
+              <Link href={`/notes/${latest.slug}`} className="l-btn l-btn-primary">
+                Read the latest note
               </Link>
+            ) : null}
+            <Link href="/notes" className="l-btn l-btn-ghost">
+              Browse all notes
+            </Link>
+          </div>
+        </div>
+
+        <CurveCard snapshot={curve.points} asOf={curve.asOf} histories={histories} />
+      </section>
+
+      {latest ? (
+        <section className="featured-wrap">
+          <Link href={`/notes/${latest.slug}`} className="featured">
+            <div className="featured-copy">
+              <span className="featured-kicker">
+                Latest note · {noteCat(latest.category).cat} ·{" "}
+                {formatDateShort(latest.publishedAt)}
+              </span>
+              <h2 className="featured-title">{latest.title}</h2>
+              {latest.excerpt ? (
+                <p className="featured-deck">{latest.excerpt}</p>
+              ) : null}
+              <span className="featured-more">Read the note →</span>
             </div>
-          </section>
-
-          <section className="section" id="notes">
-            <span className="l-kicker">Notes</span>
-            <div className="section-head">
-              <DeskNotesRotator
-                words={CATEGORIES.map((c) => c.label.toLowerCase())}
-              />
+            <div className="featured-media">
+              {latestCover ? (
+                <Image src={latestCover} alt="" width={900} height={760} />
+              ) : null}
             </div>
-            {recent.length > 0 ? (
-              <>
-                <ul className="recent-list">
-                  {recent.map((n) => {
-                    const thumbUrl = n.coverImage
-                      ? urlFor(n.coverImage).width(160).height(160).url()
-                      : null;
-                    return (
-                      <li key={n._id} className="recent-row">
-                        <Link
-                          href={`/notes/${n.slug}`}
-                          className="recent-link"
-                        >
-                          {thumbUrl ? (
-                            <Image
-                              src={thumbUrl}
-                              alt=""
-                              width={80}
-                              height={80}
-                              className="recent-thumb"
-                            />
-                          ) : null}
-                          <div className="recent-body">
-                            <div className="recent-top">
-                              <span className="recent-cat">
-                                {noteCat(n.category).cat}
-                              </span>
-                              <span className="recent-date">
-                                {formatDateShort(n.publishedAt)}
-                              </span>
-                            </div>
-                            <span className="recent-title">{n.title}</span>
-                            {n.excerpt ? (
-                              <span className="recent-excerpt">{n.excerpt}</span>
-                            ) : null}
-                          </div>
-                        </Link>
-                      </li>
-                    );
-                  })}
-                </ul>
+          </Link>
+        </section>
+      ) : null}
 
-                <Link href="/notes" className="view-all-notes">
-                  View all notes →
-                </Link>
-              </>
-            ) : (
-              <p className="rail-block-note" style={{ padding: "20px 0" }}>
-                No notes published yet.
-              </p>
-            )}
-          </section>
-
-          <YieldCurve
-            points={curve.points}
-            asOf={curve.asOf}
-            source={curveSource}
-          />
+      <section className="home-grid" id="notes">
+        <div className="home-main">
+          <div className="home-head">
+            <h2 className="home-head-title">Recent writing</h2>
+            <Link href="/notes" className="home-head-link">
+              All notes →
+            </Link>
+          </div>
+          {rows.length > 0 ? (
+            <HomeNotes notes={rows} />
+          ) : (
+            <p className="home-notes-empty">No other notes published yet.</p>
+          )}
         </div>
 
         <RightRail />
-      </div>
+      </section>
 
-      <AboutSection />
       <ProjectsSection />
     </div>
   );

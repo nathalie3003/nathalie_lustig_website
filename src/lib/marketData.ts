@@ -9,6 +9,8 @@ export type YieldCurve = { points: YieldCurvePoint[]; asOf: string };
 // Tenors we surface on the homepage chart. CSV column names match the
 // U.S. Treasury Direct daily yield-curve feed exactly.
 const CURVE_TENORS: { label: string; years: number; col: string }[] = [
+  { label: "3M", years: 0.25, col: "3 Mo" },
+  { label: "6M", years: 0.5, col: "6 Mo" },
   { label: "1Y", years: 1, col: "1 Yr" },
   { label: "2Y", years: 2, col: "2 Yr" },
   { label: "3Y", years: 3, col: "3 Yr" },
@@ -113,4 +115,98 @@ export async function getYieldCurve(): Promise<YieldCurve | null> {
   if (current) return current;
   const prev = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth() - 1, 1));
   return fetchTreasuryMonth(monthParam(prev));
+}
+
+export type CurveHistoryPoint = { date: string; yield: number };
+export type CurveHistory = { tenorLabel: string; points: CurveHistoryPoint[] };
+
+// Ordered tenor labels for the history chart, and the FRED series id behind
+// each one. FRED is the right source here even though Treasury is preferred
+// for the snapshot above: FRED gives a clean, long daily series per tenor in
+// a single request, while Treasury's CSV is organised by month, so building
+// years of history from it would mean dozens of requests.
+const FRED_SERIES_BY_TENOR: Record<string, string> = {
+  "3M": "DGS3MO",
+  "6M": "DGS6MO",
+  "1Y": "DGS1",
+  "2Y": "DGS2",
+  "3Y": "DGS3",
+  "5Y": "DGS5",
+  "7Y": "DGS7",
+  "10Y": "DGS10",
+  "20Y": "DGS20",
+  "30Y": "DGS30",
+};
+
+export const HISTORY_TENORS: string[] = [
+  "3M",
+  "6M",
+  "1Y",
+  "2Y",
+  "3Y",
+  "5Y",
+  "7Y",
+  "10Y",
+  "20Y",
+  "30Y",
+];
+
+// Which calendar quarter an ISO date (YYYY-MM-DD) falls in, as a sortable key.
+function quarterKey(iso: string): string {
+  const [yyyy, mm] = iso.split("-");
+  const q = Math.ceil(Number(mm) / 3);
+  return `${yyyy}Q${q}`;
+}
+
+export async function getTenorHistory(tenorLabel: string): Promise<CurveHistory | null> {
+  const seriesId = FRED_SERIES_BY_TENOR[tenorLabel];
+  if (!seriesId) return null;
+
+  const apiKey = process.env.FRED_API_KEY;
+  if (!apiKey) {
+    console.error("FRED_API_KEY is not set, skipping tenor history fetch");
+    return null;
+  }
+
+  const url =
+    `https://api.stlouisfed.org/fred/series/observations?series_id=${seriesId}` +
+    `&api_key=${apiKey}&file_type=json&observation_start=2021-01-01`;
+
+  try {
+    const res = await fetch(url, { next: { revalidate: 86400 } });
+    if (!res.ok) return null;
+    const data = await res.json();
+    const observations: { date: string; value: string }[] = data?.observations ?? [];
+
+    // FRED marks missing days with ".", drop anything that isn't a finite number.
+    const valid = observations
+      .map((o) => ({ date: o.date, yield: Number(o.value) }))
+      .filter((o) => Number.isFinite(o.yield));
+    if (valid.length === 0) return null;
+
+    // Downsample to quarter-end: keep the last observation seen per quarter.
+    const lastByQuarter = new Map<string, CurveHistoryPoint>();
+    for (const point of valid) {
+      lastByQuarter.set(quarterKey(point.date), point);
+    }
+    const points = Array.from(lastByQuarter.values()).sort((a, b) =>
+      a.date < b.date ? -1 : a.date > b.date ? 1 : 0
+    );
+
+    // Extend the line to the most recent trading day if it's newer than the
+    // last quarter-end point we kept, so the chart doesn't lag behind today.
+    const last = valid[valid.length - 1];
+    if (points.length === 0 || last.date > points[points.length - 1].date) {
+      points.push(last);
+    }
+
+    return { tenorLabel, points };
+  } catch {
+    return null;
+  }
+}
+
+export async function getAllTenorHistories(): Promise<CurveHistory[]> {
+  const results = await Promise.all(HISTORY_TENORS.map((label) => getTenorHistory(label)));
+  return results.filter((r): r is CurveHistory => r !== null);
 }
