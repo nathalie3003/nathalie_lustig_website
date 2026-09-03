@@ -231,7 +231,7 @@
     .top-name-mark.wm-animate .bp-mark,
     .top-name-mark.wm-animate .top-name-word { animation: none; }
   }
-  .top-right { display: flex; align-items: center; gap: 8px; justify-self: end; }
+  .top-right { display: flex; align-items: center; gap: 8px; justify-self: end; grid-column: 3; }
   .top-links { display: flex; align-items: center; gap: 4px; justify-self: center; }
   .top-link {
     font-family: var(--font-sans), system-ui, sans-serif; font-size: 14.5px; font-weight: 500; color: var(--ink);
@@ -1207,7 +1207,8 @@
   :root { --pad: 20px; }
   .menu-pop { right: var(--pad); left: var(--pad); width: auto; }
   .menu-row { padding: 14px 13px; }
-  .top-name-word { display: none; }
+  .top-name-word { font-size: 16.5px; }
+  .top-name-mark { gap: 8px; }
   .read-foot-grid { grid-template-columns: 1fr; gap: 20px; }
   .read-foot-next { text-align: left; }
 }
@@ -1220,6 +1221,10 @@
   border-top: 1px solid var(--rule);
   position: relative;
   padding-top: 60px;
+  /* How far each card is pushed down its slot. Read by StackingProjects so the
+     mobile breakpoint can tighten it. */
+  --stack-offset-base: 8vh;
+  --stack-offset-step: 28px;
 }
 
 .stack-header {
@@ -1323,10 +1328,15 @@
 .bp-mark { display: block; }
 
 @media (max-width: 720px) {
+  .band-stack {
+    padding-bottom: 24px;
+    --stack-offset-base: 3vh;
+    --stack-offset-step: 14px;
+  }
   .stack-card {
     width: 92vw;
     height: auto;
-    min-height: 80vh;
+    min-height: 74vh;
     flex-direction: column;
   }
   .stack-card-media {
