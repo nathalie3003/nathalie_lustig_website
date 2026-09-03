@@ -1,6 +1,7 @@
 @import "tailwindcss";
 @import "./home.css";
 @import "./notes.css";
+@import "./article.css";
 
 @theme {
   --color-bg: #FCFAF9;

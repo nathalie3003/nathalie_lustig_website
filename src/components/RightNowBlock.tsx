@@ -1,6 +1,8 @@
-import { rightNow, rightNowMeta } from "@/content/rightNow";
+import { aboutNow, rightNowMeta } from "@/content/rightNow";
 
-// Sticky block on the right side of the About section.
+// Sticky block on the right side of the About section. Reads `aboutNow`, not
+// the rail's `rightNow`: a visitor arriving here from the homepage has already
+// seen those rows, so About carries its own longer copy.
 // Each row lights up on hover.
 
 export function RightNowBlock() {
@@ -10,7 +12,7 @@ export function RightNowBlock() {
         <span className="rnb-eyebrow">{rightNowMeta.eyebrow}</span>
         <p className="rnb-blurb">{rightNowMeta.blurb}</p>
         <dl className="rnb-list">
-          {rightNow.map((row) => {
+          {aboutNow.map((row) => {
             const rowContent = (
               <>
                 <dt className="rnb-label">{row.label}</dt>

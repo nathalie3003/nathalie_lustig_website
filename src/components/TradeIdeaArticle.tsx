@@ -5,7 +5,7 @@ import { urlFor, imageDimensions } from "@/lib/sanity.client";
 import { ReadingProgress } from "@/components/ReadingProgress";
 import { TradeToc } from "@/components/TradeToc";
 import { extractHeadings } from "@/lib/toc";
-import type { BondNote, BondNoteCard } from "@/lib/queries";
+import type { BondNote } from "@/lib/queries";
 import { ArticleReveal } from "@/components/ArticleReveal";
 import { ScrollReveal } from "@/components/ScrollReveal";
 
@@ -21,17 +21,15 @@ function Stars({ n }: { n: number }) {
   );
 }
 
+// Prev/next used to live here. It now sits in one shared keep-reading section
+// on the note page, so a trade idea and a standard note end the same way.
 export function TradeIdeaArticle({
   note,
-  prev,
-  next,
   dateLabel,
   readLabel,
   resetKey,
 }: {
   note: BondNote;
-  prev: BondNoteCard | null;
-  next: BondNoteCard | null;
   dateLabel: string;
   readLabel: string;
   resetKey: string;
@@ -107,30 +105,6 @@ export function TradeIdeaArticle({
               </div>
             )}
 
-            {(prev || next) && (
-              <nav className="article-foot" aria-label="Article navigation">
-                <div className="article-foot-item">
-                  {prev && (
-                    <>
-                      <span className="foot-nav-label">← Previous note</span>
-                      <Link className="foot-nav-title" href={`/notes/${prev.slug}`}>
-                        {prev.title}
-                      </Link>
-                    </>
-                  )}
-                </div>
-                <div className="article-foot-item">
-                  {next && (
-                    <>
-                      <span className="foot-nav-label">Next note →</span>
-                      <Link className="foot-nav-title" href={`/notes/${next.slug}`}>
-                        {next.title}
-                      </Link>
-                    </>
-                  )}
-                </div>
-              </nav>
-            )}
           </article>
 
           <aside className="sidebar">
