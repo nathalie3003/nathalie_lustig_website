@@ -345,7 +345,6 @@
   @media (max-width: 920px) {
     .home-grid { grid-template-columns: 1fr; gap: 48px; padding-top: 56px; }
     .home-rail { position: static; }
-    .rail-tight .rail-portrait { width: 88px; border-radius: var(--radius-hair); }
   }
   @media (max-width: 560px) {
     .featured-title { font-size: 30px; }

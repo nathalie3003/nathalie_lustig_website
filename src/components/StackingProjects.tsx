@@ -32,7 +32,7 @@ function Card({ i, project, progress, range, targetScale }: CardProps) {
       <motion.article
         style={{
           scale,
-          top: `calc(8vh + ${i * 28}px)`,
+          top: `calc(var(--stack-offset-base) + ${i} * var(--stack-offset-step))`,
         }}
         className="stack-card"
       >
