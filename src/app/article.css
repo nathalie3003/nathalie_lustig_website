@@ -1,0 +1,159 @@
+/* ============================================================
+   ARTICLE PAGE: replies and keep-reading.
+   The article header, body and sources already live in globals.css;
+   this file covers only what the redesign adds.
+   ============================================================ */
+
+@layer components {
+  /* ── KEEP READING ───────────────────────────────────────── */
+  .keep-reading { border-top: 1px solid var(--rule); }
+  .keep-reading-inner {
+    max-width: var(--maxw); margin: 0 auto; padding: 56px var(--pad) 88px;
+  }
+  .keep-reading-label {
+    display: block;
+    font-family: var(--font-mono), ui-monospace, monospace;
+    font-size: 10.5px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--ink-45);
+  }
+  .keep-reading-grid {
+    display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 24px; margin-top: 20px;
+  }
+  .keep-card {
+    display: block; padding: 26px;
+    border: 1px solid var(--rule); border-radius: var(--radius-hair);
+    background: var(--surface); color: var(--ink);
+    transition: color 160ms ease, border-color 160ms ease;
+  }
+  .keep-card:hover { border-color: var(--rule-strong); color: var(--accent); }
+  .keep-card-kicker {
+    display: block;
+    font-family: var(--font-mono), ui-monospace, monospace;
+    font-size: 10.5px; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--accent-deep);
+  }
+  .keep-card-title {
+    display: block;
+    font-family: var(--font-serif), Georgia, serif;
+    font-size: 22px; line-height: 1.25; font-weight: 600; letter-spacing: -0.018em;
+    margin-top: 10px; text-wrap: pretty;
+  }
+  .keep-card-dir {
+    display: block;
+    font-family: var(--font-mono), ui-monospace, monospace;
+    font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--ink-45); margin-bottom: 10px;
+  }
+
+  /* ── REPLIES ────────────────────────────────────────────── */
+  .replies {
+    margin-top: 72px; border-top: 1px solid var(--rule);
+    background: var(--surface);
+  }
+  .replies-inner {
+    max-width: 700px; margin: 0 auto; padding: 64px var(--pad) 72px;
+  }
+  .replies-head {
+    display: flex; align-items: baseline; justify-content: space-between; gap: 20px;
+  }
+  .replies-title {
+    font-family: var(--font-serif), Georgia, serif;
+    font-size: 27px; font-weight: 600; letter-spacing: -0.019em; margin: 0;
+  }
+  .replies-count {
+    font-family: var(--font-mono), ui-monospace, monospace;
+    font-size: 11px; color: var(--ink-45);
+  }
+  .replies-note {
+    font-family: var(--font-sans), system-ui, sans-serif;
+    font-size: 14px; line-height: 1.6; color: var(--ink-60); margin: 10px 0 0;
+  }
+
+  /* ── FORM ───────────────────────────────────────────────── */
+  .reply-form {
+    margin-top: 28px; padding: 18px;
+    border: 1px solid var(--rule); border-radius: var(--radius-sm);
+    background: var(--bg);
+  }
+  .reply-name, .reply-text {
+    width: 100%; border: none; background: transparent;
+    color: var(--ink); outline: none; padding: 6px 2px;
+  }
+  .reply-name {
+    font-family: var(--font-sans), system-ui, sans-serif; font-size: 14px;
+  }
+  .reply-text {
+    font-family: var(--font-serif), Georgia, serif;
+    font-size: 17px; line-height: 1.6; resize: vertical; padding: 8px 2px;
+  }
+  .reply-name::placeholder, .reply-text::placeholder { color: var(--ink-45); }
+  /* Focus lands on the form as a whole rather than on each borderless field,
+     which would otherwise leave keyboard users with no visible focus at all. */
+  .reply-form:focus-within { border-color: var(--ink-45); }
+  .reply-divider { height: 1px; background: var(--rule); margin: 8px 0 4px; }
+
+  /* Honeypot. Positioned off-screen rather than display:none, because some
+     bots skip fields that are explicitly hidden. */
+  .reply-hp {
+    position: absolute; left: -9999px; width: 1px; height: 1px;
+    overflow: hidden;
+  }
+
+  .reply-actions {
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 16px; margin-top: 10px;
+  }
+  .reply-as {
+    font-family: var(--font-mono), ui-monospace, monospace;
+    font-size: 10.5px; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--ink-45);
+  }
+  .reply-post {
+    padding: 10px 18px; border: none; border-radius: var(--radius-xs);
+    background: var(--accent); color: var(--surface);
+    font-family: var(--font-sans), system-ui, sans-serif;
+    font-size: 14px; font-weight: 500; cursor: pointer;
+    transition: background 160ms ease, opacity 160ms ease;
+  }
+  .reply-post:hover:not(:disabled) { background: var(--accent-deep); }
+  .reply-post:disabled { opacity: 0.45; cursor: default; }
+  .reply-error {
+    margin: 10px 0 0;
+    font-family: var(--font-sans), system-ui, sans-serif;
+    font-size: 13px; color: var(--accent-deep);
+  }
+
+  /* ── LIST ───────────────────────────────────────────────── */
+  .reply-list { margin-top: 36px; display: flex; flex-direction: column; }
+  .reply {
+    display: grid; grid-template-columns: 36px minmax(0, 1fr); gap: 14px;
+    padding: 22px 0; border-bottom: 1px solid var(--tint);
+  }
+  .reply:last-child { border-bottom: 0; }
+  .reply-avatar {
+    width: 36px; height: 36px; border-radius: 50%;
+    background: var(--tint); color: var(--accent-deep);
+    display: grid; place-items: center;
+    font-family: var(--font-mono), ui-monospace, monospace; font-size: 13px;
+  }
+  .reply-meta { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+  .reply-author {
+    font-family: var(--font-sans), system-ui, sans-serif;
+    font-size: 14px; font-weight: 600; color: var(--ink);
+  }
+  .reply-when {
+    font-family: var(--font-mono), ui-monospace, monospace;
+    font-size: 10.5px; color: var(--ink-45);
+  }
+  .reply-body {
+    font-family: var(--font-serif), Georgia, serif;
+    font-size: 17.5px; line-height: 1.65; color: var(--ink);
+    margin: 6px 0 0; text-wrap: pretty; white-space: pre-wrap;
+  }
+
+  @media (max-width: 560px) {
+    .keep-reading-grid { grid-template-columns: 1fr; }
+    .replies-inner { padding: 48px var(--pad) 56px; }
+  }
+}

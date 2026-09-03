@@ -6,7 +6,7 @@ export async function POST(req: NextRequest) {
   if (secret !== process.env.SANITY_REVALIDATE_SECRET) {
     return NextResponse.json({ ok: false, error: "invalid secret" }, { status: 401 });
   }
-  for (const tag of ["bondNote", "book", "project", "dailyRead", "siteSettings"]) {
+  for (const tag of ["bondNote", "book", "project", "dailyRead", "siteSettings", "reply"]) {
     revalidateTag(tag);
   }
   return NextResponse.json({ ok: true, revalidated: "all" });
