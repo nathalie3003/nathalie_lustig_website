@@ -1,0 +1,159 @@
+/* ============================================================
+   ABOUT PAGE: bio, Right now grid, life carousel, contact card.
+   Fresh .about-page-* / .life-* names so nothing here collides with
+   rules elsewhere in globals.css.
+   ============================================================ */
+
+@layer components {
+  .about-page {
+    max-width: var(--maxw); margin: 0 auto;
+    padding: 72px var(--pad) 96px;
+    display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 340px);
+    gap: 80px; align-items: start;
+  }
+
+  .about-eyebrow {
+    display: block;
+    font-family: var(--font-mono), ui-monospace, monospace;
+    font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--accent);
+  }
+  .about-heading {
+    font-family: var(--font-serif), Georgia, serif;
+    font-size: clamp(34px, 5vw, 50px); line-height: 1.06; font-weight: 600;
+    letter-spacing: -0.032em; margin: 16px 0 0; max-width: 22ch;
+  }
+  .about-bio-text p {
+    font-family: var(--font-serif), Georgia, serif;
+    font-size: 20px; line-height: 1.75; color: var(--ink-72);
+    margin: 28px 0 0; max-width: 60ch; text-wrap: pretty;
+  }
+
+  /* ── RIGHT NOW GRID ─────────────────────────────────────── */
+  .about-now {
+    margin-top: 48px; padding-top: 28px; border-top: 1px solid var(--rule);
+  }
+  .about-now-label {
+    display: block;
+    font-family: var(--font-mono), ui-monospace, monospace;
+    font-size: 10.5px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--ink-45);
+  }
+  .about-now-grid {
+    display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px 24px; margin-top: 12px;
+  }
+  .about-now-card {
+    display: block; padding: 14px 16px;
+    border: 1px solid var(--tint); border-radius: var(--radius-sm); background: #FFFFFF;
+    color: var(--ink); text-decoration: none;
+    transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
+  }
+  .about-now-card:hover {
+    transform: translateY(-2px); border-color: var(--rule-strong);
+    box-shadow: 0 8px 20px rgba(25, 19, 22, 0.08);
+  }
+  .about-now-card-label {
+    display: block;
+    font-family: var(--font-sans), system-ui, sans-serif;
+    font-size: 12px; color: var(--ink-45);
+  }
+  .about-now-card-value {
+    display: block;
+    font-family: var(--font-serif), Georgia, serif;
+    font-size: 17px; line-height: 1.45; margin-top: 3px; text-wrap: pretty;
+  }
+  .about-now-hint {
+    display: block;
+    font-family: var(--font-sans), system-ui, sans-serif;
+    font-size: 12.5px; font-style: italic; color: var(--ink-60); margin-top: 6px;
+  }
+  .about-now-card:hover .about-now-hint { color: var(--accent); }
+
+  @media (prefers-reduced-motion: reduce) {
+    .about-now-card, .about-now-card:hover { transform: none; transition: none; }
+  }
+
+  /* ── SIDE COLUMN ────────────────────────────────────────── */
+  .about-side { position: sticky; top: 110px; }
+
+  /* ── LIFE CAROUSEL ──────────────────────────────────────── */
+  .life-frame {
+    position: relative; width: 100%; aspect-ratio: 4 / 5;
+    overflow: hidden; border-radius: var(--radius-hair); background: var(--tint);
+  }
+  .life-img {
+    object-fit: cover; filter: saturate(0.95);
+    transition: opacity 520ms ease;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .life-img { transition: none; }
+  }
+
+  .life-bar {
+    display: flex; align-items: flex-start; justify-content: space-between;
+    gap: 14px; margin-top: 14px;
+  }
+  .life-text { min-width: 0; }
+  .life-count {
+    display: block;
+    font-family: var(--font-mono), ui-monospace, monospace;
+    font-size: 10.5px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--ink-45);
+  }
+  .life-caption {
+    font-family: var(--font-serif), Georgia, serif;
+    font-size: 16.5px; line-height: 1.45; color: var(--ink-72);
+    margin: 5px 0 0; text-wrap: pretty;
+  }
+  .life-nav { display: flex; gap: 6px; flex: none; padding-top: 2px; }
+  .life-btn {
+    width: 30px; height: 30px; border-radius: 50%;
+    border: 1px solid var(--ink-20); background: #FFFFFF; color: var(--ink);
+    font-size: 13px; line-height: 1; cursor: pointer;
+    transition: border-color 160ms ease, color 160ms ease;
+  }
+  .life-btn:hover { border-color: var(--accent); color: var(--accent); }
+
+  /* Thin bars rather than round dots: they read as a strip of film, and they
+     double as a progress indicator across the set. */
+  .life-dots { display: flex; gap: 6px; margin-top: 14px; }
+  .life-dot {
+    flex: 1; height: 2px; border: 0; padding: 0; cursor: pointer;
+    background: var(--ink-20); transition: background 240ms ease;
+  }
+  .life-dot.is-active { background: var(--accent); }
+  .life-dot:hover { background: var(--accent-deep); }
+
+  /* ── CONTACT CARD ───────────────────────────────────────── */
+  .about-contact {
+    margin-top: 20px; padding: 20px;
+    background: var(--surface); border: 1px solid var(--rule);
+    border-radius: var(--radius-hair);
+  }
+  .about-contact-label {
+    display: block;
+    font-family: var(--font-mono), ui-monospace, monospace;
+    font-size: 10.5px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--ink-45);
+  }
+  .about-contact-email {
+    display: block;
+    font-family: var(--font-serif), Georgia, serif;
+    font-size: 17px; margin-top: 12px; color: var(--ink); word-break: break-word;
+  }
+  .about-contact-link {
+    display: inline-block; margin-top: 14px;
+    font-family: var(--font-sans), system-ui, sans-serif;
+    font-size: 14px; font-weight: 500;
+  }
+
+  @media (max-width: 940px) {
+    .about-page { grid-template-columns: 1fr; gap: 48px; padding-top: 56px; }
+    .about-side { position: static; max-width: 420px; }
+  }
+  @media (max-width: 560px) {
+    .about-now-grid { grid-template-columns: 1fr; }
+    .about-bio-text p { font-size: 18px; }
+  }
+}

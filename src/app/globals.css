@@ -2,6 +2,7 @@
 @import "./home.css";
 @import "./notes.css";
 @import "./article.css";
+@import "./about.css";
 
 @theme {
   --color-bg: #FCFAF9;
@@ -321,7 +322,6 @@
 
   .scroll-home { display: block; }
   .band { border-top: 1px solid var(--rule); scroll-margin-top: 70px; }
-  .band-about { background: var(--surface); padding: 60px 0 64px; }
   .band-projects { background: var(--bg); padding: 60px 0 72px; }
   #top, #notes { scroll-margin-top: 70px; }
 
@@ -588,53 +588,6 @@
   @media (prefers-reduced-motion: reduce) {
     .fold, .fold.fold-in { opacity: 1; transform: none; animation: none; }
   }
-
-  /* RIGHT NOW BLOCK (sticky right column of About section) */
-  .right-now-block { position: sticky; top: 90px; }
-  .rnb-card {
-    background: var(--surface); border: 1px solid var(--rule); border-radius: var(--radius-card);
-    padding: 22px 20px;
-  }
-  .rnb-eyebrow {
-    display: block;
-    font-family: var(--font-sans), system-ui, sans-serif; font-size: 11px; font-weight: 600;
-    letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent);
-  }
-  .rnb-blurb {
-    font-family: var(--font-serif), Georgia, serif; font-size: 13.5px; color: var(--ink-60);
-    line-height: 1.45; margin: 6px 0 14px;
-  }
-  .rnb-list { margin: 0; padding: 0; display: flex; flex-direction: column; gap: 4px; }
-  .rnb-row {
-    border-radius: 8px; padding: 8px 10px; margin: 0 -10px;
-    transition: background 160ms ease;
-  }
-  .rnb-row:hover { background: var(--accent-soft); }
-  .rnb-row-link { display: block; color: inherit; text-decoration: none; }
-  .rnb-label {
-    display: block;
-    font-family: var(--font-sans), system-ui, sans-serif; font-size: 10.5px; font-weight: 600;
-    letter-spacing: 0.10em; text-transform: uppercase; color: var(--ink-45); margin: 0 0 2px;
-  }
-  .rnb-value {
-    display: block;
-    font-family: var(--font-serif), Georgia, serif; font-size: 14.5px; line-height: 1.4;
-    color: var(--ink); margin: 0;
-  }
-  .rnb-note { color: var(--ink-60); font-size: 13px; }
-  .rnb-row-link:hover .rnb-note { color: var(--accent); }
-
-  /* ABOUT */
-  .about-title { font-size: 38px; font-weight: 600; letter-spacing: -0.022em; margin: 10px 0 0; }
-  .about-grid { display: grid; grid-template-columns: minmax(0,1fr) 300px; gap: 56px; align-items: start; margin-top: 32px; }
-  .about-bio p { font-size: 18px; line-height: 1.72; color: var(--ink-72); margin: 0 0 1.2em; text-wrap: pretty; font-family: var(--font-serif), Georgia, serif; }
-  .about-bio p:last-child { margin-bottom: 0; }
-  .about-actions { margin-top: 28px; display: flex; gap: 12px; flex-wrap: wrap; }
-  .about-portrait {
-    display: block; aspect-ratio: 3/4; width: 100%; border-radius: var(--radius-card);
-    position: sticky; top: 90px; object-fit: cover;
-  }
-  .about-portrait-wrap { position: sticky; top: 90px; }
 
   /* FOOTER — single bar. The contact band above it carries the real content. */
   .foot {
@@ -1192,10 +1145,6 @@
 
 @media (max-width: 920px) {
   :root { --pad: 32px; }
-  .about-grid { grid-template-columns: 1fr; gap: 32px; }
-  .about-portrait { position: static; max-width: 280px; }
-  .about-portrait-wrap { position: static; }
-  .right-now-block { position: static; }
   .read-title { font-size: 34px; }
   .contact-grid { grid-template-columns: 1fr; gap: 32px; }
 }
