@@ -59,7 +59,7 @@ export async function RightRail() {
             </div>
           </div>
         </div>
-        <div className="rail-accent" aria-hidden="true" />
+        <div className="rail-divider" aria-hidden="true" />
         <div className="rail-block">
           <span className="l-eyebrow rail-block-head">{readsHead}</span>
           <p className="rail-block-note">{readsNote}</p>

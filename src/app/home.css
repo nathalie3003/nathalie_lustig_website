@@ -299,9 +299,10 @@
     font-family: var(--font-sans), system-ui, sans-serif;
     font-size: 12px; color: var(--ink-60); margin-top: 4px; line-height: 1.45;
   }
-  .rail-accent {
-    height: 3px; background: linear-gradient(90deg, var(--accent), var(--petal));
-  }
+  /* A hairline, not a 3px accent bar. The masthead rule is the site's one
+     sanctioned stripe and DESIGN.md says it is never repeated elsewhere; a
+     gradient version of it in the rail broke that rule twice over. */
+  .rail-divider { height: 1px; background: var(--rule); }
   .home-rail .rail-block {
     margin-top: 0; padding: 16px 16px 6px; border-top: 0;
   }
