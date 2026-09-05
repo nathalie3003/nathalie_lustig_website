@@ -105,9 +105,16 @@
     from { stroke-dashoffset: 1; }
     to   { stroke-dashoffset: 0; }
   }
+  /* pointer-events must stay off. The animation ends at offset-distance 100%,
+     which is the last point on the curve, and this renders after the dots, so
+     it parks on top of the final tenor and swallows its hover. */
   .curve-lead {
     fill: var(--accent); stroke: var(--surface); stroke-width: 2.2;
     animation: curve-lead cubic-bezier(0.4, 0, 0.25, 1) both;
+    pointer-events: none;
+  }
+  .curve-line, .curve-area, .curve-grid, .curve-tick, .curve-xlabel {
+    pointer-events: none;
   }
   @keyframes curve-lead {
     0%   { offset-distance: 0%; opacity: 0; }

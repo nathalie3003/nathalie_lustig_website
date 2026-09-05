@@ -57,7 +57,12 @@ function Card({ i, project, progress, range, targetScale }: CardProps) {
           </div>
           <div className="stack-card-title">{project.title}</div>
           <div className="stack-card-desc">{project.description}</div>
-          <div className="stack-card-url">{project.url} →</div>
+          {/* The address only shows once a project is live. Printing it while
+              something is still being rebuilt is an invitation to go and look,
+              even though the card is not a link. */}
+          {project.live ? (
+            <div className="stack-card-url">{project.url} →</div>
+          ) : null}
         </div>
       </motion.article>
     </div>
