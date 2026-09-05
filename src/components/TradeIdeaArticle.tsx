@@ -6,6 +6,7 @@ import { ReadingProgress } from "@/components/ReadingProgress";
 import { TradeToc } from "@/components/TradeToc";
 import { extractHeadings } from "@/lib/toc";
 import type { BondNote } from "@/lib/queries";
+import { about } from "@/content/about";
 import { ArticleReveal } from "@/components/ArticleReveal";
 import { ScrollReveal } from "@/components/ScrollReveal";
 
@@ -68,6 +69,9 @@ export function TradeIdeaArticle({
             {note.title}
           </ScrollReveal>
           {note.excerpt && <p className="article-deck">{note.excerpt}</p>}
+          <p className="ap-byline">
+            By <Link href="/about">{about.author}</Link>
+          </p>
         </div>
 
         {note.coverImage && (

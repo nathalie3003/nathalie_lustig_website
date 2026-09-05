@@ -152,7 +152,7 @@ export function TopBar() {
         <div className="top-right">
           <Link
             href="/#contact"
-            className="l-btn l-btn-outline l-btn-sm cv-btn"
+            className="l-btn l-btn-outline l-btn-sm top-cta"
             onClick={jump("contact")}
           >
             Get in touch

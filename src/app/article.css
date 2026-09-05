@@ -5,6 +5,25 @@
    ============================================================ */
 
 @layer components {
+  /* ── BYLINE ─────────────────────────────────────────────── */
+  /* Sentence case, not the mono uppercase of the meta strip above it: a name is
+     not a department label or a quantity. Sans because it is a link to About,
+     which is the point of it. A reader could previously finish a note without
+     learning whose it was. */
+  .ap-byline {
+    font-family: var(--font-sans), system-ui, sans-serif;
+    font-size: 14px; line-height: 1.5; color: var(--ink-60);
+    margin: 0 0 28px;
+  }
+  .ap-byline a {
+    color: var(--ink); text-decoration: underline;
+    text-decoration-color: var(--rule-strong); text-underline-offset: 3px;
+    transition: color 140ms ease, text-decoration-color 140ms ease;
+  }
+  .ap-byline a:hover {
+    color: var(--accent); text-decoration-color: var(--accent);
+  }
+
   /* ── KEEP READING ───────────────────────────────────────── */
   .keep-reading { border-top: 1px solid var(--rule); }
   .keep-reading-inner {

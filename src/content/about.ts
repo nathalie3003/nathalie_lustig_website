@@ -2,6 +2,9 @@
 export type Contact = { label: string; value: string; href: string };
 
 export const about = {
+  // Single source for the article byline, so the two article layouts cannot
+  // drift apart on who wrote the thing.
+  author: "Nathalie Lustig",
   headline: "About",
   paragraphs: [
     "Hi, I'm Nathalie, a recent graduate from the London School of Economics with a BSc in Economics and Social Policy, and passed the CFA Level I exam earlier this year. That's where the habit of writing this kind of thing started. During my degree I worked as a Summer Analyst at J.P. Morgan's Global Private Bank.",
