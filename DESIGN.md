@@ -13,8 +13,13 @@ colors:
   ink-72: "rgba(25, 19, 22, 0.72)"
   ink-60: "rgba(25, 19, 22, 0.60)"
   ink-45: "rgba(25, 19, 22, 0.45)"
+  ink-20: "rgba(25, 19, 22, 0.18)"
+  accent-tint: "rgba(178, 58, 99, 0.09)"
   hairline: "#EADFDD"
   hairline-strong: "#E0C6CE"
+  band-base: "#EFE6DC"
+  state-live: "#4C7A54"
+  state-progress: "#C8A96A"
 typography:
   display:
     fontFamily: "var(--font-serif), Georgia, serif"
@@ -110,6 +115,11 @@ components:
     textColor: "{colors.card}"
     rounded: "{rounded.pill}"
     padding: "7px 14px"
+  button-disabled:
+    backgroundColor: "{colors.tint}"
+    textColor: "{colors.ink-72}"
+    rounded: "{rounded.xs}"
+    padding: "10px 18px"
 ---
 
 # Design System: The Basis Point
@@ -180,10 +190,16 @@ a near-black warm ink do all the signalling work.
 - **Hairline** (#EADFDD): Every rule, border, and divider in the system.
 - **Hairline Strong** (#E0C6CE): The emphasised variant, for dropdown borders and
   rules that need to read as a step up from an ordinary divider.
+- **Band Base** (#EFE6DC): Sits beneath the contact band's photograph. It is what
+  shows if the image fails, so it is warmer than the page and close enough to the
+  wash that a missing photo reads as a deliberate band rather than a hole. Nothing
+  else uses it.
 
 ### Support
-- **Petal** (#F7D9E3): Text selection and the light end of the rail's accent
-  gradient. It is a tint, never a text or border colour.
+- **Petal** (#F7D9E3): Text selection, and the light end of the curve card's area
+  fill. It is a tint, never a text or border colour. It previously also formed a
+  gradient bar in the rail; that was removed for repeating the masthead stripe,
+  and it should not come back.
 - **Accent Soft** (#F7ECEF): Hover fills behind nav links and dropdown rows.
 
 ### State
@@ -220,7 +236,11 @@ own face is the point, not a flourish.
 - **Headline** (600, 38px, 1.1): Section titles and the contact band heading.
 - **Title** (600, 25px, 1.2): Note-row and card titles.
 - **Body** (400, 19.5px, 1.78; cap 65 to 75ch): Long-form note body copy. The widest
-  line-height in the system, built for sustained reading.
+  line-height in the system, built for sustained reading. The cap is enforced by
+  `--col-text: 620px`, which measures 70 characters at this size and face. That
+  number was derived by measuring rendered text (the average glyph is 8.87px), so
+  it has to be re-measured if the body size or the serif ever changes. It is not a
+  round number chosen by eye.
 - **UI** (500, 14.5px): Nav links, buttons, form controls. Sans only.
 - **Meta** (400, 10.5px, letter-spacing 0.14em, uppercase): Department labels,
   dates, read times, chart axis values. Mono only.
@@ -245,8 +265,11 @@ only as a response to interaction: hover lifts on interactive cards, and ambient
 ### Shadow Vocabulary
 - **Ambient popover** (`0 18px 50px rgba(25,19,22,0.16)`): Under the notes dropdown
   and mobile menu popover. A soft, diffuse lift signalling "floating above the page."
-- **Hover lift** (`0 6px 18px rgba(25,19,22,0.08)`): Recent-note rows on hover,
-  paired with a small `translateY(-2px)`.
+- **Hover lift** (`0 8px 20px rgba(25,19,22,0.08)`): Note rows and the About page's
+  Right now cards on hover, paired with a small `translateY(-2px)`.
+- **Menu** (`0 12px 28px rgba(25,19,22,0.16)`): The curve card's maturity menu. A
+  tighter, closer version of the ambient popover, because it drops from a control
+  rather than floating over the page.
 - **Accent glow** (`0 2px 8px rgba(178,58,99,0.22)`, hover `0 6px 16px
   rgba(178,58,99,0.28)`): Reserved for the primary raspberry button and the active
   category chip. The one place a coloured shadow is allowed, because it is tinted to

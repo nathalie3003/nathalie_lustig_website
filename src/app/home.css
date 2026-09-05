@@ -248,7 +248,7 @@
   }
   .home-note:hover {
     color: var(--accent); transform: translateY(-2px);
-    background: #FFFFFF; box-shadow: 0 8px 22px rgba(25, 19, 22, 0.09);
+    background: #FFFFFF; box-shadow: 0 8px 20px rgba(25, 19, 22, 0.08);
   }
   .home-note-thumb {
     width: 96px; aspect-ratio: 1; object-fit: cover;

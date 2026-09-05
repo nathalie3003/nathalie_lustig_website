@@ -1,0 +1,434 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-09-05T12:00:54.123129Z",
+  "title": "Design System: The Basis Point",
+  "extensions": {
+    "colorMeta": {
+      "raspberry": {
+        "role": "primary",
+        "displayName": "Raspberry",
+        "canonical": "oklch(53.2% 0.158 3.3)",
+        "tonalRamp": [
+          "oklch(15.0% 0.069 3.3)",
+          "oklch(26.4% 0.092 3.3)",
+          "oklch(37.9% 0.115 3.3)",
+          "oklch(49.3% 0.137 3.3)",
+          "oklch(60.7% 0.157 3.3)",
+          "oklch(72.1% 0.134 3.3)",
+          "oklch(83.6% 0.112 3.3)",
+          "oklch(95.0% 0.089 3.3)"
+        ]
+      },
+      "plum": {
+        "role": "primary-deep",
+        "displayName": "Plum",
+        "canonical": "oklch(40.2% 0.126 359.5)",
+        "tonalRamp": [
+          "oklch(15.0% 0.055 359.5)",
+          "oklch(26.4% 0.073 359.5)",
+          "oklch(37.9% 0.091 359.5)",
+          "oklch(49.3% 0.109 359.5)",
+          "oklch(60.7% 0.124 359.5)",
+          "oklch(72.1% 0.107 359.5)",
+          "oklch(83.6% 0.089 359.5)",
+          "oklch(95.0% 0.071 359.5)"
+        ]
+      },
+      "accent-soft": {
+        "role": "primary-soft",
+        "displayName": "Accent Soft",
+        "canonical": "oklch(95.3% 0.012 358.8)",
+        "tonalRamp": [
+          "oklch(15.0% 0.005 358.8)",
+          "oklch(26.4% 0.007 358.8)",
+          "oklch(37.9% 0.009 358.8)",
+          "oklch(49.3% 0.011 358.8)",
+          "oklch(60.7% 0.012 358.8)",
+          "oklch(72.1% 0.011 358.8)",
+          "oklch(83.6% 0.009 358.8)",
+          "oklch(95.0% 0.007 358.8)"
+        ]
+      },
+      "petal": {
+        "role": "primary-tint",
+        "displayName": "Petal",
+        "canonical": "oklch(91.3% 0.036 355.7)",
+        "tonalRamp": [
+          "oklch(15.0% 0.016 355.7)",
+          "oklch(26.4% 0.021 355.7)",
+          "oklch(37.9% 0.026 355.7)",
+          "oklch(49.3% 0.031 355.7)",
+          "oklch(60.7% 0.035 355.7)",
+          "oklch(72.1% 0.030 355.7)",
+          "oklch(83.6% 0.025 355.7)",
+          "oklch(95.0% 0.020 355.7)"
+        ]
+      },
+      "blush-paper": {
+        "role": "neutral-bg",
+        "displayName": "Blush Paper",
+        "canonical": "oklch(98.6% 0.003 48.7)",
+        "tonalRamp": [
+          "oklch(15.0% 0.001 48.7)",
+          "oklch(26.4% 0.001 48.7)",
+          "oklch(37.9% 0.002 48.7)",
+          "oklch(49.3% 0.002 48.7)",
+          "oklch(60.7% 0.002 48.7)",
+          "oklch(72.1% 0.002 48.7)",
+          "oklch(83.6% 0.002 48.7)",
+          "oklch(95.0% 0.001 48.7)"
+        ]
+      },
+      "card": {
+        "role": "surface",
+        "displayName": "Card",
+        "canonical": "oklch(98.3% 0.009 0.1)",
+        "tonalRamp": [
+          "oklch(15.0% 0.004 0.1)",
+          "oklch(26.4% 0.005 0.1)",
+          "oklch(37.9% 0.006 0.1)",
+          "oklch(49.3% 0.008 0.1)",
+          "oklch(60.7% 0.009 0.1)",
+          "oklch(72.1% 0.008 0.1)",
+          "oklch(83.6% 0.006 0.1)",
+          "oklch(95.0% 0.005 0.1)"
+        ]
+      },
+      "tint": {
+        "role": "surface-alt",
+        "displayName": "Tint",
+        "canonical": "oklch(94.8% 0.011 24.3)",
+        "tonalRamp": [
+          "oklch(15.0% 0.005 24.3)",
+          "oklch(26.4% 0.006 24.3)",
+          "oklch(37.9% 0.008 24.3)",
+          "oklch(49.3% 0.009 24.3)",
+          "oklch(60.7% 0.011 24.3)",
+          "oklch(72.1% 0.009 24.3)",
+          "oklch(83.6% 0.008 24.3)",
+          "oklch(95.0% 0.006 24.3)"
+        ]
+      },
+      "ink": {
+        "role": "text-primary",
+        "displayName": "Ink",
+        "canonical": "oklch(19.5% 0.011 346.6)",
+        "tonalRamp": [
+          "oklch(15.0% 0.005 346.6)",
+          "oklch(26.4% 0.007 346.6)",
+          "oklch(37.9% 0.008 346.6)",
+          "oklch(49.3% 0.010 346.6)",
+          "oklch(60.7% 0.011 346.6)",
+          "oklch(72.1% 0.010 346.6)",
+          "oklch(83.6% 0.008 346.6)",
+          "oklch(95.0% 0.006 346.6)"
+        ]
+      },
+      "hairline": {
+        "role": "border",
+        "displayName": "Hairline",
+        "canonical": "oklch(91.2% 0.012 29.9)",
+        "tonalRamp": [
+          "oklch(15.0% 0.005 29.9)",
+          "oklch(26.4% 0.007 29.9)",
+          "oklch(37.9% 0.009 29.9)",
+          "oklch(49.3% 0.011 29.9)",
+          "oklch(60.7% 0.012 29.9)",
+          "oklch(72.1% 0.011 29.9)",
+          "oklch(83.6% 0.009 29.9)",
+          "oklch(95.0% 0.007 29.9)"
+        ]
+      },
+      "hairline-strong": {
+        "role": "border-strong",
+        "displayName": "Hairline Strong",
+        "canonical": "oklch(85.1% 0.031 357.2)",
+        "tonalRamp": [
+          "oklch(15.0% 0.014 357.2)",
+          "oklch(26.4% 0.018 357.2)",
+          "oklch(37.9% 0.022 357.2)",
+          "oklch(49.3% 0.027 357.2)",
+          "oklch(60.7% 0.031 357.2)",
+          "oklch(72.1% 0.026 357.2)",
+          "oklch(83.6% 0.022 357.2)",
+          "oklch(95.0% 0.017 357.2)"
+        ]
+      },
+      "state-live": {
+        "role": "state-success",
+        "displayName": "Live",
+        "canonical": "oklch(53.5% 0.078 148.8)",
+        "tonalRamp": [
+          "oklch(15.0% 0.034 148.8)",
+          "oklch(26.4% 0.045 148.8)",
+          "oklch(37.9% 0.056 148.8)",
+          "oklch(49.3% 0.067 148.8)",
+          "oklch(60.7% 0.077 148.8)",
+          "oklch(72.1% 0.066 148.8)",
+          "oklch(83.6% 0.055 148.8)",
+          "oklch(95.0% 0.044 148.8)"
+        ]
+      },
+      "state-progress": {
+        "role": "state-pending",
+        "displayName": "In Progress",
+        "canonical": "oklch(74.8% 0.089 84.2)",
+        "tonalRamp": [
+          "oklch(15.0% 0.039 84.2)",
+          "oklch(26.4% 0.052 84.2)",
+          "oklch(37.9% 0.064 84.2)",
+          "oklch(49.3% 0.077 84.2)",
+          "oklch(60.7% 0.088 84.2)",
+          "oklch(72.1% 0.076 84.2)",
+          "oklch(83.6% 0.063 84.2)",
+          "oklch(95.0% 0.050 84.2)"
+        ]
+      },
+      "band-base": {
+        "role": "surface-band",
+        "displayName": "Band Base",
+        "canonical": "oklch(92.8% 0.019 78.0)",
+        "tonalRamp": [
+          "oklch(15.0% 0.005 78.0)",
+          "oklch(26.4% 0.008 78.0)",
+          "oklch(37.9% 0.012 78.0)",
+          "oklch(49.3% 0.016 78.0)",
+          "oklch(60.7% 0.019 78.0)",
+          "oklch(72.1% 0.016 78.0)",
+          "oklch(83.6% 0.011 78.0)",
+          "oklch(95.0% 0.005 78.0)"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "The homepage masthead and note titles. The largest serif on the page."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Section titles and the contact band heading."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Note-row and card titles."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Long-form note copy, capped at 70 characters by --col-text."
+      },
+      "ui": {
+        "displayName": "UI",
+        "purpose": "Nav links, buttons and form controls. Sans only."
+      },
+      "meta": {
+        "displayName": "Meta",
+        "purpose": "Department labels, dates, read times, chart axis values. Mono only."
+      }
+    },
+    "shadows": [
+      {
+        "name": "ambient-popover",
+        "value": "0 18px 50px rgba(25,19,22,0.16)",
+        "purpose": "Under the notes dropdown and mobile menu. Signals floating above the page."
+      },
+      {
+        "name": "menu",
+        "value": "0 12px 28px rgba(25,19,22,0.16)",
+        "purpose": "The curve card's maturity menu. Tighter, because it drops from a control."
+      },
+      {
+        "name": "hover-lift",
+        "value": "0 8px 20px rgba(25,19,22,0.08)",
+        "purpose": "Note rows and Right now cards on hover, with translateY(-2px)."
+      },
+      {
+        "name": "accent-glow",
+        "value": "0 2px 8px rgba(178,58,99,0.22)",
+        "purpose": "The primary button and active chip. The one place a coloured shadow is allowed, because it is tinted to the accent itself."
+      },
+      {
+        "name": "accent-glow-hover",
+        "value": "0 6px 16px rgba(178,58,99,0.28)",
+        "purpose": "The primary button on hover."
+      },
+      {
+        "name": "stack-card",
+        "value": "0 30px 70px -32px rgba(25,19,22,0.24)",
+        "purpose": "Project stack cards. The most pronounced shadow in the system, reserved for that one component."
+      }
+    ],
+    "motion": [
+      {
+        "name": "ease-standard",
+        "value": "cubic-bezier(0.4, 0, 0.2, 1)",
+        "purpose": "Masthead wipe and default state transitions."
+      },
+      {
+        "name": "ease-reveal",
+        "value": "cubic-bezier(0.2, 0.7, 0.2, 1)",
+        "purpose": "Scroll reveals and the wordmark entrance."
+      },
+      {
+        "name": "ease-draw",
+        "value": "cubic-bezier(0.4, 0, 0.25, 1)",
+        "purpose": "The yield curve draw and its lead dot, which share one curve so they read as a single gesture."
+      },
+      {
+        "name": "ease-fold",
+        "value": "cubic-bezier(0.22, 0.61, 0.36, 1)",
+        "purpose": "The contact band folding up into place."
+      },
+      {
+        "name": "duration-curve-draw",
+        "value": "2600ms",
+        "purpose": "One full curve draw. Replays every 5s while idle."
+      },
+      {
+        "name": "duration-crossfade",
+        "value": "520ms",
+        "purpose": "About page photo crossfade."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "sm",
+        "value": "560px"
+      },
+      {
+        "name": "md",
+        "value": "760px"
+      },
+      {
+        "name": "lg",
+        "value": "940px"
+      },
+      {
+        "name": "xl",
+        "value": "1120px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "The one primary action per view. Raspberry fill with an accent-tinted glow.",
+      "html": "<a href=\"#\" class=\"ds-btn-primary\">Read the latest note</a>",
+      "css": ".ds-btn-primary { display: inline-flex; align-items: center; gap: 8px; font-family: var(--font-sans), system-ui, sans-serif; font-size: 13.5px; font-weight: 500; padding: 11px 20px; border-radius: var(--radius, 12px); border: 1px solid var(--accent, #B23A63); background: var(--accent, #B23A63); color: #fff; text-decoration: none; box-shadow: 0 2px 8px rgba(178,58,99,0.22); transition: transform 120ms ease, box-shadow 120ms ease, background 120ms ease; } .ds-btn-primary:hover { background: var(--accent-deep, #7A2246); box-shadow: 0 6px 16px rgba(178,58,99,0.28); transform: translateY(-1px); } .ds-btn-primary:focus-visible { outline: 2px solid var(--accent-deep, #7A2246); outline-offset: 2px; }"
+    },
+    {
+      "name": "Outline Button",
+      "kind": "button",
+      "refersTo": "button-outline",
+      "description": "The header's Get in touch action, and the standard secondary call to action. Fills on hover.",
+      "html": "<a href=\"#\" class=\"ds-btn-outline\">Get in touch</a>",
+      "css": ".ds-btn-outline { display: inline-flex; align-items: center; font-family: var(--font-sans), system-ui, sans-serif; font-size: 13px; font-weight: 500; padding: 9px 16px; border-radius: var(--radius-xs, 6px); border: 1px solid var(--accent, #B23A63); background: transparent; color: var(--accent, #B23A63); text-decoration: none; transition: background 160ms ease, color 160ms ease; } .ds-btn-outline:hover { background: var(--accent, #B23A63); color: var(--surface, #FFF7F9); } .ds-btn-outline:focus-visible { outline: 2px solid var(--accent-deep, #7A2246); outline-offset: 2px; }"
+    },
+    {
+      "name": "Disabled Button",
+      "kind": "button",
+      "refersTo": "button-disabled",
+      "description": "The reply button before anything is typed. A flat tint rather than a faded fill, so the label stays legible at 6.8:1.",
+      "html": "<button class=\"ds-btn-disabled\" disabled>Post reply</button>",
+      "css": ".ds-btn-disabled { padding: 10px 18px; border: none; border-radius: var(--radius-xs, 6px); background: var(--tint, #F5EBEA); color: var(--ink-72, rgba(25,19,22,0.72)); font-family: var(--font-sans), system-ui, sans-serif; font-size: 14px; font-weight: 500; cursor: default; }"
+    },
+    {
+      "name": "Category Chip",
+      "kind": "chip",
+      "refersTo": "chip-category",
+      "description": "Archive filters. Real links, so a filtered view stays shareable. Active inverts to a soft raspberry fill.",
+      "html": "<div style=\"display:flex; gap:8px;\"><a href=\"#\" class=\"ds-chip ds-chip-active\">All</a><a href=\"#\" class=\"ds-chip\">Rates &amp; Macro</a><a href=\"#\" class=\"ds-chip\">Credit</a></div>",
+      "css": ".ds-chip { display: inline-flex; align-items: baseline; padding: 9px 16px; border-radius: var(--radius-pill, 999px); font-family: var(--font-sans), system-ui, sans-serif; font-size: 13.5px; font-weight: 500; white-space: nowrap; border: 1px solid var(--rule, #EADFDD); background: transparent; color: var(--ink, #191316); text-decoration: none; transition: border-color 160ms ease, background 160ms ease, color 160ms ease; } .ds-chip:hover { border-color: var(--ink-45, rgba(25,19,22,0.45)); } .ds-chip-active { border-color: var(--accent, #B23A63); background: var(--accent-soft, #F7ECEF); color: var(--accent, #B23A63); }"
+    },
+    {
+      "name": "Department Label",
+      "kind": "custom",
+      "refersTo": "typography.meta",
+      "description": "The signature gesture. Mono small-caps raspberry on a raspberry hairline, wherever a section opens.",
+      "html": "<span class=\"ds-eyebrow\">Right now</span>",
+      "css": ".ds-eyebrow { display: block; padding-bottom: 10px; margin-bottom: 14px; border-bottom: 1px solid var(--accent, #B23A63); font-family: var(--font-mono), ui-monospace, monospace; font-size: 11px; font-weight: 400; letter-spacing: 0.16em; text-transform: uppercase; color: var(--accent, #B23A63); }"
+    },
+    {
+      "name": "Archive Row",
+      "kind": "card",
+      "refersTo": "archive-row",
+      "description": "One note in the archive: mono date, serif title and deck, mono read time. Three type voices doing their separate jobs in one row.",
+      "html": "<a href=\"#\" class=\"ds-row\"><span class=\"ds-row-date\">19 Aug 2026</span><span class=\"ds-row-body\"><span class=\"ds-row-cat\">Rates &amp; Macro</span><span class=\"ds-row-title\">The Stem Beneath the Flower</span><span class=\"ds-row-deck\">The long end has been supported for two decades. As that support fades, markets are discovering what it costs to keep the flower standing.</span></span><span class=\"ds-row-read\">5 min</span></a>",
+      "css": ".ds-row { display: grid; grid-template-columns: 118px minmax(0,1fr) 90px; gap: 28px; align-items: baseline; padding: 28px 8px 28px 0; border-bottom: 1px solid var(--rule, #EADFDD); color: var(--ink, #191316); text-decoration: none; transition: color 160ms ease, background 160ms ease; } .ds-row:hover { background: var(--surface, #FFF7F9); color: var(--accent, #B23A63); } .ds-row-date, .ds-row-read { font-family: var(--font-mono), ui-monospace, monospace; font-size: 11.5px; color: var(--ink-60, rgba(25,19,22,0.6)); } .ds-row-read { text-align: right; } .ds-row-cat { display: block; font-family: var(--font-mono), ui-monospace, monospace; font-size: 10.5px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent-deep, #7A2246); } .ds-row-title { display: block; font-family: var(--font-serif), Georgia, serif; font-size: 26px; line-height: 1.2; font-weight: 600; letter-spacing: -0.019em; margin-top: 8px; } .ds-row-deck { display: block; font-family: var(--font-serif), Georgia, serif; font-size: 17px; line-height: 1.6; color: var(--ink-60, rgba(25,19,22,0.6)); margin-top: 8px; }"
+    },
+    {
+      "name": "Reply Field",
+      "kind": "input",
+      "refersTo": "reply-form",
+      "description": "Borderless fields inside one bordered form, so focus lands on the group rather than on each field.",
+      "html": "<form class=\"ds-form\"><input class=\"ds-input-name\" placeholder=\"Name (optional)\"><div class=\"ds-divider\"></div><textarea class=\"ds-input-text\" rows=\"2\" placeholder=\"Add a reply. Pushback welcome.\"></textarea></form>",
+      "css": ".ds-form { padding: 18px; border: 1px solid var(--rule, #EADFDD); border-radius: var(--radius-sm, 9px); background: var(--bg, #FCFAF9); } .ds-form:focus-within { border-color: var(--ink-45, rgba(25,19,22,0.45)); } .ds-input-name, .ds-input-text { width: 100%; border: none; background: transparent; color: var(--ink, #191316); outline: none; padding: 6px 2px; } .ds-input-name { font-family: var(--font-sans), system-ui, sans-serif; font-size: 14px; } .ds-input-text { font-family: var(--font-serif), Georgia, serif; font-size: 17px; line-height: 1.6; resize: vertical; padding: 8px 2px; } .ds-input-name::placeholder, .ds-input-text::placeholder { color: var(--ink-60, rgba(25,19,22,0.6)); } .ds-divider { height: 1px; background: var(--rule, #EADFDD); margin: 8px 0 4px; }"
+    },
+    {
+      "name": "Brand Disc",
+      "kind": "custom",
+      "refersTo": "brand-mark",
+      "description": "A flat ink circle carrying bp in the serif. Solid, unlit, no gradient and no rim. It reads as a printer's mark.",
+      "html": "<span class=\"ds-disc\">bp</span>",
+      "css": ".ds-disc { display: grid; place-items: center; width: 30px; height: 30px; border-radius: 50%; background: var(--ink, #191316); color: var(--bg, #FCFAF9); font-family: var(--font-serif), Georgia, serif; font-size: 15px; font-weight: 600; letter-spacing: -0.5px; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Research Note",
+    "overview": "The Basis Point reads like an analyst's desk note, not a marketing site: a raspberry masthead rule at the very top (the same publication grammar move as the Economist's red bar or the FT's salmon strip), mono small-caps department labels, and long-form serif body copy set to be read closely rather than skimmed. Density is editorial, with generous line-height, real paragraphs and a right rail for supporting context. Never dashboard-dense, never marketing-sparse.\n\nThe paper is warm. Blush rather than cool grey is the single decision that most changes the site's temperature: it reads as a printed page rather than an interface, and it lets one saturated colour do all the signalling without ever feeling clinical.\n\nThis system explicitly rejects the fintech-SaaS look: no glossy dashboards, no gradient hero sections, no hero-metric templates, no stock trading-floor photography, no numbered-section scaffolding that reads as generated. Confidence comes from restraint and specificity. The writing and the yield curve carry the page, not visual decoration.",
+    "keyCharacteristics": [
+      "One working accent colour (raspberry) used sparingly, with plum as its hover and depth partner",
+      "Three type voices with strict jobs: serif reads, sans navigates, mono counts",
+      "Publication grammar: masthead rule, section hairlines, mono department labels",
+      "Warm blush paper throughout; white is reserved for genuinely raised surfaces",
+      "Flat by default; the only shadows are soft ambient lifts on interactive cards and popovers, never structural"
+    ],
+    "rules": [
+      {
+        "name": "The One Working Color Rule",
+        "body": "Raspberry is the only saturated colour on any given screen. Its rarity, a hairline here, a label there, one primary button, is what makes it read as considered rather than decorative. Plum is not an exception to this rule; it is raspberry's own darker state.",
+        "section": "colors"
+      },
+      {
+        "name": "The Legible Ink Rule",
+        "body": "--ink-60 is the lightest ink the system may set text in, at 4.7:1. --ink-45 is decoration only: it measures 2.96:1 on blush and fails WCAG AA, so it is for hairlines, borders and list-marker glyphs and never for words.",
+        "section": "colors"
+      },
+      {
+        "name": "The Three-Voice Rule",
+        "body": "Serif reads, sans navigates, mono counts. If a piece of text is meant to be read as prose, it is serif. If it is a control or a piece of wayfinding, it is sans. If it is a date, a duration, a tenor, a basis-point figure or a department label, it is mono. Never mix two voices mid-sentence.",
+        "section": "typography"
+      },
+      {
+        "name": "The Mono-Means-Measurable Rule",
+        "body": "Mono is not a decorative technical texture to sprinkle on headings. It earns its place only where the content is genuinely a label or a quantity. A serif heading never becomes mono for effect.",
+        "section": "typography"
+      },
+      {
+        "name": "The Hairline-Before-Shadow Rule",
+        "body": "Reach for a 1px hairline border before reaching for a shadow. Shadows are earned by interaction state, not applied at rest.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do keep raspberry to hairlines, labels, links, and the primary button. One working colour, used sparingly.",
+      "Do set long-form reading copy in the serif family at 19.5px/1.78, capped at 65 to 75ch.",
+      "Do reach for a 1px hairline border before a shadow; let shadows respond to interaction rather than sitting at rest.",
+      "Do keep the 3px raspberry masthead rule unique to the very top of the page.",
+      "Do set every date, read time, tenor and basis-point figure in mono.",
+      "Do keep the contact band's photograph under its wash; the wash is not optional."
+    ],
+    "donts": [
+      "Don't use border-left/border-right as a coloured accent stripe on cards or list items. The masthead rule is the site's one sanctioned stripe at the top, and the pull-quote's left rule is the one sanctioned stripe in body copy. Nothing else.",
+      "Don't use gradient text or background-clip: text gradients anywhere, and never put a gradient on the brand disc.",
+      "Don't build glossy fintech-dashboard components: no gradient hero sections, no hero-metric templates, no stock trading-floor imagery.",
+      "Don't scatter mono uppercase labels as reflexive scaffolding. Mono labels are department markers and quantities, so one sits above an editorial break or beside a measurement, and never above every div for texture.",
+      "Don't add numbered section markers (01/02/03) as decoration. The About page's photo counter is a real index of a real set, and is the only exception.",
+      "Don't mix two type voices within the same piece of running text.",
+      "Don't reintroduce a second accent colour. The old system reserved a warm tan that was never placed in the UI in three months; the lesson is that this palette does not need one.",
+      "Don't set text in --ink-45. It fails WCAG AA and PRODUCT.md commits to AA."
+    ]
+  }
+}
