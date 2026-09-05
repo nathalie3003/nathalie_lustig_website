@@ -122,13 +122,19 @@
 
   /* Thin bars rather than round dots: they read as a strip of film, and they
      double as a progress indicator across the set. */
-  .life-dots { display: flex; gap: 6px; margin-top: 14px; }
+  .life-dots { display: flex; gap: 6px; margin-top: 8px; }
+  /* The bar reads as 2px but the control is 14px tall: content-box sizing plus
+     vertical padding, with the background clipped to the content box so only
+     the bar paints. That gives the focus ring something to draw around and
+     makes the target hittable, without changing how it looks. */
   .life-dot {
-    flex: 1; height: 2px; border: 0; padding: 0; cursor: pointer;
-    background: var(--ink-20); transition: background 240ms ease;
+    box-sizing: content-box;
+    flex: 1; height: 2px; border: 0; padding: 6px 0; cursor: pointer;
+    background-color: var(--ink-20); background-clip: content-box;
+    transition: background-color 240ms ease;
   }
-  .life-dot.is-active { background: var(--accent); }
-  .life-dot:hover { background: var(--accent-deep); }
+  .life-dot.is-active { background-color: var(--accent); }
+  .life-dot:hover { background-color: var(--accent-deep); }
 
   /* ── CONTACT CARD ───────────────────────────────────────── */
   .about-contact {

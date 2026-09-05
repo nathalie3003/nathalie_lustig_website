@@ -309,8 +309,25 @@ published, so a style named for it only invites someone to add one back.
 
 ### Inputs / Fields
 - **Style:** Serif type, card surface, hairline border, 9px radius.
-- **Focus:** Border shifts from hairline to solid ink. No glow, no colour change,
-  keeping focus in the same restrained palette as everything else.
+- **Focus:** The shared focus ring below, plus the border darkening from hairline
+  to ink. The border change is an addition, never the indicator on its own.
+
+### Focus
+Every focusable control carries one ring: `2px solid` raspberry at `2px` offset,
+on `:focus-visible` so it answers the keyboard without ringing every mouse click.
+The offset matters. It puts the ring outside the element, so it stays visible on
+the raspberry-filled primary button, where a flush raspberry ring would vanish.
+
+On the contact band the ring turns to ink and gains a paper-coloured halo, because
+that band's backdrop is a photograph and a single raspberry ring cannot be relied
+on to clear 3:1 against an image.
+
+**The Focus Is Not Optional Rule.** The focus rule is deliberately written
+*unlayered*, which beats every `@layer` in this project, so no component rule can
+suppress it. If you are reaching for `outline: none`, that rule is what you are
+fighting: give the element a better indicator rather than removing the one it has.
+The site previously had zero `:focus-visible` rules and two controls that removed
+their outline outright, which left keyboard users with nothing.
 
 ### Navigation
 - **Style:** Sticky top bar on blurred blush (`color-mix(in oklab, var(--nav-bg) 92%,
@@ -371,3 +388,10 @@ strength anywhere else would break the system.
 - **Don't** reintroduce a second accent colour. The old system reserved a warm tan
   that was never placed in the UI in three months; the lesson is that this palette
   does not need one.
+- **Don't** set text in `--ink-45`. It measures 2.96:1 and `PRODUCT.md` commits to
+  WCAG AA. `--ink-60` is the lightest ink any text may use.
+- **Don't** write `outline: none`. If a control needs a different focus treatment,
+  give it a better one; never leave it with none.
+- **Don't** make a hit target smaller than it looks. The About carousel's dots read
+  as 2px bars but are 14px controls, with the background clipped to the content
+  box. Thin is a visual choice, not a size budget.

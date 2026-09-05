@@ -410,6 +410,11 @@
         "name": "The Hairline-Before-Shadow Rule",
         "body": "Reach for a 1px hairline border before reaching for a shadow. Shadows are earned by interaction state, not applied at rest.",
         "section": "elevation"
+      },
+      {
+        "name": "The Focus Is Not Optional Rule",
+        "body": "Every focusable control carries one ring: 2px solid raspberry at 2px offset, on :focus-visible. The rule is written unlayered so no component rule can suppress it. If you are reaching for outline: none, that rule is what you are fighting: give the element a better indicator rather than removing the one it has. On the contact band the ring turns to ink with a paper halo, because that backdrop is a photograph.",
+        "section": "elevation"
       }
     ],
     "dos": [
@@ -428,7 +433,10 @@
       "Don't add numbered section markers (01/02/03) as decoration. The About page's photo counter is a real index of a real set, and is the only exception.",
       "Don't mix two type voices within the same piece of running text.",
       "Don't reintroduce a second accent colour. The old system reserved a warm tan that was never placed in the UI in three months; the lesson is that this palette does not need one.",
-      "Don't set text in --ink-45. It fails WCAG AA and PRODUCT.md commits to AA."
+      "Don't set text in --ink-45. It fails WCAG AA and PRODUCT.md commits to AA.",
+      "Don't set text in --ink-45. It measures 2.96:1 and PRODUCT.md commits to WCAG AA. --ink-60 is the lightest ink any text may use.",
+      "Don't write outline: none. If a control needs a different focus treatment, give it a better one; never leave it with none.",
+      "Don't make a hit target smaller than it looks. The About carousel's dots read as 2px bars but are 14px controls, with the background clipped to the content box."
     ]
   }
 }

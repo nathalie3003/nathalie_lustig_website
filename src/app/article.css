@@ -97,7 +97,7 @@
   }
   .reply-name, .reply-text {
     width: 100%; border: none; background: transparent;
-    color: var(--ink); outline: none; padding: 6px 2px;
+    color: var(--ink); padding: 6px 2px;
   }
   .reply-name {
     font-family: var(--font-sans), system-ui, sans-serif; font-size: 14px;
@@ -107,8 +107,10 @@
     font-size: 17px; line-height: 1.6; resize: vertical; padding: 8px 2px;
   }
   .reply-name::placeholder, .reply-text::placeholder { color: var(--ink-60); }
-  /* Focus lands on the form as a whole rather than on each borderless field,
-     which would otherwise leave keyboard users with no visible focus at all. */
+  /* The form border warming up is a grouping cue, not the focus indicator: it is
+     already lit by the time you tab from Name to the textarea, so on its own it
+     made moving between the two fields produce no visible change at all. The
+     global :focus-visible ring is what actually marks the focused field. */
   .reply-form:focus-within { border-color: var(--ink-45); }
   .reply-divider { height: 1px; background: var(--rule); margin: 8px 0 4px; }
 
