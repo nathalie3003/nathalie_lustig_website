@@ -24,20 +24,51 @@ const sx = (i: number, n: number) =>
 const sy = (v: number, lo: number, hi: number) =>
   hi === lo ? PAD_T : PAD_T + ((hi - v) / (hi - lo)) * (VH - PAD_T - PAD_B);
 
-// Cubic through the points with horizontal control handles. Yields read as a
-// smooth curve rather than a polyline without overshooting between tenors.
+// Monotone cubic (Fritsch–Carlson) through the points.
+//
+// The tangent at each tenor has to follow the local slope. Handles that are
+// merely horizontal force the slope to zero at every point, which flattens the
+// line at each tenor and ramps it in between: the curve reads as a staircase,
+// which is worse than the polyline it was meant to improve on. Taking the
+// tangents from the weighted harmonic mean of the neighbouring secants gives
+// one continuous line, and because that mean collapses to zero wherever the
+// secants disagree in sign, the curve still cannot overshoot a tenor.
 function pathOf(vals: number[], lo: number, hi: number): string {
   const n = vals.length;
   if (n === 0) return "";
-  let d = `M ${sx(0, n).toFixed(1)} ${sy(vals[0], lo, hi).toFixed(1)}`;
-  for (let i = 1; i < n; i++) {
-    const x0 = sx(i - 1, n);
-    const x1 = sx(i, n);
-    const dx = (x1 - x0) / 2.2;
+  const xs = vals.map((_, i) => sx(i, n));
+  const ys = vals.map((v) => sy(v, lo, hi));
+  if (n === 1) return `M ${xs[0].toFixed(1)} ${ys[0].toFixed(1)}`;
+
+  const dx: number[] = [];
+  const slope: number[] = [];
+  for (let i = 0; i < n - 1; i++) {
+    dx.push(xs[i + 1] - xs[i]);
+    slope.push((ys[i + 1] - ys[i]) / dx[i]);
+  }
+
+  // Ends take their secant outright; interior points take the weighted harmonic
+  // mean, which is bounded by the shallower of the two secants either side.
+  const m: number[] = new Array(n);
+  m[0] = slope[0];
+  m[n - 1] = slope[n - 2];
+  for (let i = 1; i < n - 1; i++) {
+    if (slope[i - 1] * slope[i] <= 0) {
+      m[i] = 0; // a turning point, or a flat run: level the tangent off
+    } else {
+      const w1 = 2 * dx[i] + dx[i - 1];
+      const w2 = dx[i] + 2 * dx[i - 1];
+      m[i] = (w1 + w2) / (w1 / slope[i - 1] + w2 / slope[i]);
+    }
+  }
+
+  let d = `M ${xs[0].toFixed(1)} ${ys[0].toFixed(1)}`;
+  for (let i = 0; i < n - 1; i++) {
+    const h = dx[i] / 3;
     d +=
-      ` C ${(x0 + dx).toFixed(1)} ${sy(vals[i - 1], lo, hi).toFixed(1)},` +
-      ` ${(x1 - dx).toFixed(1)} ${sy(vals[i], lo, hi).toFixed(1)},` +
-      ` ${x1.toFixed(1)} ${sy(vals[i], lo, hi).toFixed(1)}`;
+      ` C ${(xs[i] + h).toFixed(1)} ${(ys[i] + m[i] * h).toFixed(1)},` +
+      ` ${(xs[i + 1] - h).toFixed(1)} ${(ys[i + 1] - m[i + 1] * h).toFixed(1)},` +
+      ` ${xs[i + 1].toFixed(1)} ${ys[i + 1].toFixed(1)}`;
   }
   return d;
 }
