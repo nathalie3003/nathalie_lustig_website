@@ -1226,6 +1226,17 @@
   top: 0;
   padding-top: clamp(76px, 9vh, 116px);
 }
+/* Each slot is a viewport tall because that is the scroll distance one card
+   needs before the next covers it. The last card has nothing following it, so
+   the rest of its slot is dead space between the stack and the footer. It sizes
+   to its content instead. */
+.stack-card-slot:last-child {
+  height: auto;
+  /* Larger than it looks. The last card is pushed down by the stagger offset,
+     which eats into this padding, so the visible gap ends up roughly 28px less
+     than the value here. */
+  padding-bottom: clamp(76px, 9.5vh, 116px);
+}
 
 .stack-card {
   position: relative;

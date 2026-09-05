@@ -200,7 +200,7 @@ export function CurveCard({ snapshot, asOf, histories }: Props) {
             </span>
           </button>
           {open && (
-            <div className="curve-menu" role="listbox">
+            <div className="curve-menu" role="listbox" data-lenis-prevent>
               {options.map((o) => (
                 <button
                   type="button"
