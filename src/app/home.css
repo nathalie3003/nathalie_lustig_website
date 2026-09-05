@@ -68,11 +68,17 @@
   }
   .curve-trigger:hover { border-color: var(--accent); }
   .curve-caret { color: var(--accent); font-size: 9px; }
+  /* The markup carries data-lenis-prevent, and it is load-bearing: the homepage
+     is wrapped in ReactLenis root, which intercepts wheel events for smooth
+     scrolling. Without it these styles are inert, because the page scrolls
+     behind the menu instead of the menu scrolling. overscroll-behavior then
+     stops the page taking over once the list hits its end. */
   .curve-menu {
     position: absolute; top: calc(100% + 5px); right: 0; z-index: 20;
     background: var(--bg); border: 1px solid var(--rule-strong);
     box-shadow: 0 12px 28px rgba(25, 19, 22, 0.16);
-    min-width: 160px; max-height: 216px; overflow-y: auto;
+    min-width: 160px; max-height: 216px;
+    overflow-y: auto; overscroll-behavior: contain;
   }
   .curve-opt {
     display: flex; width: 100%; align-items: center; justify-content: space-between;
