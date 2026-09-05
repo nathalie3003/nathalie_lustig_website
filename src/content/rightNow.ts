@@ -29,31 +29,16 @@ export const rightNow: RightNowRow[] = [
 ];
 
 // About page. Deliberately different copy from the rail above, so the two
-// surfaces do not read as duplicates.
+// surfaces do not read as duplicates. Kept to a handful of words each: these
+// are asides, and the bio beside them is where the substance lives.
 export const aboutNow: RightNowRow[] = [
-  {
-    label: "Based in",
-    value:
-      "London, drinking too much Vietnamese coffee and questioning every coffee you will ever buy.",
-    href: "/files/44151.pdf",
-  },
-  {
-    label: "Away from the desk",
-    value:
-      "Skiing, which is non-negotiable, and a self-proclaimed professional pool game.",
-  },
-  {
-    label: "Still learning",
-    value:
-      "Für Elise, and how to stop confusing 'hello' and 'sorry' in Vietnamese.",
-  },
-  {
-    label: "Reading",
-    value: "The Age of Innocence, mostly for the footnotes.",
-  },
+  { label: "Travelling", value: "Café hopping in Hanoi" },
+  { label: "Away from the desk", value: "Skiing (though my ACLs wish otherwise)" },
+  { label: "Still learning", value: "Für Elise" },
+  { label: "Reading", value: "The Age of Innocence, for the footnotes" },
   {
     label: "Still arguing that",
-    value: "'Boring' is the highest compliment a bond can earn.",
+    value: "'Boring' is the highest compliment a bond can earn",
   },
 ];
 

@@ -38,7 +38,11 @@
     --rule-strong: #E0C6CE;
     --card-dark: #191316;
     --accent-tint: rgba(178, 58, 99, 0.09);
-    --col-text: 680px;
+    /* The prose measure. 620px against Source Serif 4 at 19.5px measures 70
+       characters, which is the middle of the 65 to 75 band DESIGN.md specifies.
+       Derived by measuring rendered text, not estimated: the average glyph is
+       8.87px, so this value moves if the body size or face changes. */
+    --col-text: 620px;
     --col-wide: 900px;
     --nav-bg: #FCFAF9;
     --radius-hair: 3px;
@@ -88,7 +92,7 @@
   .l-kicker {
     display: block; padding-bottom: 10px; margin-bottom: 18px;
     border-bottom: 1px solid var(--accent);
-    font-family: var(--font-sans), system-ui, sans-serif; font-size: 12px; font-weight: 600;
+    font-family: var(--font-mono), ui-monospace, monospace; font-size: 11px; font-weight: 400;
     letter-spacing: 0.16em; text-transform: uppercase; color: var(--accent);
   }
   .l-smallcaps {
@@ -99,7 +103,7 @@
   .l-eyebrow {
     display: block; padding-bottom: 10px; margin-bottom: 14px;
     border-bottom: 1px solid var(--accent);
-    font-size: 13px; font-family: var(--font-sans), system-ui, sans-serif; font-weight: 600;
+    font-size: 11px; font-family: var(--font-mono), ui-monospace, monospace; font-weight: 400;
     letter-spacing: 0.16em; text-transform: uppercase; color: var(--accent);
   }
   .l-btn {
@@ -1015,10 +1019,18 @@
 
   /* Body */
   .ap-body { padding: 52px 0 0; }
-  .ap-col { max-width: var(--col-wide); margin: 0 auto; padding: 0 var(--pad); }
+  /* --col-text at 19.5px is roughly 70 characters, inside the 65 to 75 that
+     DESIGN.md specifies. This was previously --col-wide, which measured 84.
+     Narrowing the column itself rather than each child is safe because the one
+     element that must be wider, .data-strip, breaks out against the viewport
+     rather than against this column, and .ap-hero is its sibling, not a child. */
+  .ap-col {
+    max-width: calc(var(--col-text) + var(--pad) * 2);
+    margin: 0 auto; padding: 0 var(--pad);
+  }
   .ap-col > p {
     font-family: var(--font-serif), Georgia, serif;
-    font-size: 18.5px; line-height: 1.78; color: var(--ink); margin: 0 0 1.4em; text-wrap: pretty;
+    font-size: 19.5px; line-height: 1.78; color: var(--ink); margin: 0 0 1.4em; text-wrap: pretty;
   }
   .ap-col > p:first-of-type::first-letter {
     font-family: var(--font-serif), Georgia, serif;
