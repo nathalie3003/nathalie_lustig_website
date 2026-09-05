@@ -134,17 +134,6 @@
   .l-btn-outline:hover {
     background: var(--accent); color: var(--surface); box-shadow: none;
   }
-  /* Editorial CV button — ink on paper, hairline border, no fill */
-  .l-btn-cv {
-    color: var(--ink); background: var(--surface);
-    border: 1px solid var(--ink); padding: 10px 18px;
-    transition: background 140ms ease, color 140ms ease, transform 120ms ease;
-    box-shadow: none;
-  }
-  .l-btn-cv:hover {
-    background: var(--ink); color: var(--surface);
-    transform: translateY(-1px);
-  }
   /* Category labels: mono small-caps raspberry, no pill, no fill — the editorial
      read of "department label" rather than a SaaS badge. */
   .l-tag {
@@ -1176,7 +1165,7 @@
 }
 @media (max-width: 760px) {
   .top-links { display: none; }
-  .cv-btn { display: none; }
+  .top-cta { display: none; }
   .mobile-menu { display: inline-flex; }
 }
 @media (max-width: 560px) {

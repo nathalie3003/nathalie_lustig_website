@@ -93,14 +93,6 @@ components:
     textColor: "{colors.ink}"
     rounded: "{rounded.md}"
     padding: "11px 20px"
-  button-cv:
-    backgroundColor: "{colors.card}"
-    textColor: "{colors.ink}"
-    rounded: "{rounded.md}"
-    padding: "10px 18px"
-  button-cv-hover:
-    backgroundColor: "{colors.ink}"
-    textColor: "{colors.card}"
   card-rail:
     backgroundColor: "#FFFFFF"
     rounded: "{rounded.card}"
@@ -292,9 +284,13 @@ for a shadow. Shadows are earned by interaction state, not applied at rest.
   solid raspberry on hover. This is the header's "Get in touch" action and the
   system's standard secondary call to action.
 - **Ghost:** Card surface, hairline border, no shadow; border darkens on hover.
-- **CV/Editorial button:** Ink-on-paper. Card surface, 1px solid ink border, no shadow
-  at rest; inverts to solid ink fill on hover. The one button that behaves like a
-  printed stamp rather than a UI control.
+- **Disabled:** A flat tint fill with ink on top, never a faded version of the
+  primary. Fading the raspberry put the label at 2.02:1, and disabled is the reply
+  button's default state on every article.
+
+The system previously carried an ink-on-paper "CV button" that was specified in
+full and never used anywhere. It has been removed: the CV is deliberately not
+published, so a style named for it only invites someone to add one back.
 
 ### Chips
 - **Style:** Pill radius (999px), transparent, hairline border, ink-60 text.

@@ -11,6 +11,7 @@ import {
 } from "@/lib/queries";
 import { urlFor, imageDimensions } from "@/lib/sanity.client";
 import { PortableText } from "@/components/PortableText";
+import { about } from "@/content/about";
 import { noteCat } from "@/lib/noteCat";
 import { readTime } from "@/lib/readTime";
 import { TradeIdeaArticle } from "@/components/TradeIdeaArticle";
@@ -172,6 +173,9 @@ export default async function NotePage({
               {note.title}
             </ScrollReveal>
             {note.excerpt && <p className="ap-deck">{note.excerpt}</p>}
+            <p className="ap-byline">
+              By <Link href="/about">{about.author}</Link>
+            </p>
           </header>
 
           {note.coverImage && (
