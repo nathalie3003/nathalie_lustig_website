@@ -335,7 +335,8 @@
     border: 1px solid var(--rule); border-radius: var(--radius-sm);
     padding: 10px 12px; transition: border-color 140ms ease;
   }
-  .subscribe-input:focus { outline: none; border-color: var(--ink); }
+  /* Border darkening is an addition to the focus ring, not a replacement for it. */
+  .subscribe-input:focus { border-color: var(--ink); }
   .subscribe-input:disabled { opacity: 0.6; }
   .subscribe-btn { flex: 0 0 auto; }
   .subscribe-btn:disabled { opacity: 0.7; cursor: default; transform: none; }
@@ -1330,4 +1331,32 @@
   .stack-card-content {
     padding: 24px;
   }
+}
+
+/* ============================================================
+   FOCUS
+   Deliberately unlayered. Everything else in this file sits inside
+   @layer base or @layer components, and unlayered CSS beats every layer,
+   so no component rule can accidentally suppress the focus ring the way
+   .reply-name once did with outline: none. If you find yourself writing
+   outline: none anywhere, this is the rule you are fighting: give the
+   element a better indicator instead of removing this one.
+
+   :focus-visible rather than :focus, so the ring appears for keyboard and
+   assistive tech without ringing every mouse click. The 2px offset puts it
+   outside the element, which keeps it visible even on the raspberry-filled
+   primary button, where a flush raspberry ring would disappear. Modern
+   browsers draw the outline following each element's own border-radius,
+   so pills stay pills.
+   ============================================================ */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+/* On the contact band the backdrop is a photograph, so a single raspberry
+   ring cannot be relied on for the 3:1 an indicator needs. A paper-coloured
+   halo sits under it and guarantees separation whatever the photo is doing. */
+.band-contact :focus-visible {
+  outline-color: var(--ink);
+  box-shadow: 0 0 0 4px rgba(252, 250, 249, 0.9);
 }
