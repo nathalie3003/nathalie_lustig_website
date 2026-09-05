@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import type { CurveHistory, YieldCurvePoint } from "@/lib/marketData";
 
 type Props = {
@@ -78,7 +78,21 @@ export function CurveCard({ snapshot, asOf, histories }: Props) {
   const [selected, setSelected] = useState<string>("all");
   const [open, setOpen] = useState(false);
   const [hoverIdx, setHoverIdx] = useState<number | null>(null);
+  const [redrawTick, setRedrawTick] = useState(0);
+  const [hovering, setHovering] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
+
+  // The line redraws itself every few seconds so the card has a pulse rather
+  // than sitting inert after its first draw. It holds still while the pointer
+  // is on the card: redrawing under someone reading a tenor off it would wipe
+  // the value they are looking at. Off entirely under reduced motion, and the
+  // decision is made after mount so the server and client markup match.
+  useEffect(() => {
+    if (hovering || open) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const id = window.setInterval(() => setRedrawTick((t) => t + 1), 5000);
+    return () => window.clearInterval(id);
+  }, [hovering, open]);
 
   const isAll = selected === "all";
   const history = useMemo(
@@ -156,10 +170,17 @@ export function CurveCard({ snapshot, asOf, histories }: Props) {
 
   // Replaying the draw on every change is the point: the line redrawing is the
   // feedback that the selection took effect.
-  const drawKey = `${selected}-${chart?.n ?? 0}`;
+  const drawKey = `${selected}-${chart?.n ?? 0}-${redrawTick}`;
 
   return (
-    <div className="curve-card">
+    <div
+      className="curve-card"
+      onMouseEnter={() => setHovering(true)}
+      onMouseLeave={() => {
+        setHovering(false);
+        setHoverIdx(null);
+      }}
+    >
       <div className="curve-head">
         <span className="curve-eyebrow">US Treasury</span>
         <div className="curve-select" ref={menuRef}>
@@ -256,6 +277,7 @@ export function CurveCard({ snapshot, asOf, histories }: Props) {
 
           <path
             key={`area-${drawKey}`}
+            className="curve-area"
             d={`${chart.d} L ${sx(chart.n - 1, chart.n).toFixed(1)} ${VH - PAD_B} L ${sx(0, chart.n).toFixed(1)} ${VH - PAD_B} Z`}
             fill="url(#curve-fill)"
           />

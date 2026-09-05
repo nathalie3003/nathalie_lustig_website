@@ -1182,10 +1182,11 @@
   background: var(--bg);
   border-top: 1px solid var(--rule);
   position: relative;
-  padding-top: 60px;
-  /* How far each card is pushed down its slot. Read by StackingProjects so the
-     mobile breakpoint can tighten it. */
-  --stack-offset-base: 8vh;
+  padding-top: 48px;
+  /* How far each card is pushed down its slot, which is what staggers the
+     stack. The base sits at 0 because the slot's own padding-top now does that
+     job; the step is what fans the cards apart. */
+  --stack-offset-base: 0vh;
   --stack-offset-step: 28px;
 }
 
@@ -1204,13 +1205,19 @@
   position: relative;
 }
 
+/* Cards align to the top of their slot rather than its centre. Centring in a
+   100vh slot left roughly half a viewport of dead space between the heading and
+   the first card. Every slot uses the same padding, so the cards still land on
+   top of each other as they stack; only the leading gap changes. The clamp
+   keeps them clear of the sticky header on short viewports. */
 .stack-card-slot {
   height: 100vh;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
   position: sticky;
   top: 0;
+  padding-top: clamp(76px, 9vh, 116px);
 }
 
 .stack-card {
@@ -1292,7 +1299,9 @@
 @media (max-width: 720px) {
   .band-stack {
     padding-bottom: 24px;
-    --stack-offset-base: 3vh;
+    /* Base stays 0 here too: the slot's own padding-top positions the cards on
+       every breakpoint, and only the stagger step tightens for narrow screens. */
+    --stack-offset-base: 0vh;
     --stack-offset-step: 14px;
   }
   .stack-card {
