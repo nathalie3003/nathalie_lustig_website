@@ -166,9 +166,17 @@ a near-black warm ink do all the signalling work.
   Distinct from pure white, which is reserved for the rail card and the footer bar.
 - **Tint** (#F5EBEA): Image placeholders, thumbnail backgrounds, quiet bands.
 - **Ink** (#191316): Primary text colour, headlines, body copy, the brand disc.
-- **Ink 72 / 60 / 45** (rgba(25,19,22, .72/.60/.45)): Descending text emphasis.
-  Standfirsts and excerpts at 72%, secondary bylines at 60%, metadata and captions
-  at 45%.
+- **Ink 72 / 60** (rgba(25,19,22, .72/.60)): The two text steps. Standfirsts and
+  excerpts at 72% (7.2:1), everything secondary at 60% (4.7:1). 60% is the
+  lightest ink the system may set text in.
+- **Ink 45** (rgba(25,19,22,0.45)): **Decoration only, never text.** It measures
+  2.96:1 on blush, which fails WCAG AA, and `PRODUCT.md` commits to AA. It is for
+  hairlines, borders and list-marker glyphs.
+
+  Metadata used to sit at 45% and was the largest source of that failure. It now
+  shares 60% with other secondary text, and loses nothing by it: dates, read
+  times and department labels are already set apart by being mono, small, tracked
+  and uppercase. They never needed to be lighter as well.
 - **Hairline** (#EADFDD): Every rule, border, and divider in the system.
 - **Hairline Strong** (#E0C6CE): The emphasised variant, for dropdown borders and
   rules that need to read as a step up from an ordinary divider.

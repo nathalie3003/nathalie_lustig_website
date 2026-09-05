@@ -28,6 +28,9 @@
     --ink: #191316;
     --ink-72: rgba(25, 19, 22, 0.72);
     --ink-60: rgba(25, 19, 22, 0.60);
+    /* Decoration only. At 0.45 this composites to 2.96:1 on blush, which fails
+       WCAG AA, so it must never colour text. Hairlines, borders and list-marker
+       glyphs only; --ink-60 is the lightest legible text step at 4.7:1. */
     --ink-45: rgba(25, 19, 22, 0.45);
     --ink-20: rgba(25, 19, 22, 0.18);
     --accent: #B23A63;
@@ -97,7 +100,7 @@
   }
   .l-smallcaps {
     font-family: var(--font-mono), ui-monospace, monospace; font-size: 12px; font-weight: 500;
-    letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-45);
+    letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-60);
     font-feature-settings: 'tnum';
   }
   .l-eyebrow {
@@ -250,7 +253,7 @@
   /* Notes hover-dropdown (desktop) */
   .notes-menu { position: relative; display: inline-flex; align-items: center; }
   .notes-trigger { display: inline-flex; align-items: center; gap: 4px; }
-  .notes-caret { font-size: 13px; color: var(--ink-45); transition: transform 160ms ease; line-height: 1; }
+  .notes-caret { font-size: 13px; color: var(--ink-60); transition: transform 160ms ease; line-height: 1; }
   .notes-trigger[aria-expanded="true"] .notes-caret { transform: rotate(-180deg); color: var(--ink); }
   /* Popover sits flush against the trigger; a transparent top pad bridges the
      hover so moving onto the menu doesn't briefly leave the hover region. */
@@ -269,7 +272,7 @@
   .np-row:hover { background: var(--accent-soft); }
   .np-all { background: rgba(178,58,99,0.05); }
   .np-title { font-family: var(--font-serif), Georgia, serif; font-size: 15px; font-weight: 600; letter-spacing: -0.005em; }
-  .np-sub { font-family: var(--font-sans), system-ui, sans-serif; font-size: 11.5px; color: var(--ink-45); }
+  .np-sub { font-family: var(--font-sans), system-ui, sans-serif; font-size: 11.5px; color: var(--ink-60); }
   .np-rule { height: 1px; background: var(--rule); margin: 6px 6px; }
 
   /* Mobile hamburger — hidden on desktop */
@@ -307,7 +310,7 @@
   .menu-row:hover { background: var(--accent-soft); color: var(--ink); }
   .menu-row.active { background: var(--accent-soft); }
   .menu-row .mr-title { font-size: 16px; font-weight: 600; letter-spacing: -0.008em; }
-  .menu-row .mr-sub { font-family: var(--font-sans), system-ui, sans-serif; font-size: 11.5px; color: var(--ink-45); }
+  .menu-row .mr-sub { font-family: var(--font-sans), system-ui, sans-serif; font-size: 11.5px; color: var(--ink-60); }
   .menu-cats { padding: 2px 4px 8px 4px; display: flex; flex-direction: column; gap: 1px; }
   .menu-cat {
     display: flex; align-items: baseline; justify-content: space-between; width: 100%;
@@ -316,7 +319,7 @@
     text-decoration: none;
   }
   .menu-cat:hover { background: var(--accent-soft); color: var(--ink); }
-  .menu-cat .mc-sub { font-size: 11px; color: var(--ink-45); }
+  .menu-cat .mc-sub { font-size: 11px; color: var(--ink-60); }
   .menu-rule { height: 1px; background: var(--rule); margin: 7px 6px; }
 
   /* PAGE SCAFFOLD */
@@ -364,7 +367,7 @@
     font-size: 24px; line-height: 1.35; color: var(--ink);
     letter-spacing: -0.01em;
   }
-  .dnr-lead { color: var(--ink-45); font-weight: 400; }
+  .dnr-lead { color: var(--ink-60); font-weight: 400; }
   .dnr-slot {
     position: relative; display: inline-block;
     overflow: hidden; vertical-align: bottom;
@@ -388,7 +391,7 @@
   }
   .rail-block { margin-top: 22px; padding-top: 20px; border-top: 1px solid var(--rule); }
   .rail-block-head { display: block; margin-bottom: 4px; }
-  .rail-block-note { font-family: var(--font-sans), system-ui, sans-serif; font-size: 12px; color: var(--ink-45); margin: 0 0 12px; line-height: 1.45; }
+  .rail-block-note { font-family: var(--font-sans), system-ui, sans-serif; font-size: 12px; color: var(--ink-60); margin: 0 0 12px; line-height: 1.45; }
   .reads { display: flex; flex-direction: column; }
   .read-link {
     display: flex; align-items: baseline; justify-content: space-between; gap: 12px;
@@ -451,7 +454,7 @@
   .read-meta-top .l-smallcaps { color: var(--accent); font-weight: 600; letter-spacing: 0.18em; }
   .read-title { font-size: 42px; font-weight: 600; letter-spacing: -0.024em; line-height: 1.06; margin: 0 0 16px; text-wrap: balance; }
   .read-excerpt { font-size: 20px; line-height: 1.5; color: var(--ink-72); margin: 0 0 16px; text-wrap: pretty; font-family: var(--font-serif), Georgia, serif; }
-  .read-byline { font-family: var(--font-sans), system-ui, sans-serif; font-size: 13px; color: var(--ink-45); }
+  .read-byline { font-family: var(--font-sans), system-ui, sans-serif; font-size: 13px; color: var(--ink-60); }
   .read-body p { font-size: 19px; line-height: 1.72; color: var(--ink); margin: 0 0 1.25em; text-wrap: pretty; font-family: var(--font-serif), Georgia, serif; }
   .read-body h2 { font-size: 26px; font-weight: 600; letter-spacing: -0.014em; margin: 1.5em 0 0.5em; }
   .read-body a { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }
@@ -468,7 +471,7 @@
     margin: 1.6em 0; border-radius: var(--radius-card); overflow: hidden; border: 1px solid var(--rule);
   }
   .read-figure img { display: block; width: 100%; height: auto; }
-  .read-figure-cap { font-family: var(--font-sans), system-ui, sans-serif; font-size: 12.5px; color: var(--ink-45); padding: 12px 16px; background: var(--surface); }
+  .read-figure-cap { font-family: var(--font-sans), system-ui, sans-serif; font-size: 12.5px; color: var(--ink-60); padding: 12px 16px; background: var(--surface); }
   .read-foot { margin-top: 36px; padding-top: 26px; border-top: 1px solid var(--rule); }
   .read-foot-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; width: 100%; }
   .read-foot-cell { display: flex; flex-direction: column; gap: 4px; color: var(--ink); text-decoration: none; }
@@ -561,11 +564,15 @@
     transition: color 160ms ease;
   }
   a.contact-row:hover { color: var(--accent); }
+  /* The contact band's backdrop is a photograph under a translucent wash, so
+     its effective luminance is not fixed. Small text here takes the darker ink
+     step: --ink-60 measures 4.46:1 on the band's warm base, marginally under AA,
+     where --ink-72 is 6.6:1 and stays safe wherever the photo lands. */
   .cl-label {
     display: block;
     font-family: var(--font-mono), ui-monospace, monospace;
     font-size: 10.5px; letter-spacing: 0.12em; text-transform: uppercase;
-    color: var(--ink-45);
+    color: var(--ink-72);
   }
   .cl-value {
     display: block; font-family: var(--font-serif), Georgia, serif;
@@ -579,7 +586,7 @@
     transition: background 160ms ease;
   }
   .contact-copy:hover { background: rgba(255,255,255,0.75); }
-  .contact-arrow { font-size: 15px; color: var(--ink-45); }
+  .contact-arrow { font-size: 15px; color: var(--ink-72); }
 
   /* Fold-in — children rise and unrotate once the band enters the viewport.
      ContactSection.tsx adds .fold-in; per-item stagger via inline animationDelay. */
@@ -646,7 +653,7 @@
     font-weight: 600; letter-spacing: 0.06em;
     background: var(--accent-tint); padding: 3px 9px; border-radius: 3px;
   }
-  .article-meta-top .l-smallcaps { color: var(--ink-45); }
+  .article-meta-top .l-smallcaps { color: var(--ink-60); }
   .article-h1 {
     font-size: clamp(32px, 5vw, 52px); font-weight: 600; letter-spacing: -0.024em;
     line-height: 1.08; margin: 0 0 16px; text-wrap: balance;
@@ -771,7 +778,7 @@
   .article-foot-item:last-child { text-align: right; }
   .foot-nav-label {
     font-family: var(--font-sans), system-ui, sans-serif; font-size: 10px; font-weight: 600;
-    letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-45);
+    letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-60);
   }
   .foot-nav-title {
     font-family: var(--font-serif), Georgia, serif; font-size: 16px; font-weight: 600;
@@ -793,7 +800,7 @@
   .toc-label {
     display: block; margin-bottom: 12px;
     font-family: var(--font-sans), system-ui, sans-serif; font-size: 9.5px; font-weight: 600;
-    letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-45);
+    letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-60);
   }
   .toc-list { list-style: none; padding: 0; margin: 0; }
   .toc-list li a {
@@ -825,7 +832,7 @@
   .tc-field-label {
     display: block; margin-bottom: 4px;
     font-family: var(--font-sans), system-ui, sans-serif; font-size: 9.5px; font-weight: 600;
-    letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-45);
+    letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-60);
   }
   .tc-instr-name {
     font-family: var(--font-serif), Georgia, serif; font-size: 16px; font-weight: 600;
@@ -833,7 +840,7 @@
   }
   .tc-instr-sub {
     margin-top: 3px; font-family: var(--font-sans), system-ui, sans-serif;
-    font-size: 11.5px; color: var(--ink-45);
+    font-size: 11.5px; color: var(--ink-60);
   }
   .tc-stats { display: grid; grid-template-columns: 1fr 1fr 1fr; border-bottom: 1px solid var(--rule); }
   .tc-stat { padding: 12px 14px; border-right: 1px solid var(--rule); }
@@ -844,7 +851,7 @@
   }
   .tc-stat-sub {
     margin-top: 3px; font-family: var(--font-sans), system-ui, sans-serif;
-    font-size: 10.5px; color: var(--ink-45);
+    font-size: 10.5px; color: var(--ink-60);
   }
   .tc-row {
     padding: 11px 20px; border-bottom: 1px solid var(--rule);
@@ -879,7 +886,7 @@
   }
   .trade-disclaimer {
     margin-top: 0; font-family: var(--font-sans), system-ui, sans-serif;
-    font-size: 10.5px; line-height: 1.55; color: var(--ink-45);
+    font-size: 10.5px; line-height: 1.55; color: var(--ink-60);
   }
 
   /* Trade page responsive */
@@ -921,7 +928,7 @@
   .ap-back {
     display: inline-flex; align-items: center; gap: 7px;
     font-family: var(--font-sans), system-ui, sans-serif; font-size: 12.5px; font-weight: 500;
-    color: var(--ink-45); padding: 20px 0 18px; text-decoration: none; transition: color 120ms ease;
+    color: var(--ink-60); padding: 20px 0 18px; text-decoration: none; transition: color 120ms ease;
   }
   .ap-back:hover { color: var(--accent); }
   .ap-rule { border: 0; border-top: 1px solid var(--rule-strong); margin: 0 0 22px; }
@@ -1079,7 +1086,7 @@
   }
   .ds-label {
     font-family: var(--font-sans), system-ui, sans-serif; font-size: 10.5px; font-weight: 500;
-    letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-45); margin-top: 7px;
+    letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-60); margin-top: 7px;
   }
 
   /* Annotation */
@@ -1102,14 +1109,14 @@
   .sources-label {
     display: block; margin-bottom: 10px;
     font-family: var(--font-sans), system-ui, sans-serif; font-size: 9.5px; font-weight: 600;
-    letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-45);
+    letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-60);
   }
   .sources ol {
     margin: 0; padding: 0 0 0 1.4em; display: flex; flex-direction: column; gap: 4px;
   }
   .sources ol li {
     font-family: var(--font-sans), system-ui, sans-serif; font-size: 12px;
-    color: var(--ink-45); line-height: 1.55;
+    color: var(--ink-60); line-height: 1.55;
   }
 
   /* Prev / next */
@@ -1121,7 +1128,7 @@
   .ap-foot-item:last-child { text-align: right; }
   .ap-foot-label {
     font-family: var(--font-sans), system-ui, sans-serif; font-size: 10px; font-weight: 600;
-    letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-45);
+    letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-60);
   }
   .ap-foot-title {
     font-family: var(--font-serif), Georgia, serif; font-size: 15.5px; font-weight: 600;
