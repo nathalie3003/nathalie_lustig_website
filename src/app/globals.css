@@ -286,7 +286,7 @@
   }
   .menu-btn:hover { border-color: var(--ink-45); }
   .menu-btn .bars { display: inline-flex; flex-direction: column; gap: 3px; width: 15px; }
-  .menu-btn .bars i { height: 1.8px; background: var(--ink); border-radius: 2px; display: block; transition: transform 180ms ease, opacity 180ms ease; }
+  .menu-btn .bars i { height: 1.8px; background: var(--ink); border-radius: var(--radius-hair); display: block; transition: transform 180ms ease, opacity 180ms ease; }
   .menu-btn .bars i:nth-child(1) { width: 15px; }
   .menu-btn .bars i:nth-child(2) { width: 11px; }
   .menu-btn .bars i:nth-child(3) { width: 15px; }
@@ -410,7 +410,7 @@
     display: grid; grid-template-columns: 96px 1fr; gap: 18px; align-items: flex-start;
   }
   .book-cover {
-    display: block; width: 96px; height: 144px; border-radius: 4px;
+    display: block; width: 96px; height: 144px; border-radius: var(--radius-hair);
     box-shadow:
       0 1px 2px rgba(25,19,22,0.10),
       0 8px 22px rgba(25,19,22,0.18);
@@ -914,10 +914,17 @@
      Namespaced .ap-* so it never collides with the trade layout.
      ============================================================ */
 
+  /* Full width, scaled from the left, rather than a growing width. This fires on
+     every scroll event, and transform is composited where width forces layout. */
   .reading-progress {
-    position: fixed; top: 0; left: 0; z-index: 100;
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
     height: 2px; background: var(--accent);
-    transition: width 80ms linear; pointer-events: none;
+    transform-origin: left center;
+    /* Collapsed by default. The element is now full width, so without this it
+       would paint as a complete bar for the moment before hydration sets the
+       inline transform. */
+    transform: scaleX(0);
+    transition: transform 80ms linear; pointer-events: none;
   }
 
   .col-text { max-width: var(--col-text); margin: 0 auto; padding: 0 var(--pad); }

@@ -22,6 +22,10 @@ export function ReadingProgress() {
   }, []);
 
   return (
-    <div className="reading-progress" style={{ width: `${pct}%` }} aria-hidden="true" />
+    <div
+      className="reading-progress"
+      style={{ transform: `scaleX(${pct / 100})` }}
+      aria-hidden="true"
+    />
   );
 }
