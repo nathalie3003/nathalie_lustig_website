@@ -10,16 +10,32 @@ orienting the reader in the piece and supporting them inside the prose. Five
 changes: a reading progress rail, a table of contents for standard notes, an
 auto-matched glossary, inline citation markers, and a pull-quote block.
 
-## Prerequisite (content, not code)
+## Content survey (2026-09-06)
 
 `extractHeadings` in `src/lib/toc.ts` selects `h2` blocks only, and the table of
-contents hides itself below two entries. Notes that mark sections with bold
-paragraphs rather than the "Section heading" style produce no headings, so the
-rail renders nothing on those articles.
+contents hides itself below two entries. Queried against the live `production`
+dataset, 11 notes:
 
-This is a Sanity content fix. The TOC work is not visible until it is done. It is
-retroactive: restyling an old note's section breaks makes its TOC appear with no
-code change.
+- **5 already use real `h2` blocks** and get a TOC with no content work: The Stem
+  Beneath the Flower (3), What your Gym Membership Can Teach Us (2), When the Gale
+  Changes Course (2), The Gilded Age of Private Credit (2), Brazil's Winning
+  Formation (2).
+- **1 fakes headings with bold paragraphs and would gain a TOC if converted:**
+  Super El Niño ("Bearish for Bonds", "Bullish for Bonds").
+- **2 have a single section marker** and stay below the threshold either way: A
+  Clear Picture of the Wrong Problem (one bold line), Lending Against Obsolescence
+  (one `sectionLabel`).
+- **3 are continuous prose with no sections** and correctly get nothing: The Price
+  of Opacity (5 paragraphs), Could a Railway Change the Price of War? (9), Tech
+  Giants and the New Logic of Bond Issuance (6).
+
+So the content prerequisite is one note, not a blocker. The honest consequence is
+that the TOC is the lowest-reach change in this spec: it affects 5 notes today,
+typically showing two entries, while the progress rail and glossary affect all 11
+and every future note. It is worth building because it grows with the writing
+rather than shrinking, and because the collapsed line fixes trade ideas on mobile
+where the sidebar TOC currently lands below everything it was meant to help with.
+But it is the first piece to cut if this needs to be smaller.
 
 ## 1. Reading progress rail
 
@@ -177,7 +193,7 @@ sanctioned stripe in body copy per `DESIGN.md`.
 | Feature | Setup | Per note |
 | --- | --- | --- |
 | Progress rail | none | none |
-| Table of contents | use "Section heading" style | none |
+| Table of contents | convert Super El Niño's two bold lines | use "Section heading" style |
 | Glossary | write the dictionary once | none |
 | Citations | migration script runs once | optional, by hand |
 | Pull quote | none | optional, by hand |
