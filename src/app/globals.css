@@ -926,6 +926,81 @@
     .reading-progress { transition: none; }
   }
 
+  /* TABLE OF CONTENTS — one component, two presentations.
+     Above 1320px the rail lives in the margin left of the 900px content wrap:
+     it must clear 450px from centre, plus a 30px gap, plus its own 156px, plus
+     a 24px gutter, so 50% - 636px >= 24px. Below that there is no margin to
+     live in, and the collapsed bar takes over. That means most 1280px laptops
+     get the bar, not the rail. */
+  .atoc-rail { display: none; }
+  .atoc-bar {
+    position: fixed; top: calc(var(--nav-h) + 2px); left: 0; right: 0; z-index: 38;
+    background: color-mix(in oklab, var(--nav-bg) 94%, transparent);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--rule);
+    opacity: 0; visibility: hidden; transition: opacity 160ms ease, visibility 160ms;
+  }
+  .atoc-bar.is-visible { opacity: 1; visibility: visible; }
+  .atoc-bar-btn {
+    display: flex; align-items: center; gap: 10px;
+    width: 100%; max-width: var(--col-wide); margin: 0 auto;
+    padding: 9px var(--pad);
+    background: none; border: 0; cursor: pointer; text-align: left;
+  }
+  .atoc-bar-label {
+    flex: none;
+    font-family: var(--font-mono), ui-monospace, monospace; font-size: 10.5px;
+    letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-60);
+  }
+  .atoc-bar-current {
+    flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+    font-family: var(--font-sans), system-ui, sans-serif; font-size: 12.5px; font-weight: 500;
+    color: var(--ink);
+  }
+  .atoc-bar-btn svg { flex: none; color: var(--ink-60); }
+  .atoc-bar-panel {
+    max-width: var(--col-wide); margin: 0 auto;
+    padding: 4px var(--pad) 14px;
+  }
+  .atoc-list { list-style: none; margin: 0; padding: 0; }
+  .atoc-list li a {
+    display: block; padding: 7px 0;
+    font-family: var(--font-sans), system-ui, sans-serif; font-size: 12.5px; font-weight: 500;
+    color: var(--ink-60); text-decoration: none; line-height: 1.35;
+    border-bottom: 1px solid var(--rule);
+    transition: color 100ms ease;
+  }
+  .atoc-list li:last-child a { border-bottom: 0; }
+  .atoc-list li a:hover { color: var(--ink); }
+  .atoc-list li a.active { color: var(--ink); }
+  /* The active marker is a raspberry tick, not a coloured label: colouring the
+     text would put the accent on running wayfinding rather than on one signal. */
+  .atoc-list li a.active::before {
+    content: ""; display: inline-block; vertical-align: middle;
+    width: 12px; height: 2px; margin-right: 8px; background: var(--accent);
+  }
+
+  @media (min-width: 1320px) {
+    .atoc-bar { display: none; }
+    .atoc-rail {
+      display: block;
+      position: fixed; top: calc(var(--nav-h) + 56px);
+      left: calc(50% - 636px); width: 156px; z-index: 30;
+      opacity: 0; transition: opacity 220ms ease;
+      pointer-events: none;
+    }
+    .atoc-rail.is-visible { opacity: 1; pointer-events: auto; }
+    .atoc-label {
+      display: block; margin-bottom: 10px;
+      font-family: var(--font-mono), ui-monospace, monospace; font-size: 10.5px;
+      letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-60);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .atoc-rail, .atoc-bar { transition: none; }
+  }
+
   .col-text { max-width: var(--col-text); margin: 0 auto; padding: 0 var(--pad); }
   .col-wide { max-width: var(--col-wide); margin: 0 auto; padding: 0 var(--pad); }
 
