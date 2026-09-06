@@ -126,6 +126,20 @@ export const bondNote = defineType({
         },
         {
           type: "object",
+          name: "pullQuote",
+          title: "Pull quote",
+          description:
+            "A line lifted out of the flow, set large and breaking the column. For quoting someone else, use the Quote style instead.",
+          fields: [
+            { name: "text", type: "text", rows: 3, title: "Text" },
+            { name: "attribution", type: "string", title: "Attribution" },
+          ],
+          preview: {
+            select: { title: "text", subtitle: "attribution" },
+          },
+        },
+        {
+          type: "object",
           name: "annotation",
           title: "Annotation",
           description: "Inset note with a French Blue label — a structural aside or caveat.",

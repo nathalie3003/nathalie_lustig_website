@@ -18,6 +18,12 @@ const components: PortableTextComponents = {
         <p>{value.text}</p>
       </div>
     ),
+    pullQuote: ({ value }) => (
+      <figure className="pull-quote">
+        <p>{value.text}</p>
+        {value.attribution && <figcaption>{value.attribution}</figcaption>}
+      </figure>
+    ),
     annotation: ({ value }) => (
       <div className="annotation">
         <span className="annotation-label">{value.label ?? "Note"}</span>
