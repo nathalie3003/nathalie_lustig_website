@@ -64,7 +64,7 @@ defects:
 One heading source, two presentations, one new component (`ArticleToc`) shared by
 both article layouts.
 
-### Desktop, 1240px and up
+### Desktop, 1320px and up
 
 A sticky rail in the whitespace left of the content column.
 
@@ -76,13 +76,14 @@ A sticky rail in the whitespace left of the content column.
 - Fades in once the reader has scrolled past the header. Reduced motion shows it
   without the fade.
 
-**Width constraint.** The content wrap is `--col-wide: 900px`. A 170px rail plus
-its gap needs roughly 1240px of viewport to sit outside that wrap without
-crowding. A 1280px laptop qualifies; a 1152px one does not. The collapsed
-treatment below is therefore not a phone fallback, it is what a meaningful share
-of laptops will see, and should be designed to that standard.
+**Width constraint.** The content wrap is `--col-wide: 900px`, so the rail must
+clear 450px from centre, plus a 30px gap, plus its own 156px, plus a 24px
+gutter: `50% - 636px >= 24px` resolves to a 1320px minimum. A 1440px MacBook
+qualifies; a 1280px screen does not. The collapsed treatment below is therefore
+not a phone fallback, it is what a meaningful share of laptops will see, and
+should be designed to that standard.
 
-### Below 1240px
+### Below 1320px
 
 A single line directly under the progress rail: mono label, current section name,
 chevron. Tapping expands the full list as a popover using the existing
@@ -94,7 +95,7 @@ it was meant to help with.
 
 ### Layout split
 
-- Standard notes: margin rail on desktop, collapsed line below 1240px.
+- Standard notes: margin rail on desktop, collapsed line below 1320px.
 - Trade ideas: keep the existing `TradeToc` sidebar card on desktop (the sidebar
   is already earned by the trade card), collapsed line on mobile. The sidebar TOC
   hides at the mobile breakpoint so the two never both appear.
@@ -180,7 +181,9 @@ it does today. No back-filling of published notes is expected or required.
 
 New block object `pullQuote` on `bondNote`: `text`, optional `attribution`.
 
-- Serif around 28px.
+- Serif around 28px. Note that `globals.css:1062` currently labels the
+  blockquote rule "Pull quote"; that comment is corrected as part of this work.
+
 - Breaks out from `--col-text` (620px) to `--col-wide` (900px).
 - Hairline rules above and below. No left stripe.
 - Attribution in mono meta.
