@@ -194,6 +194,68 @@ const TERMS = [
     definition:
       "Debt rated below investment grade, paying more to compensate for higher default risk. Also called junk, though rarely by anyone selling it.",
   },
+
+  // Optionality. Note the aliases here are deliberately conservative: bare
+  // "call" and "put" are ordinary English verbs and would gloss "called it a
+  // day" or "put pressure on", so only the compound forms are matched.
+  {
+    term: "convertible bond",
+    aliases: ["convertible bonds", "convertibles"],
+    definition:
+      "A bond the holder can exchange for a fixed number of the issuer's shares. It pays a lower coupon than straight debt because the conversion right is itself worth something.",
+  },
+  {
+    term: "callable bond",
+    aliases: ["callable bonds", "callable"],
+    definition:
+      "A bond the issuer can redeem early, typically once rates have fallen far enough to refinance cheaper. The investor is paid a higher yield for handing over that choice.",
+  },
+  {
+    term: "puttable bond",
+    aliases: ["puttable bonds", "puttable"],
+    definition:
+      "A bond the holder can sell back to the issuer before maturity at a set price. The mirror of a callable bond, with the option sitting on the investor's side instead.",
+  },
+  {
+    term: "call option",
+    aliases: ["call options"],
+    definition:
+      "The right, without the obligation, to buy an asset at a set price before a set date. In bonds it usually sits with the issuer, as the right to redeem early.",
+  },
+  {
+    term: "put option",
+    aliases: ["put options"],
+    definition:
+      "The right, without the obligation, to sell an asset at a set price before a set date. It is what makes a puttable bond puttable.",
+  },
+  {
+    term: "strike price",
+    aliases: ["strike"],
+    definition:
+      "The fixed price at which an option can be exercised. Whether it sits above or below the market price is what decides whether the option is worth anything.",
+  },
+  {
+    term: "option-adjusted spread",
+    aliases: ["OAS"],
+    definition:
+      "A bond's spread after stripping out the value of any embedded option. It is what lets a callable bond be compared like for like with a straight one.",
+  },
+  {
+    term: "embedded option",
+    aliases: ["embedded options"],
+    definition:
+      "An option written into a bond's own terms rather than traded separately, such as the issuer's right to call it early. It cannot be sold off on its own.",
+  },
+  {
+    term: "conversion premium",
+    definition:
+      "How much more a convertible bond costs than the shares it converts into are currently worth. It is what the buyer pays for the downside protection the bond gives.",
+  },
+  {
+    term: "negative convexity",
+    definition:
+      "When a bond's price rises more slowly than it falls as yields move, usually because a call option caps the upside. Callable and mortgage bonds are the classic cases.",
+  },
 ];
 
 const tooLong = TERMS.filter((t) => t.definition.length > 280);
