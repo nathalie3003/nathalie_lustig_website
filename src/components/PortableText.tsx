@@ -2,6 +2,7 @@ import { PortableText as PT, type PortableTextComponents } from "@portabletext/r
 import Image from "next/image";
 import { urlFor } from "@/lib/sanity.client";
 import { blockText, headingId } from "@/lib/toc";
+import { GlossaryTerm } from "@/components/GlossaryTerm";
 
 const components: PortableTextComponents = {
   types: {
@@ -68,6 +69,15 @@ const components: PortableTextComponents = {
       <a href={value.href} target="_blank" rel="noopener noreferrer">
         {children}
       </a>
+    ),
+    glossary: ({ children, value }) => (
+      <GlossaryTerm
+        term={value.term}
+        definition={value.definition}
+        moreHref={value.moreHref}
+      >
+        {children}
+      </GlossaryTerm>
     ),
   },
 };
