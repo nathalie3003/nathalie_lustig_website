@@ -57,6 +57,12 @@
     --radius-pill: 999px;
     --maxw: 1120px;
     --pad: 32px;
+    /* The sticky nav's height. .top-inner sets its min-height from this, and
+       the fixed reading-progress rail positions itself against it, so the two
+       cannot drift apart. --nav-h adds the 3px masthead rule and the 1px
+       hairline that sit outside the inner box. */
+    --nav-h-inner: 66px;
+    --nav-h: calc(var(--nav-h-inner) + 4px);
   }
 
   * { box-sizing: border-box; }
@@ -177,7 +183,7 @@
   }
   .top-inner {
     max-width: var(--maxw); margin: 0 auto; padding: 0 var(--pad);
-    min-height: 66px;
+    min-height: var(--nav-h-inner);
     display: grid; grid-template-columns: 1fr auto 1fr;
     align-items: center; gap: 24px;
     position: relative;
