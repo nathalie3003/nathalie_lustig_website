@@ -191,8 +191,16 @@ export const bondNote = defineType({
       name: "sources",
       title: "Sources",
       type: "array",
-      of: [{ type: "string" }],
-      description: "Optional citation list shown at the end of the article.",
+      description:
+        "Optional citation list shown at the end of the article. Cite one from the body text with the Citation annotation.",
+      of: [
+        {
+          type: "object",
+          name: "source",
+          fields: [{ name: "text", type: "text", rows: 2, title: "Source" }],
+          preview: { select: { title: "text" } },
+        },
+      ],
     }),
     defineField({
       name: "disableGlossary",

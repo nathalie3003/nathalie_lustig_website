@@ -30,7 +30,7 @@ export type TradeFields = {
 export type BondNote = BondNoteCard &
   TradeFields & {
     body: unknown[];
-    sources?: string[];
+    sources?: { _key: string; text: string }[];
     disableGlossary?: boolean;
   };
 
