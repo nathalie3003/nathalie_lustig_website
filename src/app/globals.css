@@ -1415,6 +1415,17 @@
   .stack-card-content {
     padding: 24px;
   }
+
+  /* Trade ideas keep the sidebar card on desktop, so suppress the margin rail
+     there; below the sidebar's own breakpoint the card TOC drops to the bottom
+     of the page, so hide it and let the collapsed bar do the job instead. */
+  .trade-page .atoc-rail { display: none; }
+  @media (max-width: 980px) {
+    .sidebar .toc { display: none; }
+  }
+  @media (min-width: 981px) {
+    .trade-page .atoc-bar { display: none; }
+  }
 }
 
 /* ============================================================

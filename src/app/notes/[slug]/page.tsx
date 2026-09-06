@@ -16,6 +16,8 @@ import { noteCat } from "@/lib/noteCat";
 import { readTime } from "@/lib/readTime";
 import { TradeIdeaArticle } from "@/components/TradeIdeaArticle";
 import { ArticleShell } from "@/components/ArticleShell";
+import { ArticleToc } from "@/components/ArticleToc";
+import { extractHeadings } from "@/lib/toc";
 import { ArticleReveal } from "@/components/ArticleReveal";
 import { ScrollReveal } from "@/components/ScrollReveal";
 import { Replies } from "@/components/Replies";
@@ -132,6 +134,7 @@ export default async function NotePage({
 
   const { cat } = noteCat(note.category);
   const minutes = readTime(note.body);
+  const headings = extractHeadings(note.body);
   const [{ prev, next }, replies] = await Promise.all([
     getAdjacentNotes(slug),
     getReplies(note._id),
@@ -147,6 +150,7 @@ export default async function NotePage({
       />
     ) : (
       <ArticleShell className="article-page">
+        <ArticleToc items={headings} />
         <ArticleReveal resetKey={slug}>
           <header className="ap-head col-wide">
             <Link href="/notes" className="ap-back">
