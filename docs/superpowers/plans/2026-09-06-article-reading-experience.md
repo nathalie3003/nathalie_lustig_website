@@ -129,8 +129,11 @@ In `package.json`, add to `"scripts"` after `"lint"`:
 - [ ] **Step 4: Verify the runner starts**
 
 Run: `npm test`
-Expected: exits 0 with "No test files found" (there are none yet). If it errors on
-config resolution, the alias path is wrong.
+Expected: `No test files found, exiting with code 1`. Vitest 3 exits non-zero when
+nothing matches, which is correct and resolves itself once Task 4 adds the first
+test file. Do NOT add `passWithNoTests` to work around it. What this step is
+actually checking is that the config resolved: an error mentioning the `@` alias
+or the `include` glob is the real failure.
 
 - [ ] **Step 5: Commit**
 
