@@ -1,4 +1,5 @@
 import { defineType, defineField } from "sanity";
+import { SourceSelectInput } from "../components/SourceSelectInput";
 
 const RECOMMENDATIONS = ["BUY / LONG", "SELL / SHORT", "HOLD"];
 const HORIZONS = ["3M", "6M", "12M"];
@@ -87,6 +88,19 @@ export const bondNote = defineType({
                 title: "Link",
                 fields: [{ name: "href", type: "url", title: "URL" }],
               },
+              {
+                name: "citation",
+                type: "object",
+                title: "Citation",
+                fields: [
+                  {
+                    name: "sourceKey",
+                    type: "string",
+                    title: "Source",
+                    components: { input: SourceSelectInput },
+                  },
+                ],
+              },
             ],
           },
         },
@@ -122,6 +136,20 @@ export const bondNote = defineType({
           preview: {
             select: { title: "label", subtitle: "text" },
             prepare: ({ title, subtitle }) => ({ title: title || "Callout", subtitle }),
+          },
+        },
+        {
+          type: "object",
+          name: "pullQuote",
+          title: "Pull quote",
+          description:
+            "A line lifted out of the flow, set large and breaking the column. For quoting someone else, use the Quote style instead.",
+          fields: [
+            { name: "text", type: "text", rows: 3, title: "Text" },
+            { name: "attribution", type: "string", title: "Attribution" },
+          ],
+          preview: {
+            select: { title: "text", subtitle: "attribution" },
           },
         },
         {
@@ -177,8 +205,24 @@ export const bondNote = defineType({
       name: "sources",
       title: "Sources",
       type: "array",
-      of: [{ type: "string" }],
-      description: "Optional citation list shown at the end of the article.",
+      description:
+        "Optional citation list shown at the end of the article. Cite one from the body text with the Citation annotation.",
+      of: [
+        {
+          type: "object",
+          name: "source",
+          fields: [{ name: "text", type: "text", rows: 2, title: "Source" }],
+          preview: { select: { title: "text" } },
+        },
+      ],
+    }),
+    defineField({
+      name: "disableGlossary",
+      title: "Disable glossary highlighting",
+      type: "boolean",
+      initialValue: false,
+      description:
+        "Switch off automatic term definitions for this note, for pieces written for readers who already know the words.",
     }),
 
     // ── Trade Idea fields (shown only when category === "trade-ideas") ──

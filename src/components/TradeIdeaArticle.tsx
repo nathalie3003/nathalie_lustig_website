@@ -2,7 +2,8 @@ import Link from "next/link";
 import Image from "next/image";
 import { PortableText } from "@/components/PortableText";
 import { urlFor, imageDimensions } from "@/lib/sanity.client";
-import { ReadingProgress } from "@/components/ReadingProgress";
+import { ArticleShell } from "@/components/ArticleShell";
+import { ArticleToc } from "@/components/ArticleToc";
 import { TradeToc } from "@/components/TradeToc";
 import { extractHeadings } from "@/lib/toc";
 import type { BondNote } from "@/lib/queries";
@@ -40,9 +41,8 @@ export function TradeIdeaArticle({
   const coverDim = note.coverImage ? imageDimensions(note.coverImage) : null;
 
   return (
-    <div className="trade-page">
-      <ReadingProgress />
-
+    <ArticleShell className="trade-page">
+      <ArticleToc items={headings} />
       <ArticleReveal resetKey={resetKey}>
       <header className="trade-hero">
         <div className="trade-wrap">
@@ -95,15 +95,17 @@ export function TradeIdeaArticle({
         <div className="trade-layout">
           <article className="article">
             <div className="article-body">
-              <PortableText value={note.body} />
+              <PortableText value={note.body} sources={note.sources ?? []} />
             </div>
 
             {note.sources && note.sources.length > 0 && (
               <div className="sources">
                 <span className="sources-label">Sources</span>
                 <ol>
-                  {note.sources.map((s, i) => (
-                    <li key={i}>{s}</li>
+                  {note.sources.map((s) => (
+                    <li key={s._key} id={`source-${s._key}`}>
+                      {s.text}
+                    </li>
                   ))}
                 </ol>
               </div>
@@ -206,6 +208,6 @@ export function TradeIdeaArticle({
         </div>
       </div>
       </ArticleReveal>
-    </div>
+    </ArticleShell>
   );
 }

@@ -2,8 +2,14 @@ import { PortableText as PT, type PortableTextComponents } from "@portabletext/r
 import Image from "next/image";
 import { urlFor } from "@/lib/sanity.client";
 import { blockText, headingId } from "@/lib/toc";
+import { GlossaryTerm } from "@/components/GlossaryTerm";
 
-const components: PortableTextComponents = {
+type Source = { _key: string; text: string };
+
+function buildComponents(sources: Source[]): PortableTextComponents {
+  const indexOf = (key: string) => sources.findIndex((s) => s._key === key) + 1;
+
+  return {
   types: {
     execSummary: ({ value }) => (
       <div className="exec-summary">
@@ -16,6 +22,12 @@ const components: PortableTextComponents = {
         <span className="callout-label">{value.label ?? "Key Insight"}</span>
         <p>{value.text}</p>
       </div>
+    ),
+    pullQuote: ({ value }) => (
+      <figure className="pull-quote">
+        <p>{value.text}</p>
+        {value.attribution && <figcaption>{value.attribution}</figcaption>}
+      </figure>
     ),
     annotation: ({ value }) => (
       <div className="annotation">
@@ -69,9 +81,43 @@ const components: PortableTextComponents = {
         {children}
       </a>
     ),
+    glossary: ({ children, value }) => (
+      <GlossaryTerm
+        term={value.term}
+        definition={value.definition}
+        moreHref={value.moreHref}
+      >
+        {children}
+      </GlossaryTerm>
+    ),
+    citation: ({ children, value }) => {
+      const n = indexOf(value.sourceKey);
+      // A citation pointing at a source that has since been deleted renders
+      // as plain text rather than a dead marker.
+      if (n < 1) return <>{children}</>;
+      return (
+        <>
+          {children}
+          <a
+            className="cite"
+            href={`#source-${value.sourceKey}`}
+            title={sources[n - 1]?.text}
+          >
+            {n}
+          </a>
+        </>
+      );
+    },
   },
-};
+  };
+}
 
-export function PortableText({ value }: { value: unknown[] }) {
-  return <PT value={value as never} components={components} />;
+export function PortableText({
+  value,
+  sources = [],
+}: {
+  value: unknown[];
+  sources?: Source[];
+}) {
+  return <PT value={value as never} components={buildComponents(sources)} />;
 }

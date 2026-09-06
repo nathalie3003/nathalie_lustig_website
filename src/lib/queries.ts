@@ -1,4 +1,5 @@
 import { sanityClient } from "./sanity.client";
+import type { GlossaryEntry } from "./glossary";
 
 export type BondNoteCard = {
   _id: string;
@@ -29,7 +30,8 @@ export type TradeFields = {
 export type BondNote = BondNoteCard &
   TradeFields & {
     body: unknown[];
-    sources?: string[];
+    sources?: { _key: string; text: string }[];
+    disableGlossary?: boolean;
   };
 
 const CARD_FIELDS = `
@@ -61,7 +63,7 @@ export async function getAllNotes(): Promise<BondNoteCard[]> {
 
 export async function getNoteBySlug(slug: string): Promise<BondNote | null> {
   return sanityClient.fetch(
-    `*[_type == "bondNote" && slug.current == $slug][0]{ ${CARD_FIELDS}, body, tradeRecommendation, instrument, instrumentSub, horizon, nominalYield, realYield, realYieldSub, view, conviction, keyPoints, keyRisks, oneLiner, sources }`,
+    `*[_type == "bondNote" && slug.current == $slug][0]{ ${CARD_FIELDS}, body, tradeRecommendation, instrument, instrumentSub, horizon, nominalYield, realYield, realYieldSub, view, conviction, keyPoints, keyRisks, oneLiner, sources, disableGlossary }`,
     { slug },
     { next: { revalidate: 60, tags: ["bondNote"] } },
   );
@@ -210,4 +212,12 @@ export async function getAdjacentNotes(
     prev: all[idx + 1] ?? null,
     next: all[idx - 1] ?? null,
   };
+}
+
+export async function getGlossaryTerms(): Promise<GlossaryEntry[]> {
+  return sanityClient.fetch(
+    `*[_type == "glossaryTerm"]{ term, aliases, definition, moreHref }`,
+    {},
+    { next: { revalidate: 60, tags: ["glossaryTerm"] } },
+  );
 }

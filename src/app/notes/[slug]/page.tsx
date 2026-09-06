@@ -7,15 +7,19 @@ import {
   getAllNoteSlugs,
   getAdjacentNotes,
   getReplies,
+  getGlossaryTerms,
   type BondNoteCard,
 } from "@/lib/queries";
 import { urlFor, imageDimensions } from "@/lib/sanity.client";
 import { PortableText } from "@/components/PortableText";
+import { applyGlossary } from "@/lib/glossary";
 import { about } from "@/content/about";
 import { noteCat } from "@/lib/noteCat";
 import { readTime } from "@/lib/readTime";
 import { TradeIdeaArticle } from "@/components/TradeIdeaArticle";
-import { ReadingProgress } from "@/components/ReadingProgress";
+import { ArticleShell } from "@/components/ArticleShell";
+import { ArticleToc } from "@/components/ArticleToc";
+import { extractHeadings } from "@/lib/toc";
 import { ArticleReveal } from "@/components/ArticleReveal";
 import { ScrollReveal } from "@/components/ScrollReveal";
 import { Replies } from "@/components/Replies";
@@ -132,23 +136,28 @@ export default async function NotePage({
 
   const { cat } = noteCat(note.category);
   const minutes = readTime(note.body);
-  const [{ prev, next }, replies] = await Promise.all([
+  const headings = extractHeadings(note.body);
+  const [{ prev, next }, replies, glossary] = await Promise.all([
     getAdjacentNotes(slug),
     getReplies(note._id),
+    getGlossaryTerms(),
   ]);
+
+  const body = note.disableGlossary
+    ? note.body
+    : applyGlossary(note.body, glossary);
 
   const article =
     note.category === "trade-ideas" ? (
       <TradeIdeaArticle
-        note={note}
+        note={{ ...note, body }}
         dateLabel={formatDateLong(note.publishedAt)}
         readLabel={`${minutes} read`}
         resetKey={slug}
       />
     ) : (
-      <div className="article-page">
-        <ReadingProgress />
-
+      <ArticleShell className="article-page">
+        <ArticleToc items={headings} />
         <ArticleReveal resetKey={slug}>
           <header className="ap-head col-wide">
             <Link href="/notes" className="ap-back">
@@ -194,14 +203,16 @@ export default async function NotePage({
 
           <article className="ap-body">
             <div className="ap-col">
-              <PortableText value={note.body} />
+              <PortableText value={body} sources={note.sources ?? []} />
 
               {note.sources && note.sources.length > 0 && (
                 <div className="sources">
                   <span className="sources-label">Sources</span>
                   <ol>
-                    {note.sources.map((s, i) => (
-                      <li key={i}>{s}</li>
+                    {note.sources.map((s) => (
+                      <li key={s._key} id={`source-${s._key}`}>
+                        {s.text}
+                      </li>
                     ))}
                   </ol>
                 </div>
@@ -209,7 +220,7 @@ export default async function NotePage({
             </div>
           </article>
         </ArticleReveal>
-      </div>
+      </ArticleShell>
     );
 
   return (
