@@ -180,6 +180,14 @@ export const bondNote = defineType({
       of: [{ type: "string" }],
       description: "Optional citation list shown at the end of the article.",
     }),
+    defineField({
+      name: "disableGlossary",
+      title: "Disable glossary highlighting",
+      type: "boolean",
+      initialValue: false,
+      description:
+        "Switch off automatic term definitions for this note, for pieces written for readers who already know the words.",
+    }),
 
     // ── Trade Idea fields (shown only when category === "trade-ideas") ──
     defineField({
