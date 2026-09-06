@@ -17,9 +17,12 @@ export function ReadingProgress({
     const update = () => {
       const el = target.current;
       if (!el) return;
-      const navH = parseFloat(
-        getComputedStyle(document.documentElement).getPropertyValue("--nav-h"),
-      ) || 70;
+      // Measured rather than read from --nav-h: getPropertyValue returns a
+      // custom property's raw token stream, so a calc() comes back as the
+      // literal string "calc(66px + 4px)" and parseFloat gives NaN. Measuring
+      // the sticky bar is accurate at any viewport and cannot go stale.
+      const navH =
+        document.querySelector(".top")?.getBoundingClientRect().height ?? 70;
       const top = el.getBoundingClientRect().top + window.scrollY;
       // Read from the article clearing the nav to its last line clearing the
       // bottom of the viewport.
