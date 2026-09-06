@@ -15,7 +15,7 @@ import { about } from "@/content/about";
 import { noteCat } from "@/lib/noteCat";
 import { readTime } from "@/lib/readTime";
 import { TradeIdeaArticle } from "@/components/TradeIdeaArticle";
-import { ReadingProgress } from "@/components/ReadingProgress";
+import { ArticleShell } from "@/components/ArticleShell";
 import { ArticleReveal } from "@/components/ArticleReveal";
 import { ScrollReveal } from "@/components/ScrollReveal";
 import { Replies } from "@/components/Replies";
@@ -146,9 +146,7 @@ export default async function NotePage({
         resetKey={slug}
       />
     ) : (
-      <div className="article-page">
-        <ReadingProgress />
-
+      <ArticleShell className="article-page">
         <ArticleReveal resetKey={slug}>
           <header className="ap-head col-wide">
             <Link href="/notes" className="ap-back">
@@ -209,7 +207,7 @@ export default async function NotePage({
             </div>
           </article>
         </ArticleReveal>
-      </div>
+      </ArticleShell>
     );
 
   return (

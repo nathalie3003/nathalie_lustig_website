@@ -2,7 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { PortableText } from "@/components/PortableText";
 import { urlFor, imageDimensions } from "@/lib/sanity.client";
-import { ReadingProgress } from "@/components/ReadingProgress";
+import { ArticleShell } from "@/components/ArticleShell";
 import { TradeToc } from "@/components/TradeToc";
 import { extractHeadings } from "@/lib/toc";
 import type { BondNote } from "@/lib/queries";
@@ -40,9 +40,7 @@ export function TradeIdeaArticle({
   const coverDim = note.coverImage ? imageDimensions(note.coverImage) : null;
 
   return (
-    <div className="trade-page">
-      <ReadingProgress />
-
+    <ArticleShell className="trade-page">
       <ArticleReveal resetKey={resetKey}>
       <header className="trade-hero">
         <div className="trade-wrap">
@@ -206,6 +204,6 @@ export function TradeIdeaArticle({
         </div>
       </div>
       </ArticleReveal>
-    </div>
+    </ArticleShell>
   );
 }

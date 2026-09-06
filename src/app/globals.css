@@ -910,17 +910,20 @@
      Namespaced .ap-* so it never collides with the trade layout.
      ============================================================ */
 
-  /* Full width, scaled from the left, rather than a growing width. This fires on
-     every scroll event, and transform is composited where width forces layout. */
+  /* Sits on the nav's bottom hairline rather than at the top of the viewport,
+     where it used to be mistaken for the masthead rule thickening. z-index 39
+     keeps it under the nav (40) so the mobile menu popover always wins. */
   .reading-progress {
-    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    position: fixed; top: var(--nav-h); left: 0; right: 0; z-index: 39;
     height: 2px; background: var(--accent);
     transform-origin: left center;
-    /* Collapsed by default. The element is now full width, so without this it
-       would paint as a complete bar for the moment before hydration sets the
-       inline transform. */
+    /* Collapsed by default: the element is full width, so without this it
+       paints as a complete bar until hydration sets the inline transform. */
     transform: scaleX(0);
     transition: transform 80ms linear; pointer-events: none;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .reading-progress { transition: none; }
   }
 
   .col-text { max-width: var(--col-text); margin: 0 auto; padding: 0 var(--pad); }
