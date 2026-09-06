@@ -7,10 +7,12 @@ import {
   getAllNoteSlugs,
   getAdjacentNotes,
   getReplies,
+  getGlossaryTerms,
   type BondNoteCard,
 } from "@/lib/queries";
 import { urlFor, imageDimensions } from "@/lib/sanity.client";
 import { PortableText } from "@/components/PortableText";
+import { applyGlossary } from "@/lib/glossary";
 import { about } from "@/content/about";
 import { noteCat } from "@/lib/noteCat";
 import { readTime } from "@/lib/readTime";
@@ -135,15 +137,20 @@ export default async function NotePage({
   const { cat } = noteCat(note.category);
   const minutes = readTime(note.body);
   const headings = extractHeadings(note.body);
-  const [{ prev, next }, replies] = await Promise.all([
+  const [{ prev, next }, replies, glossary] = await Promise.all([
     getAdjacentNotes(slug),
     getReplies(note._id),
+    getGlossaryTerms(),
   ]);
+
+  const body = note.disableGlossary
+    ? note.body
+    : applyGlossary(note.body, glossary);
 
   const article =
     note.category === "trade-ideas" ? (
       <TradeIdeaArticle
-        note={note}
+        note={{ ...note, body }}
         dateLabel={formatDateLong(note.publishedAt)}
         readLabel={`${minutes} read`}
         resetKey={slug}
@@ -196,7 +203,7 @@ export default async function NotePage({
 
           <article className="ap-body">
             <div className="ap-col">
-              <PortableText value={note.body} />
+              <PortableText value={body} />
 
               {note.sources && note.sources.length > 0 && (
                 <div className="sources">
