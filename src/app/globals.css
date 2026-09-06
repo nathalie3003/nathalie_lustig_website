@@ -1234,9 +1234,15 @@
     font-family: var(--font-sans), system-ui, sans-serif; font-size: 12px;
     color: var(--accent);
   }
-  /* Near the right edge the popover would overflow the column, so flip it. */
-  .ap-col .gloss:nth-last-child(-n+2) .gloss-pop,
-  .article-body .gloss:nth-last-child(-n+2) .gloss-pop { left: auto; right: 0; }
+  /* .ap-col a and .article-body a would otherwise underline this. Same layer,
+     higher specificity, so no !important needed. */
+  .ap-col .gloss-pop-more,
+  .article-body .gloss-pop-more { text-decoration: none; }
+  .ap-col .gloss-pop-more:hover,
+  .article-body .gloss-pop-more:hover { text-decoration: underline; }
+  /* Anchored left by default, flipped right by measurement when it would
+     overflow the viewport. See GlossaryTerm's flip effect. */
+  .gloss-pop.is-flipped { left: auto; right: 0; }
 
   /* Prev / next */
   .ap-foot {

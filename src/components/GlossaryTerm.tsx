@@ -20,6 +20,8 @@ export function GlossaryTerm({
   const id = useId();
   const wrapRef = useRef<HTMLSpanElement>(null);
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const popRef = useRef<HTMLSpanElement>(null);
+  const [flip, setFlip] = useState(false);
 
   useEffect(() => {
     if (!open) return;
@@ -39,6 +41,18 @@ export function GlossaryTerm({
 
   useEffect(() => () => { if (timer.current) clearTimeout(timer.current); }, []);
 
+  // Flip the popover's anchor when it would overflow the right edge. Measured
+  // rather than guessed from sibling position, which cannot know where a term
+  // actually sits on its line.
+  useEffect(() => {
+    if (!open) {
+      setFlip(false);
+      return;
+    }
+    const r = popRef.current?.getBoundingClientRect();
+    if (r) setFlip(r.right > window.innerWidth - 16);
+  }, [open]);
+
   const hoverOpen = () => {
     if (!window.matchMedia("(hover: hover)").matches) return;
     timer.current = setTimeout(() => setOpen(true), 120);
@@ -57,14 +71,24 @@ export function GlossaryTerm({
         aria-expanded={open}
         aria-describedby={open ? id : undefined}
         onClick={() => setOpen((v) => !v)}
-        onFocus={() => setOpen(true)}
+        // Keyboard focus opens the popover; pointer focus does not, because a
+        // click fires focus before click and the two handlers would race,
+        // leaving the popover shut on the user's first click.
+        onFocus={(e) => {
+          if (e.currentTarget.matches(":focus-visible")) setOpen(true);
+        }}
         onMouseEnter={hoverOpen}
         onMouseLeave={hoverClose}
       >
         {children}
       </button>
       {open && (
-        <span className="gloss-pop" id={id} role="tooltip">
+        <span
+          className={`gloss-pop${flip ? " is-flipped" : ""}`}
+          id={id}
+          role="tooltip"
+          ref={popRef}
+        >
           <span className="gloss-pop-term">{term}</span>
           <span className="gloss-pop-def">{definition}</span>
           {moreHref && (
