@@ -1238,6 +1238,22 @@
     color: var(--ink-60); line-height: 1.55;
   }
 
+  /* Citation marker — mono because it is a number, raspberry because it is a
+     link, superscript because that is what a citation looks like.
+     .ap-col a / .article-body a set text-decoration: underline at higher
+     specificity (class + element) than a bare .cite (class only), so the
+     override is scoped the same way .gloss-pop-more is above: same layer,
+     higher specificity, no !important. */
+  .cite {
+    font-family: var(--font-mono), ui-monospace, monospace; font-size: 0.62em;
+    vertical-align: super; line-height: 0; color: var(--accent);
+    padding-left: 2px;
+  }
+  .ap-col .cite,
+  .article-body .cite { text-decoration: none; }
+  .cite:hover { text-decoration: underline; }
+  .sources ol li:target { color: var(--ink); }
+
   /* GLOSSARY — the term stays ink with a dotted underline; the accent appears
      only inside the popover, so the One Working Color Rule survives having a
      definable term every few paragraphs. */

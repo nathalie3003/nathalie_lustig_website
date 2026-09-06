@@ -95,15 +95,17 @@ export function TradeIdeaArticle({
         <div className="trade-layout">
           <article className="article">
             <div className="article-body">
-              <PortableText value={note.body} />
+              <PortableText value={note.body} sources={note.sources ?? []} />
             </div>
 
             {note.sources && note.sources.length > 0 && (
               <div className="sources">
                 <span className="sources-label">Sources</span>
                 <ol>
-                  {note.sources.map((s, i) => (
-                    <li key={i}>{s}</li>
+                  {note.sources.map((s) => (
+                    <li key={s._key} id={`source-${s._key}`}>
+                      {s.text}
+                    </li>
                   ))}
                 </ol>
               </div>

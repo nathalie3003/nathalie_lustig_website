@@ -203,14 +203,16 @@ export default async function NotePage({
 
           <article className="ap-body">
             <div className="ap-col">
-              <PortableText value={body} />
+              <PortableText value={body} sources={note.sources ?? []} />
 
               {note.sources && note.sources.length > 0 && (
                 <div className="sources">
                   <span className="sources-label">Sources</span>
                   <ol>
-                    {note.sources.map((s, i) => (
-                      <li key={i}>{s}</li>
+                    {note.sources.map((s) => (
+                      <li key={s._key} id={`source-${s._key}`}>
+                        {s.text}
+                      </li>
                     ))}
                   </ol>
                 </div>

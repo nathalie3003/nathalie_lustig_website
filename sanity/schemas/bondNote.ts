@@ -1,4 +1,5 @@
 import { defineType, defineField } from "sanity";
+import { SourceSelectInput } from "../components/SourceSelectInput";
 
 const RECOMMENDATIONS = ["BUY / LONG", "SELL / SHORT", "HOLD"];
 const HORIZONS = ["3M", "6M", "12M"];
@@ -86,6 +87,19 @@ export const bondNote = defineType({
                 type: "object",
                 title: "Link",
                 fields: [{ name: "href", type: "url", title: "URL" }],
+              },
+              {
+                name: "citation",
+                type: "object",
+                title: "Citation",
+                fields: [
+                  {
+                    name: "sourceKey",
+                    type: "string",
+                    title: "Source",
+                    components: { input: SourceSelectInput },
+                  },
+                ],
               },
             ],
           },
