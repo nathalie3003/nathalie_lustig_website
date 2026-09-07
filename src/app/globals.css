@@ -1513,17 +1513,33 @@
   .stack-card-content {
     padding: 24px;
   }
+}
 
-  /* Trade ideas keep the sidebar card on desktop, so suppress the margin rail
-     there; below the sidebar's own breakpoint the card TOC drops to the bottom
-     of the page, so hide it and let the collapsed bar do the job instead. */
-  .trade-page .atoc-rail { display: none; }
-  @media (max-width: 980px) {
-    .sidebar .toc { display: none; }
-  }
-  @media (min-width: 981px) {
-    .trade-page .atoc-bar { display: none; }
-  }
+/* --- Trade idea pages: one table of contents, never two ---------------------
+   A trade idea already carries its contents in the sticky sidebar card, so the
+   other two presentations have to stand down around it. The three rules below
+   were once nested inside the 720px block above, which made all three dead:
+   the margin rail only exists from 1320px up, so hiding it below 720px hid
+   nothing, and it was landing on top of the article text. The trade wrap is
+   1100px against the 900px --col-wide the rail's `left: 50% - 636px` was
+   measured for, so on a trade page the rail's right edge sits roughly 38px
+   inside the running text rather than 30px clear of it.
+
+   Left unlayered on purpose: .atoc-rail's `display: block` lives in
+   @layer components, and unlayered rules beat every layer, so this cannot be
+   re-buried by a later components rule the way the nested version was.
+
+   Breakpoints, in the order a window narrows:
+     >= 1320   rail would show   -> off, card has it
+     981-1319  card is beside the article -> collapsed bar off
+     <= 980    card drops to the page foot, too late to be wayfinding -> card
+               TOC off, collapsed bar takes over.                            */
+.trade-page .atoc-rail { display: none; }
+@media (min-width: 981px) {
+  .trade-page .atoc-bar { display: none; }
+}
+@media (max-width: 980px) {
+  .sidebar .toc { display: none; }
 }
 
 /* ============================================================
