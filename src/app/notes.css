@@ -45,22 +45,31 @@
 
   .archive-list { margin-top: 16px; border-top: 1px solid var(--rule); }
   .archive-row {
-    display: grid; grid-template-columns: 118px minmax(0, 1fr) 90px;
-    gap: 28px; align-items: baseline;
-    padding: 28px 8px 28px 0; border-bottom: 1px solid var(--rule);
+    display: grid; grid-template-columns: 96px minmax(0, 1fr); gap: 22px;
+    align-items: start; padding: 24px 8px 24px 0;
+    border-bottom: 1px solid var(--rule);
     color: var(--ink); transition: color 160ms ease, background 160ms ease;
   }
   .archive-row:hover { background: var(--surface); color: var(--accent); }
 
-  .archive-date {
-    font-family: var(--font-mono), ui-monospace, monospace;
-    font-size: 11.5px; letter-spacing: 0.04em; color: var(--ink-60);
+  .archive-thumb {
+    width: 96px; aspect-ratio: 1; object-fit: cover; display: block;
+    border-radius: var(--radius-hair); background: var(--tint);
+  }
+  .archive-row-body { min-width: 0; display: flex; flex-direction: column; }
+  .archive-meta {
+    display: flex; align-items: baseline; justify-content: space-between; gap: 16px;
   }
   .archive-cat {
-    display: block;
+    display: flex; align-items: center; gap: 9px;
     font-family: var(--font-mono), ui-monospace, monospace;
     font-size: 10.5px; letter-spacing: 0.14em; text-transform: uppercase;
     color: var(--accent-deep);
+  }
+  .archive-sep { width: 1px; height: 10px; background: var(--ink-20); display: block; }
+  .archive-date {
+    font-family: var(--font-mono), ui-monospace, monospace;
+    font-size: 11px; letter-spacing: 0.04em; color: var(--ink-60); white-space: nowrap;
   }
   .archive-row-title {
     display: block;
@@ -68,18 +77,11 @@
     font-size: 26px; line-height: 1.2; font-weight: 600; letter-spacing: -0.019em;
     margin-top: 8px; text-wrap: pretty;
   }
-  /* In a filtered view the category label is dropped, so the title leads the
-     row and must not carry the gap that sat under the label. */
-  .archive-row-title:first-child { margin-top: 0; }
   .archive-deck {
     display: block;
     font-family: var(--font-serif), Georgia, serif;
     font-size: 17px; line-height: 1.6; color: var(--ink-60);
     margin-top: 8px; max-width: 62ch; text-wrap: pretty;
-  }
-  .archive-read {
-    font-family: var(--font-mono), ui-monospace, monospace;
-    font-size: 11px; color: var(--ink-60); text-align: right;
   }
 
   .archive-empty {
@@ -89,14 +91,9 @@
   }
 
   @media (max-width: 760px) {
-    /* Date and read time fold onto one line above the title, so the title
-       keeps the full width rather than being squeezed by two thin columns. */
-    .archive-row {
-      grid-template-columns: 1fr auto; gap: 6px 16px; padding: 24px 0;
-    }
-    .archive-date { grid-column: 1; grid-row: 1; }
-    .archive-read { grid-column: 2; grid-row: 1; }
-    .archive-row-body { grid-column: 1 / -1; grid-row: 2; }
+    .archive-row { grid-template-columns: 72px minmax(0, 1fr); gap: 14px; padding: 20px 0; }
+    .archive-thumb { width: 72px; }
+    .archive-meta { flex-wrap: wrap; gap: 6px; }
     .archive-row-title { font-size: 22px; }
     .archive-deck { font-size: 16px; }
   }

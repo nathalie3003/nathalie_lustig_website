@@ -1,5 +1,7 @@
+import Image from "next/image";
 import Link from "next/link";
 import { getAllNotes } from "@/lib/queries";
+import { urlFor } from "@/lib/sanity.client";
 import { CATEGORIES, categoryFromSlug, noteCat } from "@/lib/noteCat";
 import { readTimeFromChars } from "@/lib/readTime";
 
@@ -75,21 +77,39 @@ export default async function NotesIndexPage({
         <div className="archive-list">
           {notes.map((n) => (
             <Link key={n._id} href={`/notes/${n.slug}`} className="archive-row">
-              <span className="archive-date">
-                {formatDateShort(n.publishedAt)}
-              </span>
+              {n.coverImage ? (
+                <Image
+                  src={urlFor(n.coverImage).width(192).height(192).url()}
+                  alt=""
+                  width={192}
+                  height={192}
+                  className="archive-thumb"
+                />
+              ) : (
+                <span className="archive-thumb" aria-hidden="true" />
+              )}
               <span className="archive-row-body">
-                {/* With a filter on, every row would carry the same label, so
-                    the heading above already says it. */}
-                {active ? null : (
-                  <span className="archive-cat">{noteCat(n.category).cat}</span>
-                )}
+                <span className="archive-meta">
+                  {/* With a filter on, every row would carry the same label, so
+                      the heading above already says it. */}
+                  <span className="archive-cat">
+                    {active ? null : (
+                      <>
+                        {noteCat(n.category).cat}
+                        <span className="archive-sep" aria-hidden="true" />
+                      </>
+                    )}
+                    {readTimeFromChars(n.readChars)} read
+                  </span>
+                  <span className="archive-date">
+                    {formatDateShort(n.publishedAt)}
+                  </span>
+                </span>
                 <span className="archive-row-title">{n.title}</span>
                 {n.excerpt ? (
                   <span className="archive-deck">{n.excerpt}</span>
                 ) : null}
               </span>
-              <span className="archive-read">{readTimeFromChars(n.readChars)}</span>
             </Link>
           ))}
         </div>
