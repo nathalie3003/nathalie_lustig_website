@@ -2,6 +2,7 @@
 import { usePathname } from "next/navigation";
 import { TopBar } from "./Nav";
 import { ContactSection } from "./ContactSection";
+import { Intro } from "./Intro";
 
 export function Chrome({
   children,
@@ -15,6 +16,7 @@ export function Chrome({
   if (isStudio) return <>{children}</>;
   return (
     <>
+      <Intro />
       <TopBar />
       <main className="main">{children}</main>
       <ContactSection />

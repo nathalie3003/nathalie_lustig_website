@@ -1,0 +1,58 @@
+/* ============================================================
+   FIRST-VISIT INTRO: the badge over cross-fading paintings, then
+   the whole cover lifts away like a curtain. Hidden unless the
+   head script in layout.tsx set html[data-intro="on"], which it
+   only does once per session, never under reduced motion.
+   ============================================================ */
+
+@layer components {
+  .intro { display: none; }
+
+  html[data-intro="on"] { overflow: hidden; }
+  html[data-intro="on"] .intro {
+    display: grid; place-items: center;
+    position: fixed; inset: 0; z-index: 1000;
+    background: var(--tint);
+    overflow: hidden;
+    transition: transform 750ms cubic-bezier(0.7, 0, 0.2, 1);
+  }
+  html[data-intro="on"] .intro.is-leaving { transform: translateY(-100%); }
+
+  .intro-painting {
+    position: absolute; inset: 0;
+    opacity: 0; transition: opacity 500ms ease;
+  }
+  .intro-painting.is-shown { opacity: 1; }
+  .intro-painting img { object-fit: cover; }
+
+  /* Same idea as the contact band's wash, a touch lighter so the paintings
+     carry, plus a soft pool of paper behind the lockup so the name always
+     reads whatever the painting does underneath it. */
+  .intro-wash {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 42% 38% at 50% 50%, rgba(252, 247, 246, 0.55), transparent 70%),
+      linear-gradient(180deg, rgba(252, 247, 246, 0.38), rgba(255, 247, 249, 0.58));
+  }
+
+  .intro-lockup {
+    position: relative;
+    display: flex; flex-direction: column; align-items: center; gap: 22px;
+    /* backwards, not both: once the entrance ends the static values take
+       over again, so the leaving transition below is free to run. */
+    animation: intro-in 700ms cubic-bezier(0.2, 0.7, 0.2, 1) backwards;
+    transition: opacity 300ms ease, transform 300ms ease;
+  }
+  .intro-lockup .bp-mark { width: clamp(96px, 13vw, 140px); height: auto; }
+  .intro-name {
+    font-family: var(--font-serif), Georgia, serif;
+    font-size: clamp(20px, 2.2vw, 26px); font-weight: 600;
+    letter-spacing: -0.015em; color: var(--ink);
+  }
+  .intro.is-leaving .intro-lockup { opacity: 0; transform: translateY(-12px); }
+
+  @keyframes intro-in {
+    from { opacity: 0; transform: scale(0.94); }
+    to   { opacity: 1; transform: none; }
+  }
+}
