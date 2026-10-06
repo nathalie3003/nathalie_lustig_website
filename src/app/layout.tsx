@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Source_Serif_4, Instrument_Sans, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
+import "./intro.css";
 import { Chrome } from "@/components/Chrome";
 import { ContactFooter } from "@/components/Footer";
 import { Analytics } from "@vercel/analytics/next";
@@ -50,9 +51,22 @@ export const metadata: Metadata = {
   },
 };
 
+// Runs before first paint, so a first visit opens on the intro cover rather
+// than flashing the page and then covering it. Once per session, never under
+// reduced motion, never in the Studio. The timeout is a failsafe: if the app
+// never hydrates to lift the cover, it lifts itself.
+const INTRO_SCRIPT = `(function(){try{var d=document.documentElement;if(location.pathname.indexOf('/studio')===0)return;if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;if(sessionStorage.getItem('bp-intro-seen')==='1')return;sessionStorage.setItem('bp-intro-seen','1');d.setAttribute('data-intro','on');setTimeout(function(){if(d.getAttribute('data-intro')==='on'){d.removeAttribute('data-intro');dispatchEvent(new Event('bp:intro-done'));}},9000);}catch(e){}})();`;
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${serif.variable} ${sans.variable} ${mono.variable}`}>
+    <html
+      lang="en"
+      className={`${serif.variable} ${sans.variable} ${mono.variable}`}
+      suppressHydrationWarning
+    >
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: INTRO_SCRIPT }} />
+      </head>
       <body className="site">
         <noscript>
           <style>{`.top-name-mark .bp-mark{opacity:1;transform:none}.top-name-word{clip-path:none;transform:none}.scroll-reveal .sr-char{transform:none}.article-reveal .ap-back,.article-reveal .trade-back,.article-reveal .ap-meta,.article-reveal .article-meta-top,.article-reveal .ap-deck,.article-reveal .article-deck,.article-reveal .ap-col>p:first-of-type,.article-reveal .article-body>p:first-of-type{opacity:1;transform:none}.article-reveal .trade-rule{transform:scaleX(1)}`}</style>
