@@ -20,7 +20,7 @@
 
   .intro-painting {
     position: absolute; inset: 0;
-    opacity: 0; transition: opacity 500ms ease;
+    opacity: 0; transition: opacity 800ms ease;
   }
   .intro-painting.is-shown { opacity: 1; }
   .intro-painting img { object-fit: cover; }

@@ -5,14 +5,19 @@ import Image from "next/image";
 import { BasisPointMark } from "@/components/BasisPointMark";
 import { INTRO_PAINTINGS } from "@/content/introPaintings";
 
-// Timings. Each painting leads for STEP_MS while the next fades in on top; the
-// whole sequence never holds for less than MIN_HOLD_MS so a single painting
-// still registers. If the first painting is slow to arrive the sequence starts
-// anyway after FIRST_WAIT_MS, over the plain tinted ground.
-const STEP_MS = 650;
-const MIN_HOLD_MS = 1600;
-const FIRST_WAIT_MS = 1200;
+// Timings. A painting only takes its turn once it has actually loaded, and its
+// hold is counted from that moment, so a slow network delays the sequence
+// rather than skipping paintings. The first painting holds longer than the
+// rest, since it is the one the reader is still taking in. If a painting has
+// not arrived within its wait it is passed over, and MAX_TOTAL_MS caps the
+// whole thing so a bad connection never keeps anyone waiting.
+const FIRST_HOLD_MS = 1600;
+const STEP_MS = 1000;
+const FIRST_WAIT_MS = 3000;
+const NEXT_WAIT_MS = 1500;
+const MAX_TOTAL_MS = 10000;
 const EXIT_MS = 750;
+const POLL_MS = 100;
 
 const LAST_KEY = "bp-intro-last";
 
@@ -40,21 +45,22 @@ function pickOrder(n: number): number[] {
 // never download them.
 export function Intro() {
   const [order, setOrder] = useState<number[] | null>(null);
-  const [shown, setShown] = useState(-1);
-  const [loaded, setLoaded] = useState<Set<number>>(() => new Set());
+  // Positions in `order` that have taken their turn. A painting that was
+  // passed over never joins, so it can never pop in late.
+  const [shown, setShown] = useState<Set<number>>(() => new Set());
   const [leaving, setLeaving] = useState(false);
-  const beginRef = useRef<() => void>(() => {});
+  const imgs = useRef<Map<number, HTMLImageElement>>(new Map());
 
   useEffect(() => {
     const root = document.documentElement;
     if (root.dataset.intro !== "on") return;
 
-    const n = INTRO_PAINTINGS.length;
-    setOrder(pickOrder(n));
+    const ord = pickOrder(INTRO_PAINTINGS.length);
+    setOrder(ord);
 
     const timers: number[] = [];
-    let begun = false;
     let left = false;
+    let anyShown = false;
 
     const finish = () => {
       delete root.dataset.intro;
@@ -71,16 +77,25 @@ export function Intro() {
       timers.push(window.setTimeout(finish, EXIT_MS));
     };
 
-    const begin = () => {
-      if (begun || left) return;
-      begun = true;
-      for (let i = 0; i < n; i++) {
-        timers.push(window.setTimeout(() => setShown(i), i * STEP_MS));
+    const step = (i: number, waited: number) => {
+      if (left) return;
+      if (i >= ord.length) return leave();
+      // Read the image itself rather than waiting on onLoad: a painting
+      // already in the browser cache can finish before React attaches the
+      // handler, and that event never arrives.
+      const img = imgs.current.get(ord[i]);
+      if (img?.complete && img.naturalWidth > 0) {
+        setShown((prev) => new Set(prev).add(i));
+        const hold = anyShown ? STEP_MS : FIRST_HOLD_MS;
+        anyShown = true;
+        timers.push(window.setTimeout(() => step(i + 1, 0), hold));
+        return;
       }
-      timers.push(window.setTimeout(leave, Math.max(n * STEP_MS, MIN_HOLD_MS)));
+      if (waited >= (anyShown ? NEXT_WAIT_MS : FIRST_WAIT_MS)) return step(i + 1, 0);
+      timers.push(window.setTimeout(() => step(i, waited + POLL_MS), POLL_MS));
     };
-    beginRef.current = begin;
-    timers.push(window.setTimeout(begin, FIRST_WAIT_MS));
+    step(0, 0);
+    timers.push(window.setTimeout(leave, MAX_TOTAL_MS));
 
     // Any deliberate input skips straight to the page.
     const skipEvents = ["pointerdown", "keydown", "wheel", "touchmove"] as const;
@@ -95,33 +110,26 @@ export function Intro() {
     };
   }, []);
 
-  const onLoad = (idx: number) => {
-    setLoaded((prev) => (prev.has(idx) ? prev : new Set(prev).add(idx)));
-    if (order && idx === order[0]) beginRef.current();
-  };
-
-  // A painting already in the browser cache can finish loading before React
-  // attaches onLoad, so the event never arrives. Catch that case on mount.
-  const catchCached = (idx: number) => (img: HTMLImageElement | null) => {
-    if (img?.complete && img.naturalWidth > 0) onLoad(idx);
-  };
-
   return (
     <div className={`intro${leaving ? " is-leaving" : ""}`} aria-hidden="true">
       {order?.map((idx, i) => {
         const p = INTRO_PAINTINGS[idx];
-        const visible = i <= shown && loaded.has(idx);
         return (
-          <div key={p.src} className={`intro-painting${visible ? " is-shown" : ""}`}>
+          <div key={p.src} className={`intro-painting${shown.has(i) ? " is-shown" : ""}`}>
             <Image
               src={p.src}
               alt=""
               fill
               sizes="100vw"
               loading="eager"
+              // The opening painting is the one the reader waits on, so it
+              // goes first in the queue; the rest load behind it.
+              fetchPriority={i === 0 ? "high" : "low"}
               style={{ objectPosition: p.position ?? "center" }}
-              onLoad={() => onLoad(idx)}
-              ref={catchCached(idx)}
+              ref={(el) => {
+                if (el) imgs.current.set(idx, el);
+                else imgs.current.delete(idx);
+              }}
             />
           </div>
         );
