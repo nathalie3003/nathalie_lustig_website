@@ -148,6 +148,7 @@ const TERMS = [
   },
   {
     term: "capex",
+    aliases: ["capital expenditure"],
     definition:
       "Capital expenditure: money spent on long-lived physical assets rather than day-to-day running costs. Large capex programmes are increasingly funded in bond markets.",
   },
@@ -186,6 +187,7 @@ const TERMS = [
   },
   {
     term: "investment grade",
+    aliases: ["IG"],
     definition:
       "Debt rated BBB minus or above, judged relatively unlikely to default. The boundary matters because many funds are barred from holding anything below it.",
   },
@@ -361,6 +363,36 @@ const TERMS = [
     definition:
       "The risk that a borrower cannot replace maturing debt, or only at a much higher cost. It bites hardest when the asset behind the loan has lost value in the meantime.",
   },
+  {
+    term: "inference chips",
+    aliases: ["inference chip", "inference-specific chips", "inference-specific chip"],
+    definition:
+      "Chips built only to run finished AI models, not to train them. They do one job, so they can do it on far less power than a general-purpose GPU.",
+  },
+  {
+    term: "cold start",
+    aliases: ["cold starts"],
+    definition:
+      "Bringing a GPU online when no AI model is loaded on it yet. Loading the model can take minutes, so providers keep spare GPUs running just to avoid it.",
+  },
+  {
+    term: "utilisation",
+    aliases: ["utilization"],
+    definition:
+      "The share of time an asset is actually doing paid work. A GPU that sits idle half the day earns half the revenue on the same cost.",
+  },
+  {
+    term: "secured debt",
+    aliases: ["secured loan", "secured loans", "secured lenders"],
+    definition:
+      "Debt backed by specific assets the lender can seize if the borrower defaults. It is repaid before unsecured debt, which is why it usually pays less.",
+  },
+  {
+    term: "unsecured bondholders",
+    aliases: ["unsecured creditors", "unsecured debt"],
+    definition:
+      "Lenders with a general claim on the company but no specific assets pledged to them. They rank behind secured lenders, so they gain most when the business as a whole gets stronger.",
+  },
 ];
 
 const tooLong = TERMS.filter((t) => t.definition.length > 280);
@@ -376,10 +408,32 @@ const existing = new Set(
   await client.fetch(`*[_type == "glossaryTerm"].term`),
 );
 
+// Aliases added to the list after a term was first seeded are merged into the
+// existing document, so new forms (e.g. "IG" for investment grade) reach the
+// site without duplicating the term. Aliases are only ever added, never
+// removed, so an alias deleted in the Studio will come back on a re-run.
+const existingAliases = Object.fromEntries(
+  (await client.fetch(`*[_type == "glossaryTerm"]{ _id, term, aliases }`)).map(
+    (d) => [d.term, d],
+  ),
+);
+
 let created = 0;
 for (const t of TERMS) {
   if (existing.has(t.term)) {
-    console.log(`skip (exists) ${t.term}`);
+    const doc = existingAliases[t.term];
+    const have = new Set((doc?.aliases ?? []).map((a) => a.toLowerCase()));
+    const missing = (t.aliases ?? []).filter((a) => !have.has(a.toLowerCase()));
+    if (doc && missing.length) {
+      await client
+        .patch(doc._id)
+        .setIfMissing({ aliases: [] })
+        .append("aliases", missing)
+        .commit();
+      console.log(`aliases added to ${t.term}: ${missing.join(", ")}`);
+    } else {
+      console.log(`skip (exists) ${t.term}`);
+    }
     continue;
   }
   await client.create({ _type: "glossaryTerm", ...t });
