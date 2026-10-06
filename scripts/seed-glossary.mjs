@@ -256,6 +256,111 @@ const TERMS = [
     definition:
       "When a bond's price rises more slowly than it falls as yields move, usually because a call option caps the upside. Callable and mortgage bonds are the classic cases.",
   },
+
+  // AI infrastructure, for the notes on AI efficiency and the lending behind
+  // data centres. Readers from the bond side will not know the hardware, so
+  // these explain what the thing is and why a lender should care about it.
+  {
+    term: "GPU",
+    aliases: ["GPUs", "graphics processing unit", "graphics processing units"],
+    definition:
+      "Graphics processing unit: a chip built to run thousands of small calculations at once. Originally for video games, it is now the workhorse of AI, and Nvidia sells most of them.",
+  },
+  {
+    term: "TPU",
+    aliases: ["TPUs", "tensor processing unit", "tensor processing units"],
+    definition:
+      "Tensor processing unit: Google's own AI chip, designed only for the maths neural networks use. Less flexible than a GPU, but cheaper to run for the jobs it was built for.",
+  },
+  {
+    term: "ASIC",
+    aliases: ["ASICs", "custom chip", "custom chips", "custom silicon"],
+    definition:
+      "A chip designed for one specific task rather than general use. Big tech firms build their own for AI to cut their dependence on, and payments to, Nvidia.",
+  },
+  {
+    term: "compute",
+    definition:
+      "Shorthand for the raw processing power used to build and run AI models, measured in chips and the hours they run. It is the main cost of AI, and the thing data centres sell.",
+  },
+  {
+    term: "model training",
+    aliases: ["training run", "training runs", "pre-training"],
+    definition:
+      "Building an AI model by feeding it vast amounts of data until it learns patterns. A one-off, very expensive job that can occupy tens of thousands of chips for months.",
+  },
+  {
+    term: "inference",
+    definition:
+      "Running a finished AI model to answer a question or complete a task. Each answer is cheap, but it happens billions of times a day, so it becomes the larger cost over time.",
+  },
+  {
+    term: "large language model",
+    aliases: ["large language models", "LLM", "LLMs"],
+    definition:
+      "An AI system trained on huge amounts of text to predict and generate language. ChatGPT, Claude and Gemini are all built on one.",
+  },
+  {
+    // Plural only: a bare "token" would gloss "by the same token".
+    term: "tokens",
+    definition:
+      "The units AI models read and write in, each roughly three quarters of a word. AI companies price their services per million tokens, so cost per token is the industry's unit cost.",
+  },
+  {
+    term: "hyperscaler",
+    aliases: ["hyperscalers"],
+    definition:
+      "One of the handful of companies running cloud computing at enormous scale: Amazon, Microsoft, Google and Meta. They are the biggest buyers of AI chips and data centre capacity.",
+  },
+  {
+    term: "neocloud",
+    aliases: ["neoclouds"],
+    definition:
+      "A newer cloud provider that rents out GPUs and little else, such as CoreWeave. Many fund their chip purchases with debt secured on the chips themselves.",
+  },
+  {
+    term: "data centre",
+    aliases: ["data centres", "data center", "data centers"],
+    definition:
+      "A building full of servers, with the power and cooling to run them. AI data centres need far more electricity per rack than older ones, which makes them costly and slow to build.",
+  },
+  {
+    term: "Jevons paradox",
+    definition:
+      "The observation that making a resource cheaper to use often increases total demand for it. Coined about coal in 1865; now the main argument that efficient AI means more chips, not fewer.",
+  },
+  {
+    term: "depreciation",
+    definition:
+      "Spreading an asset's cost over the years it is expected to be useful. For AI chips, the key question is whether that period is six years, as many firms assume, or closer to three.",
+  },
+  {
+    term: "useful life",
+    definition:
+      "How long an asset is expected to earn money before it needs replacing. If chips are superseded faster than assumed, the collateral behind a loan is worth less than the books say.",
+  },
+  {
+    term: "residual value",
+    definition:
+      "What an asset is expected to be worth at the end of a loan or lease. It is what a lender is left relying on if the borrower cannot pay.",
+  },
+  {
+    term: "loan-to-value",
+    aliases: ["LTV", "loan to value"],
+    definition:
+      "The size of a loan as a percentage of the value of the asset securing it. A lower figure leaves more cushion if the asset falls in value.",
+  },
+  {
+    term: "covenant",
+    aliases: ["covenants"],
+    definition:
+      "A condition written into a loan that the borrower must keep to, such as a cap on debt. Breaching one lets the lender step in before the borrower actually runs out of money.",
+  },
+  {
+    term: "refinancing risk",
+    definition:
+      "The risk that a borrower cannot replace maturing debt, or only at a much higher cost. It bites hardest when the asset behind the loan has lost value in the meantime.",
+  },
 ];
 
 const tooLong = TERMS.filter((t) => t.definition.length > 280);
