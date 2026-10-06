@@ -55,7 +55,7 @@ export const metadata: Metadata = {
 // than flashing the page and then covering it. Once per session, never under
 // reduced motion, never in the Studio. The timeout is a failsafe: if the app
 // never hydrates to lift the cover, it lifts itself.
-const INTRO_SCRIPT = `(function(){try{var d=document.documentElement;if(location.pathname.indexOf('/studio')===0)return;if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;if(sessionStorage.getItem('bp-intro-seen')==='1')return;sessionStorage.setItem('bp-intro-seen','1');d.setAttribute('data-intro','on');setTimeout(function(){if(d.getAttribute('data-intro')==='on'){d.removeAttribute('data-intro');dispatchEvent(new Event('bp:intro-done'));}},9000);}catch(e){}})();`;
+const INTRO_SCRIPT = `(function(){try{var d=document.documentElement;if(location.pathname.indexOf('/studio')===0)return;if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;if(sessionStorage.getItem('bp-intro-seen')==='1')return;sessionStorage.setItem('bp-intro-seen','1');d.setAttribute('data-intro','on');setTimeout(function(){if(d.getAttribute('data-intro')==='on'){d.removeAttribute('data-intro');dispatchEvent(new Event('bp:intro-done'));}},13000);}catch(e){}})();`;
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
