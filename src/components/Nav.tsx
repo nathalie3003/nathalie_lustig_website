@@ -102,7 +102,6 @@ export function TopBar() {
           aria-label="The Basis Point — home"
         >
           <BasisPointMark size={34} decorative />
-          <span className="top-name-word">The Basis Point<span className="bp-point">.</span></span>
         </Link>
 
         <nav className="top-links">
