@@ -1524,6 +1524,10 @@
 
 /* --- Basis Point brand mark ------------------------------------------ */
 .bp-mark { display: block; color: var(--ink); }
+/* The raspberry point after "bp" and after the name. The mark's circle carries
+   a hex fallback in its fill attribute; these rules keep both on the token. */
+.bp-mark-point { fill: var(--accent); }
+.bp-point { color: var(--accent); }
 
 @media (max-width: 720px) {
   .band-stack {

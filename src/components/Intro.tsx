@@ -129,7 +129,7 @@ export function Intro() {
       <div className="intro-wash" />
       <div className="intro-lockup">
         <BasisPointMark size={140} decorative />
-        <span className="intro-name">The Basis Point</span>
+        <span className="intro-name">The Basis Point<span className="bp-point">.</span></span>
       </div>
     </div>
   );
