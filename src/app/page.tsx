@@ -68,7 +68,7 @@ export default async function HomePage() {
             <span className="hero-eyebrow-rule" aria-hidden="true" />
             Bond notes since 2026
           </span>
-          <h1 className="hero-display">The Basis Point</h1>
+          <h1 className="hero-display">The Basis Point<span className="bp-point">.</span></h1>
           <p className="hero-standfirst">
             Bond markets are the most honest real-time read on the economy. I
             write these notes to work out what the market is pricing in, and

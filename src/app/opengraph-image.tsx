@@ -1,4 +1,9 @@
 import { ImageResponse } from "next/og";
+import {
+  BP_MARK_PATH,
+  BP_MARK_VIEWBOX,
+  BP_POINT,
+} from "@/components/BasisPointMark";
 
 export const alt = "The Basis Point — Notes by Nathalie Lustig";
 export const size = { width: 1200, height: 630 };
@@ -59,26 +64,11 @@ export default async function OpengraphImage() {
           fontFamily: '"Source Serif 4", Georgia, serif',
         }}
       >
-        {/* "bp" on a flat ink disc — matches the SVG BasisPointMark. */}
-        <div
-          style={{
-            width: 340,
-            height: 340,
-            borderRadius: 340,
-            background: "#191316",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            color: "#FCFAF9",
-            fontFamily: '"Source Serif 4", Georgia, serif',
-            fontWeight: 600,
-            fontSize: 148,
-            letterSpacing: "-0.028em",
-            lineHeight: 1,
-          }}
-        >
-          bp
-        </div>
+        {/* The woven "bp" monogram and its point, the same shapes as the SVG BasisPointMark. */}
+        <svg width={340} height={340} viewBox={BP_MARK_VIEWBOX}>
+          <path fill="#191316" fillRule="evenodd" d={BP_MARK_PATH} />
+          <circle fill="#B23A63" {...BP_POINT} />
+        </svg>
         <div
           style={{
             marginTop: 44,
@@ -88,9 +78,11 @@ export default async function OpengraphImage() {
             letterSpacing: "-0.028em",
             color: "#191316",
             lineHeight: 1,
+            display: "flex",
           }}
         >
           The Basis Point
+          <span style={{ color: "#B23A63" }}>.</span>
         </div>
         <div
           style={{
