@@ -1,64 +1,51 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import Image from "next/image";
+import { useEffect, useState } from "react";
 import { BasisPointMark } from "@/components/BasisPointMark";
 import { INTRO_PAINTINGS } from "@/content/introPaintings";
 
-// Timings, aiming at about 3.5s from first paint to the page. Each visit shows
-// PER_VISIT of the paintings, every one held for the same STEP_MS, so the
-// opening painting gets no more time than the rest. A painting only takes its
-// turn once it has actually loaded, and its hold is counted from that moment,
-// so a slow network delays the sequence rather than skipping paintings. One
-// that has not arrived within its wait is passed over, and MAX_TOTAL_MS caps
-// the whole thing so a bad connection never keeps anyone waiting.
-const PER_VISIT = 3;
+// Timings, aiming at about 3.5s from first paint to the page. Every painting
+// holds for the same STEP_MS, counted from when it actually arrived, so a slow
+// network delays the sequence rather than skipping paintings. One that has not
+// arrived within its wait is passed over, and MAX_TOTAL_MS caps the whole
+// thing so a bad connection never keeps anyone waiting.
 const STEP_MS = 800;
-const FIRST_WAIT_MS = 1000;
-const NEXT_WAIT_MS = 700;
+// The opening painting may already have been on screen for a while when the
+// app hydrates; never cut it shorter than this, so it does not flick away.
+const MIN_FIRST_MS = 300;
+const FIRST_WAIT_MS = 1500;
+const NEXT_WAIT_MS = 1200;
 const MAX_TOTAL_MS = 4500;
 const EXIT_MS = 600;
-const POLL_MS = 100;
-
-const LAST_KEY = "bp-intro-last";
+const POLL_MS = 50;
 
 export const INTRO_DONE_EVENT = "bp:intro-done";
 
-// Starts somewhere new each visit: random, but never the painting the last
-// visit opened on. Runs on in list order from there, so across visits every
-// painting comes round.
-function pickOrder(n: number): number[] {
-  let start = Math.floor(Math.random() * n);
-  try {
-    const raw = localStorage.getItem(LAST_KEY);
-    if (n > 1 && raw !== null && Number(raw) === start) {
-      start = (start + 1 + Math.floor(Math.random() * (n - 1))) % n;
-    }
-    localStorage.setItem(LAST_KEY, String(start));
-  } catch {}
-  return Array.from({ length: Math.min(n, PER_VISIT) }, (_, i) => (start + i) % n);
-}
-
-// The overlay itself is server-rendered on every page but stays display:none
-// unless the head script in layout.tsx marked this load as a first visit with
-// html[data-intro="on"]. That way the badge is on screen from the first paint,
-// with no flash of the page underneath while this component hydrates. The
-// paintings are only mounted once the intro is confirmed, so returning readers
-// never download them.
+// The overlay is server-rendered on every page but stays display:none unless
+// the head script (lib/introScript.ts) marked this load as a first visit with
+// html[data-intro="on"]. By the time this component hydrates, that script has
+// already picked the paintings and started downloading them, and the opening
+// painting is showing as a CSS background (.intro-first). This component takes
+// it from there: it layers the later paintings over the first as each one
+// arrives, then lifts the cover.
 export function Intro() {
-  const [order, setOrder] = useState<number[] | null>(null);
-  // Positions in `order` that have taken their turn. A painting that was
+  const [layers, setLayers] = useState<{ src: string; position: string }[] | null>(null);
+  // Positions in the plan that have taken their turn. A painting that was
   // passed over never joins, so it can never pop in late.
   const [shown, setShown] = useState<Set<number>>(() => new Set());
   const [leaving, setLeaving] = useState(false);
-  const imgs = useRef<Map<number, HTMLImageElement>>(new Map());
 
   useEffect(() => {
     const root = document.documentElement;
-    if (root.dataset.intro !== "on") return;
+    const plan = window.__bpIntro;
+    if (root.dataset.intro !== "on" || !plan) return;
 
-    const ord = pickOrder(INTRO_PAINTINGS.length);
-    setOrder(ord);
+    setLayers(
+      plan.urls.map((src, i) => ({
+        src,
+        position: INTRO_PAINTINGS[plan.order[i]]?.position ?? "center",
+      })),
+    );
 
     const timers: number[] = [];
     let left = false;
@@ -67,7 +54,7 @@ export function Intro() {
     const finish = () => {
       delete root.dataset.intro;
       window.dispatchEvent(new Event(INTRO_DONE_EVENT));
-      setOrder(null);
+      setLayers(null);
     };
 
     const leave = () => {
@@ -79,17 +66,27 @@ export function Intro() {
       timers.push(window.setTimeout(finish, EXIT_MS));
     };
 
+    // Load state comes from the head script's preloads. They are detached
+    // Image objects, so this does not depend on the layers below rendering.
+    const arrived = (i: number) => {
+      const img = plan.imgs[i];
+      return img.complete && img.naturalWidth > 0;
+    };
+
     const step = (i: number, waited: number) => {
       if (left) return;
-      if (i >= ord.length) return leave();
-      // Read the image itself rather than waiting on onLoad: a painting
-      // already in the browser cache can finish before React attaches the
-      // handler, and that event never arrives.
-      const img = imgs.current.get(ord[i]);
-      if (img?.complete && img.naturalWidth > 0) {
-        setShown((prev) => new Set(prev).add(i));
+      if (i >= plan.imgs.length) return leave();
+      if (arrived(i)) {
+        // The first painting is the CSS background, already visible; only the
+        // later ones are layered on.
+        if (i > 0) setShown((prev) => new Set(prev).add(i));
+        const since =
+          i === 0 && window.__bpIntroT !== undefined
+            ? performance.now() - window.__bpIntroT
+            : 0;
+        const hold = i === 0 ? Math.max(MIN_FIRST_MS, STEP_MS - since) : STEP_MS;
         anyShown = true;
-        timers.push(window.setTimeout(() => step(i + 1, 0), STEP_MS));
+        timers.push(window.setTimeout(() => step(i + 1, 0), hold));
         return;
       }
       if (waited >= (anyShown ? NEXT_WAIT_MS : FIRST_WAIT_MS)) return step(i + 1, 0);
@@ -113,31 +110,22 @@ export function Intro() {
 
   return (
     <div className={`intro${leaving ? " is-leaving" : ""}`} aria-hidden="true">
-      {order?.map((idx, i) => {
-        const p = INTRO_PAINTINGS[idx];
-        return (
-          <div key={p.src} className={`intro-painting${shown.has(i) ? " is-shown" : ""}`}>
-            <Image
-              src={p.src}
-              alt=""
-              fill
-              sizes="100vw"
-              loading="eager"
-              // Under the wash the difference from the default 75 is invisible,
-              // and a lighter file means the opening painting arrives sooner.
-              quality={60}
-              // The opening painting is the one the reader waits on, so it
-              // goes first in the queue; the rest load behind it.
-              fetchPriority={i === 0 ? "high" : "low"}
-              style={{ objectPosition: p.position ?? "center" }}
-              ref={(el) => {
-                if (el) imgs.current.set(idx, el);
-                else imgs.current.delete(idx);
-              }}
-            />
-          </div>
-        );
-      })}
+      <div className="intro-first" />
+      {layers?.map((p, i) =>
+        i === 0 ? null : (
+          // Plain img on purpose: these are pre-sized files the head script has
+          // already fetched, and next/image would request different URLs and
+          // download them all again.
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            key={p.src}
+            src={p.src}
+            alt=""
+            className={`intro-painting${shown.has(i) ? " is-shown" : ""}`}
+            style={{ objectPosition: p.position }}
+          />
+        ),
+      )}
       <div className="intro-wash" />
       <div className="intro-lockup">
         <BasisPointMark size={140} decorative />

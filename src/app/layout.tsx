@@ -5,6 +5,7 @@ import "./intro.css";
 import { Chrome } from "@/components/Chrome";
 import { ContactFooter } from "@/components/Footer";
 import { Analytics } from "@vercel/analytics/next";
+import { INTRO_SCRIPT } from "@/lib/introScript";
 
 const serif = Source_Serif_4({
   subsets: ["latin"],
@@ -50,12 +51,6 @@ export const metadata: Metadata = {
       "Notes on rates, credit, and sovereign issuance by Nathalie Lustig.",
   },
 };
-
-// Runs before first paint, so a first visit opens on the intro cover rather
-// than flashing the page and then covering it. Once per session, never under
-// reduced motion, never in the Studio. The timeout is a failsafe: if the app
-// never hydrates to lift the cover, it lifts itself.
-const INTRO_SCRIPT = `(function(){try{var d=document.documentElement;if(location.pathname.indexOf('/studio')===0)return;if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;if(sessionStorage.getItem('bp-intro-seen')==='1')return;sessionStorage.setItem('bp-intro-seen','1');d.setAttribute('data-intro','on');setTimeout(function(){if(d.getAttribute('data-intro')==='on'){d.removeAttribute('data-intro');dispatchEvent(new Event('bp:intro-done'));}},8000);}catch(e){}})();`;
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
