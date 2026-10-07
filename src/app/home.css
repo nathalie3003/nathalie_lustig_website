@@ -12,7 +12,8 @@
     display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 460px);
     gap: 56px; align-items: center;
   }
-  .hero-copy { min-width: 0; }
+  /* A size container, so the display title can be sized from the column. */
+  .hero-copy { min-width: 0; container-type: inline-size; }
 
   .hero-eyebrow {
     display: flex; align-items: center; gap: 10px;
@@ -27,8 +28,11 @@
 
   .hero-display {
     font-family: var(--font-serif), Georgia, serif;
-    font-size: clamp(44px, 6.4vw, 76px); line-height: 0.98; font-weight: 600;
-    letter-spacing: -0.034em; margin: 24px 0 0;
+    /* "The Basis Point." always sits on one line: it measures about 7.2em at
+       this tracking, so 13cqi fills roughly 94% of the column, capped at
+       76px on wide screens. */
+    font-size: min(76px, 13cqi); line-height: 0.98; font-weight: 600;
+    letter-spacing: -0.034em; margin: 24px 0 0; white-space: nowrap;
   }
   .hero-standfirst {
     font-family: var(--font-serif), Georgia, serif;
