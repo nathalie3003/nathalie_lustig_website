@@ -5,18 +5,19 @@ import Image from "next/image";
 import { BasisPointMark } from "@/components/BasisPointMark";
 import { INTRO_PAINTINGS } from "@/content/introPaintings";
 
-// Timings. A painting only takes its turn once it has actually loaded, and its
-// hold is counted from that moment, so a slow network delays the sequence
-// rather than skipping paintings. The first painting holds longer than the
-// rest, since it is the one the reader is still taking in. If a painting has
-// not arrived within its wait it is passed over, and MAX_TOTAL_MS caps the
-// whole thing so a bad connection never keeps anyone waiting.
-const FIRST_HOLD_MS = 1600;
-const STEP_MS = 1000;
-const FIRST_WAIT_MS = 3000;
-const NEXT_WAIT_MS = 1500;
-const MAX_TOTAL_MS = 10000;
-const EXIT_MS = 750;
+// Timings, aiming at about 3.5s from first paint to the page. Each visit shows
+// PER_VISIT of the paintings, every one held for the same STEP_MS, so the
+// opening painting gets no more time than the rest. A painting only takes its
+// turn once it has actually loaded, and its hold is counted from that moment,
+// so a slow network delays the sequence rather than skipping paintings. One
+// that has not arrived within its wait is passed over, and MAX_TOTAL_MS caps
+// the whole thing so a bad connection never keeps anyone waiting.
+const PER_VISIT = 3;
+const STEP_MS = 800;
+const FIRST_WAIT_MS = 1000;
+const NEXT_WAIT_MS = 700;
+const MAX_TOTAL_MS = 4500;
+const EXIT_MS = 600;
 const POLL_MS = 100;
 
 const LAST_KEY = "bp-intro-last";
@@ -24,7 +25,8 @@ const LAST_KEY = "bp-intro-last";
 export const INTRO_DONE_EVENT = "bp:intro-done";
 
 // Starts somewhere new each visit: random, but never the painting the last
-// visit opened on.
+// visit opened on. Runs on in list order from there, so across visits every
+// painting comes round.
 function pickOrder(n: number): number[] {
   let start = Math.floor(Math.random() * n);
   try {
@@ -34,7 +36,7 @@ function pickOrder(n: number): number[] {
     }
     localStorage.setItem(LAST_KEY, String(start));
   } catch {}
-  return Array.from({ length: n }, (_, i) => (start + i) % n);
+  return Array.from({ length: Math.min(n, PER_VISIT) }, (_, i) => (start + i) % n);
 }
 
 // The overlay itself is server-rendered on every page but stays display:none
@@ -86,9 +88,8 @@ export function Intro() {
       const img = imgs.current.get(ord[i]);
       if (img?.complete && img.naturalWidth > 0) {
         setShown((prev) => new Set(prev).add(i));
-        const hold = anyShown ? STEP_MS : FIRST_HOLD_MS;
         anyShown = true;
-        timers.push(window.setTimeout(() => step(i + 1, 0), hold));
+        timers.push(window.setTimeout(() => step(i + 1, 0), STEP_MS));
         return;
       }
       if (waited >= (anyShown ? NEXT_WAIT_MS : FIRST_WAIT_MS)) return step(i + 1, 0);
@@ -122,6 +123,9 @@ export function Intro() {
               fill
               sizes="100vw"
               loading="eager"
+              // Under the wash the difference from the default 75 is invisible,
+              // and a lighter file means the opening painting arrives sooner.
+              quality={60}
               // The opening painting is the one the reader waits on, so it
               // goes first in the queue; the rest load behind it.
               fetchPriority={i === 0 ? "high" : "low"}

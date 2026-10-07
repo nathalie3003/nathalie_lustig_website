@@ -14,13 +14,13 @@
     position: fixed; inset: 0; z-index: 1000;
     background: var(--tint);
     overflow: hidden;
-    transition: transform 750ms cubic-bezier(0.7, 0, 0.2, 1);
+    transition: transform 600ms cubic-bezier(0.7, 0, 0.2, 1);
   }
   html[data-intro="on"] .intro.is-leaving { transform: translateY(-100%); }
 
   .intro-painting {
     position: absolute; inset: 0;
-    opacity: 0; transition: opacity 800ms ease;
+    opacity: 0; transition: opacity 450ms ease;
   }
   .intro-painting.is-shown { opacity: 1; }
   .intro-painting img { object-fit: cover; }
