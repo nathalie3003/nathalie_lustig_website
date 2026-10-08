@@ -22,8 +22,9 @@ declare global {
 const [SMALL, LARGE] = INTRO_WIDTHS;
 
 // Runs in <head> before first paint, inline, so it must stay plain ES5 with no
-// imports at runtime. On a first visit (once per session, never under reduced
-// motion, never in the Studio) it:
+// imports at runtime. On a browser's first ever visit (remembered in
+// localStorage, so it never plays again; never under reduced motion, never in
+// the Studio) it:
 //
 // - marks html[data-intro="on"], so the cover is on screen from the first
 //   paint rather than the page flashing and then being covered;
@@ -39,8 +40,8 @@ export const INTRO_SCRIPT = `(function(){try{
 var d=document.documentElement;
 if(location.pathname.indexOf('/studio')===0)return;
 if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;
-if(sessionStorage.getItem('bp-intro-seen')==='1')return;
-sessionStorage.setItem('bp-intro-seen','1');
+if(localStorage.getItem('bp-intro-seen')==='1')return;
+localStorage.setItem('bp-intro-seen','1');
 var N=${JSON.stringify(INTRO_PAINTINGS.map((p) => p.name))};
 var P=${JSON.stringify(INTRO_PAINTINGS.map((p) => p.position))};
 var n=N.length,k=Math.min(n,${INTRO_PER_VISIT}),s=Math.floor(Math.random()*n);
