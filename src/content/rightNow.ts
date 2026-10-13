@@ -14,17 +14,12 @@ export type RightNowRow = {
 // and a grid row is as tall as its taller column, so a longer list here strands
 // empty space under the notes. RightRail caps at four regardless.
 export const rightNow: RightNowRow[] = [
-  { label: "Based in", value: "London, writing from a coffee shop in Hanoi" },
-  {
-    label: "Drinking",
-    value: "Vietnamese egg coffee",
-    note: "Want to question every coffee you will ever buy?",
-    href: "/files/44151.pdf",
-  },
+  { label: "Based in", value: "London" },
+  { label: "Drinking", value: "Cappuccino" },
   { label: "Listening to", value: "Lo-fi, Chopin when I'm writing" },
   {
     label: "Trying to learn",
-    value: "How to stop confusing 'hello' and 'sorry' in Vietnamese",
+    value: "The difference between a GPU and a CPU",
   },
 ];
 
