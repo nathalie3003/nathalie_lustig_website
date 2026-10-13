@@ -14,4 +14,6 @@ export const dailyReads: DailyRead[] = [
     url: "https://privatebank.jpmorgan.com/nam/en/insights/markets-and-investing/eye-on-the-market",
     short: "EoM",
   },
+  { name: "Calcalist", url: "https://www.calcalist.co.il", short: "CC" },
+  { name: "Ctech", url: "https://www.calcalistech.com", short: "CT" },
 ];
