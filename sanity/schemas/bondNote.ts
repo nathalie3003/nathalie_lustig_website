@@ -199,6 +199,26 @@ export const bondNote = defineType({
             }),
           },
         },
+        {
+          type: "object",
+          name: "stressTest",
+          title: "Stress test",
+          description:
+            "Interactive bond stress test: readers shock Treasury yields and credit spreads and see the price and borrowing-cost impact. The numbers below are where the sliders start.",
+          fields: [
+            { name: "title", type: "string", title: "Title", initialValue: "Stress test" },
+            { name: "intro", type: "text", rows: 2, title: "Intro" },
+            { name: "treasuryShock", type: "number", title: "Treasury shock (bp)", initialValue: 100, validation: (r) => r.min(0).max(300) },
+            { name: "spreadShock", type: "number", title: "Spread widening (bp)", initialValue: 100, validation: (r) => r.min(0).max(300) },
+            { name: "duration", type: "number", title: "Modified duration (years)", initialValue: 5, validation: (r) => r.min(1).max(10) },
+            { name: "startYield", type: "number", title: "Starting yield (%)", initialValue: 6.5, validation: (r) => r.min(2).max(12) },
+            { name: "caveat", type: "text", rows: 3, title: "Caveat", description: "Small print under the figure." },
+          ],
+          preview: {
+            select: { title: "title", subtitle: "intro" },
+            prepare: ({ title, subtitle }) => ({ title: title || "Stress test", subtitle }),
+          },
+        },
       ],
     }),
     defineField({
