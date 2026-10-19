@@ -34,7 +34,7 @@ const block = {
   duration: 5,
   startYield: 6.5,
   caveat:
-    "A first-order estimate using modified duration (ΔP/P ≈ −D × Δy), before convexity, assuming the full shock passes through to the bond's yield. The price falls straight away; the higher borrowing cost only bites when the company issues new debt or refinances, since existing fixed-rate debt does not become more expensive to service. Illustrative, not a forecast.",
+    "A first-order estimate using modified duration (ΔP/P ≈ −D × Δy), before convexity, assuming the full shock passes through to the bond's yield. The price falls straight away; the higher borrowing cost only bites when the company issues new debt or refinances, since existing fixed-rate debt does not become more expensive to service. For demonstration only: the bond and every scenario here are hypothetical, not a forecast, and not investment advice.",
 };
 if (JSON.stringify(block).includes("—")) throw new Error("em dash in copy");
 
