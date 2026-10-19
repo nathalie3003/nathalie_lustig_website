@@ -1,5 +1,6 @@
 // One-shot: insert the interactive stress test into "Flint and Steel", at the
-// end of "The Collision" (just before "The Fuel" heading). Idempotent.
+// very end of the body, after "Who Gets Burned?" and before the Sources list.
+// Idempotent.
 //
 // Run:  node --env-file=.env.local scripts/add-stress-test-flint-and-steel.mjs
 
@@ -21,8 +22,6 @@ if (note.body.some((b) => b._type === "stressTest")) {
   console.log("Stress test already present. Nothing to do.");
   process.exit(0);
 }
-const fuel = note.body.find((b) => b.style === "h2" && b.children[0].text.startsWith("The Fuel"));
-if (!fuel) throw new Error("could not find The Fuel heading");
 
 const block = {
   _type: "stressTest",
@@ -41,6 +40,6 @@ if (JSON.stringify(block).includes("—")) throw new Error("em dash in copy");
 
 await client
   .patch(note._id)
-  .insert("before", `body[_key=="${fuel._key}"]`, [block])
+  .append("body", [block])
   .commit();
-console.log(`✓ Inserted stress test before "The Fuel" in ${note._id}`);
+console.log(`✓ Appended stress test to the end of ${note._id}`);
