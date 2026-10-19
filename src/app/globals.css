@@ -1227,6 +1227,167 @@
     font-size: 16.5px; line-height: 1.68; color: var(--ink-72); font-style: normal;
   }
 
+  /* Stress test: an interactive figure. On the plain note layout it breaks
+     out to col-wide like .data-strip, so the controls and the results can sit
+     side by side; on the trade layout it stays in its grid track, for the same
+     reason the trade .pull-quote does. A 4px editorial frame on the card
+     surface: it is a figure on the page, not a dashboard widget, so raspberry
+     is kept to the slider fills, the active scenario and the one key number. */
+  .stress-test {
+    margin: 3em 0; padding: 30px 32px 26px;
+    background: var(--surface); border: 1px solid var(--rule);
+    border-radius: var(--radius-hair);
+  }
+  .ap-col .stress-test {
+    position: relative; left: 50%; transform: translateX(-50%);
+    width: min(var(--col-wide), calc(100vw - 2 * var(--pad)));
+  }
+  .stress-test .st-label {
+    display: block; margin-bottom: 8px;
+    font-family: var(--font-mono), ui-monospace, monospace; font-size: 10.5px;
+    letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent);
+  }
+  .stress-test .st-title {
+    margin: 0; font-family: var(--font-serif), Georgia, serif;
+    font-size: 25px; font-weight: 600; letter-spacing: -0.02em; line-height: 1.2;
+    color: var(--ink); text-wrap: balance;
+  }
+  .stress-test .st-intro {
+    margin: 10px 0 0; max-width: 60ch;
+    font-family: var(--font-serif), Georgia, serif; font-size: 17px; line-height: 1.6;
+    color: var(--ink-72); text-wrap: pretty;
+  }
+
+  .st-presets { display: flex; flex-wrap: wrap; gap: 8px; margin: 22px 0 28px; }
+  .st-chip {
+    padding: 7px 14px; border-radius: var(--radius-pill);
+    border: 1px solid var(--rule-strong); background: transparent; cursor: pointer;
+    font-family: var(--font-sans), system-ui, sans-serif; font-size: 13px; font-weight: 500;
+    color: var(--ink-72);
+    transition: border-color 160ms ease, background-color 160ms ease, color 160ms ease, box-shadow 160ms ease;
+  }
+  .st-chip:hover { border-color: var(--ink-45); color: var(--ink); }
+  .st-chip[aria-pressed="true"] {
+    background: var(--accent); border-color: var(--accent); color: var(--surface);
+    box-shadow: 0 2px 8px rgba(178, 58, 99, 0.22);
+  }
+
+  .st-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+  .st-controls { display: flex; flex-direction: column; gap: 22px; padding-right: 36px; }
+  .st-results {
+    display: flex; flex-direction: column;
+    padding-left: 36px; border-left: 1px solid var(--rule);
+  }
+
+  .st-field-row {
+    display: flex; justify-content: space-between; align-items: baseline; gap: 12px;
+    margin-bottom: 8px;
+  }
+  .st-field label {
+    font-family: var(--font-sans), system-ui, sans-serif; font-size: 13.5px; font-weight: 500;
+    color: var(--ink);
+  }
+  .st-field output {
+    font-family: var(--font-mono), ui-monospace, monospace; font-size: 13px;
+    color: var(--ink); font-variant-numeric: tabular-nums;
+  }
+  /* Range input: a 3px hairline track filled in raspberry up to the thumb.
+     The fill is a gradient stop driven by --fill, set inline per slider. The
+     input itself is 24px tall so the hit target is bigger than it looks. */
+  .st-field input[type="range"] {
+    -webkit-appearance: none; appearance: none;
+    display: block; width: 100%; height: 24px; margin: 0;
+    background: transparent; cursor: pointer;
+  }
+  .st-field input[type="range"]::-webkit-slider-runnable-track {
+    height: 3px; border-radius: 2px;
+    background: linear-gradient(to right, var(--accent) var(--fill), var(--rule-strong) var(--fill));
+  }
+  .st-field input[type="range"]::-moz-range-track {
+    height: 3px; border-radius: 2px; background: var(--rule-strong);
+  }
+  .st-field input[type="range"]::-moz-range-progress {
+    height: 3px; border-radius: 2px; background: var(--accent);
+  }
+  .st-field input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none; appearance: none;
+    width: 18px; height: 18px; margin-top: -7.5px; border-radius: 50%;
+    background: var(--accent); border: 3px solid var(--surface);
+    box-shadow: 0 0 0 1px var(--accent), 0 2px 6px rgba(25, 19, 22, 0.16);
+    transition: transform 160ms cubic-bezier(0.25, 1, 0.5, 1);
+  }
+  .st-field input[type="range"]::-moz-range-thumb {
+    width: 12px; height: 12px; border-radius: 50%;
+    background: var(--accent); border: 3px solid var(--surface);
+    box-shadow: 0 0 0 1px var(--accent), 0 2px 6px rgba(25, 19, 22, 0.16);
+  }
+  .st-field input[type="range"]:hover::-webkit-slider-thumb,
+  .st-field input[type="range"]:active::-webkit-slider-thumb { transform: scale(1.12); }
+
+  .st-result { display: flex; flex-direction: column; gap: 6px; padding: 16px 0; border-bottom: 1px solid var(--rule); }
+  .st-result:first-child { padding-top: 0; }
+  .st-result:last-child { border-bottom: 0; padding-bottom: 0; }
+  .st-result-label {
+    font-family: var(--font-sans), system-ui, sans-serif; font-size: 10.5px; font-weight: 500;
+    letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-60);
+  }
+  .st-result-value {
+    font-family: var(--font-mono), ui-monospace, monospace; font-size: 26px;
+    letter-spacing: -0.02em; line-height: 1.1; color: var(--ink);
+    font-variant-numeric: tabular-nums;
+  }
+  .st-result-key { color: var(--accent); }
+  .st-from { color: var(--ink-60); }
+  .st-arrow { margin: 0 0.35em; color: var(--ink-60); font-family: var(--font-sans), system-ui, sans-serif; }
+  .st-result-sub {
+    font-family: var(--font-sans), system-ui, sans-serif; font-size: 13px; color: var(--ink-72);
+  }
+
+  .st-bar {
+    display: flex; height: 10px; margin: 6px 0 4px; overflow: hidden;
+    border-radius: 2px; background: var(--tint);
+  }
+  .st-bar span { display: block; height: 100%; transition: width 320ms cubic-bezier(0.25, 1, 0.5, 1); }
+  .st-bar-flint { background: var(--ink); }
+  .st-bar-steel { background: var(--accent); }
+  .st-legend { margin: 6px 0 0; display: flex; flex-direction: column; gap: 6px; }
+  .st-legend > div { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
+  .st-legend dt {
+    display: flex; align-items: center; gap: 8px;
+    font-family: var(--font-sans), system-ui, sans-serif; font-size: 13px; color: var(--ink-72);
+  }
+  .st-legend dd {
+    margin: 0; font-family: var(--font-mono), ui-monospace, monospace; font-size: 13px;
+    color: var(--ink); font-variant-numeric: tabular-nums;
+  }
+  .st-legend .st-legend-total { margin-top: 2px; padding-top: 8px; border-top: 1px solid var(--rule); }
+  .st-legend .st-legend-total dt { color: var(--ink); font-weight: 600; }
+  .st-legend .st-legend-total dd { font-weight: 600; }
+  .st-key { width: 10px; height: 10px; border-radius: 2px; flex: none; }
+  .st-key-flint { background: var(--ink); }
+  .st-key-steel { background: var(--accent); }
+
+  .stress-test .st-caveat {
+    margin-top: 26px; padding-top: 16px; border-top: 1px solid var(--rule);
+    font-family: var(--font-serif), Georgia, serif; font-size: 14.5px; line-height: 1.6;
+    color: var(--ink-60); text-wrap: pretty;
+  }
+
+  @media (max-width: 760px) {
+    .st-grid { grid-template-columns: minmax(0, 1fr); }
+    .st-controls { padding-right: 0; }
+    .st-results { padding-left: 0; border-left: 0; margin-top: 26px; padding-top: 22px; border-top: 1px solid var(--rule); }
+  }
+  @media (max-width: 560px) {
+    .stress-test { padding: 24px 20px 20px; }
+    .stress-test .st-title { font-size: 21px; }
+    .stress-test .st-intro { font-size: 16px; }
+    .st-result-value { font-size: 22px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .st-chip, .st-bar span, .st-field input[type="range"]::-webkit-slider-thumb { transition: none; }
+  }
+
   /* Sources */
   .sources { margin: 3.6em 0 0; padding-top: 1.6em; border-top: 1px solid var(--rule); }
   .sources-label {

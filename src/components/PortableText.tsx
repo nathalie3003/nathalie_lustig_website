@@ -3,6 +3,7 @@ import Image from "next/image";
 import { urlFor } from "@/lib/sanity.client";
 import { blockText, headingId } from "@/lib/toc";
 import { GlossaryTerm } from "@/components/GlossaryTerm";
+import { StressTest } from "@/components/StressTest";
 
 type Source = { _key: string; text: string };
 
@@ -46,6 +47,17 @@ function buildComponents(sources: Source[]): PortableTextComponents {
           ),
         )}
       </div>
+    ),
+    stressTest: ({ value }) => (
+      <StressTest
+        title={value.title}
+        intro={value.intro}
+        caveat={value.caveat}
+        treasuryShock={value.treasuryShock}
+        spreadShock={value.spreadShock}
+        duration={value.duration}
+        startYield={value.startYield}
+      />
     ),
     image: ({ value }) => {
       const url = urlFor(value).width(1600).url();
