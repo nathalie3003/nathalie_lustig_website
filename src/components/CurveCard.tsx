@@ -357,6 +357,11 @@ export function CurveCard({ snapshot, asOf, histories }: Props) {
         <span className="curve-foot-cap">{readout.caption}</span>
         <span className="curve-foot-val">{readout.value}</span>
       </div>
+      <p className="curve-source">
+        {isAll
+          ? `Yields in %. Source: US Treasury, as of ${formatAsOf(asOf)}.`
+          : "Yields in %, daily. Source: FRED."}
+      </p>
     </div>
   );
 }
