@@ -4,7 +4,6 @@ import { getAllNotes } from "@/lib/queries";
 import { urlFor } from "@/lib/sanity.client";
 import { RightRail } from "@/components/RightRail";
 import { RailScroll } from "@/components/RailScroll";
-import { ProjectsSection } from "@/components/ProjectsSection";
 import { HashScroll } from "@/components/HashScroll";
 import { CATEGORIES, noteCat } from "@/lib/noteCat";
 import { DeskNotesRotator } from "@/components/DeskNotesRotator";
@@ -131,7 +130,6 @@ export default async function HomePage() {
         <RightRail />
       </section>
 
-      <ProjectsSection />
     </div>
   );
 }
