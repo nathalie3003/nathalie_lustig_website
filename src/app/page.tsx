@@ -6,7 +6,7 @@ import { RightRail } from "@/components/RightRail";
 import { RailScroll } from "@/components/RailScroll";
 import { HashScroll } from "@/components/HashScroll";
 import { CATEGORIES, noteCat } from "@/lib/noteCat";
-import { DeskNotesRotator } from "@/components/DeskNotesRotator";
+import { TypedTopics } from "@/components/TypedTopics";
 import { CurveCard } from "@/components/CurveCard";
 import { HomeNotes, type HomeNote } from "@/components/HomeNotes";
 import { getYieldCurve, getAllTenorHistories } from "@/lib/marketData";
@@ -73,7 +73,10 @@ export default async function HomePage() {
             write these notes to work out what the market is pricing in, and
             what it might be missing.
           </p>
-          <DeskNotesRotator words={CATEGORIES.map((c) => c.label.toLowerCase())} />
+          <TypedTopics
+            lead="Notes on"
+            words={CATEGORIES.map((c) => c.label.toLowerCase().replace("&", "and"))}
+          />
           <div className="hero-cta">
             {latest ? (
               <Link href={`/notes/${latest.slug}`} className="l-btn l-btn-primary">
