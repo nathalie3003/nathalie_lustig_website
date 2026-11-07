@@ -11,6 +11,7 @@ export type StackProject = {
   href: string;
   url: string;
   live: boolean;
+  status: string;
   statusNote: string;
   imageSrc?: string;
   imageFit?: "cover" | "contain";
@@ -52,7 +53,7 @@ function Card({ i, project, progress, range, targetScale }: CardProps) {
               aria-hidden="true"
             />
             <span className="stack-status-text">
-              {project.live ? "Live" : "Rebuilding"} · {project.statusNote}
+              {project.status} · {project.statusNote}
             </span>
           </div>
           <div className="stack-card-title">{project.title}</div>
@@ -82,6 +83,9 @@ export default function StackingProjects({ projects }: { projects: StackProject[
         <div className="page-wide stack-header">
           <span className="l-kicker">Projects</span>
           <h2 className="stack-header-title">Things I&rsquo;m building</h2>
+          <p className="stack-header-note">
+            All three are works in progress, so expect rough edges.
+          </p>
         </div>
 
         <div className="stack-cards">

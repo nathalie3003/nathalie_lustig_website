@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { PortableText } from "@/components/PortableText";
+import { SourceText } from "@/components/SourceText";
 import { urlFor, imageDimensions } from "@/lib/sanity.client";
 import { ArticleShell } from "@/components/ArticleShell";
 import { ArticleToc } from "@/components/ArticleToc";
@@ -104,7 +105,7 @@ export function TradeIdeaArticle({
                 <ol>
                   {note.sources.map((s) => (
                     <li key={s._key} id={`source-${s._key}`}>
-                      {s.text}
+                      <SourceText text={s.text} />
                     </li>
                   ))}
                 </ol>

@@ -1402,7 +1402,15 @@
   .ap-col .cite,
   .article-body .cite { text-decoration: none; }
   .cite:hover { text-decoration: underline; }
-  .sources ol li:target { color: var(--ink); }
+  /* A citation jumps here. Clear the fixed nav and the collapsed contents bar
+     beneath it, or the source lands hidden under them. */
+  .sources ol li { scroll-margin-top: calc(var(--nav-h) + 64px); }
+  .sources ol li:target {
+    color: var(--ink);
+    background: color-mix(in oklab, var(--petal) 55%, transparent);
+    box-shadow: -0.4em 0 0 color-mix(in oklab, var(--petal) 55%, transparent);
+  }
+  .sources ol li a { color: inherit; text-decoration: underline; text-underline-offset: 2px; }
 
   /* GLOSSARY — the term stays ink with a dotted underline; the accent appears
      only inside the popover, so the One Working Color Rule survives having a
@@ -1533,6 +1541,13 @@
   letter-spacing: -0.022em;
   margin: 10px 0 0;
   color: var(--ink);
+}
+.stack-header-note {
+  font-family: var(--font-serif);
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--ink-60);
+  margin: 10px 0 0;
 }
 
 .stack-cards {

@@ -13,6 +13,7 @@ export async function ProjectsSection() {
           url: p.url,
           href: p.href,
           live: p.live,
+          status: p.status,
           statusNote: p.statusNote,
           description: p.description,
           imageSrc: p.image ? urlFor(p.image).width(1200).height(800).url() : undefined,
@@ -23,9 +24,10 @@ export async function ProjectsSection() {
           url: p.url,
           href: p.href,
           live: p.live,
+          status: p.status,
           statusNote: p.statusNote,
           description: p.description,
-          imageSrc: p.image,
+          imageSrc: p.image || undefined,
           imageFit: p.imageFit,
         }));
 
