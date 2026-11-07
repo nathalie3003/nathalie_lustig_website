@@ -3,6 +3,7 @@ import { about } from "@/content/about";
 import { aboutNow, rightNowMeta } from "@/content/rightNow";
 import { getSiteSettings } from "@/lib/queries";
 import { LifeCarousel } from "@/components/LifeCarousel";
+import { ProjectsSection } from "@/components/ProjectsSection";
 
 export const metadata: Metadata = {
   title: "About — The Basis Point",
@@ -21,6 +22,7 @@ export default async function AboutPage() {
   const linkedIn = about.contact.find((c) => c.label === "LinkedIn");
 
   return (
+    <>
     <div className="about-page">
       <div className="about-bio">
         <span className="about-eyebrow">{about.headline}</span>
@@ -89,5 +91,10 @@ export default async function AboutPage() {
         </div>
       </aside>
     </div>
+
+    {/* Side projects live here rather than on the homepage, which is kept
+        for the notes. */}
+    <ProjectsSection />
+    </>
   );
 }

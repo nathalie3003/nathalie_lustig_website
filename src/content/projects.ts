@@ -24,7 +24,7 @@ export const projects: Project[] = [
     statusNote: "Back soon",
     faviconLabel: "LML",
     description:
-      "The jewellery label I founded as a teenager — currently rebuilding. New site dropping later this year.",
+      "The jewellery label I founded as a teenager, currently being rebuilt. New site dropping later this year.",
     image: "/projects/lml-site.png",
     imageFit: "cover",
   },

@@ -80,7 +80,7 @@ export function TopBar() {
     setMobileOpen(false);
   }, [pathname]);
 
-  // Section jump for About/Projects: smooth-scroll on home, route otherwise.
+  // Section jump for home and contact: smooth-scroll on home, route otherwise.
   const jump = (id: string) => (e: React.MouseEvent) => {
     setMobileOpen(false);
     e.preventDefault();
@@ -152,7 +152,7 @@ export function TopBar() {
           <Link href="/about" className="top-link">
             About
           </Link>
-          <Link href="/#projects" className="top-link" onClick={jump("projects")}>
+          <Link href="/about#projects" className="top-link">
             Projects
           </Link>
         </nav>
@@ -201,7 +201,7 @@ export function TopBar() {
             <Link href="/about" className="menu-row" onClick={() => setMobileOpen(false)}>
               <span className="mr-title">About</span>
             </Link>
-            <Link href="/#projects" className="menu-row" onClick={jump("projects")}>
+            <Link href="/about#projects" className="menu-row" onClick={() => setMobileOpen(false)}>
               <span className="mr-title">Projects</span>
             </Link>
             <div className="menu-rule" />
