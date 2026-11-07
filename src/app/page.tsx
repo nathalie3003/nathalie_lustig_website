@@ -90,7 +90,9 @@ export default async function HomePage() {
           </p>
           <TypedTopics
             lead="Notes on"
-            words={CATEGORIES.map((c) => c.label.toLowerCase())}
+            words={CATEGORIES.map((c) =>
+              c.label.toLowerCase().replace("&", "and"),
+            )}
           />
           <p className="hero-byline">
             By <Link href="/about">Nathalie Lustig</Link>

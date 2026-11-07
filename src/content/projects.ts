@@ -26,6 +26,7 @@ export const projects: Project[] = [
     description:
       "A small diary that lives in the Mac menu bar or Windows tray. Jot something down, keep a to-do list, track projects, and everything stays on your own computer.",
     image: "/projects/desktop-diary.png",
+    imageFit: "contain",
   },
   {
     slotId: "proj-lml",
