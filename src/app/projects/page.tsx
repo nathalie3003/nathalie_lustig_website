@@ -1,5 +1,5 @@
 import { permanentRedirect } from "next/navigation";
 
 export default function ProjectsRedirect() {
-  permanentRedirect("/#projects");
+  permanentRedirect("/about#projects");
 }
