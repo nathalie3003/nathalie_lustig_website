@@ -12,6 +12,7 @@ import {
 } from "@/lib/queries";
 import { urlFor, imageDimensions } from "@/lib/sanity.client";
 import { PortableText } from "@/components/PortableText";
+import { SourceText } from "@/components/SourceText";
 import { applyGlossary } from "@/lib/glossary";
 import { about } from "@/content/about";
 import { noteCat } from "@/lib/noteCat";
@@ -211,7 +212,7 @@ export default async function NotePage({
                   <ol>
                     {note.sources.map((s) => (
                       <li key={s._key} id={`source-${s._key}`}>
-                        {s.text}
+                        <SourceText text={s.text} />
                       </li>
                     ))}
                   </ol>
