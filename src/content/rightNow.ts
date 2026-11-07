@@ -27,13 +27,26 @@ export const rightNow: RightNowRow[] = [
 // surfaces do not read as duplicates. Kept to a handful of words each: these
 // are asides, and the bio beside them is where the substance lives.
 export const aboutNow: RightNowRow[] = [
-  { label: "Travelling", value: "Café hopping in Hanoi" },
-  { label: "Away from the desk", value: "Skiing (though my ACLs wish otherwise)" },
-  { label: "Still learning", value: "Für Elise" },
-  { label: "Reading", value: "The Age of Innocence, for the footnotes" },
+  { label: "Based in", value: "London" },
   {
-    label: "Still arguing that",
-    value: "'Boring' is the highest compliment a bond can earn",
+    label: "Sunday ritual",
+    value: "A long walk on the Heath with a cappuccino (and sometimes a crêpe)",
+  },
+  {
+    label: "Always reading",
+    value: "Something about bonds, some history, and a novel I should have finished by now",
+  },
+  {
+    label: "Currently curious about",
+    value: "Where technology, capital markets and geopolitics meet",
+  },
+  {
+    label: "Always up for",
+    value: "A ski trip, a spontaneous weekend away, or a new restaurant",
+  },
+  {
+    label: "One thing I've learned",
+    value: "The best ideas often come from conversations outside your usual circle",
   },
 ];
 
