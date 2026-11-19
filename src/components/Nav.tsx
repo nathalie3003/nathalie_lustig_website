@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { CATEGORIES } from "@/lib/noteCat";
+import { CategoryIcon } from "@/components/CategoryIcon";
 import { BasisPointMark } from "@/components/BasisPointMark";
 import { INTRO_DONE_EVENT } from "@/components/Intro";
 
@@ -130,8 +131,11 @@ export function TopBar() {
                   className="np-row np-all"
                   onClick={() => setNotesOpen(false)}
                 >
-                  <span className="np-title">All notes</span>
-                  <span className="np-sub">Every post, newest first</span>
+                  <CategoryIcon slug="all" className="np-icon" />
+                  <span className="np-text">
+                    <span className="np-title">All notes</span>
+                    <span className="np-sub">Every post, newest first</span>
+                  </span>
                 </Link>
                 <div className="np-rule" />
                 {CATEGORIES.map((c) => (
@@ -141,8 +145,11 @@ export function TopBar() {
                     className="np-row"
                     onClick={() => setNotesOpen(false)}
                   >
-                    <span className="np-title">{c.label}</span>
-                    <span className="np-sub">{c.blurb}</span>
+                    <CategoryIcon slug={c.slug} className="np-icon" />
+                    <span className="np-text">
+                      <span className="np-title">{c.label}</span>
+                      <span className="np-sub">{c.blurb}</span>
+                    </span>
                   </Link>
                 ))}
               </div>
@@ -194,7 +201,10 @@ export function TopBar() {
                   className="menu-cat"
                   onClick={() => setMobileOpen(false)}
                 >
-                  <span>{c.label}</span>
+                  <span className="mc-label">
+                    <CategoryIcon slug={c.slug} className="mc-icon" />
+                    {c.label}
+                  </span>
                 </Link>
               ))}
             </div>
