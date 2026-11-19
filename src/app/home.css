@@ -102,13 +102,20 @@
     gap: 12px; padding: 8px 12px; border: 0; background: transparent;
     font-family: var(--font-mono), ui-monospace, monospace;
     font-size: 11.5px; color: var(--ink); text-align: left; cursor: pointer;
+    white-space: nowrap;
     transition: background 120ms ease;
   }
   .curve-opt:hover { background: var(--accent-soft); }
   .curve-opt.is-active { background: var(--accent-soft); color: var(--accent); }
   .curve-opt-hint { opacity: 0.5; }
 
-  .curve-svg { width: 100%; display: block; }
+  .curve-svg {
+    width: 100%; display: block;
+    /* Taps and double-clicks on the chart were selecting the axis labels and
+       flashing the system highlight across the curve. */
+    user-select: none; -webkit-user-select: none;
+    -webkit-tap-highlight-color: transparent;
+  }
   .curve-grid { stroke: var(--rule); stroke-dasharray: 2 5; }
   .curve-tick, .curve-xlabel {
     font-family: var(--font-mono), ui-monospace, monospace;
@@ -123,6 +130,15 @@
     fill: none; stroke: var(--accent); stroke-width: 2.4;
     stroke-linecap: round; stroke-dasharray: 1;
     animation: curve-draw cubic-bezier(0.4, 0, 0.25, 1) both;
+  }
+  /* The fill wipes in left to right with the line, so it never appears ahead
+     of the stroke that is supposed to be drawing it. */
+  .curve-area {
+    animation: curve-area-wipe cubic-bezier(0.4, 0, 0.25, 1) both;
+  }
+  @keyframes curve-area-wipe {
+    from { clip-path: inset(0 100% 0 0); }
+    to   { clip-path: inset(0 0 0 0); }
   }
   @keyframes curve-draw {
     from { stroke-dashoffset: 1; }
@@ -152,6 +168,7 @@
 
   @media (prefers-reduced-motion: reduce) {
     .curve-line { stroke-dasharray: none; animation: none; }
+    .curve-area { animation: none; }
     .curve-lead { display: none; }
   }
 
@@ -169,6 +186,13 @@
     font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase;
     color: var(--ink-60);
   }
+  .curve-source {
+    margin: 8px 0 0;
+    font-family: var(--font-mono), ui-monospace, monospace;
+    font-size: 9.5px; letter-spacing: 0.06em; color: var(--ink-60);
+  }
+  .curve-source a { color: inherit; text-decoration: underline; text-underline-offset: 2px; }
+  .curve-source a:hover { color: var(--accent); }
   .curve-foot-val {
     font-family: var(--font-serif), Georgia, serif;
     font-size: 21px; font-weight: 600; font-variant-numeric: tabular-nums;

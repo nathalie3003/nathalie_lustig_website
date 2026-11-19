@@ -125,6 +125,26 @@ export function CurveCard({ snapshot, asOf, histories }: Props) {
     return () => window.clearInterval(id);
   }, [hovering, open]);
 
+  // Close the menu on a press outside it or on Escape. A blur handler can't do
+  // this reliably: Safari and iOS never focus a button on click, so the menu
+  // never closed there, and in Chrome grabbing the menu's scrollbar blurred the
+  // trigger and slammed the menu shut mid-scroll.
+  useEffect(() => {
+    if (!open) return;
+    const onDown = (e: PointerEvent) => {
+      if (!menuRef.current?.contains(e.target as Node)) setOpen(false);
+    };
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setOpen(false);
+    };
+    document.addEventListener("pointerdown", onDown);
+    document.addEventListener("keydown", onKey);
+    return () => {
+      document.removeEventListener("pointerdown", onDown);
+      document.removeEventListener("keydown", onKey);
+    };
+  }, [open]);
+
   const isAll = selected === "all";
   const history = useMemo(
     () => histories.find((h) => h.tenorLabel === selected) ?? null,
@@ -202,6 +222,10 @@ export function CurveCard({ snapshot, asOf, histories }: Props) {
   // Replaying the draw on every change is the point: the line redrawing is the
   // feedback that the selection took effect.
   const drawKey = `${selected}-${chart?.n ?? 0}-${redrawTick}`;
+  // The fill only replays on a real selection change. On the idle pulse it
+  // stays put and just the line re-traces over it; remounting the fill too made
+  // the whole shaded area blink out and back every five seconds.
+  const areaKey = `${selected}-${chart?.n ?? 0}`;
 
   return (
     <div
@@ -221,9 +245,6 @@ export function CurveCard({ snapshot, asOf, histories }: Props) {
             aria-expanded={open}
             aria-haspopup="listbox"
             onClick={() => setOpen((o) => !o)}
-            onBlur={(e) => {
-              if (!menuRef.current?.contains(e.relatedTarget as Node)) setOpen(false);
-            }}
           >
             {isAll ? "All maturities" : selected}
             <span className="curve-caret" aria-hidden="true">
@@ -307,8 +328,9 @@ export function CurveCard({ snapshot, asOf, histories }: Props) {
           )}
 
           <path
-            key={`area-${drawKey}`}
+            key={`area-${areaKey}`}
             className="curve-area"
+            style={{ animationDuration: `${DRAW_MS}ms` }}
             d={`${chart.d} L ${sx(chart.n - 1, chart.n).toFixed(1)} ${VH - PAD_B} L ${sx(0, chart.n).toFixed(1)} ${VH - PAD_B} Z`}
             fill="url(#curve-fill)"
           />
@@ -324,8 +346,13 @@ export function CurveCard({ snapshot, asOf, histories }: Props) {
             snapshot.map((p, i) => (
               <g
                 key={p.tenorLabel}
-                onMouseEnter={() => setHoverIdx(i)}
-                onMouseLeave={() => setHoverIdx(null)}
+                onPointerEnter={() => setHoverIdx(i)}
+                onPointerLeave={(e) => {
+                  // A touch tap fires leave straight after enter; keep the
+                  // tapped tenor showing until the next tap instead.
+                  if (e.pointerType === "mouse") setHoverIdx(null);
+                }}
+                onPointerDown={() => setHoverIdx(i)}
               >
                 <circle
                   cx={sx(i, chart.n)}
@@ -357,6 +384,13 @@ export function CurveCard({ snapshot, asOf, histories }: Props) {
         <span className="curve-foot-cap">{readout.caption}</span>
         <span className="curve-foot-val">{readout.value}</span>
       </div>
+      <p className="curve-source">
+        {isAll ? "Data: US Treasury and the " : "Data: "}
+        <a href="https://fred.stlouisfed.org/" target="_blank" rel="noopener noreferrer">
+          FRED API
+        </a>
+        {isAll ? "" : " (Federal Reserve Bank of St. Louis)"}
+      </p>
     </div>
   );
 }
