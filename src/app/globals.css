@@ -240,13 +240,13 @@
     animation: nl-pop 140ms cubic-bezier(0.2,0.7,0.2,1);
   }
   .np-row {
-    display: flex; align-items: flex-start; gap: 12px;
+    display: flex; align-items: center; gap: 12px;
     padding: 10px 13px; border-radius: var(--radius-sm);
     color: var(--ink); text-decoration: none; transition: background 120ms ease;
   }
   .np-row:hover { background: var(--accent-soft); }
   .np-text { display: flex; flex-direction: column; gap: 2px; }
-  .np-icon { flex: none; margin-top: 1px; color: var(--ink-60); transition: color 120ms ease; }
+  .np-icon { flex: none; color: var(--ink-60); transition: color 120ms ease; }
   .np-row:hover .np-icon, .np-all .np-icon { color: var(--accent); }
   .np-all { background: rgba(178,58,99,0.05); }
   .np-title { font-family: var(--font-serif), Georgia, serif; font-size: 15px; font-weight: 600; letter-spacing: -0.005em; }

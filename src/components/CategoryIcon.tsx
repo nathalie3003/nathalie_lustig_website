@@ -11,12 +11,12 @@ const PATHS: Record<CategorySlug | "all", React.ReactNode> = {
       <path d="M5.5 14c2.5-1 4-3.5 6-6.5S15 4.5 16.5 4.5" />
     </>
   ),
-  // Two lines with the gap between them: the spread.
+  // The capital stack: senior at the base, thinner tranches above it.
   credit: (
     <>
-      <path d="M3 7.5c3-1.5 5.5-2 8-1.5s4 .5 6-.5" />
-      <path d="M3 13.5c3-.5 5.5 0 8 .5s4 0 6-1" />
-      <path d="M10 7v6" strokeDasharray="1.2 1.6" />
+      <rect x="2.5" y="13" width="15" height="4" rx="1" />
+      <rect x="4.5" y="8" width="11" height="4" rx="1" />
+      <rect x="6.5" y="3" width="7" height="4" rx="1" />
     </>
   ),
   // A fresh term sheet with a plus: something coming to market.
