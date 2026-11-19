@@ -11,12 +11,12 @@ const PATHS: Record<CategorySlug | "all", React.ReactNode> = {
       <path d="M5.5 14c2.5-1 4-3.5 6-6.5S15 4.5 16.5 4.5" />
     </>
   ),
-  // The capital stack: senior at the base, thinner tranches above it.
+  // A credit card: magnetic stripe across the top, card number below.
   credit: (
     <>
-      <rect x="2.5" y="13" width="15" height="4" rx="1" />
-      <rect x="4.5" y="8" width="11" height="4" rx="1" />
-      <rect x="6.5" y="3" width="7" height="4" rx="1" />
+      <rect x="2" y="4.5" width="16" height="11" rx="1.75" />
+      <path d="M2 8h16" />
+      <path d="M5 12.25h2.5M9.5 12.25h2" />
     </>
   ),
   // A fresh term sheet with a plus: something coming to market.
