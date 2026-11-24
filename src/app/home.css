@@ -28,11 +28,10 @@
 
   .hero-display {
     font-family: var(--font-display), Georgia, serif;
-    /* "The Basis Point." always sits on one line. Cormorant 600 at this
-       tracking runs about 1.6% wider than the Source Serif it replaced, so the
-       fluid size steps down from 13cqi to 12.8cqi to keep the same ~94% fill,
-       capped at 84px on wide screens. */
-    font-size: min(84px, 12.8cqi); line-height: 0.96; font-weight: 600;
+    /* "The Basis Point." always sits on one line. In Cormorant 600 at this
+       tracking it measures about 6.1em (measured on the rendered page), so
+       15.2cqi fills roughly 93% of the column, capped at 84px on wide screens. */
+    font-size: min(84px, 15.2cqi); line-height: 0.96; font-weight: 600;
     letter-spacing: -0.014em; margin: 24px 0 0; white-space: nowrap;
   }
   .hero-standfirst {
