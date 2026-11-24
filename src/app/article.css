@@ -54,8 +54,8 @@
   }
   .keep-card-title {
     display: block;
-    font-family: var(--font-serif), Georgia, serif;
-    font-size: 22px; line-height: 1.25; font-weight: 600; letter-spacing: -0.018em;
+    font-family: var(--font-display), Georgia, serif;
+    font-size: 25px; line-height: 1.2; font-weight: 600; letter-spacing: -0.006em;
     margin-top: 10px; text-wrap: pretty;
   }
   .keep-card-dir {
@@ -77,8 +77,8 @@
     display: flex; align-items: baseline; justify-content: space-between; gap: 20px;
   }
   .replies-title {
-    font-family: var(--font-serif), Georgia, serif;
-    font-size: 27px; font-weight: 600; letter-spacing: -0.019em; margin: 0;
+    font-family: var(--font-display), Georgia, serif;
+    font-size: 30px; font-weight: 600; letter-spacing: -0.006em; margin: 0;
   }
   .replies-count {
     font-family: var(--font-mono), ui-monospace, monospace;

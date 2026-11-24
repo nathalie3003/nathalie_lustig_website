@@ -22,23 +22,29 @@ colors:
   state-progress: "#C8A96A"
 typography:
   display:
-    fontFamily: "var(--font-serif), Georgia, serif"
-    fontSize: "clamp(2.25rem, 4vw, 4.75rem)"
+    fontFamily: "var(--font-display), Georgia, serif"
+    fontSize: "clamp(2.25rem, 4vw, 5.25rem)"
     fontWeight: 600
-    lineHeight: 0.98
-    letterSpacing: "-0.034em"
+    lineHeight: 0.96
+    letterSpacing: "-0.014em"
   headline:
-    fontFamily: "var(--font-serif), Georgia, serif"
-    fontSize: "2.375rem"
+    fontFamily: "var(--font-display), Georgia, serif"
+    fontSize: "2.625rem"
     fontWeight: 600
     lineHeight: 1.1
-    letterSpacing: "-0.022em"
+    letterSpacing: "-0.012em"
   title:
-    fontFamily: "var(--font-serif), Georgia, serif"
-    fontSize: "1.5625rem"
+    fontFamily: "var(--font-display), Georgia, serif"
+    fontSize: "1.75rem"
     fontWeight: 600
-    lineHeight: 1.2
-    letterSpacing: "-0.024em"
+    lineHeight: 1.15
+    letterSpacing: "-0.006em"
+  standfirst:
+    fontFamily: "var(--font-display), Georgia, serif"
+    fontSize: "1.4375rem"
+    fontWeight: 500
+    fontStyle: "italic"
+    lineHeight: 1.42
   body:
     fontFamily: "var(--font-serif), Georgia, serif"
     fontSize: "1.21875rem"
@@ -212,27 +218,39 @@ it is raspberry's own darker state.
 
 ## 3. Typography
 
-**Display/Body Font:** Source Serif 4 (`var(--font-serif)`, Georgia fallback)
+**Display Font:** Cormorant Garamond (`var(--font-display)`, Georgia fallback)
+**Body Font:** Newsreader, variable with optical sizing (`var(--font-serif)`, Georgia fallback)
 **UI Font:** Instrument Sans (`var(--font-sans)`, system-ui fallback)
 **Meta/Numeric Font:** IBM Plex Mono (`var(--font-mono)`, ui-monospace fallback)
 
-**Character:** A classic serif carries headlines, standfirsts and body copy, the
-"written" voice of the site. A neutral grotesque handles interface chrome. A
+**Character:** The serif voice has two faces. Cormorant Garamond sets headlines,
+standfirsts, drop caps and the wordmark: it was chosen because it shares the bp
+mark's letterforms (the angled wedge on the ascender, the hairline that tapers
+into the bowl, the diagonal stress), so the type and the mark read as one hand.
+Cormorant is too delicate for running text, so Newsreader carries body copy and
+any serif text under about 20px; its optical-size axis keeps it sturdy at
+reading sizes. Both faces are the "written" voice of the site. A neutral grotesque handles interface chrome. A
 monospace sets everything countable: dates, read times, category labels, tenors,
 basis-point figures and chart axes. On a site about numbers, giving numbers their
 own face is the point, not a flourish.
 
 ### Hierarchy
-- **Display** (600, up to 76px, 0.98, tracking -0.034em): The homepage masthead and
-  note-detail titles. The largest serif on the page.
-- **Headline** (600, 38px, 1.1): Section titles and the contact band heading.
-- **Title** (600, 25px, 1.2): Note-row and card titles.
-- **Body** (400, 19.5px, 1.78; cap 65 to 75ch): Long-form note body copy. The widest
-  line-height in the system, built for sustained reading. The cap is enforced by
-  `--col-text: 620px`, which measures 70 characters at this size and face. That
-  number was derived by measuring rendered text (the average glyph is 8.87px), so
-  it has to be re-measured if the body size or the serif ever changes. It is not a
-  round number chosen by eye.
+- **Display** (Cormorant 600, up to 84px, 0.96, tracking -0.014em): The homepage
+  masthead and note-detail titles. The largest serif on the page.
+- **Headline** (Cormorant 600, 42px, 1.1): Section titles and the contact band heading.
+- **Title** (Cormorant 600, 28px, 1.15): Note-row and card titles.
+- **Standfirst** (Cormorant italic 500, 23 to 24px, 1.42, ink-72): The deck under a
+  note title, the homepage standfirst and the contact lede.
+- **Body** (Newsreader 400, 19.5px, 1.78; cap 65 to 75ch): Long-form note body copy.
+  The widest line-height in the system, built for sustained reading. The cap is
+  enforced by `--col-text: 560px`, which measures 70 characters at this size and
+  face. That number was derived by measuring rendered text (the average glyph is
+  7.96px), so it has to be re-measured if the body size or the serif ever changes.
+  It is not a round number chosen by eye.
+
+Cormorant runs small on the body, so every size moved to it was raised about 10%
+and its tracking loosened: the tight -0.03em values written for Source Serif make
+Cormorant's hairline serifs collide. Keep display tracking at -0.014em or looser.
 - **UI** (500, 14.5px): Nav links, buttons, form controls. Sans only.
 - **Meta** (400, 10.5px, letter-spacing 0.14em, uppercase): Department labels,
   dates, read times, chart axis values. Mono only.

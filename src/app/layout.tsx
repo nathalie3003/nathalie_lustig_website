@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Source_Serif_4, Instrument_Sans, IBM_Plex_Mono } from "next/font/google";
+import { Newsreader, Cormorant_Garamond, Instrument_Sans, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
 import "./intro.css";
 import { Chrome } from "@/components/Chrome";
@@ -7,10 +7,23 @@ import { ContactFooter } from "@/components/Footer";
 import { Analytics } from "@vercel/analytics/next";
 import { INTRO_SCRIPT } from "@/lib/introScript";
 
-const serif = Source_Serif_4({
+// Text voice: Newsreader, variable with an optical-size axis, so captions,
+// body copy and small headings each get the cut drawn for their size.
+const serif = Newsreader({
   subsets: ["latin"],
-  weight: ["400", "500", "600"],
+  style: ["normal", "italic"],
+  axes: ["opsz"],
   variable: "--font-serif",
+  display: "swap",
+});
+// Display voice: Cormorant Garamond, chosen to match the bp mark's angled
+// wedge serifs and hairline contrast. Headlines, standfirsts and drop caps only;
+// it is too delicate for running text.
+const display = Cormorant_Garamond({
+  subsets: ["latin"],
+  weight: ["500", "600"],
+  style: ["normal", "italic"],
+  variable: "--font-display",
   display: "swap",
 });
 const sans = Instrument_Sans({
@@ -56,7 +69,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html
       lang="en"
-      className={`${serif.variable} ${sans.variable} ${mono.variable}`}
+      className={`${serif.variable} ${display.variable} ${sans.variable} ${mono.variable}`}
       suppressHydrationWarning
     >
       <head>

@@ -19,9 +19,9 @@
     color: var(--accent);
   }
   .about-heading {
-    font-family: var(--font-serif), Georgia, serif;
-    font-size: clamp(34px, 5vw, 50px); line-height: 1.06; font-weight: 600;
-    letter-spacing: -0.032em; margin: 16px 0 0; max-width: 22ch;
+    font-family: var(--font-display), Georgia, serif;
+    font-size: clamp(38px, 5.5vw, 56px); line-height: 1.02; font-weight: 600;
+    letter-spacing: -0.012em; margin: 16px 0 0; max-width: 22ch;
   }
   .about-bio-text p {
     font-family: var(--font-serif), Georgia, serif;

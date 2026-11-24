@@ -27,16 +27,17 @@
   }
 
   .hero-display {
-    font-family: var(--font-serif), Georgia, serif;
-    /* "The Basis Point." always sits on one line: it measures about 7.2em at
-       this tracking, so 13cqi fills roughly 94% of the column, capped at
-       76px on wide screens. */
-    font-size: min(76px, 13cqi); line-height: 0.98; font-weight: 600;
-    letter-spacing: -0.034em; margin: 24px 0 0; white-space: nowrap;
+    font-family: var(--font-display), Georgia, serif;
+    /* "The Basis Point." always sits on one line. Cormorant 600 at this
+       tracking runs about 1.6% wider than the Source Serif it replaced, so the
+       fluid size steps down from 13cqi to 12.8cqi to keep the same ~94% fill,
+       capped at 84px on wide screens. */
+    font-size: min(84px, 12.8cqi); line-height: 0.96; font-weight: 600;
+    letter-spacing: -0.014em; margin: 24px 0 0; white-space: nowrap;
   }
   .hero-standfirst {
-    font-family: var(--font-serif), Georgia, serif;
-    font-size: 21px; line-height: 1.55; color: var(--ink-72);
+    font-family: var(--font-display), Georgia, serif; font-style: italic; font-weight: 500;
+    font-size: 24px; line-height: 1.42; color: var(--ink-72);
     margin: 22px 0 0; max-width: 46ch; text-wrap: pretty;
   }
   .typed {
@@ -216,8 +217,8 @@
     color: var(--accent);
   }
   .featured-title {
-    font-family: var(--font-serif), Georgia, serif;
-    font-size: 40px; line-height: 1.08; font-weight: 600; letter-spacing: -0.032em;
+    font-family: var(--font-display), Georgia, serif;
+    font-size: 44px; line-height: 1.04; font-weight: 600; letter-spacing: -0.012em;
     margin: 18px 0 0; max-width: 18ch; text-wrap: pretty;
   }
   .featured-deck {
@@ -246,8 +247,8 @@
     padding-bottom: 14px; border-bottom: 2px solid var(--ink);
   }
   .home-head-title {
-    font-family: var(--font-serif), Georgia, serif;
-    font-size: 30px; font-weight: 600; letter-spacing: -0.026em; margin: 0;
+    font-family: var(--font-display), Georgia, serif;
+    font-size: 33px; font-weight: 600; letter-spacing: -0.008em; margin: 0;
   }
   .home-head-link {
     font-family: var(--font-sans), system-ui, sans-serif;
@@ -314,8 +315,8 @@
     font-size: 11px; color: var(--ink-60); white-space: nowrap;
   }
   .home-note-title {
-    font-family: var(--font-serif), Georgia, serif;
-    font-size: 25px; line-height: 1.2; font-weight: 600; letter-spacing: -0.024em;
+    font-family: var(--font-display), Georgia, serif;
+    font-size: 28px; line-height: 1.15; font-weight: 600; letter-spacing: -0.006em;
     margin-top: 7px; text-wrap: pretty;
   }
   .home-note-deck {
@@ -346,8 +347,8 @@
     .rail-portrait { transition: none; }
   }
   .rail-name {
-    font-family: var(--font-serif), Georgia, serif;
-    font-size: 17px; font-weight: 600; line-height: 1.2;
+    font-family: var(--font-display), Georgia, serif;
+    font-size: 20px; font-weight: 600; line-height: 1.2;
   }
   .rail-cred {
     font-family: var(--font-sans), system-ui, sans-serif;
@@ -371,7 +372,7 @@
     color: var(--ink-60);
   }
   .stack-card-content { justify-content: center; padding: 44px 46px; }
-  .stack-card-title { margin: 14px 0 0; letter-spacing: -0.024em; }
+  .stack-card-title { margin: 14px 0 0; letter-spacing: -0.006em; }
   .stack-card-desc { margin-top: 12px; font-size: 18px; line-height: 1.6; max-width: 34ch; }
   .stack-card-url {
     font-family: var(--font-mono), ui-monospace, monospace;

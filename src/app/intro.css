@@ -57,9 +57,9 @@
   }
   .intro-lockup .bp-mark { width: clamp(96px, 13vw, 140px); height: auto; }
   .intro-name {
-    font-family: var(--font-serif), Georgia, serif;
-    font-size: clamp(20px, 2.2vw, 26px); font-weight: 600;
-    letter-spacing: -0.015em; color: var(--ink);
+    font-family: var(--font-display), Georgia, serif;
+    font-size: clamp(22px, 2.4vw, 29px); font-weight: 600;
+    letter-spacing: 0; color: var(--ink);
   }
   .intro.is-leaving .intro-lockup { opacity: 0; transform: translateY(-12px); }
 
