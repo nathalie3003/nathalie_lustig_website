@@ -16,8 +16,8 @@ const iconUrl = (domain: string) =>
 
 // A scrolling strip of company icons and names. The list is rendered twice
 // side by side so the loop is seamless; the second copy is hidden from screen
-// readers and taken out of the tab order. MarqueeTrack moves it (and lets the
-// cursor steer it); with prefers-reduced-motion it is a static wrapped list.
+// readers and taken out of the tab order. MarqueeTrack moves it (and lets it be
+// dragged or swiped); with prefers-reduced-motion it is a static wrapped list.
 export function LogoMarquee({
   id,
   title,
@@ -43,6 +43,7 @@ export function LogoMarquee({
               width={28}
               height={28}
               decoding="async"
+              draggable={false}
               className="marquee-icon"
             />
             <span className="marquee-name">{item.name}</span>
@@ -56,6 +57,7 @@ export function LogoMarquee({
                 className="marquee-item"
                 title={item.hint}
                 tabIndex={copy ? -1 : undefined}
+                draggable={false}
               >
                 {inner}
               </Link>
