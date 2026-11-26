@@ -6,7 +6,6 @@ import { usePathname, useRouter } from "next/navigation";
 import { CATEGORIES } from "@/lib/noteCat";
 import { CategoryIcon } from "@/components/CategoryIcon";
 import { BasisPointMark } from "@/components/BasisPointMark";
-import { INTRO_DONE_EVENT } from "@/components/Intro";
 
 function scrollToId(id: string) {
   const el = document.getElementById(id);
@@ -40,13 +39,6 @@ export function TopBar() {
     try {
       sessionStorage.setItem("bp-wordmark-seen", "1");
     } catch {}
-    // On a first visit the intro covers the header, so hold the reveal until
-    // the cover has lifted rather than playing it unseen underneath.
-    if (phase === "wm-animate" && document.documentElement.dataset.intro === "on") {
-      const onDone = () => setWordmarkPhase("wm-animate");
-      window.addEventListener(INTRO_DONE_EVENT, onDone, { once: true });
-      return () => window.removeEventListener(INTRO_DONE_EVENT, onDone);
-    }
     setWordmarkPhase(phase);
   }, []);
 
