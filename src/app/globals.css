@@ -530,39 +530,56 @@
     transition: clip-path 1100ms cubic-bezier(0.2, 0.7, 0.1, 1);
   }
   .foot-mark.is-in .foot-mark-text { clip-path: inset(0 0 0 0); }
-  /* The full stop is an ink splash, sized and seated where a period glyph
-     would sit so the fitted measure stays honest. */
+  /* The full stop arrives as an ink splash that settles into the round
+     point. Sized and seated where a period glyph would sit so the fitted
+     measure stays honest; the resting state is just the circle. */
   .foot-mark-dot {
-    display: inline-block; width: 0.34em; height: 0.34em;
-    margin-left: -0.01em; vertical-align: -0.09em;
+    display: inline-block; width: 0.3em; height: 0.3em;
+    margin-left: 0.01em; vertical-align: -0.04em;
     fill: var(--accent); overflow: visible;
   }
   .foot-mark-dot .ink-body,
-  .foot-mark-dot .ink-drop { transform-box: fill-box; transform-origin: center; }
-  .foot-mark .ink-body { transform: scale(0.15); }
+  .foot-mark-dot .ink-drop,
+  .foot-mark-dot .ink-point { transform-box: fill-box; transform-origin: center; }
+  .foot-mark .ink-body { transform: scale(0); }
   .foot-mark .ink-drop { opacity: 0; }
+  .foot-mark .ink-point { transform: scale(0); }
   .foot-mark.is-in .ink-body {
-    animation: ink-land 520ms cubic-bezier(0.2, 1.6, 0.4, 1) 820ms both;
+    animation: ink-splash 1300ms cubic-bezier(0.3, 0.7, 0.2, 1) 780ms both;
   }
   .foot-mark.is-in .ink-drop {
-    animation: ink-throw 460ms cubic-bezier(0.15, 0.8, 0.3, 1) both;
+    animation: ink-throw 1250ms cubic-bezier(0.3, 0.7, 0.2, 1) both;
   }
-  @keyframes ink-land {
-    0% { transform: scale(0.15, 0.1); }
-    55% { transform: scale(1.12, 0.92); }
-    100% { transform: scale(1); }
+  .foot-mark.is-in .ink-point {
+    animation: ink-settle 1300ms cubic-bezier(0.3, 0.7, 0.2, 1) 780ms both;
   }
+  /* The splash hits wide and flat, then gathers in on itself. */
+  @keyframes ink-splash {
+    0% { transform: scale(0.1, 0.05); }
+    18% { transform: scale(1.3, 1.05); }
+    40% { transform: scale(1.15, 1.1) rotate(4deg); }
+    100% { transform: scale(0.5) rotate(10deg); }
+  }
+  /* Droplets fly out, hang for a beat, then are drawn back into the point. */
   @keyframes ink-throw {
-    0% { opacity: 0; transform: translate(var(--dx), var(--dy)) scale(0.3); }
-    25% { opacity: 1; }
-    100% { opacity: 1; transform: none; }
+    0% { opacity: 1; transform: translate(var(--dx), var(--dy)) scale(0.2); }
+    20% { opacity: 1; transform: none; }
+    45% { opacity: 1; transform: scale(0.9); }
+    85% { opacity: 1; transform: translate(var(--dx), var(--dy)) scale(0.6); }
+    100% { opacity: 0; transform: translate(var(--dx), var(--dy)) scale(0); }
+  }
+  @keyframes ink-settle {
+    0%, 30% { transform: scale(0); }
+    100% { transform: scale(1); }
   }
   @media (prefers-reduced-motion: reduce) {
     .foot-mark .foot-mark-text { clip-path: none; transition: none; }
     .foot-mark .ink-body,
     .foot-mark .ink-drop,
     .foot-mark.is-in .ink-body,
-    .foot-mark.is-in .ink-drop { animation: none; transform: none; opacity: 1; }
+    .foot-mark.is-in .ink-drop { animation: none; opacity: 0; }
+    .foot-mark .ink-point,
+    .foot-mark.is-in .ink-point { animation: none; transform: none; }
   }
 
   .foot-base { font-size: 13px; color: var(--ink-60); }
