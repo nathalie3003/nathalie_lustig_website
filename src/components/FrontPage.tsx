@@ -111,16 +111,19 @@ export function FrontPage({
         </article>
 
         <aside className="fp-side" aria-label="Markets and about">
-          <h2 className="fp-side-title">The curve today</h2>
           {curve}
-          <p className="fp-about">
-            Bond markets are the most honest real-time read on the economy. I
-            write these notes to work out what the market is pricing in, and
-            what it might be missing.
-          </p>
-          <Link href="/about" className="fp-side-link">
-            About me →
-          </Link>
+          <blockquote className="fp-about">
+            <p>
+              Bond markets are the most honest real-time read on the economy. I
+              write these notes to work out what the market is pricing in, and
+              what it might be missing.
+            </p>
+            <footer>
+              <Link href="/about" className="fp-side-link">
+                Nathalie Lustig, about me →
+              </Link>
+            </footer>
+          </blockquote>
         </aside>
       </div>
 

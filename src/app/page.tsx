@@ -9,6 +9,7 @@ import { RailScroll } from "@/components/RailScroll";
 import { HashScroll } from "@/components/HashScroll";
 import { CATEGORIES, noteCat } from "@/lib/noteCat";
 import { CurveCard } from "@/components/CurveCard";
+import { MarketsPanel } from "@/components/MarketsPanel";
 import { HomeNotes, type HomeNote } from "@/components/HomeNotes";
 import { LogoMarquee } from "@/components/LogoMarquee";
 import { companiesCovered } from "@/content/companiesCovered";
@@ -148,7 +149,7 @@ export default async function HomePage() {
           leadImageCaption={leadFigure?.caption}
           secondary={notes.slice(1, 4).map(toStory)}
           more={notes.slice(4, 10).map(toRow)}
-          curve={<CurveCard snapshot={curve.points} asOf={curve.asOf} histories={histories} />}
+          curve={<MarketsPanel points={curve.points} asOf={curve.asOf} histories={histories} />}
           rail={<RightRail />}
         />
       ) : null}
