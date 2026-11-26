@@ -15,6 +15,29 @@ export const siteSettings = defineType({
       description: "Each item is one paragraph of the About bio.",
     }),
     defineField({
+      name: "lifePhotos",
+      title: "About — photos",
+      type: "array",
+      description:
+        "The slideshow beside the bio. Drag to reorder. Two show at a time, and the caption appears when a reader hovers. Leave empty to use the photos in the code.",
+      of: [
+        {
+          type: "image",
+          options: { hotspot: true },
+          fields: [
+            defineField({
+              name: "caption",
+              title: "Caption",
+              type: "string",
+              description: "One short line. Also read out to screen-reader users.",
+              validation: (r) => r.required().max(120),
+            }),
+          ],
+          preview: { select: { title: "caption", media: "asset" } },
+        },
+      ],
+    }),
+    defineField({
       name: "contact",
       title: "Contact list",
       type: "array",
