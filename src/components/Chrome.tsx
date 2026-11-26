@@ -1,7 +1,6 @@
 "use client";
 import { usePathname } from "next/navigation";
 import { TopBar } from "./Nav";
-import { ContactSection } from "./ContactSection";
 import { Intro } from "./Intro";
 
 export function Chrome({
@@ -19,7 +18,6 @@ export function Chrome({
       <Intro />
       <TopBar />
       <main className="main">{children}</main>
-      <ContactSection />
       {footer}
     </>
   );

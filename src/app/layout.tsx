@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Source_Serif_4, Instrument_Sans, IBM_Plex_Mono } from "next/font/google";
+import { Source_Serif_4, Instrument_Sans, IBM_Plex_Mono, DM_Serif_Display } from "next/font/google";
 import "./globals.css";
 import "./intro.css";
 import { Chrome } from "@/components/Chrome";
@@ -17,6 +17,13 @@ const sans = Instrument_Sans({
   subsets: ["latin"],
   weight: ["400", "500", "600"],
   variable: "--font-sans",
+  display: "swap",
+});
+// Display face for the footer wordmark only.
+const display = DM_Serif_Display({
+  subsets: ["latin"],
+  weight: "400",
+  variable: "--font-display",
   display: "swap",
 });
 const mono = IBM_Plex_Mono({
@@ -56,7 +63,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html
       lang="en"
-      className={`${serif.variable} ${sans.variable} ${mono.variable}`}
+      className={`${serif.variable} ${sans.variable} ${mono.variable} ${display.variable}`}
       suppressHydrationWarning
     >
       <head>
