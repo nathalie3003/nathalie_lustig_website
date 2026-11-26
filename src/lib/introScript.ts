@@ -39,6 +39,7 @@ const [SMALL, LARGE] = INTRO_WIDTHS;
 export const INTRO_SCRIPT = `(function(){try{
 var d=document.documentElement;
 if(location.pathname.indexOf('/studio')===0)return;
+if(d.getAttribute('data-hero')==='landing')return;
 if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;
 if(localStorage.getItem('bp-intro-seen')==='1')return;
 localStorage.setItem('bp-intro-seen','1');

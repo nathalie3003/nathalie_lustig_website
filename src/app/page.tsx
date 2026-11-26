@@ -1,13 +1,15 @@
 import Image from "next/image";
+import { TypedTopics } from "@/components/TypedTopics";
 import Link from "next/link";
-import { getAllNotes } from "@/lib/queries";
+import { getAllNotes, getLeadExtras } from "@/lib/queries";
+import { FrontPage, type FrontStory } from "@/components/FrontPage";
 import { urlFor } from "@/lib/sanity.client";
 import { RightRail } from "@/components/RightRail";
 import { RailScroll } from "@/components/RailScroll";
 import { HashScroll } from "@/components/HashScroll";
 import { CATEGORIES, noteCat } from "@/lib/noteCat";
-import { TypedTopics } from "@/components/TypedTopics";
 import { CurveCard } from "@/components/CurveCard";
+import { MarketsPanel } from "@/components/MarketsPanel";
 import { HomeNotes, type HomeNote } from "@/components/HomeNotes";
 import { LogoMarquee } from "@/components/LogoMarquee";
 import { companiesCovered } from "@/content/companiesCovered";
@@ -15,6 +17,7 @@ import { readersFrom } from "@/content/readersFrom";
 import { getYieldCurve, getAllTenorHistories } from "@/lib/marketData";
 import { readTimeFromChars } from "@/lib/readTime";
 import { FALLBACK_CURVE } from "@/content/yieldCurveFallback";
+import { BasisPointMark } from "@/components/BasisPointMark";
 
 function formatDateShort(iso: string) {
   return new Date(iso).toLocaleDateString("en-GB", {
@@ -33,6 +36,7 @@ export default async function HomePage() {
 
   const curve = liveCurve ?? FALLBACK_CURVE;
   const latest = notes[0];
+  const leadExtras = latest ? await getLeadExtras(latest.slug) : null;
 
   // The latest note already leads the page as the featured card, so it is not
   // repeated in the list directly beneath it. The rest are capped: the homepage
@@ -55,6 +59,43 @@ export default async function HomePage() {
       : undefined,
   }));
 
+  const toRow = (n: (typeof notes)[number]): HomeNote => ({
+    id: n._id,
+    slug: n.slug,
+    title: n.title,
+    excerpt: n.excerpt,
+    category: n.category ?? "",
+    catLabel: noteCat(n.category).cat,
+    date: formatDateShort(n.publishedAt),
+    read: readTimeFromChars(n.readChars),
+    thumbUrl: n.coverImage
+      ? urlFor(n.coverImage).width(192).height(192).url()
+      : undefined,
+  });
+  const toStory = (n: (typeof notes)[number]): FrontStory => ({
+    slug: n.slug,
+    title: n.title,
+    excerpt: n.excerpt,
+    cat: noteCat(n.category).cat,
+    date: formatDateShort(n.publishedAt),
+    read: readTimeFromChars(n.readChars),
+    image: n.coverImage ? urlFor(n.coverImage).width(720).height(450).url() : undefined,
+  });
+  // The front page prefers the note's own first figure over its cover.
+  const leadFigure = leadExtras?.figure?.asset ? leadExtras.figure : null;
+  const leadImage = leadFigure
+    ? urlFor(leadFigure).width(1400).url()
+    : latest?.coverImage
+      ? urlFor(latest.coverImage).width(1400).height(840).url()
+      : null;
+  const today = new Date().toLocaleDateString("en-GB", {
+    weekday: "long",
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+    timeZone: "Europe/London",
+  });
+
   const latestCover = latest?.coverImage
     ? urlFor(latest.coverImage).width(900).height(760).url()
     : null;
@@ -74,12 +115,47 @@ export default async function HomePage() {
       <HashScroll />
       <RailScroll />
 
+      {/* Design exploration: the full-screen landing. Hidden unless
+          html[data-hero="landing"] (see src/lib/look.ts). It stays pinned
+          while .home-sheet slides up over it. */}
+      <section className="landing" aria-label="Welcome">
+        <div className="landing-bg" aria-hidden="true" />
+        <div className="landing-wash" aria-hidden="true" />
+        <div className="landing-inner">
+          <BasisPointMark size={88} decorative />
+          <p className="landing-title">
+            The Basis Point<span className="bp-point">.</span>
+          </p>
+          <p className="landing-standfirst">
+            Notes on AI, credit infrastructure and the macro picture, by
+            Nathalie Lustig.
+          </p>
+        </div>
+        <a href="#top" className="landing-cue">
+          <span>Read the notes</span>
+          <span className="landing-cue-arrow" aria-hidden="true">↓</span>
+        </a>
+      </section>
+
+      <div className="home-sheet">
+      {latest ? (
+        <FrontPage
+          today={today}
+          issueNo={notes.length}
+          lead={toStory(latest)}
+          leadExtras={leadExtras}
+          leadImage={leadImage}
+          leadImageAlt={leadFigure?.alt ?? ""}
+          leadImageCaption={leadFigure?.caption}
+          secondary={notes.slice(1, 4).map(toStory)}
+          more={notes.slice(4, 10).map(toRow)}
+          curve={<MarketsPanel points={curve.points} asOf={curve.asOf} histories={histories} />}
+          rail={<RightRail />}
+        />
+      ) : null}
+      <div className="home-band-top">
       <section className="hero-grid" id="top">
         <div className="hero-copy">
-          <span className="hero-eyebrow">
-            <span className="hero-eyebrow-rule" aria-hidden="true" />
-            Bond notes since 2026
-          </span>
           <h1 className="hero-display">The Basis Point<span className="bp-point">.</span></h1>
           <p className="hero-standfirst">
             Bond markets are the most honest real-time read on the economy. I
@@ -127,6 +203,7 @@ export default async function HomePage() {
           </Link>
         </section>
       ) : null}
+      </div>
 
       <section className="home-grid" id="notes">
         <div className="home-main">
@@ -157,6 +234,7 @@ export default async function HomePage() {
         items={readersFrom}
         reverse
       />
+      </div>
 
     </div>
   );

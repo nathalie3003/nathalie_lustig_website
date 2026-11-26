@@ -105,7 +105,7 @@ export function TopBar() {
           <BasisPointMark size={34} decorative />
         </Link>
 
-        <nav className="top-links">
+        <nav className="top-links" aria-label="Main">
           <div
             className="notes-menu"
             ref={notesRef}

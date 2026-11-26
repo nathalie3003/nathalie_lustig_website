@@ -5,7 +5,8 @@ import "./intro.css";
 import { Chrome } from "@/components/Chrome";
 import { ContactFooter } from "@/components/Footer";
 import { Analytics } from "@vercel/analytics/next";
-import { INTRO_SCRIPT } from "@/lib/introScript";
+import { LOOK_SCRIPT } from "@/lib/look";
+import { LOOK_FONT_VARS } from "@/lib/lookFonts";
 
 const serif = Source_Serif_4({
   subsets: ["latin"],
@@ -63,11 +64,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html
       lang="en"
-      className={`${serif.variable} ${sans.variable} ${mono.variable} ${display.variable}`}
+      className={`${serif.variable} ${sans.variable} ${mono.variable} ${display.variable} ${LOOK_FONT_VARS}`}
       suppressHydrationWarning
     >
       <head>
-        <script dangerouslySetInnerHTML={{ __html: INTRO_SCRIPT }} />
+        <script dangerouslySetInnerHTML={{ __html: LOOK_SCRIPT }} />
       </head>
       <body className="site">
         <noscript>

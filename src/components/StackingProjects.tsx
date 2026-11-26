@@ -1,7 +1,6 @@
 "use client";
 
-import { ReactLenis } from "lenis/react";
-import { motion, useScroll, useTransform, type MotionValue } from "framer-motion";
+import { motion, useReducedMotion, useScroll, useTransform, type MotionValue } from "framer-motion";
 import { useRef } from "react";
 
 export type StackProject = {
@@ -26,7 +25,8 @@ interface CardProps {
 }
 
 function Card({ i, project, progress, range, targetScale }: CardProps) {
-  const scale = useTransform(progress, range, [1, targetScale]);
+  const reduce = useReducedMotion();
+  const scale = useTransform(progress, range, [1, reduce ? 1 : targetScale]);
 
   return (
     <div className="stack-card-slot">
@@ -78,10 +78,9 @@ export default function StackingProjects({ projects }: { projects: StackProject[
   });
 
   return (
-    <ReactLenis root>
+    <>
       <section ref={container} className="band band-stack" id="projects">
         <div className="page-wide stack-header">
-          <span className="l-kicker">Projects</span>
           <h2 className="stack-header-title">Things I&rsquo;m building</h2>
           <p className="stack-header-note">
             All three are works in progress, so expect rough edges.
@@ -104,6 +103,6 @@ export default function StackingProjects({ projects }: { projects: StackProject[
           })}
         </div>
       </section>
-    </ReactLenis>
+    </>
   );
 }

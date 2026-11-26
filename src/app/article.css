@@ -12,7 +12,7 @@
      learning whose it was. */
   .ap-byline {
     font-family: var(--font-sans), system-ui, sans-serif;
-    font-size: 14px; line-height: 1.5; color: var(--ink-60);
+    font-size: var(--fs-small); line-height: 1.5; color: var(--ink-60);
     margin: 0 0 28px;
   }
   .ap-byline a {
@@ -32,7 +32,7 @@
   .keep-reading-label {
     display: block;
     font-family: var(--font-mono), ui-monospace, monospace;
-    font-size: 10.5px; letter-spacing: 0.14em; text-transform: uppercase;
+    font-size: var(--fs-meta); letter-spacing: 0.14em; text-transform: uppercase;
     color: var(--ink-60);
   }
   .keep-reading-grid {
@@ -49,19 +49,19 @@
   .keep-card-kicker {
     display: block;
     font-family: var(--font-mono), ui-monospace, monospace;
-    font-size: 10.5px; letter-spacing: 0.12em; text-transform: uppercase;
+    font-size: var(--fs-meta); letter-spacing: 0.12em; text-transform: uppercase;
     color: var(--accent-deep);
   }
   .keep-card-title {
     display: block;
     font-family: var(--font-serif), Georgia, serif;
-    font-size: 22px; line-height: 1.25; font-weight: 600; letter-spacing: -0.018em;
+    font-size: var(--fs-standfirst); line-height: 1.25; font-weight: 600; letter-spacing: -0.018em;
     margin-top: 10px; text-wrap: pretty;
   }
   .keep-card-dir {
     display: block;
     font-family: var(--font-mono), ui-monospace, monospace;
-    font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase;
+    font-size: var(--fs-meta); letter-spacing: 0.12em; text-transform: uppercase;
     color: var(--ink-60); margin-bottom: 10px;
   }
 
@@ -78,15 +78,15 @@
   }
   .replies-title {
     font-family: var(--font-serif), Georgia, serif;
-    font-size: 27px; font-weight: 600; letter-spacing: -0.019em; margin: 0;
+    font-size: var(--fs-title); font-weight: 600; letter-spacing: -0.019em; margin: 0;
   }
   .replies-count {
     font-family: var(--font-mono), ui-monospace, monospace;
-    font-size: 11px; color: var(--ink-60);
+    font-size: var(--fs-caption); color: var(--ink-60);
   }
   .replies-note {
     font-family: var(--font-sans), system-ui, sans-serif;
-    font-size: 14px; line-height: 1.6; color: var(--ink-60); margin: 10px 0 0;
+    font-size: var(--fs-small); line-height: 1.6; color: var(--ink-60); margin: 10px 0 0;
   }
 
   /* ── FORM ───────────────────────────────────────────────── */
@@ -100,11 +100,11 @@
     color: var(--ink); padding: 6px 2px;
   }
   .reply-name {
-    font-family: var(--font-sans), system-ui, sans-serif; font-size: 14px;
+    font-family: var(--font-sans), system-ui, sans-serif; font-size: var(--fs-small);
   }
   .reply-text {
     font-family: var(--font-serif), Georgia, serif;
-    font-size: 17px; line-height: 1.6; resize: vertical; padding: 8px 2px;
+    font-size: var(--fs-body-s); line-height: 1.6; resize: vertical; padding: 8px 2px;
   }
   .reply-name::placeholder, .reply-text::placeholder { color: var(--ink-60); }
   /* The form border warming up is a grouping cue, not the focus indicator: it is
@@ -127,14 +127,14 @@
   }
   .reply-as {
     font-family: var(--font-mono), ui-monospace, monospace;
-    font-size: 10.5px; letter-spacing: 0.1em; text-transform: uppercase;
+    font-size: var(--fs-meta); letter-spacing: 0.1em; text-transform: uppercase;
     color: var(--ink-60);
   }
   .reply-post {
     padding: 10px 18px; border: none; border-radius: var(--radius-xs);
     background: var(--accent); color: var(--surface);
     font-family: var(--font-sans), system-ui, sans-serif;
-    font-size: 14px; font-weight: 500; cursor: pointer;
+    font-size: var(--fs-small); font-weight: 500; cursor: pointer;
     transition: background 160ms ease, opacity 160ms ease;
   }
   .reply-post:hover:not(:disabled) { background: var(--accent-deep); }
@@ -148,7 +148,7 @@
   .reply-error {
     margin: 10px 0 0;
     font-family: var(--font-sans), system-ui, sans-serif;
-    font-size: 13px; color: var(--accent-deep);
+    font-size: var(--fs-small); color: var(--accent-deep);
   }
 
   /* ── LIST ───────────────────────────────────────────────── */
@@ -162,20 +162,20 @@
     width: 36px; height: 36px; border-radius: 50%;
     background: var(--tint); color: var(--accent-deep);
     display: grid; place-items: center;
-    font-family: var(--font-mono), ui-monospace, monospace; font-size: 13px;
+    font-family: var(--font-mono), ui-monospace, monospace; font-size: var(--fs-small);
   }
   .reply-meta { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
   .reply-author {
     font-family: var(--font-sans), system-ui, sans-serif;
-    font-size: 14px; font-weight: 600; color: var(--ink);
+    font-size: var(--fs-small); font-weight: 600; color: var(--ink);
   }
   .reply-when {
     font-family: var(--font-mono), ui-monospace, monospace;
-    font-size: 10.5px; color: var(--ink-60);
+    font-size: var(--fs-meta); color: var(--ink-60);
   }
   .reply-body {
     font-family: var(--font-serif), Georgia, serif;
-    font-size: 17.5px; line-height: 1.65; color: var(--ink);
+    font-size: var(--fs-lead); line-height: 1.65; color: var(--ink);
     margin: 6px 0 0; text-wrap: pretty; white-space: pre-wrap;
   }
 

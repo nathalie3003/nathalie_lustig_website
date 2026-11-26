@@ -10,6 +10,9 @@ export function LifeCarousel() {
   const [index, setIndex] = useState(0);
   const timer = useRef<number | null>(null);
   const [autoplay, setAutoplay] = useState(false);
+  // The visitor's own Pause (WCAG 2.2.2); hover only pauses for a moment.
+  const [paused, setPaused] = useState(false);
+  const running = autoplay && !paused;
 
   // Autoplay is off during SSR and for anyone who asked for reduced motion.
   // Deciding this after mount also keeps the server and client markup identical.
@@ -25,13 +28,13 @@ export function LifeCarousel() {
   }, []);
 
   useEffect(() => {
-    if (!autoplay) return;
+    if (!running) return;
     timer.current = window.setInterval(
       () => setIndex((i) => (i + 1) % lifeShots.length),
       ADVANCE_MS,
     );
     return clear;
-  }, [autoplay, clear]);
+  }, [running, clear]);
 
   // Any manual move restarts the clock, so the photo you just chose gets a
   // full turn rather than being replaced a moment later.
@@ -39,14 +42,14 @@ export function LifeCarousel() {
     (next: number) => {
       clear();
       setIndex(((next % lifeShots.length) + lifeShots.length) % lifeShots.length);
-      if (autoplay) {
+      if (running) {
         timer.current = window.setInterval(
           () => setIndex((i) => (i + 1) % lifeShots.length),
           ADVANCE_MS,
         );
       }
     },
-    [autoplay, clear],
+    [running, clear],
   );
 
   const current = lifeShots[index];
@@ -57,7 +60,7 @@ export function LifeCarousel() {
       <div
         className="life-frame"
         onMouseEnter={clear}
-        onMouseLeave={() => autoplay && goTo(index)}
+        onMouseLeave={() => running && goTo(index)}
       >
         {lifeShots.map((shot, i) => (
           <Image
@@ -81,11 +84,28 @@ export function LifeCarousel() {
       <div className="life-bar">
         <div className="life-text">
           <span className="life-count">{counter}</span>
-          <p className="life-caption" aria-live="polite">
+          <p className="life-caption" aria-live={running ? "off" : "polite"}>
             {current.caption}
           </p>
         </div>
         <div className="life-nav">
+          {autoplay ? (
+            <button
+              type="button"
+              className="life-btn"
+              aria-label={paused ? "Play slideshow" : "Pause slideshow"}
+              aria-pressed={paused}
+              onClick={() => setPaused((p) => !p)}
+            >
+              <svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true">
+                {paused ? (
+                  <path d="M3 1.5v9l7-4.5z" fill="currentColor" />
+                ) : (
+                  <path d="M3 1.5h2v9H3zM7 1.5h2v9H7z" fill="currentColor" />
+                )}
+              </svg>
+            </button>
+          ) : null}
           <button
             type="button"
             className="life-btn"

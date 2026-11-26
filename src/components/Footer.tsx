@@ -1,8 +1,21 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type CSSProperties } from "react";
 import { about } from "@/content/about";
+
+// Where each droplet flies, in ems of the wordmark, and how big it is
+// relative to the point. Mostly up and outwards, as a drop landing on paper
+// throws its spray.
+const INK_DROPS = [
+  { dx: -0.2, dy: -0.12, s: 0.32 },
+  { dx: -0.12, dy: -0.26, s: 0.22 },
+  { dx: 0.02, dy: -0.31, s: 0.18 },
+  { dx: 0.17, dy: -0.22, s: 0.26 },
+  { dx: 0.26, dy: -0.06, s: 0.2 },
+  { dx: 0.22, dy: 0.04, s: 0.14 },
+  { dx: -0.27, dy: 0.02, s: 0.16 },
+];
 
 const EMAIL = about.contact.find((c) => c.label === "Email")?.value ?? "";
 const LINKEDIN = about.contact.find((c) => c.label === "LinkedIn");
@@ -120,7 +133,27 @@ export function ContactFooter() {
 
         <div className="foot-mark" ref={boxRef} aria-hidden="true">
           <span className="foot-mark-text" ref={textRef}>
-            The Basis Point<span className="foot-mark-dot">.</span>
+            The Basis Point
+            <span className="foot-mark-dot">
+              .
+              {/* The point lands like a drop of ink: it falls in once the
+                  wordmark has written out, squashes on impact and throws a
+                  few droplets that fade. See .ink-splash in globals.css. */}
+              <span className="ink-splash">
+                {INK_DROPS.map((d, i) => (
+                  <i
+                    key={i}
+                    style={
+                      {
+                        "--dx": `${d.dx}em`,
+                        "--dy": `${d.dy}em`,
+                        "--s": d.s,
+                      } as CSSProperties
+                    }
+                  />
+                ))}
+              </span>
+            </span>
           </span>
         </div>
 

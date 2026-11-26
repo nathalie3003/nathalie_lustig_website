@@ -1,0 +1,572 @@
+/* ============================================================
+   DESIGN EXPLORATION (Nov 2026). Two directions, switched by
+   html[data-hero] and html[data-texture] (see src/lib/look.ts).
+   With neither attribute set, nothing here changes the site.
+   ============================================================ */
+
+@layer components {
+  /* ── DIRECTION 3: FRONT PAGE ────────────────────────────── */
+  .fp { display: none; }
+  html[data-hero="frontpage"] .fp { display: block; }
+  html[data-hero="frontpage"] .home-band-top,
+  html[data-hero="frontpage"] #notes { display: none; }
+
+  .fp { max-width: var(--maxw); margin: 0 auto; padding: 36px var(--pad) 0; }
+
+  .fp-mast { text-align: center; }
+  .fp-name {
+    margin: 0; font-family: var(--font-serif), Georgia, serif; font-weight: 600;
+    font-size: clamp(46px, 8.4vw, 96px); line-height: 1; letter-spacing: -0.038em;
+    color: var(--ink);
+  }
+  .fp-ears {
+    display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 24px;
+    margin-top: 20px; padding: 10px 0;
+    border-top: 1px solid var(--ink); border-bottom: 3px double var(--ink);
+  }
+  .fp-ear {
+    justify-self: start;
+    font-family: var(--font-mono), ui-monospace, monospace;
+    font-size: var(--fs-meta); letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--ink-60);
+  }
+  .fp-ear-end { justify-self: end; }
+  .fp-ears .typed { margin: 0; font-size: var(--fs-lead); min-height: 0; white-space: nowrap; }
+
+  .fp-top {
+    display: grid; grid-template-columns: minmax(0, 1.85fr) minmax(0, 1fr);
+    gap: 48px; margin-top: 40px; align-items: start;
+  }
+  .fp-lead-title {
+    margin: 0; max-width: 20ch; text-wrap: balance;
+    font-family: var(--font-serif), Georgia, serif; font-weight: 600;
+    font-size: clamp(36px, 4.4vw, 58px); line-height: 1.04; letter-spacing: -0.032em;
+  }
+  .fp-lead-title a, .fp-story-title a { color: var(--ink); transition: color 140ms ease; }
+  .fp-lead-title a:hover, .fp-story-title a:hover { color: var(--accent); }
+  .fp-dateline {
+    margin: 16px 0 0;
+    font-family: var(--font-mono), ui-monospace, monospace;
+    font-size: var(--fs-meta); letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--ink-60);
+  }
+  .fp-lead-deck {
+    margin: 18px 0 0; max-width: 46ch; text-wrap: pretty;
+    font-family: var(--font-serif), Georgia, serif;
+    font-size: var(--fs-standfirst); line-height: 1.5; color: var(--ink-72);
+  }
+  .fp-strip {
+    display: grid; grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr);
+    margin: 30px 0 0; border-top: 2px solid var(--accent);
+  }
+  .fp-stat {
+    display: flex; flex-direction: column-reverse; justify-content: flex-end; gap: 6px;
+    padding: 16px 20px 0 0;
+  }
+  .fp-stat + .fp-stat { padding-left: 20px; border-left: 1px solid var(--rule); }
+  .fp-stat dd {
+    margin: 0; font-family: var(--font-mono), ui-monospace, monospace;
+    font-size: var(--fs-headline-s); line-height: 1.1; letter-spacing: -0.03em; color: var(--ink);
+    font-variant-numeric: tabular-nums;
+  }
+  .fp-stat dt {
+    font-family: var(--font-sans), system-ui, sans-serif;
+    font-size: var(--fs-caption); line-height: 1.4; color: var(--ink-60);
+  }
+  .fp-figure { margin: 32px 0 0; }
+  .fp-figure img { display: block; width: 100%; height: auto; background: var(--tint); }
+  .fp-figure figcaption {
+    margin-top: 10px; font-family: var(--font-sans), system-ui, sans-serif;
+    font-size: var(--fs-small); line-height: 1.5; color: var(--ink-60);
+  }
+  .fp-summary {
+    margin: 26px 0 0; max-width: 62ch; text-wrap: pretty;
+    font-family: var(--font-serif), Georgia, serif;
+    font-size: var(--fs-lead); line-height: 1.68; color: var(--ink-72);
+  }
+  .fp-summary::first-letter {
+    float: left; margin: 6px 10px 0 0;
+    font-size: 3.5em; line-height: 0.8; font-weight: 600; color: var(--accent);
+  }
+  .fp-more {
+    display: inline-block; margin-top: 22px; padding: 6px 0;
+    font-family: var(--font-sans), system-ui, sans-serif;
+    font-size: var(--fs-ui); font-weight: 500; color: var(--accent);
+  }
+
+  .fp-side { padding-left: 40px; border-left: 1px solid var(--rule); }
+  /* Markets box: the curve today against a year ago, key yields, spreads. */
+  .mk-head {
+    display: flex; align-items: baseline; justify-content: space-between; gap: 12px;
+    padding-bottom: 10px; border-bottom: 2px solid var(--ink);
+  }
+  .mk-title {
+    margin: 0; font-family: var(--font-serif), Georgia, serif; font-weight: 600;
+    font-size: var(--fs-title); letter-spacing: -0.02em;
+  }
+  .mk-asof, .mk-source, .mk-legend, .mk-xlabels, .mk-table, .mk-spreads dt {
+    font-family: var(--font-mono), ui-monospace, monospace; color: var(--ink-60);
+  }
+  .mk-asof { font-size: var(--fs-meta); letter-spacing: 0.1em; text-transform: uppercase; text-align: right; }
+  .mk-chart { position: relative; margin: 18px 0 0; }
+  .mk-svg { display: block; width: 100%; height: 132px; overflow: visible; }
+  .mk-grid { stroke: var(--rule); stroke-width: 1; vector-effect: non-scaling-stroke; }
+  .mk-area { fill: var(--accent); opacity: 0.07; }
+  .mk-now { fill: none; stroke: var(--accent); stroke-width: 2.25; vector-effect: non-scaling-stroke; stroke-linejoin: round; }
+  .mk-then { fill: none; stroke: var(--ink); stroke-opacity: 0.5; stroke-width: 1.25; stroke-dasharray: 4 4; vector-effect: non-scaling-stroke; }
+  .mk-dot { fill: var(--accent); }
+  .mk-xlabels { position: relative; height: 18px; margin-top: 4px; font-size: var(--fs-meta); letter-spacing: 0.06em; }
+  .mk-xlabels span { position: absolute; top: 0; transform: translateX(-50%); }
+  .mk-xlabels span:first-child { transform: none; }
+  .mk-xlabels span:last-child { transform: translateX(-100%); }
+  .mk-legend { display: flex; gap: 18px; margin-top: 8px; font-size: var(--fs-meta); letter-spacing: 0.06em; }
+  .mk-key { display: inline-flex; align-items: center; gap: 7px; }
+  .mk-key::before { content: ""; width: 18px; border-top: 2px solid var(--accent); }
+  .mk-key-then::before { border-top: 1.5px dashed rgba(25, 19, 22, 0.55); }
+  .mk-table {
+    width: 100%; margin-top: 18px; border-collapse: collapse;
+    font-size: var(--fs-small); font-variant-numeric: tabular-nums;
+  }
+  .mk-table th, .mk-table td { padding: 8px 0; text-align: right; border-bottom: 1px solid var(--rule); }
+  .mk-table thead th {
+    padding-top: 0; font-weight: 400; font-size: var(--fs-meta);
+    letter-spacing: 0.1em; text-transform: uppercase; border-bottom-color: var(--ink-20);
+  }
+  .mk-table th:first-child { text-align: left; }
+  .mk-table tbody th { font-weight: 500; color: var(--ink); }
+  .mk-table td { color: var(--ink); }
+  .mk-table td.is-down { color: var(--accent); }
+  .mk-spreads { display: grid; grid-template-columns: 1fr 1fr; margin: 18px 0 0; }
+  .mk-spreads > div { padding-right: 14px; }
+  .mk-spreads > div + div { padding: 0 0 0 16px; border-left: 1px solid var(--rule); }
+  .mk-spreads dt { font-size: var(--fs-caption); letter-spacing: 0.02em; }
+  .mk-spreads dd {
+    margin: 4px 0 0; font-family: var(--font-serif), Georgia, serif; font-weight: 600;
+    font-size: var(--fs-headline-s); letter-spacing: -0.02em; color: var(--ink);
+    font-variant-numeric: lining-nums tabular-nums;
+  }
+  .mk-source { margin: 14px 0 0; font-size: var(--fs-caption); line-height: 1.5; }
+  .sr-only {
+    position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+    overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+  }
+
+  .fp-about {
+    margin: 32px 0 0; padding-top: 20px; border-top: 1px solid var(--ink);
+  }
+  .fp-about p {
+    margin: 0; text-wrap: pretty;
+    font-family: var(--font-serif), Georgia, serif; font-style: italic;
+    font-size: var(--fs-lead); line-height: 1.5; color: var(--ink);
+  }
+  .fp-about footer { margin-top: 8px; }
+  .fp-side-link {
+    display: inline-block; padding: 6px 0;
+    font-family: var(--font-sans), system-ui, sans-serif;
+    font-size: var(--fs-small); font-weight: 500; color: var(--accent);
+  }
+
+  .fp-row {
+    display: grid; grid-template-columns: repeat(3, minmax(0, 1fr));
+    margin-top: 60px; padding-top: 26px; border-top: 2px solid var(--ink);
+  }
+  .fp-story + .fp-story { padding-left: 28px; border-left: 1px solid var(--rule); }
+  .fp-story-title {
+    margin: 0; text-wrap: balance;
+    font-family: var(--font-serif), Georgia, serif; font-weight: 600;
+    font-size: var(--fs-title); line-height: 1.15; letter-spacing: -0.022em;
+  }
+  .fp-story-deck {
+    margin: 12px 0 0; text-wrap: pretty;
+    font-family: var(--font-serif), Georgia, serif;
+    font-size: var(--fs-body-s); line-height: 1.55; color: var(--ink-60);
+  }
+
+  /* The whole story is the click target and lights up on hover: the title
+     link is stretched over its article, which tints, and the picture eases in. */
+  .fp-lead, .fp-story { position: relative; transition: background-color 200ms ease; }
+  .fp-lead-title a::after, .fp-story-title a::after {
+    content: ""; position: absolute; inset: 0; z-index: 1;
+  }
+  .fp-more { position: relative; z-index: 2; }
+  .fp-lead { margin: -22px; padding: 22px; }
+  .fp-lead:hover, .fp-story:hover { background-color: #FBF3F6; }
+  .fp-lead:hover .fp-lead-title a, .fp-story:hover .fp-story-title a { color: var(--accent); }
+  .fp-lead:has(.fp-lead-title a:focus-visible),
+  .fp-story:has(.fp-story-title a:focus-visible) { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .fp-lead-title a:focus-visible, .fp-story-title a:focus-visible { outline: none; }
+  .fp-figure, .fp-story-media { overflow: hidden; }
+  .fp-figure img, .fp-story-media img { transition: transform 600ms cubic-bezier(0.2, 0.7, 0.2, 1); }
+  .fp-lead:hover .fp-figure img, .fp-story:hover .fp-story-media img { transform: scale(1.025); }
+  .fp-story-media { margin: 0 0 16px; aspect-ratio: 16 / 10; background: var(--tint); }
+  .fp-story-media img { display: block; width: 100%; height: 100%; object-fit: cover; }
+  .fp-row { padding-top: 0; }
+  /* The row is widened by the story padding on both sides so every picture
+     is the same width and the hover tint has room; the rule stays on the grid. */
+  .fp-row { margin-inline: -22px; border-top: 0; }
+  .fp-row::before {
+    content: ""; grid-column: 1 / -1; margin: 0 22px; border-top: 2px solid var(--ink);
+  }
+  .fp-row > .fp-row-head { padding-inline: 22px; }
+  .fp-story, .fp-story + .fp-story { padding: 24px 22px 26px; }
+  @media (prefers-reduced-motion: reduce) {
+    .fp-figure img, .fp-story-media img { transition: none; }
+    .fp-lead:hover .fp-figure img, .fp-story:hover .fp-story-media img { transform: none; }
+  }
+
+  .fp-issue-no, .fp-byline { display: none; }
+  .fp-row-head {
+    grid-column: 1 / -1; margin: 0; padding: 14px 0 0;
+    font-family: var(--font-serif), Georgia, serif; font-weight: 600;
+    font-size: var(--fs-title); letter-spacing: -0.02em;
+  }
+
+  /* Masthead type options (html[data-mast]). */
+  html[data-mast="didone"] .fp-name {
+    font-family: var(--font-mast-didone), serif; font-weight: 800; letter-spacing: -0.025em;
+  }
+  html[data-mast="playfair"] .fp-name {
+    font-family: var(--font-mast-playfair), serif; font-weight: 900; letter-spacing: -0.02em;
+  }
+  html[data-mast="italic"] .fp-name {
+    font-family: var(--font-mast-italic), serif; font-style: italic; font-weight: 400;
+    font-size: clamp(54px, 10vw, 116px); letter-spacing: -0.02em; line-height: 0.95;
+  }
+  html[data-mast="engraved"] .fp-name {
+    font-family: var(--font-mast-engraved), serif; font-weight: 600;
+    font-size: clamp(30px, 6.2vw, 74px); letter-spacing: 0.08em; line-height: 1.1;
+  }
+  html[data-mast="blackletter"] .fp-name {
+    font-family: var(--font-mast-blackletter), serif; font-weight: 400;
+    font-size: clamp(50px, 9vw, 104px); letter-spacing: 0; line-height: 1.05;
+  }
+
+  /* Issue / article style (html[data-layout="issue"]): the lead set like the
+     opening spread of a magazine feature. Centred headline, italic deck and
+     byline, the summary in two columns, and the markets panel moved below. */
+  html[data-layout="issue"] .fp-issue-no,
+  html[data-layout="issue"] .fp-byline { display: inline; }
+  html[data-layout="issue"] .fp-top { grid-template-columns: 1fr; gap: 0; margin-top: 52px; }
+  html[data-layout="issue"] .fp-lead { text-align: center; }
+  html[data-layout="issue"] .fp-lead-title {
+    margin: 0 auto; max-width: 18ch;
+    font-size: clamp(40px, 6.2vw, 84px); line-height: 1.0; letter-spacing: -0.036em;
+  }
+  html[data-layout="issue"] .fp-lead-deck {
+    margin: 22px auto 0; max-width: 40ch;
+    font-style: italic; font-size: clamp(20px, 2.1vw, 26px); color: var(--ink-72);
+  }
+  html[data-layout="issue"] .fp-dateline { margin-top: 20px; }
+  html[data-layout="issue"] .fp-strip {
+    max-width: 780px; margin: 36px auto 0; text-align: left;
+    border-top: 1px solid var(--ink); border-bottom: 1px solid var(--ink);
+  }
+  html[data-layout="issue"] .fp-stat { padding-bottom: 16px; }
+  html[data-layout="issue"] .fp-figure { margin-top: 40px; }
+  html[data-layout="issue"] .fp-figure figcaption { text-align: left; }
+  html[data-layout="issue"] .fp-summary {
+    max-width: none; margin-top: 34px; text-align: left;
+    columns: 2 300px; column-gap: 48px; column-rule: 1px solid var(--rule);
+    font-size: var(--fs-lead); color: var(--ink);
+  }
+  html[data-layout="issue"] .fp-side {
+    display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); gap: 0 56px;
+    align-items: start; margin-top: 56px; padding: 32px 0 0;
+    border-left: 0; border-top: 2px solid var(--ink);
+  }
+  html[data-layout="issue"] .fp-about { margin-top: 0; padding-top: 0; border-top: 0; }
+  html[data-layout="issue"] .fp-about p { font-size: var(--fs-standfirst); }
+  html[data-layout="issue"] .fp-row-head { text-align: center; font-style: italic; }
+  html[data-layout="issue"] .fp-story { text-align: center; }
+  html[data-layout="issue"] .fp-story-deck { font-style: italic; }
+  @media (max-width: 920px) {
+    html[data-layout="issue"] .fp-side { grid-template-columns: 1fr; }
+    html[data-layout="issue"] .fp-about { margin-top: 32px; }
+  }
+
+  .fp-grid { padding-left: 0; padding-right: 0; padding-top: 80px; }
+
+  @media (max-width: 920px) {
+    .fp-top { grid-template-columns: 1fr; gap: 0; }
+    .fp-side {
+      margin-top: 48px; padding: 0; border-left: 0;
+    }
+    .fp-row { grid-template-columns: 1fr; margin-top: 48px; padding-top: 0; }
+    .fp-story, .fp-story + .fp-story {
+      padding: 22px 0; border-left: 0; border-bottom: 1px solid var(--rule);
+    }
+    .fp-row { margin-inline: 0; }
+    .fp-row::before, .fp-row > .fp-row-head { margin-inline: 0; padding-inline: 0; }
+    .fp-grid { padding-top: 56px; }
+  }
+  @media (max-width: 560px) {
+    .fp { padding-top: 24px; }
+    .fp-lead { margin: -14px; padding: 14px; }
+    .fp-ears { grid-template-columns: 1fr; gap: 6px; justify-items: center; }
+    .fp-ear { justify-self: center; }
+    .fp-ear-end { display: none; }
+    .fp-ears .typed { font-size: var(--fs-body-s); }
+    .fp-strip { grid-auto-flow: row; }
+    .fp-stat, .fp-stat + .fp-stat {
+      flex-direction: row-reverse; justify-content: space-between; align-items: baseline;
+      padding: 12px 0; border-left: 0; border-bottom: 1px solid var(--rule);
+    }
+    .fp-stat dd { font-size: var(--fs-title); }
+  }
+
+  /* ── DIRECTION 1: FULL-SCREEN LANDING ───────────────────── */
+  .landing { display: none; }
+
+  html[data-hero="landing"] .landing {
+    display: grid; place-items: center;
+    position: sticky; top: var(--nav-h); z-index: 0;
+    height: calc(100svh - var(--nav-h));
+    min-height: 520px;
+    overflow: hidden;
+    background: var(--tint);
+  }
+  .landing-bg {
+    position: absolute; inset: -2%;
+    background: var(--landing-img, none) var(--landing-pos, center) / cover no-repeat;
+    animation: landing-drift 24s ease-out both;
+  }
+  @keyframes landing-drift {
+    from { transform: scale(1.08); }
+    to   { transform: scale(1); }
+  }
+  /* The same wash the intro uses, a touch heavier at the bottom so the cue
+     always reads. */
+  .landing-wash {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 46% 42% at 50% 46%, rgba(255, 255, 255, 0.72), transparent 72%),
+      linear-gradient(180deg, rgba(255, 255, 255, 0.34), rgba(255, 255, 255, 0.5) 60%, rgba(255, 255, 255, 0.86));
+  }
+  .landing-inner {
+    position: relative; z-index: 1;
+    display: flex; flex-direction: column; align-items: center; text-align: center;
+    padding: 0 var(--pad);
+    animation: landing-in 900ms cubic-bezier(0.2, 0.7, 0.2, 1) 150ms both;
+  }
+  .landing-inner .bp-mark { width: clamp(64px, 8vw, 92px); height: auto; color: var(--ink); }
+  .landing-title {
+    margin: 26px 0 0;
+    font-family: var(--font-serif), Georgia, serif;
+    font-size: clamp(44px, 8.4vw, 112px); line-height: 0.95; font-weight: 600;
+    letter-spacing: -0.04em; color: var(--ink);
+  }
+  .landing-standfirst {
+    margin: 22px 0 0; max-width: 36ch;
+    font-family: var(--font-serif), Georgia, serif;
+    font-size: clamp(18px, 1.7vw, 22px); line-height: 1.5; color: var(--ink-72);
+    text-wrap: balance;
+  }
+  .landing-cue {
+    position: absolute; z-index: 1; bottom: 34px; left: 50%; transform: translateX(-50%);
+    display: flex; flex-direction: column; align-items: center; gap: 8px;
+    font-family: var(--font-sans), system-ui, sans-serif;
+    font-size: 13.5px; font-weight: 500; color: var(--ink);
+    animation: landing-in 900ms cubic-bezier(0.2, 0.7, 0.2, 1) 600ms both;
+  }
+  .landing-cue:hover { color: var(--accent); }
+  .landing-cue-arrow {
+    display: grid; place-items: center; width: 36px; height: 36px;
+    border: 1px solid var(--ink-45); border-radius: 50%;
+    animation: landing-bob 2.4s ease-in-out 1.6s infinite;
+  }
+  .landing-cue:hover .landing-cue-arrow { border-color: var(--accent); }
+  @keyframes landing-in {
+    from { opacity: 0; transform: translateY(14px); }
+    to   { opacity: 1; transform: none; }
+  }
+  .landing-cue { animation-name: landing-cue-in; }
+  @keyframes landing-cue-in {
+    from { opacity: 0; transform: translate(-50%, 10px); }
+    to   { opacity: 1; transform: translate(-50%, 0); }
+  }
+  @keyframes landing-bob {
+    0%, 100% { transform: none; }
+    50%      { transform: translateY(5px); }
+  }
+
+  /* As the sheet rises, the landing copy eases back and fades. Progressive:
+     browsers without scroll-driven animations just see the sheet cover it. */
+  @supports (animation-timeline: scroll()) {
+    html[data-hero="landing"] .landing-inner,
+    html[data-hero="landing"] .landing-cue {
+      animation: landing-recede linear both;
+      animation-timeline: scroll(root);
+      animation-range: 0 90vh;
+    }
+    @keyframes landing-recede {
+      to { opacity: 0; transform: translateY(-40px) scale(0.97); }
+    }
+    html[data-hero="landing"] .landing-cue { animation-name: landing-cue-recede; }
+    @keyframes landing-cue-recede {
+      to { opacity: 0; transform: translate(-50%, 20px); }
+    }
+  }
+
+  /* The sheet: everything after the landing, on paper, rising over it. */
+  html[data-hero="landing"] .home-sheet {
+    position: relative; z-index: 1;
+    background-color: var(--bg);
+    border-radius: 28px 28px 0 0;
+    box-shadow: 0 -24px 60px -20px rgba(25, 19, 22, 0.22);
+  }
+  /* The old hero sits second now, so it loses its tall top padding. */
+  html[data-hero="landing"] .hero-grid { padding-top: 76px; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .landing-bg, .landing-inner, .landing-cue, .landing-cue-arrow { animation: none !important; }
+  }
+
+  /* ── DIRECTION 2: BACKGROUNDS ───────────────────────────── */
+  /* Two families. "Bond" options borrow from a printed certificate: engraved
+     guilloche rosettes held in the corners of the screen, optionally inside a
+     ruled frame. "Gradient" options tint the paper itself. The corner layer is
+     fixed and sits behind the content, so it frames whatever is on screen
+     without ever covering text. */
+  /* The paper is painted on <html> and body is see-through, so the fixed
+     corner layer (z-index -1) shows between the two. */
+  html[data-texture]:not([data-texture="none"]) body { background: transparent; }
+  html[data-texture]:not([data-texture="none"]) .foot { background-color: transparent; }
+  html[data-texture]:not([data-texture="none"]) .band-projects { background: transparent; }
+
+  html[data-texture="corners"] body::before,
+  html[data-texture="frame"] body::before,
+  html[data-texture="green"] body::before {
+    content: ""; position: fixed; inset: 0; z-index: -1; pointer-events: none;
+    background:
+      url(/textures/bond/corner-tl.svg) left top / var(--corner-size) no-repeat,
+      url(/textures/bond/corner-tr.svg) right top / var(--corner-size) no-repeat,
+      url(/textures/bond/corner-bl.svg) left bottom / var(--corner-size) no-repeat,
+      url(/textures/bond/corner-br.svg) right bottom / var(--corner-size) no-repeat;
+  }
+  html[data-texture="corners"],
+  html[data-texture="frame"],
+  html[data-texture="green"] { --corner-size: clamp(170px, 22vw, 300px); }
+
+  /* Certificate frame: a double rule inset from the screen edge. */
+  html[data-texture="frame"] body::after {
+    content: ""; position: fixed; inset: 10px; z-index: -1; pointer-events: none;
+    border: 1px solid rgba(178, 58, 99, 0.28);
+    box-shadow: inset 0 0 0 4px #FFFFFF, inset 0 0 0 5px rgba(178, 58, 99, 0.16);
+  }
+
+  /* Certificate green: the pale green-grey of an engraved bond, with the
+     corners recoloured to match. */
+  html[data-texture="green"] { --bg: #F6F8F3; --nav-bg: #F6F8F3; }
+  html[data-texture="green"] { background: linear-gradient(180deg, #EEF3EA 0%, #F6F8F3 38%, #F9FAF7 100%); }
+  html[data-texture="green"] body::before { filter: hue-rotate(160deg) saturate(0.55) brightness(0.9); }
+
+  /* Paper: warm off-white that deepens very slightly towards the foot. */
+  html[data-texture="paper"] { --bg: #FCFAF6; --nav-bg: #FCFAF6; }
+  html[data-texture="paper"] {
+    background: linear-gradient(180deg, #FDFBF8 0%, #FAF6EF 100%);
+  }
+
+  /* Dawn: raspberry and peach light pooled in the top corners, held fixed so
+     it stays with the reader as they scroll. */
+  html[data-texture="dawn"] {
+    background:
+      radial-gradient(ellipse 55% 45% at 100% 0%, rgba(247, 217, 227, 0.85), transparent 70%),
+      radial-gradient(ellipse 45% 40% at 0% 0%, rgba(252, 232, 214, 0.75), transparent 70%),
+      radial-gradient(ellipse 60% 40% at 50% 100%, rgba(178, 58, 99, 0.06), transparent 70%),
+      #FFFFFF;
+    background-attachment: fixed;
+  }
+
+  /* Ink to paper: a deep raspberry band at the very top that dissolves into
+     white within the first screen. */
+  html[data-texture="ink-fade"] {
+    background: linear-gradient(180deg, rgba(178, 58, 99, 0.14) 0, rgba(247, 217, 227, 0.35) 260px, #FFFFFF 720px) no-repeat, #FFFFFF;
+  }
+
+  /* Cards keep their own fills, so on tinted paper they sit on the page. */
+
+
+  /* ── FOOTER BANDS ───────────────────────────────────────── */
+  /* Doubled class so these win over the texture rules above, which clear the
+     footer's background whatever the footer option. */
+
+  /* Ink band: the footer turns to the brand's ink, like the back page of a
+     printed paper, with the bond lines faintly engraved in raspberry. Its
+     rounded top lifts it off the page rather than butting up against it. */
+  html[data-footer="ink"] .foot.foot {
+    --foot-fg: #F6F2F3;
+    --foot-fg-72: rgba(246, 242, 243, 0.74);
+    --foot-fg-60: rgba(246, 242, 243, 0.62);
+    --foot-line: rgba(246, 242, 243, 0.22);
+    --foot-hover: var(--petal);
+    background: #191316 url(/textures/guilloche-tile.svg) center top / 1600px auto repeat;
+    color: var(--foot-fg);
+    border-top: 0;
+    border-radius: 28px 28px 0 0;
+    margin-top: 24px;
+  }
+  /* Certificate band: a paper panel framed by a double hairline, the border
+     of a bond certificate, with the engraved lines inside. */
+  html[data-footer="certificate"] .foot.foot {
+    background: var(--tint);
+    border-top: 1px solid var(--rule-strong);
+    padding: 28px var(--pad) 28px;
+  }
+  html[data-footer="certificate"] .foot-inner {
+    max-width: calc(var(--maxw) - 2 * var(--pad));
+    padding: 64px 48px 28px;
+    background: #FFFFFF url(/textures/guilloche-tile.svg) center top / 1600px auto repeat;
+    border: 1px solid var(--rule-strong);
+    outline: 1px solid var(--rule-strong); outline-offset: 6px;
+  }
+
+  html[data-footer="ink"] .foot-h { color: var(--foot-fg); }
+  html[data-footer="ink"] .foot-lede { color: var(--foot-fg-72); }
+  html[data-footer="ink"] .foot-copy { color: var(--foot-fg-72); border-bottom-color: var(--foot-line); }
+  html[data-footer="ink"] .foot-copy-cue,
+  html[data-footer="ink"] .foot-list a,
+  html[data-footer="ink"] .foot-base { color: var(--foot-fg-60); }
+  html[data-footer="ink"] .foot-copy:hover,
+  html[data-footer="ink"] .foot-list a:hover { color: var(--foot-hover); border-bottom-color: var(--foot-hover); }
+  html[data-footer="ink"] .foot-mark-text { color: var(--foot-fg); }
+  /* Raspberry is too dark to carry on ink, so the point lifts a step. */
+  html[data-footer="ink"] .foot-mark-dot { color: #D9608A; }
+  html[data-footer="ink"] .ink-splash i { background: #D9608A; }
+
+  @media (max-width: 760px) {
+    html[data-footer="ink"] .foot.foot { border-radius: 20px 20px 0 0; }
+    html[data-footer="certificate"] .foot.foot { padding: 14px 12px; }
+    html[data-footer="certificate"] .foot-inner { padding: 44px 22px 22px; outline-offset: 4px; }
+  }
+
+  /* ── THE SWITCHER ───────────────────────────────────────── */
+  .look-switch {
+    position: fixed; right: 16px; bottom: 16px; z-index: 900;
+    width: 236px; padding: 12px 14px 14px;
+    background: #FFFFFF; color: var(--ink);
+    border: 1px solid var(--rule-strong); border-radius: var(--radius);
+    box-shadow: 0 18px 50px rgba(25, 19, 22, 0.16);
+    font-family: var(--font-sans), system-ui, sans-serif; font-size: 13px;
+  }
+  .look-switch.is-closed { width: auto; padding: 0; }
+  .look-switch-toggle {
+    display: block; margin-left: auto; padding: 6px 10px;
+    border: 0; background: none; cursor: pointer;
+    font-size: 12px; font-weight: 500; color: var(--ink-60);
+  }
+  .look-switch.is-closed .look-switch-toggle { color: var(--ink); padding: 10px 14px; }
+  .look-switch-body { display: grid; gap: 10px; max-height: calc(100vh - 140px); overflow-y: auto; }
+  .look-switch fieldset { border: 0; margin: 0; padding: 0; display: grid; gap: 5px; }
+  .look-switch legend {
+    margin-bottom: 4px; font-weight: 600; font-size: 12.5px; color: var(--ink);
+  }
+  .look-switch label { display: flex; align-items: center; gap: 8px; cursor: pointer; color: var(--ink-72); }
+  .look-switch input { accent-color: var(--accent); margin: 0; }
+  @media (max-width: 560px) {
+    .look-switch { right: 8px; bottom: 8px; width: 210px; }
+  }
+}
+
+/* Unlayered, like the site's focus rule it adjusts: on the ink footer the
+   raspberry ring would sit at under 3:1, so it turns petal. */
+html[data-footer="ink"] .foot :focus-visible { outline-color: var(--petal); }

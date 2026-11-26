@@ -37,7 +37,6 @@ export default async function NotesIndexPage({
   return (
     <div className="archive">
       <header>
-        <span className="archive-eyebrow">Archive</span>
         <h1 className="archive-title">{active ? active.label : "Notes"}</h1>
         <p className="archive-lede">
           {active
