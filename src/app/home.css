@@ -379,42 +379,46 @@
     letter-spacing: 0; text-transform: none;
   }
 
-  /* ── COMPANIES COVERED ──────────────────────────────────── */
-  .covered { max-width: var(--maxw); margin: 0 auto; padding: 0 var(--pad) 72px; }
-
-  /* ── READERS FROM ───────────────────────────────────────── */
-  .readers { max-width: var(--maxw); margin: 0 auto; padding: 0 var(--pad) 96px; }
-  .readers-list {
-    list-style: none; margin: 0; padding: 22px 0 0;
-    display: flex; flex-wrap: wrap; row-gap: 6px;
+  /* ── LOGO MARQUEES (companies covered, readers from) ───── */
+  .marquee-section { max-width: var(--maxw); margin: 0 auto; padding: 0 var(--pad) 64px; }
+  .marquee-section:last-of-type { padding-bottom: 96px; }
+  .marquee {
+    overflow: hidden; padding: 26px 0 4px;
+    mask-image: linear-gradient(to right, transparent, #000 7%, #000 93%, transparent);
+  }
+  .marquee-track {
+    display: flex; width: max-content;
+    animation: marquee-slide var(--marquee-duration, 50s) linear infinite;
+  }
+  .marquee-reverse .marquee-track { animation-direction: reverse; }
+  .marquee:hover .marquee-track,
+  .marquee:focus-within .marquee-track { animation-play-state: paused; }
+  .marquee-row {
+    display: flex; align-items: center; gap: 52px;
+    list-style: none; margin: 0; padding: 0 52px 0 0;
+  }
+  .marquee-item {
+    display: inline-flex; align-items: center; gap: 12px;
+    white-space: nowrap; color: var(--ink);
+  }
+  .marquee-icon {
+    width: 28px; height: 28px; flex: none; border-radius: 6px;
+    background: #fff; box-shadow: 0 0 0 1px var(--rule);
+  }
+  .marquee-name {
     font-family: var(--font-display, var(--font-serif)), Georgia, serif;
-    font-size: 24px; font-weight: 500; line-height: 1.4; color: var(--ink-72);
-  }
-  .readers-list li { white-space: nowrap; }
-  .readers-list li:not(:last-child)::after {
-    content: "·"; margin: 0 0.55em; color: var(--accent);
-  }
-  .covered-list {
-    list-style: none; margin: 0; padding: 0;
-    display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-    column-gap: 40px;
-  }
-  .covered-list li { border-bottom: 1px solid var(--rule); }
-  .covered-item { display: block; padding: 22px 0 20px; color: var(--ink); }
-  .covered-name {
-    display: block;
-    font-family: var(--font-display, var(--font-serif)), Georgia, serif;
-    font-size: 28px; font-weight: 600; line-height: 1.1; letter-spacing: -0.012em;
+    font-size: 24px; font-weight: 600; letter-spacing: -0.01em;
     transition: color 140ms ease;
   }
-  .covered-note {
-    display: block; margin-top: 8px;
-    font-family: var(--font-sans), system-ui, sans-serif;
-    font-size: 13.5px; line-height: 1.4; color: var(--ink-60);
-    text-wrap: pretty;
+  a.marquee-item:hover .marquee-name,
+  a.marquee-item:focus-visible .marquee-name { color: var(--accent); }
+  @keyframes marquee-slide { to { transform: translateX(-50%); } }
+  @media (prefers-reduced-motion: reduce) {
+    .marquee { mask-image: none; }
+    .marquee-track { animation: none; width: auto; }
+    .marquee-row { flex-wrap: wrap; row-gap: 18px; gap: 18px 40px; padding-right: 0; }
+    .marquee-row[aria-hidden] { display: none; }
   }
-  .covered-item:hover .covered-name,
-  .covered-item:focus-visible .covered-name { color: var(--accent); }
 
   /* ── RESPONSIVE ─────────────────────────────────────────── */
   @media (max-width: 1000px) {

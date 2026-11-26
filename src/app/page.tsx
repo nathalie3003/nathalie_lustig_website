@@ -9,8 +9,9 @@ import { CATEGORIES, noteCat } from "@/lib/noteCat";
 import { TypedTopics } from "@/components/TypedTopics";
 import { CurveCard } from "@/components/CurveCard";
 import { HomeNotes, type HomeNote } from "@/components/HomeNotes";
-import { CompaniesCovered } from "@/components/CompaniesCovered";
-import { ReadersFrom } from "@/components/ReadersFrom";
+import { LogoMarquee } from "@/components/LogoMarquee";
+import { companiesCovered } from "@/content/companiesCovered";
+import { readersFrom } from "@/content/readersFrom";
 import { getYieldCurve, getAllTenorHistories } from "@/lib/marketData";
 import { readTimeFromChars } from "@/lib/readTime";
 import { FALLBACK_CURVE } from "@/content/yieldCurveFallback";
@@ -57,6 +58,16 @@ export default async function HomePage() {
   const latestCover = latest?.coverImage
     ? urlFor(latest.coverImage).width(900).height(760).url()
     : null;
+
+  // Companies covered link to the note about them; an entry whose note is no
+  // longer published is dropped rather than linking to a 404.
+  const noteTitles = new Map(notes.map((n) => [n.slug, n.title.trim()]));
+  const covered = companiesCovered.flatMap((c) => {
+    const title = noteTitles.get(c.slug);
+    return title
+      ? [{ name: c.name, domain: c.domain, href: `/notes/${c.slug}`, hint: title }]
+      : [];
+  });
 
   return (
     <div className="scroll-home">
@@ -135,8 +146,17 @@ export default async function HomePage() {
         <RightRail />
       </section>
 
-      <CompaniesCovered notes={notes} />
-      <ReadersFrom />
+      <LogoMarquee
+        id="covered-title"
+        title="Companies covered"
+        items={covered}
+      />
+      <LogoMarquee
+        id="readers-title"
+        title="Readers from"
+        items={readersFrom}
+        reverse
+      />
 
     </div>
   );
