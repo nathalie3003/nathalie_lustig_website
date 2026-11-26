@@ -26,7 +26,9 @@ export const TEXTURE_OPTIONS = [
   { value: "grain", label: "Paper grain" },
   { value: "guilloche", label: "Bond-certificate lines" },
   { value: "wash", label: "Raspberry wash" },
-  { value: "custom", label: "Your images" },
+  { value: "gpt-guilloche", label: "ChatGPT engraving" },
+  { value: "gpt-newsprint", label: "ChatGPT newsprint" },
+  { value: "gpt-paper-wash", label: "ChatGPT paper + wash" },
 ] as const;
 
 export const FOOTER_OPTIONS = [

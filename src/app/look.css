@@ -135,9 +135,16 @@
     --page-texture: url(/textures/guilloche-tile.svg), url(/textures/grain.png);
     --page-texture-size: 1600px auto, 320px;
   }
-  html[data-texture="custom"] {
-    --page-texture: url(/textures/custom-tile.png);
-    --page-texture-size: 256px;
+  /* ALFIE's ChatGPT images (public/textures/gpt). The tiles are 1254px
+     squares, shown at half size so they stay crisp on retina screens. */
+  html[data-texture="gpt-guilloche"] {
+    --page-texture: url(/textures/gpt/guilloche.webp);
+    --page-texture-size: 627px;
+  }
+  html[data-texture="gpt-newsprint"],
+  html[data-texture="gpt-paper-wash"] {
+    --page-texture: url(/textures/gpt/newsprint.webp);
+    --page-texture-size: 627px;
   }
   html[data-texture]:not([data-texture="none"]) body,
   html[data-hero="landing"][data-texture]:not([data-texture="none"]) .home-sheet {
@@ -154,13 +161,6 @@
   /* Paper grain: a slightly warmer paper so the fibres read. */
   html[data-texture="grain"] { --bg: #FDFCFA; --nav-bg: #FDFCFA; }
 
-  html[data-texture="custom"] .home-band-top::before,
-  html[data-texture="custom"] .foot::before {
-    content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
-  }
-  html[data-texture="custom"] .home-band-top,
-  html[data-texture="custom"] .foot { position: relative; isolation: isolate; }
-
   /* Raspberry wash: soft colour pooled at the top of the page and the foot. */
   html[data-texture="wash"] .home-band-top {
     background:
@@ -173,17 +173,14 @@
       radial-gradient(ellipse 50% 60% at 95% 90%, rgba(178, 58, 99, 0.08), transparent 70%);
   }
 
-  /* Your images: drop files over public/textures/custom-tile.png (page tile)
-     and public/textures/custom-band.webp (hero and footer bands). */
-  html[data-texture="custom"] .home-band-top::before {
-    background: url(/textures/custom-band.webp) center top / cover no-repeat;
-    opacity: 0.8;
-    mask-image: linear-gradient(180deg, #000 0%, #000 50%, transparent 92%);
-  }
-  html[data-texture="custom"] .foot::before {
-    background: url(/textures/custom-band.webp) center bottom / cover no-repeat;
-    opacity: 0.7;
-    mask-image: linear-gradient(0deg, #000 30%, transparent 100%);
+  /* ChatGPT paper + wash: the newsprint tile throughout, with the watercolour
+     pooled behind the opening section and fading out beneath it. */
+  html[data-texture="gpt-paper-wash"] .home-band-top { position: relative; isolation: isolate; }
+  html[data-texture="gpt-paper-wash"] .home-band-top::before {
+    content: ""; position: absolute; inset: 0 0 -80px; z-index: -1; pointer-events: none;
+    background: url(/textures/gpt/watercolour.webp) center top / cover no-repeat;
+    opacity: 0.85;
+    mask-image: linear-gradient(180deg, #000 0%, #000 45%, transparent 100%);
   }
 
   /* ── FOOTER BANDS ───────────────────────────────────────── */
