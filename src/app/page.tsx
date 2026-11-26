@@ -10,6 +10,7 @@ import { TypedTopics } from "@/components/TypedTopics";
 import { CurveCard } from "@/components/CurveCard";
 import { HomeNotes, type HomeNote } from "@/components/HomeNotes";
 import { CompaniesCovered } from "@/components/CompaniesCovered";
+import { ReadersFrom } from "@/components/ReadersFrom";
 import { getYieldCurve, getAllTenorHistories } from "@/lib/marketData";
 import { readTimeFromChars } from "@/lib/readTime";
 import { FALLBACK_CURVE } from "@/content/yieldCurveFallback";
@@ -135,6 +136,7 @@ export default async function HomePage() {
       </section>
 
       <CompaniesCovered notes={notes} />
+      <ReadersFrom />
 
     </div>
   );
