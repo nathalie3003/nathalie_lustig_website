@@ -478,103 +478,71 @@
     .sr-char { transform: none; transition: none; }
   }
 
-  /* CONTACT BAND — sky photograph under a gradient wash, folding in on scroll.
-     Rendered site-wide from Chrome.tsx, directly above the footer. */
-  .band-contact {
-    position: relative; overflow: hidden;
-    background: #ECEAE9; color: var(--ink);
-    border-top: 0; padding: 0;
-  }
-  .contact-sky {
-    object-fit: cover; object-position: center 58%;
-  }
-  .contact-wash {
-    position: absolute; inset: 0;
-    background: linear-gradient(180deg, rgba(255,255,255,0.62), rgba(255,255,255,0.8));
-  }
-  .contact-inner {
-    position: relative;
-    max-width: var(--maxw); margin: 0 auto; padding: 84px var(--pad);
-  }
-  .contact-grid {
-    display: grid; grid-template-columns: minmax(0,1.2fr) minmax(0,1fr);
-    gap: 72px; align-items: end;
-  }
-  .contact-eyebrow {
-    display: block;
-    font-family: var(--font-mono), ui-monospace, monospace;
-    font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase;
-    color: var(--accent);
-  }
-  .contact-title {
-    font-size: 38px; line-height: 1.15; font-weight: 600; letter-spacing: -0.026em;
-    margin: 16px 0 0; max-width: 26ch; text-wrap: pretty;
-  }
-  .contact-lede {
-    font-family: var(--font-serif), Georgia, serif; font-style: italic;
-    font-size: 20px; line-height: 1.45; font-weight: 400; color: var(--ink-60);
-    margin: 14px 0 0; max-width: 40ch;
-  }
-  .contact-direct { display: flex; flex-direction: column; gap: 14px; }
-  .contact-row {
-    display: flex; align-items: center; justify-content: space-between; gap: 16px;
-    padding: 18px 0; border-top: 1px solid rgba(25,19,22,0.2);
-    color: var(--ink); text-decoration: none;
-    transition: color 160ms ease;
-  }
-  a.contact-row:hover { color: var(--accent); }
-  /* The contact band's backdrop is a photograph under a translucent wash, so
-     its effective luminance is not fixed. Small text here takes the darker ink
-     step: --ink-60 measures 4.46:1 on the band's warm base, marginally under AA,
-     where --ink-72 is 6.6:1 and stays safe wherever the photo lands. */
-  .cl-label {
-    display: block;
-    font-family: var(--font-mono), ui-monospace, monospace;
-    font-size: 10.5px; letter-spacing: 0.12em; text-transform: uppercase;
-    color: var(--ink-72);
-  }
-  .cl-value {
-    display: block; font-family: var(--font-serif), Georgia, serif;
-    font-size: 18px; margin-top: 5px; color: inherit;
-  }
-  .contact-copy {
-    padding: 9px 15px; border-radius: 6px;
-    border: 1px solid rgba(25,19,22,0.32); background: rgba(255,255,255,0.35);
-    color: var(--ink); font-family: var(--font-sans), system-ui, sans-serif;
-    font-size: 13px; font-weight: 500; cursor: pointer; white-space: nowrap;
-    transition: background 160ms ease;
-  }
-  .contact-copy:hover { background: rgba(255,255,255,0.75); }
-  .contact-arrow { font-size: 15px; color: var(--ink-72); }
-
-  /* Fold-in — children rise and unrotate once the band enters the viewport.
-     ContactSection.tsx adds .fold-in; per-item stagger via inline animationDelay. */
-  @keyframes bp-fold {
-    from { opacity: 0; transform: translateY(16px) rotateX(14deg); }
-    to   { opacity: 1; transform: none; }
-  }
-  .fold { transform-origin: 50% 100%; opacity: 0; }
-  .fold.fold-in { animation: bp-fold 780ms cubic-bezier(0.22,0.61,0.36,1) both; }
-  @media (prefers-reduced-motion: reduce) {
-    .fold, .fold.fold-in { opacity: 1; transform: none; animation: none; }
-  }
-
-  /* FOOTER — single bar. The contact band above it carries the real content. */
+  /* FOOTER: link columns over a full-width "The Basis Point" wordmark.
+     Footer.tsx fits the wordmark to the column and adds .is-in on first view. */
   .foot {
     flex-shrink: 0; border-top: 1px solid var(--rule);
     background: #FFFFFF; margin-top: 0;
   }
-  .foot-bar { border-top: 0; }
-  .foot-bar-inner {
-    max-width: var(--maxw); margin: 0 auto; padding: 24px var(--pad);
-    display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
-    gap: 16px;
-    font-family: var(--font-sans), system-ui, sans-serif; font-size: 13px;
-    color: var(--ink-60);
+  .foot-inner {
+    max-width: var(--maxw); margin: 0 auto; padding: 72px var(--pad) 32px;
+    font-family: var(--font-sans), system-ui, sans-serif;
   }
-  .foot-bar-right { display: inline-flex; align-items: center; gap: 22px; }
-  .foot-bar a { color: var(--ink-60); }
-  .foot-bar a:hover { color: var(--accent); }
+  .foot-cols {
+    display: grid; grid-template-columns: minmax(0, 1.6fr) repeat(3, minmax(0, 1fr));
+    gap: 48px;
+  }
+  .foot-h {
+    font-family: var(--font-sans), system-ui, sans-serif;
+    font-size: 15px; font-weight: 600; letter-spacing: 0; line-height: 1.3;
+    color: var(--ink); margin: 0 0 16px;
+  }
+  .foot-lede {
+    font-family: var(--font-serif), Georgia, serif; font-style: italic;
+    font-size: 18px; line-height: 1.45; color: var(--ink-60);
+    margin: 0 0 22px; max-width: 34ch;
+  }
+  .foot-copy {
+    display: flex; align-items: center; justify-content: space-between; gap: 16px;
+    width: 100%; max-width: 360px; padding: 12px 0;
+    background: none; border: 0; border-bottom: 1px solid var(--rule-strong);
+    font: inherit; font-size: 15px; color: var(--ink-72); text-align: left;
+    cursor: pointer; transition: color 160ms ease, border-color 160ms ease;
+  }
+  .foot-copy:hover { color: var(--accent); border-bottom-color: var(--accent); }
+  .foot-copy-cue { font-size: 13px; color: var(--ink-60); }
+  .foot-copy:hover .foot-copy-cue { color: inherit; }
+  .foot-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
+  .foot-list a { color: var(--ink-60); font-size: 15px; text-decoration: none; }
+  .foot-list a:hover { color: var(--accent); }
+
+  .foot-mark { margin: 120px 0 64px; line-height: 0.82; overflow: hidden; }
+  .foot-mark-text {
+    display: block; width: max-content; white-space: nowrap;
+    font-family: var(--font-display), Georgia, serif; font-weight: 400;
+    letter-spacing: -0.025em; color: var(--ink);
+    /* Fallback until Footer.tsx measures; close to the fitted size. */
+    font-size: min(13vw, 146px);
+    padding-bottom: 0.06em;
+  }
+  .foot-mark .foot-mark-text {
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 1100ms cubic-bezier(0.2, 0.7, 0.1, 1);
+  }
+  .foot-mark.is-in .foot-mark-text { clip-path: inset(0 0 0 0); }
+  .foot-mark-dot { color: var(--accent); }
+  @media (prefers-reduced-motion: reduce) {
+    .foot-mark .foot-mark-text { clip-path: none; transition: none; }
+  }
+
+  .foot-base { font-size: 13px; color: var(--ink-60); }
+
+  @media (max-width: 760px) {
+    .foot-inner { padding-top: 56px; }
+    .foot-cols { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 36px 24px; }
+    .foot-contact { grid-column: 1 / -1; }
+    .foot-mark { margin: 72px 0 40px; }
+  }
 
   /* ============================================================
      TRADE IDEA PAGE — article + sticky snapshot sidebar
@@ -1508,7 +1476,6 @@
 @media (max-width: 920px) {
   :root { --pad: 32px; }
   .read-title { font-size: 34px; }
-  .contact-grid { grid-template-columns: 1fr; gap: 32px; }
 }
 @media (max-width: 760px) {
   .top-links { display: none; }
@@ -1734,11 +1701,4 @@
 :focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 2px;
-}
-/* On the contact band the backdrop is a photograph, so a single raspberry
-   ring cannot be relied on for the 3:1 an indicator needs. A paper-coloured
-   halo sits under it and guarantees separation whatever the photo is doing. */
-.band-contact :focus-visible {
-  outline-color: var(--ink);
-  box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.9);
 }
