@@ -120,12 +120,20 @@
 
   .home-band-top { position: relative; padding-bottom: 8px; }
 
-  /* Grain is the base layer for every texture option. */
+  /* Grain is the base layer for every texture option. Each option sets the
+     page's background layers once, on body (and on the landing's sheet), so
+     the texture runs the whole length of every page rather than sitting in
+     one band. */
   html[data-texture="grain"],
-  html[data-texture="guilloche"],
   html[data-texture="wash"] {
     --page-texture: url(/textures/grain.png);
     --page-texture-size: 320px;
+  }
+  /* Bond-certificate lines: two faint engraved ribbons per 1400px tile,
+     repeating down the page over the grain. */
+  html[data-texture="guilloche"] {
+    --page-texture: url(/textures/guilloche-tile.svg), url(/textures/grain.png);
+    --page-texture-size: 1600px auto, 320px;
   }
   html[data-texture="custom"] {
     --page-texture: url(/textures/custom-tile.png);
@@ -136,36 +144,22 @@
     background-image: var(--page-texture);
     background-size: var(--page-texture-size);
     background-repeat: repeat;
+    background-position: center top;
   }
   html[data-texture]:not([data-texture="none"]) .foot { background-color: transparent; }
   /* The archive filter row and article pages paint white panels; let the
-     grain through those too. */
+     texture through those too. */
   html[data-texture]:not([data-texture="none"]) .band-projects { background: transparent; }
 
   /* Paper grain: a slightly warmer paper so the fibres read. */
   html[data-texture="grain"] { --bg: #FDFCFA; --nav-bg: #FDFCFA; }
 
-  /* Bond-certificate lines: engraved guilloche behind the hero and footer. */
-  html[data-texture="guilloche"] .home-band-top::before,
-  html[data-texture="guilloche"] .foot::before,
   html[data-texture="custom"] .home-band-top::before,
   html[data-texture="custom"] .foot::before {
     content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
   }
-  html[data-texture="guilloche"] .home-band-top,
-  html[data-texture="guilloche"] .foot,
   html[data-texture="custom"] .home-band-top,
   html[data-texture="custom"] .foot { position: relative; isolation: isolate; }
-  html[data-texture="guilloche"] .home-band-top::before {
-    background: url(/textures/guilloche.svg) 70% 30% / 1600px auto no-repeat;
-    opacity: 0.1;
-    mask-image: linear-gradient(180deg, #000 0%, #000 45%, transparent 85%);
-  }
-  html[data-texture="guilloche"] .foot::before {
-    background: url(/textures/guilloche.svg) 20% 100% / 1800px auto no-repeat;
-    opacity: 0.1;
-    mask-image: linear-gradient(0deg, #000 30%, transparent 100%);
-  }
 
   /* Raspberry wash: soft colour pooled at the top of the page and the foot. */
   html[data-texture="wash"] .home-band-top {
@@ -190,6 +184,59 @@
     background: url(/textures/custom-band.webp) center bottom / cover no-repeat;
     opacity: 0.7;
     mask-image: linear-gradient(0deg, #000 30%, transparent 100%);
+  }
+
+  /* ── FOOTER BANDS ───────────────────────────────────────── */
+  /* Doubled class so these win over the texture rules above, which clear the
+     footer's background whatever the footer option. */
+
+  /* Ink band: the footer turns to the brand's ink, like the back page of a
+     printed paper, with the bond lines faintly engraved in raspberry. Its
+     rounded top lifts it off the page rather than butting up against it. */
+  html[data-footer="ink"] .foot.foot {
+    --foot-fg: #F6F2F3;
+    --foot-fg-72: rgba(246, 242, 243, 0.74);
+    --foot-fg-60: rgba(246, 242, 243, 0.62);
+    --foot-line: rgba(246, 242, 243, 0.22);
+    --foot-hover: var(--petal);
+    background: #191316 url(/textures/guilloche-tile.svg) center top / 1600px auto repeat;
+    color: var(--foot-fg);
+    border-top: 0;
+    border-radius: 28px 28px 0 0;
+    margin-top: 24px;
+  }
+  /* Certificate band: a paper panel framed by a double hairline, the border
+     of a bond certificate, with the engraved lines inside. */
+  html[data-footer="certificate"] .foot.foot {
+    background: var(--tint);
+    border-top: 1px solid var(--rule-strong);
+    padding: 28px var(--pad) 28px;
+  }
+  html[data-footer="certificate"] .foot-inner {
+    max-width: calc(var(--maxw) - 2 * var(--pad));
+    padding: 64px 48px 28px;
+    background: #FFFFFF url(/textures/guilloche-tile.svg) center top / 1600px auto repeat;
+    border: 1px solid var(--rule-strong);
+    outline: 1px solid var(--rule-strong); outline-offset: 6px;
+  }
+
+  html[data-footer="ink"] .foot-h { color: var(--foot-fg); }
+  html[data-footer="ink"] .foot-lede { color: var(--foot-fg-72); }
+  html[data-footer="ink"] .foot-copy { color: var(--foot-fg-72); border-bottom-color: var(--foot-line); }
+  html[data-footer="ink"] .foot-copy-cue,
+  html[data-footer="ink"] .foot-list a,
+  html[data-footer="ink"] .foot-base { color: var(--foot-fg-60); }
+  html[data-footer="ink"] .foot-copy:hover,
+  html[data-footer="ink"] .foot-list a:hover { color: var(--foot-hover); border-bottom-color: var(--foot-hover); }
+  html[data-footer="ink"] .foot-mark-text { color: var(--foot-fg); }
+  /* Raspberry is too dark to carry on ink, so the point lifts a step. */
+  html[data-footer="ink"] .foot-mark-dot { color: #D9608A; }
+  html[data-footer="ink"] .ink-splash i { background: #D9608A; }
+
+  @media (max-width: 760px) {
+    html[data-footer="ink"] .foot.foot { border-radius: 20px 20px 0 0; }
+    html[data-footer="certificate"] .foot.foot { padding: 14px 12px; }
+    html[data-footer="certificate"] .foot-inner { padding: 44px 22px 22px; outline-offset: 4px; }
   }
 
   /* ── THE SWITCHER ───────────────────────────────────────── */
@@ -219,3 +266,7 @@
     .look-switch { right: 8px; bottom: 8px; width: 210px; }
   }
 }
+
+/* Unlayered, like the site's focus rule it adjusts: on the ink footer the
+   raspberry ring would sit at under 3:1, so it turns petal. */
+html[data-footer="ink"] .foot :focus-visible { outline-color: var(--petal); }

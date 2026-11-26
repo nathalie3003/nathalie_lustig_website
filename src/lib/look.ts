@@ -6,10 +6,11 @@ import { INTRO_PAINTINGS } from "@/content/introPaintings";
 //   hero:    "classic" is today's homepage; "landing" opens on a full-screen
 //            painting hero and the notes slide up over it on scroll.
 //   texture: "none" is today's flat white; the rest add a background texture
-//            to the page and to the top and footer bands.
+//            that runs the length of the page.
+//   footer:  "plain" is today's footer; the others set it apart as a band.
 //
-// The choice lives on <html> as data-hero / data-texture, set by LOOK_SCRIPT
-// before first paint so there is no flash. It comes from ?hero= / ?texture= in
+// The choice lives on <html> as data-hero / data-texture / data-footer, set by LOOK_SCRIPT
+// before first paint so there is no flash. It comes from ?hero= / ?texture= / ?footer= in
 // the URL, else from what the switcher last saved. None of it runs on the live
 // domain: there the site looks exactly as it does today.
 
@@ -28,10 +29,21 @@ export const TEXTURE_OPTIONS = [
   { value: "custom", label: "Your images" },
 ] as const;
 
+export const FOOTER_OPTIONS = [
+  { value: "plain", label: "White (current)" },
+  { value: "ink", label: "Ink band" },
+  { value: "certificate", label: "Certificate band" },
+] as const;
+
 export type HeroLook = (typeof HERO_OPTIONS)[number]["value"];
 export type TextureLook = (typeof TEXTURE_OPTIONS)[number]["value"];
+export type FooterLook = (typeof FOOTER_OPTIONS)[number]["value"];
 
-export const LOOK_KEYS = { hero: "bp-look-hero", texture: "bp-look-texture" } as const;
+export const LOOK_KEYS = {
+  hero: "bp-look-hero",
+  texture: "bp-look-texture",
+  footer: "bp-look-footer",
+} as const;
 
 // Plain ES5, inline in <head>. Also picks the landing hero's painting for this
 // visit and hands it to CSS as --landing-img.

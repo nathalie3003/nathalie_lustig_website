@@ -2,10 +2,12 @@
 
 import { useEffect, useState } from "react";
 import {
+  FOOTER_OPTIONS,
   HERO_OPTIONS,
   LOOK_HOST_LIVE,
   LOOK_KEYS,
   TEXTURE_OPTIONS,
+  type FooterLook,
   type HeroLook,
   type TextureLook,
 } from "@/lib/look";
@@ -17,6 +19,7 @@ export function LookSwitcher() {
   const [open, setOpen] = useState(true);
   const [hero, setHero] = useState<HeroLook>("classic");
   const [texture, setTexture] = useState<TextureLook>("none");
+  const [footer, setFooter] = useState<FooterLook>("plain");
 
   useEffect(() => {
     const host = window.location.hostname.replace(/^www\./, "");
@@ -25,6 +28,7 @@ export function LookSwitcher() {
     setEnabled(true);
     setHero((root.dataset.hero as HeroLook) || "classic");
     setTexture((root.dataset.texture as TextureLook) || "none");
+    setFooter((root.dataset.footer as FooterLook) || "plain");
     try {
       setOpen(localStorage.getItem("bp-look-panel") !== "closed");
     } catch {}
@@ -32,7 +36,7 @@ export function LookSwitcher() {
 
   if (!enabled) return null;
 
-  const apply = (key: "hero" | "texture", value: string) => {
+  const apply = (key: "hero" | "texture" | "footer", value: string) => {
     const root = document.documentElement;
     root.setAttribute(`data-${key}`, value);
     try {
@@ -44,8 +48,11 @@ export function LookSwitcher() {
     if (key === "hero") {
       setHero(value as HeroLook);
       window.scrollTo({ top: 0 });
-    } else {
+    } else if (key === "texture") {
       setTexture(value as TextureLook);
+    } else {
+      setFooter(value as FooterLook);
+      document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
     }
   };
 
@@ -90,6 +97,20 @@ export function LookSwitcher() {
                   name="look-texture"
                   checked={texture === o.value}
                   onChange={() => apply("texture", o.value)}
+                />
+                {o.label}
+              </label>
+            ))}
+          </fieldset>
+          <fieldset>
+            <legend>Footer</legend>
+            {FOOTER_OPTIONS.map((o) => (
+              <label key={o.value}>
+                <input
+                  type="radio"
+                  name="look-footer"
+                  checked={footer === o.value}
+                  onChange={() => apply("footer", o.value)}
                 />
                 {o.label}
               </label>
