@@ -3,6 +3,7 @@
 @import "./notes.css";
 @import "./article.css";
 @import "./about.css";
+@import "./look.css";
 
 @theme {
   --color-bg: #FFFFFF;

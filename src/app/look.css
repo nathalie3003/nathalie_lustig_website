@@ -1,0 +1,221 @@
+/* ============================================================
+   DESIGN EXPLORATION (Nov 2026). Two directions, switched by
+   html[data-hero] and html[data-texture] (see src/lib/look.ts).
+   With neither attribute set, nothing here changes the site.
+   ============================================================ */
+
+@layer components {
+  /* ── DIRECTION 1: FULL-SCREEN LANDING ───────────────────── */
+  .landing { display: none; }
+
+  html[data-hero="landing"] .landing {
+    display: grid; place-items: center;
+    position: sticky; top: var(--nav-h); z-index: 0;
+    height: calc(100svh - var(--nav-h));
+    min-height: 520px;
+    overflow: hidden;
+    background: var(--tint);
+  }
+  .landing-bg {
+    position: absolute; inset: -2%;
+    background: var(--landing-img, none) var(--landing-pos, center) / cover no-repeat;
+    animation: landing-drift 24s ease-out both;
+  }
+  @keyframes landing-drift {
+    from { transform: scale(1.08); }
+    to   { transform: scale(1); }
+  }
+  /* The same wash the intro uses, a touch heavier at the bottom so the cue
+     always reads. */
+  .landing-wash {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 46% 42% at 50% 46%, rgba(255, 255, 255, 0.72), transparent 72%),
+      linear-gradient(180deg, rgba(255, 255, 255, 0.34), rgba(255, 255, 255, 0.5) 60%, rgba(255, 255, 255, 0.86));
+  }
+  .landing-inner {
+    position: relative; z-index: 1;
+    display: flex; flex-direction: column; align-items: center; text-align: center;
+    padding: 0 var(--pad);
+    animation: landing-in 900ms cubic-bezier(0.2, 0.7, 0.2, 1) 150ms both;
+  }
+  .landing-inner .bp-mark { width: clamp(64px, 8vw, 92px); height: auto; color: var(--ink); }
+  .landing-title {
+    margin: 26px 0 0;
+    font-family: var(--font-serif), Georgia, serif;
+    font-size: clamp(44px, 8.4vw, 112px); line-height: 0.95; font-weight: 600;
+    letter-spacing: -0.04em; color: var(--ink);
+  }
+  .landing-standfirst {
+    margin: 22px 0 0; max-width: 36ch;
+    font-family: var(--font-serif), Georgia, serif;
+    font-size: clamp(18px, 1.7vw, 22px); line-height: 1.5; color: var(--ink-72);
+    text-wrap: balance;
+  }
+  .landing-cue {
+    position: absolute; z-index: 1; bottom: 34px; left: 50%; transform: translateX(-50%);
+    display: flex; flex-direction: column; align-items: center; gap: 8px;
+    font-family: var(--font-sans), system-ui, sans-serif;
+    font-size: 13.5px; font-weight: 500; color: var(--ink);
+    animation: landing-in 900ms cubic-bezier(0.2, 0.7, 0.2, 1) 600ms both;
+  }
+  .landing-cue:hover { color: var(--accent); }
+  .landing-cue-arrow {
+    display: grid; place-items: center; width: 36px; height: 36px;
+    border: 1px solid var(--ink-45); border-radius: 50%;
+    animation: landing-bob 2.4s ease-in-out 1.6s infinite;
+  }
+  .landing-cue:hover .landing-cue-arrow { border-color: var(--accent); }
+  @keyframes landing-in {
+    from { opacity: 0; transform: translateY(14px); }
+    to   { opacity: 1; transform: none; }
+  }
+  .landing-cue { animation-name: landing-cue-in; }
+  @keyframes landing-cue-in {
+    from { opacity: 0; transform: translate(-50%, 10px); }
+    to   { opacity: 1; transform: translate(-50%, 0); }
+  }
+  @keyframes landing-bob {
+    0%, 100% { transform: none; }
+    50%      { transform: translateY(5px); }
+  }
+
+  /* As the sheet rises, the landing copy eases back and fades. Progressive:
+     browsers without scroll-driven animations just see the sheet cover it. */
+  @supports (animation-timeline: scroll()) {
+    html[data-hero="landing"] .landing-inner,
+    html[data-hero="landing"] .landing-cue {
+      animation: landing-recede linear both;
+      animation-timeline: scroll(root);
+      animation-range: 0 90vh;
+    }
+    @keyframes landing-recede {
+      to { opacity: 0; transform: translateY(-40px) scale(0.97); }
+    }
+    html[data-hero="landing"] .landing-cue { animation-name: landing-cue-recede; }
+    @keyframes landing-cue-recede {
+      to { opacity: 0; transform: translate(-50%, 20px); }
+    }
+  }
+
+  /* The sheet: everything after the landing, on paper, rising over it. */
+  html[data-hero="landing"] .home-sheet {
+    position: relative; z-index: 1;
+    background-color: var(--bg);
+    border-radius: 28px 28px 0 0;
+    box-shadow: 0 -24px 60px -20px rgba(25, 19, 22, 0.22);
+  }
+  /* The old hero sits second now, so it loses its tall top padding. */
+  html[data-hero="landing"] .hero-grid { padding-top: 76px; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .landing-bg, .landing-inner, .landing-cue, .landing-cue-arrow { animation: none !important; }
+  }
+
+  /* ── DIRECTION 2: TEXTURES ──────────────────────────────── */
+  /* Three surfaces take a texture: the page itself (a repeating tile), and
+     two full-width bands, the top of the homepage and the footer, which take
+     one large image. Cards keep their solid fills, so they now sit on the
+     page rather than being flush with it. That contrast is the depth. */
+
+  .home-band-top { position: relative; padding-bottom: 8px; }
+
+  /* Grain is the base layer for every texture option. */
+  html[data-texture="grain"],
+  html[data-texture="guilloche"],
+  html[data-texture="wash"] {
+    --page-texture: url(/textures/grain.png);
+    --page-texture-size: 320px;
+  }
+  html[data-texture="custom"] {
+    --page-texture: url(/textures/custom-tile.png);
+    --page-texture-size: 256px;
+  }
+  html[data-texture]:not([data-texture="none"]) body,
+  html[data-hero="landing"][data-texture]:not([data-texture="none"]) .home-sheet {
+    background-image: var(--page-texture);
+    background-size: var(--page-texture-size);
+    background-repeat: repeat;
+  }
+  html[data-texture]:not([data-texture="none"]) .foot { background-color: transparent; }
+  /* The archive filter row and article pages paint white panels; let the
+     grain through those too. */
+  html[data-texture]:not([data-texture="none"]) .band-projects { background: transparent; }
+
+  /* Paper grain: a slightly warmer paper so the fibres read. */
+  html[data-texture="grain"] { --bg: #FDFCFA; --nav-bg: #FDFCFA; }
+
+  /* Bond-certificate lines: engraved guilloche behind the hero and footer. */
+  html[data-texture="guilloche"] .home-band-top::before,
+  html[data-texture="guilloche"] .foot::before,
+  html[data-texture="custom"] .home-band-top::before,
+  html[data-texture="custom"] .foot::before {
+    content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  }
+  html[data-texture="guilloche"] .home-band-top,
+  html[data-texture="guilloche"] .foot,
+  html[data-texture="custom"] .home-band-top,
+  html[data-texture="custom"] .foot { position: relative; isolation: isolate; }
+  html[data-texture="guilloche"] .home-band-top::before {
+    background: url(/textures/guilloche.svg) 70% 30% / 1600px auto no-repeat;
+    opacity: 0.1;
+    mask-image: linear-gradient(180deg, #000 0%, #000 45%, transparent 85%);
+  }
+  html[data-texture="guilloche"] .foot::before {
+    background: url(/textures/guilloche.svg) 20% 100% / 1800px auto no-repeat;
+    opacity: 0.1;
+    mask-image: linear-gradient(0deg, #000 30%, transparent 100%);
+  }
+
+  /* Raspberry wash: soft colour pooled at the top of the page and the foot. */
+  html[data-texture="wash"] .home-band-top {
+    background:
+      radial-gradient(ellipse 60% 70% at 88% 18%, rgba(247, 217, 227, 0.75), transparent 70%),
+      radial-gradient(ellipse 50% 50% at 6% 4%, rgba(236, 234, 233, 0.9), transparent 70%);
+  }
+  html[data-texture="wash"] .foot {
+    background:
+      radial-gradient(ellipse 70% 80% at 15% 100%, rgba(247, 217, 227, 0.7), transparent 70%),
+      radial-gradient(ellipse 50% 60% at 95% 90%, rgba(178, 58, 99, 0.08), transparent 70%);
+  }
+
+  /* Your images: drop files over public/textures/custom-tile.png (page tile)
+     and public/textures/custom-band.webp (hero and footer bands). */
+  html[data-texture="custom"] .home-band-top::before {
+    background: url(/textures/custom-band.webp) center top / cover no-repeat;
+    opacity: 0.8;
+    mask-image: linear-gradient(180deg, #000 0%, #000 50%, transparent 92%);
+  }
+  html[data-texture="custom"] .foot::before {
+    background: url(/textures/custom-band.webp) center bottom / cover no-repeat;
+    opacity: 0.7;
+    mask-image: linear-gradient(0deg, #000 30%, transparent 100%);
+  }
+
+  /* ── THE SWITCHER ───────────────────────────────────────── */
+  .look-switch {
+    position: fixed; right: 16px; bottom: 16px; z-index: 900;
+    width: 236px; padding: 12px 14px 14px;
+    background: #FFFFFF; color: var(--ink);
+    border: 1px solid var(--rule-strong); border-radius: var(--radius);
+    box-shadow: 0 18px 50px rgba(25, 19, 22, 0.16);
+    font-family: var(--font-sans), system-ui, sans-serif; font-size: 13px;
+  }
+  .look-switch.is-closed { width: auto; padding: 0; }
+  .look-switch-toggle {
+    display: block; margin-left: auto; padding: 6px 10px;
+    border: 0; background: none; cursor: pointer;
+    font-size: 12px; font-weight: 500; color: var(--ink-60);
+  }
+  .look-switch.is-closed .look-switch-toggle { color: var(--ink); padding: 10px 14px; }
+  .look-switch-body { display: grid; gap: 10px; }
+  .look-switch fieldset { border: 0; margin: 0; padding: 0; display: grid; gap: 5px; }
+  .look-switch legend {
+    margin-bottom: 4px; font-weight: 600; font-size: 12.5px; color: var(--ink);
+  }
+  .look-switch label { display: flex; align-items: center; gap: 8px; cursor: pointer; color: var(--ink-72); }
+  .look-switch input { accent-color: var(--accent); margin: 0; }
+  @media (max-width: 560px) {
+    .look-switch { right: 8px; bottom: 8px; width: 210px; }
+  }
+}

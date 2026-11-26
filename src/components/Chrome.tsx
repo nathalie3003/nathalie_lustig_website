@@ -2,6 +2,7 @@
 import { usePathname } from "next/navigation";
 import { TopBar } from "./Nav";
 import { Intro } from "./Intro";
+import { LookSwitcher } from "./LookSwitcher";
 
 export function Chrome({
   children,
@@ -19,6 +20,7 @@ export function Chrome({
       <TopBar />
       <main className="main">{children}</main>
       {footer}
+      <LookSwitcher />
     </>
   );
 }

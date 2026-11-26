@@ -15,6 +15,7 @@ import { readersFrom } from "@/content/readersFrom";
 import { getYieldCurve, getAllTenorHistories } from "@/lib/marketData";
 import { readTimeFromChars } from "@/lib/readTime";
 import { FALLBACK_CURVE } from "@/content/yieldCurveFallback";
+import { BasisPointMark } from "@/components/BasisPointMark";
 
 function formatDateShort(iso: string) {
   return new Date(iso).toLocaleDateString("en-GB", {
@@ -74,6 +75,30 @@ export default async function HomePage() {
       <HashScroll />
       <RailScroll />
 
+      {/* Design exploration: the full-screen landing. Hidden unless
+          html[data-hero="landing"] (see src/lib/look.ts). It stays pinned
+          while .home-sheet slides up over it. */}
+      <section className="landing" aria-label="Welcome">
+        <div className="landing-bg" aria-hidden="true" />
+        <div className="landing-wash" aria-hidden="true" />
+        <div className="landing-inner">
+          <BasisPointMark size={88} decorative />
+          <p className="landing-title">
+            The Basis Point<span className="bp-point">.</span>
+          </p>
+          <p className="landing-standfirst">
+            Notes on AI, credit infrastructure and the macro picture, by
+            Nathalie Lustig.
+          </p>
+        </div>
+        <a href="#top" className="landing-cue">
+          <span>Read the notes</span>
+          <span className="landing-cue-arrow" aria-hidden="true">↓</span>
+        </a>
+      </section>
+
+      <div className="home-sheet">
+      <div className="home-band-top">
       <section className="hero-grid" id="top">
         <div className="hero-copy">
           <span className="hero-eyebrow">
@@ -127,6 +152,7 @@ export default async function HomePage() {
           </Link>
         </section>
       ) : null}
+      </div>
 
       <section className="home-grid" id="notes">
         <div className="home-main">
@@ -157,6 +183,7 @@ export default async function HomePage() {
         items={readersFrom}
         reverse
       />
+      </div>
 
     </div>
   );
