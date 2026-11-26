@@ -5,15 +5,15 @@
 @import "./about.css";
 
 @theme {
-  --color-bg: #FCFAF9;
-  --color-surface: #FFF7F9;
+  --color-bg: #FFFFFF;
+  --color-surface: #FAFAFA;
   --color-ink: #191316;
   --color-ink-72: rgba(25, 19, 22, 0.72);
   --color-ink-60: rgba(25, 19, 22, 0.60);
   --color-ink-45: rgba(25, 19, 22, 0.45);
   --color-accent: #B23A63;
-  --color-accent-soft: #F7ECEF;
-  --color-rule: #EADFDD;
+  --color-accent-soft: #F5F3F4;
+  --color-rule: #E8E6E6;
 
   --font-serif: var(--font-serif), Georgia, serif;
   --font-sans: var(--font-sans), -apple-system, system-ui, sans-serif;
@@ -22,23 +22,23 @@
 
 @layer base {
   :root {
-    --bg: #FCFAF9;
-    --surface: #FFF7F9;
-    --tint: #F5EBEA;
+    --bg: #FFFFFF;
+    --surface: #FAFAFA;
+    --tint: #F4F3F3;
     --ink: #191316;
     --ink-72: rgba(25, 19, 22, 0.72);
     --ink-60: rgba(25, 19, 22, 0.60);
-    /* Decoration only. At 0.45 this composites to 2.96:1 on blush, which fails
+    /* Decoration only. At 0.45 this composites to 2.96:1 on white, which fails
        WCAG AA, so it must never colour text. Hairlines, borders and list-marker
        glyphs only; --ink-60 is the lightest legible text step at 4.7:1. */
     --ink-45: rgba(25, 19, 22, 0.45);
     --ink-20: rgba(25, 19, 22, 0.18);
     --accent: #B23A63;
     --accent-deep: #7A2246;
-    --accent-soft: #F7ECEF;
+    --accent-soft: #F5F3F4;
     --petal: #F7D9E3;
-    --rule: #EADFDD;
-    --rule-strong: #E0C6CE;
+    --rule: #E8E6E6;
+    --rule-strong: #D9D6D7;
     --card-dark: #191316;
     --accent-tint: rgba(178, 58, 99, 0.09);
     /* The prose measure. 620px against Source Serif 4 at 19.5px measures 70
@@ -47,7 +47,7 @@
        8.87px, so this value moves if the body size or face changes. */
     --col-text: 620px;
     --col-wide: 900px;
-    --nav-bg: #FCFAF9;
+    --nav-bg: #FFFFFF;
     --radius-hair: 3px;
     --radius-xs: 6px;
     --radius-sm: 9px;
@@ -150,7 +150,7 @@
   .l-link { font-family: var(--font-sans), system-ui, sans-serif; font-size: 13.5px; font-weight: 500; color: var(--accent); text-decoration: none; cursor: pointer; }
   .l-link:hover { text-decoration: underline; }
 
-  /* TOP BAR: blush with a raspberry masthead rule across the very top
+  /* TOP BAR: white with a raspberry masthead rule across the very top
      (the publication grammar move: Economist's red bar, FT's salmon strip). */
   .top {
     position: sticky; top: 0; z-index: 40;
@@ -482,7 +482,7 @@
      Rendered site-wide from Chrome.tsx, directly above the footer. */
   .band-contact {
     position: relative; overflow: hidden;
-    background: #EFE6DC; color: var(--ink);
+    background: #ECEAE9; color: var(--ink);
     border-top: 0; padding: 0;
   }
   .contact-sky {
@@ -490,7 +490,7 @@
   }
   .contact-wash {
     position: absolute; inset: 0;
-    background: linear-gradient(180deg, rgba(252,247,246,0.62), rgba(255,247,249,0.8));
+    background: linear-gradient(180deg, rgba(255,255,255,0.62), rgba(255,255,255,0.8));
   }
   .contact-inner {
     position: relative;
@@ -1740,5 +1740,5 @@
    halo sits under it and guarantees separation whatever the photo is doing. */
 .band-contact :focus-visible {
   outline-color: var(--ink);
-  box-shadow: 0 0 0 4px rgba(252, 250, 249, 0.9);
+  box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.9);
 }

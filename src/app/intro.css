@@ -43,8 +43,8 @@
   .intro-wash {
     position: absolute; inset: 0;
     background:
-      radial-gradient(ellipse 42% 38% at 50% 50%, rgba(252, 247, 246, 0.55), transparent 70%),
-      linear-gradient(180deg, rgba(252, 247, 246, 0.38), rgba(255, 247, 249, 0.58));
+      radial-gradient(ellipse 42% 38% at 50% 50%, rgba(255, 255, 255, 0.55), transparent 70%),
+      linear-gradient(180deg, rgba(255, 255, 255, 0.38), rgba(255, 255, 255, 0.58));
   }
 
   .intro-lockup {
