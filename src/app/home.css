@@ -379,6 +379,46 @@
     letter-spacing: 0; text-transform: none;
   }
 
+  /* ── LOGO MARQUEES (companies covered, readers from) ───── */
+  .marquee-section { max-width: var(--maxw); margin: 0 auto; padding: 0 var(--pad) 64px; }
+  .marquee-section:last-of-type { padding-bottom: 96px; }
+  .marquee {
+    overflow: hidden; padding: 26px 0 4px;
+    mask-image: linear-gradient(to right, transparent, #000 7%, #000 93%, transparent);
+  }
+  .marquee-track {
+    display: flex; width: max-content; will-change: transform;
+  }
+  /* Grabbable: vertical page scrolling still works on touch, sideways swipes
+     go to the strip, and native image/link dragging and text selection are off. */
+  .marquee { cursor: grab; touch-action: pan-y; user-select: none; -webkit-user-select: none; }
+  .marquee.is-dragging, .marquee.is-dragging a { cursor: grabbing; }
+  .marquee img, .marquee a { -webkit-user-drag: none; }
+  .marquee-row {
+    display: flex; align-items: flex-start; gap: 44px;
+    list-style: none; margin: 0; padding: 0 44px 0 0;
+  }
+  /* Logo on top, name beneath: bare logos with no tile, so each mark stands on
+     the page by itself. */
+  .marquee-item {
+    display: flex; flex-direction: column; align-items: center; gap: 10px;
+    width: 112px; text-align: center; color: var(--ink);
+  }
+  .marquee-icon { width: 52px; height: 52px; flex: none; object-fit: contain; }
+  .marquee-name {
+    font-family: var(--font-display, var(--font-serif)), Georgia, serif;
+    font-size: 14px; font-weight: 600; line-height: 1.25; letter-spacing: -0.005em;
+    transition: color 140ms ease;
+  }
+  a.marquee-item:hover .marquee-name,
+  a.marquee-item:focus-visible .marquee-name { color: var(--accent); }
+  @media (prefers-reduced-motion: reduce) {
+    .marquee { mask-image: none; cursor: auto; touch-action: auto; user-select: auto; -webkit-user-select: auto; }
+    .marquee-track { width: auto; will-change: auto; }
+    .marquee-row { flex-wrap: wrap; gap: 28px 32px; padding-right: 0; }
+    .marquee-row[aria-hidden] { display: none; }
+  }
+
   /* ── RESPONSIVE ─────────────────────────────────────────── */
   @media (max-width: 1000px) {
     .hero-grid { grid-template-columns: 1fr; gap: 40px; padding-top: 64px; }
