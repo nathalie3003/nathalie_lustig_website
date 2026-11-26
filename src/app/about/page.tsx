@@ -3,6 +3,7 @@ import { about } from "@/content/about";
 import { aboutNow, rightNowMeta } from "@/content/rightNow";
 import { getSiteSettings } from "@/lib/queries";
 import { LifeCarousel } from "@/components/LifeCarousel";
+import { lifeShots, type LifeShot } from "@/content/life";
 import { ProjectsSection } from "@/components/ProjectsSection";
 
 export const metadata: Metadata = {
@@ -17,6 +18,18 @@ export default async function AboutPage() {
     settings?.aboutParagraphs && settings.aboutParagraphs.length > 0
       ? settings.aboutParagraphs
       : about.paragraphs;
+
+  // Photos from Studio win when there are any; otherwise the list in code.
+  const shots: LifeShot[] =
+    settings?.lifePhotos && settings.lifePhotos.length > 0
+      ? settings.lifePhotos.map((p) => ({
+          src: p.src,
+          caption: p.caption,
+          position: p.hotspot
+            ? `${Math.round(p.hotspot.x * 100)}% ${Math.round(p.hotspot.y * 100)}%`
+            : undefined,
+        }))
+      : lifeShots;
 
   const email = about.contact.find((c) => c.label === "Email");
   const linkedIn = about.contact.find((c) => c.label === "LinkedIn");
@@ -68,7 +81,7 @@ export default async function AboutPage() {
       </div>
 
       <aside className="about-side">
-        <LifeCarousel />
+        <LifeCarousel shots={shots} />
 
         <div className="about-contact">
           <span className="about-contact-label">Get in touch</span>

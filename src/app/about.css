@@ -8,7 +8,7 @@
   .about-page {
     max-width: var(--maxw); margin: 0 auto;
     padding: 72px var(--pad) 96px;
-    display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 340px);
+    display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 400px);
     gap: 80px; align-items: start;
   }
 
@@ -41,18 +41,25 @@
   }
   .about-now-grid {
     display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
-    /* Row gap was tighter than the column gap, which made two columns read as
-       one list. Equal gaps let it read as a grid. */
-    gap: 14px; margin-top: 12px;
+    /* Equal gaps so two columns read as a grid, not one long list. */
+    gap: 12px; margin-top: 16px; align-items: stretch;
   }
   /* An odd number of cards would strand the last one beside dead space, so it
      takes the full width instead. Reads as a closing line rather than a gap. */
   .about-now-grid > :last-child:nth-child(odd) { grid-column: 1 / -1; }
   .about-now-card {
-    display: block; padding: 14px 16px;
-    border: 1px solid var(--tint); border-radius: var(--radius-sm); background: #FFFFFF;
+    position: relative; display: flex; flex-direction: column;
+    padding: 20px 20px 18px;
+    background: var(--surface); border: 1px solid var(--rule);
+    border-radius: var(--radius-sm);
     color: var(--ink); text-decoration: none;
     transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
+  }
+  /* A short accent rule on each card ties the set to the site's raspberry
+     without colouring the whole box. */
+  .about-now-card::before {
+    content: ""; position: absolute; top: -1px; left: 20px;
+    width: 24px; height: 2px; background: var(--accent);
   }
   .about-now-card:hover {
     transform: translateY(-2px); border-color: var(--rule-strong);
@@ -60,13 +67,15 @@
   }
   .about-now-card-label {
     display: block;
-    font-family: var(--font-sans), system-ui, sans-serif;
-    font-size: var(--fs-caption); color: var(--ink-60);
+    font-family: var(--font-mono), ui-monospace, monospace;
+    font-size: var(--fs-meta); letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--accent);
   }
   .about-now-card-value {
     display: block;
     font-family: var(--font-serif), Georgia, serif;
-    font-size: var(--fs-body-s); line-height: 1.45; margin-top: 3px; text-wrap: pretty;
+    font-size: var(--fs-body-s); line-height: 1.5; margin-top: 10px;
+    color: var(--ink-72); text-wrap: pretty;
   }
   .about-now-hint {
     display: block;
@@ -82,60 +91,66 @@
   /* ── SIDE COLUMN ────────────────────────────────────────── */
   .about-side { position: sticky; top: 110px; }
 
-  /* ── LIFE CAROUSEL ──────────────────────────────────────── */
+  /* ── LIFE SLIDESHOW ─────────────────────────────────────
+     Two frames side by side. One changes per tick, alternating, with the new
+     photo rising a few pixels as it fades in over the old one. The caption
+     sits on the photo and only comes up on hover or keyboard focus; on touch
+     screens, where there is no hover, it stays up. */
+  .life-pair { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+  .life-pair[data-frames="1"] { grid-template-columns: 1fr; }
+  /* Offset the right frame so the pair reads as two prints laid down, not a
+     grid of thumbnails. */
+  .life-pair[data-frames="2"] .life-frame:nth-child(2) { margin-top: 36px; }
+
   .life-frame {
-    position: relative; width: 100%; aspect-ratio: 4 / 5;
+    position: relative; margin: 0; aspect-ratio: 4 / 5;
     overflow: hidden; border-radius: var(--radius-hair); background: var(--tint);
+    outline: none;
   }
+  .life-frame:focus-visible { box-shadow: 0 0 0 2px var(--paper, #fff), 0 0 0 4px var(--accent); }
+
+  /* The lit photo wipes up from the bottom while settling from a 1.12 zoom
+     (as on alfierees.com/about). A photo that goes dark stays visible until
+     the new one has covered it, then snaps back out of sight, so a frame is
+     never empty mid-swap. */
   .life-img {
-    object-fit: cover; filter: saturate(0.95);
-    transition: opacity 520ms ease;
+    object-fit: cover; filter: saturate(0.95); z-index: 0;
+    clip-path: inset(100% 0 0 0); transform: scale(1.12);
+    transition: clip-path 0s linear 0.9s, transform 0s linear 0.9s;
   }
-  @media (prefers-reduced-motion: reduce) {
-    .life-img { transition: none; }
+  .life-img[data-lit="true"] {
+    z-index: 1; clip-path: inset(0); transform: scale(1);
+    transition: clip-path 0.9s cubic-bezier(0.76, 0, 0.24, 1),
+                transform 0.9s cubic-bezier(0.22, 0.9, 0.3, 1);
   }
 
-  .life-bar {
-    display: flex; align-items: flex-start; justify-content: space-between;
-    gap: 14px; margin-top: 14px;
-  }
-  .life-text { min-width: 0; }
-  .life-count {
-    display: block;
-    font-family: var(--font-mono), ui-monospace, monospace;
-    font-size: var(--fs-meta); letter-spacing: 0.14em; text-transform: uppercase;
-    color: var(--ink-60);
-  }
   .life-caption {
+    position: absolute; inset: auto 0 0 0; z-index: 3;
+    padding: 36px 12px 11px;
+    background: linear-gradient(to top, rgba(25, 19, 22, 0.72), rgba(25, 19, 22, 0));
+    color: #FFFFFF;
     font-family: var(--font-serif), Georgia, serif;
-    font-size: var(--fs-body-s); line-height: 1.45; color: var(--ink-72);
-    margin: 5px 0 0; text-wrap: pretty;
+    font-size: var(--fs-small); line-height: 1.35; text-wrap: pretty;
+    opacity: 0; transform: translateY(6px);
+    transition: opacity 220ms ease, transform 260ms ease;
+    pointer-events: none;
   }
-  .life-nav { display: flex; gap: 6px; flex: none; padding-top: 2px; }
-  .life-btn {
-    display: inline-grid; place-items: center;
-    width: 30px; height: 30px; border-radius: 50%;
-    border: 1px solid var(--ink-20); background: #FFFFFF; color: var(--ink);
-    font-size: var(--fs-small); line-height: 1; cursor: pointer;
-    transition: border-color 160ms ease, color 160ms ease;
-  }
-  .life-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .life-frame:hover .life-caption,
+  .life-frame:focus-visible .life-caption { opacity: 1; transform: none; }
 
-  /* Thin bars rather than round dots: they read as a strip of film, and they
-     double as a progress indicator across the set. */
-  .life-dots { display: flex; gap: 6px; margin-top: 8px; }
-  /* The bar reads as 2px but the control is 14px tall: content-box sizing plus
-     vertical padding, with the background clipped to the content box so only
-     the bar paints. That gives the focus ring something to draw around and
-     makes the target hittable, without changing how it looks. */
-  .life-dot {
-    box-sizing: content-box;
-    flex: 1; height: 2px; border: 0; padding: 6px 0; cursor: pointer;
-    background-color: var(--ink-20); background-clip: content-box;
-    transition: background-color 240ms ease;
+  .life-hint {
+    margin: 12px 0 0;
+    font-family: var(--font-sans), system-ui, sans-serif;
+    font-size: var(--fs-caption); color: var(--ink-60);
   }
-  .life-dot.is-active { background-color: var(--accent); }
-  .life-dot:hover { background-color: var(--accent-deep); }
+
+  @media (hover: none) {
+    .life-caption { opacity: 1; transform: none; }
+    .life-hint { display: none; }
+  }
+  .life.is-still .life-img,
+  .life.is-still .life-img[data-lit="true"] { transform: none; transition: none; }
+  .life.is-still .life-caption { transform: none; }
 
   /* ── CONTACT CARD ───────────────────────────────────────── */
   .about-contact {
@@ -162,7 +177,7 @@
 
   @media (max-width: 940px) {
     .about-page { grid-template-columns: 1fr; gap: 48px; padding-top: 56px; }
-    .about-side { position: static; max-width: 420px; }
+    .about-side { position: static; max-width: 560px; }
   }
   @media (max-width: 560px) {
     .about-now-grid { grid-template-columns: 1fr; }

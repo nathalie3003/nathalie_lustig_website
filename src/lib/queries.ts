@@ -164,6 +164,7 @@ export async function getDailyReads(): Promise<DailyRead[]> {
 
 export type SiteSettings = {
   aboutParagraphs: string[];
+  lifePhotos?: { src: string; caption: string; hotspot?: { x: number; y: number } }[];
   contact: { label: string; value: string; href: string }[];
 };
 
@@ -171,6 +172,7 @@ export async function getSiteSettings(): Promise<SiteSettings | null> {
   return sanityClient.fetch(
     `*[_type == "siteSettings"][0]{
       aboutParagraphs,
+      "lifePhotos": lifePhotos[defined(asset)]{ "src": asset->url, caption, hotspot{ x, y } },
       contact[]{ label, value, href }
     }`,
     {},
