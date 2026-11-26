@@ -13,6 +13,7 @@ export type FrontStory = {
   cat: string;
   date: string;
   read: string;
+  image?: string;
 };
 
 // Design exploration: the homepage set as a publication front page. Shown only
@@ -21,6 +22,7 @@ export type FrontStory = {
 // how she thinks rather than describing it.
 export function FrontPage({
   today,
+  issueNo,
   lead,
   leadExtras,
   leadImage,
@@ -32,6 +34,7 @@ export function FrontPage({
   rail,
 }: {
   today: string;
+  issueNo: number;
   lead: FrontStory;
   leadExtras: LeadExtras | null;
   leadImage: string | null;
@@ -52,7 +55,10 @@ export function FrontPage({
           The Basis Point<span className="bp-point">.</span>
         </p>
         <div className="fp-ears">
-          <span className="fp-ear">{today}</span>
+          <span className="fp-ear">
+            <span className="fp-issue-no">No. {issueNo} · </span>
+            {today}
+          </span>
           <TypedTopics
             lead="Notes on"
             words={CATEGORIES.map((c) => c.label.toLowerCase().replace("&", "and"))}
@@ -66,10 +72,11 @@ export function FrontPage({
           <h1 className="fp-lead-title">
             <Link href={`/notes/${lead.slug}`}>{lead.title}</Link>
           </h1>
+          {lead.excerpt ? <p className="fp-lead-deck">{lead.excerpt}</p> : null}
           <p className="fp-dateline">
+            <span className="fp-byline">By Nathalie Lustig · </span>
             {lead.cat} · {lead.date} · {lead.read} read
           </p>
-          {lead.excerpt ? <p className="fp-lead-deck">{lead.excerpt}</p> : null}
 
           {strip.length > 0 ? (
             <dl className="fp-strip">
@@ -118,9 +125,17 @@ export function FrontPage({
       </div>
 
       {secondary.length > 0 ? (
-        <section className="fp-row" aria-label="More recent notes">
+        <section className="fp-row" aria-labelledby="fp-row-head">
+          <h2 className="fp-row-head" id="fp-row-head">
+            Also in this issue
+          </h2>
           {secondary.map((s) => (
             <article key={s.slug} className="fp-story">
+              {s.image ? (
+                <div className="fp-story-media">
+                  <Image src={s.image} alt="" width={720} height={450} sizes="(max-width: 920px) 100vw, 360px" />
+                </div>
+              ) : null}
               <h2 className="fp-story-title">
                 <Link href={`/notes/${s.slug}`}>{s.title}</Link>
               </h2>

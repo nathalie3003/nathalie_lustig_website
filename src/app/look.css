@@ -118,7 +118,6 @@
     display: grid; grid-template-columns: repeat(3, minmax(0, 1fr));
     margin-top: 60px; padding-top: 26px; border-top: 2px solid var(--ink);
   }
-  .fp-story { padding-right: 28px; }
   .fp-story + .fp-story { padding-left: 28px; border-left: 1px solid var(--rule); }
   .fp-story-title {
     margin: 0; text-wrap: balance;
@@ -129,6 +128,112 @@
     margin: 12px 0 0; text-wrap: pretty;
     font-family: var(--font-serif), Georgia, serif;
     font-size: var(--fs-body-s); line-height: 1.55; color: var(--ink-60);
+  }
+
+  /* The whole story is the click target and lights up on hover: the title
+     link is stretched over its article, which tints, and the picture eases in. */
+  .fp-lead, .fp-story { position: relative; transition: background-color 200ms ease; }
+  .fp-lead-title a::after, .fp-story-title a::after {
+    content: ""; position: absolute; inset: 0; z-index: 1;
+  }
+  .fp-more { position: relative; z-index: 2; }
+  .fp-lead { margin: -22px; padding: 22px; }
+  .fp-lead:hover, .fp-story:hover { background-color: #FBF3F6; }
+  .fp-lead:hover .fp-lead-title a, .fp-story:hover .fp-story-title a { color: var(--accent); }
+  .fp-lead:has(.fp-lead-title a:focus-visible),
+  .fp-story:has(.fp-story-title a:focus-visible) { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .fp-lead-title a:focus-visible, .fp-story-title a:focus-visible { outline: none; }
+  .fp-figure, .fp-story-media { overflow: hidden; }
+  .fp-figure img, .fp-story-media img { transition: transform 600ms cubic-bezier(0.2, 0.7, 0.2, 1); }
+  .fp-lead:hover .fp-figure img, .fp-story:hover .fp-story-media img { transform: scale(1.025); }
+  .fp-story-media { margin: 0 0 16px; aspect-ratio: 16 / 10; background: var(--tint); }
+  .fp-story-media img { display: block; width: 100%; height: 100%; object-fit: cover; }
+  .fp-row { padding-top: 0; }
+  /* The row is widened by the story padding on both sides so every picture
+     is the same width and the hover tint has room; the rule stays on the grid. */
+  .fp-row { margin-inline: -22px; border-top: 0; }
+  .fp-row::before {
+    content: ""; grid-column: 1 / -1; margin: 0 22px; border-top: 2px solid var(--ink);
+  }
+  .fp-row > .fp-row-head { padding-inline: 22px; }
+  .fp-story, .fp-story + .fp-story { padding: 24px 22px 26px; }
+  @media (prefers-reduced-motion: reduce) {
+    .fp-figure img, .fp-story-media img { transition: none; }
+    .fp-lead:hover .fp-figure img, .fp-story:hover .fp-story-media img { transform: none; }
+  }
+
+  .fp-issue-no, .fp-byline { display: none; }
+  .fp-row-head {
+    grid-column: 1 / -1; margin: 0; padding: 14px 0 0;
+    font-family: var(--font-serif), Georgia, serif; font-weight: 600;
+    font-size: var(--fs-title); letter-spacing: -0.02em;
+  }
+
+  /* Masthead type options (html[data-mast]). */
+  html[data-mast="didone"] .fp-name {
+    font-family: var(--font-mast-didone), serif; font-weight: 800; letter-spacing: -0.025em;
+  }
+  html[data-mast="playfair"] .fp-name {
+    font-family: var(--font-mast-playfair), serif; font-weight: 900; letter-spacing: -0.02em;
+  }
+  html[data-mast="italic"] .fp-name {
+    font-family: var(--font-mast-italic), serif; font-style: italic; font-weight: 400;
+    font-size: clamp(54px, 10vw, 116px); letter-spacing: -0.02em; line-height: 0.95;
+  }
+  html[data-mast="engraved"] .fp-name {
+    font-family: var(--font-mast-engraved), serif; font-weight: 600;
+    font-size: clamp(30px, 6.2vw, 74px); letter-spacing: 0.08em; line-height: 1.1;
+  }
+  html[data-mast="blackletter"] .fp-name {
+    font-family: var(--font-mast-blackletter), serif; font-weight: 400;
+    font-size: clamp(50px, 9vw, 104px); letter-spacing: 0; line-height: 1.05;
+  }
+
+  /* Issue / article style (html[data-layout="issue"]): the lead set like the
+     opening spread of a magazine feature. Centred headline, italic deck and
+     byline, the summary in two columns, and the markets panel moved below. */
+  html[data-layout="issue"] .fp-issue-no,
+  html[data-layout="issue"] .fp-byline { display: inline; }
+  html[data-layout="issue"] .fp-top { grid-template-columns: 1fr; gap: 0; margin-top: 52px; }
+  html[data-layout="issue"] .fp-lead { text-align: center; }
+  html[data-layout="issue"] .fp-lead-title {
+    margin: 0 auto; max-width: 18ch;
+    font-size: clamp(40px, 6.2vw, 84px); line-height: 1.0; letter-spacing: -0.036em;
+  }
+  html[data-layout="issue"] .fp-lead-deck {
+    margin: 22px auto 0; max-width: 40ch;
+    font-style: italic; font-size: clamp(20px, 2.1vw, 26px); color: var(--ink-72);
+  }
+  html[data-layout="issue"] .fp-dateline { margin-top: 20px; }
+  html[data-layout="issue"] .fp-strip {
+    max-width: 780px; margin: 36px auto 0; text-align: left;
+    border-top: 1px solid var(--ink); border-bottom: 1px solid var(--ink);
+  }
+  html[data-layout="issue"] .fp-stat { padding-bottom: 16px; }
+  html[data-layout="issue"] .fp-figure { margin-top: 40px; }
+  html[data-layout="issue"] .fp-figure figcaption { text-align: left; }
+  html[data-layout="issue"] .fp-summary {
+    max-width: none; margin-top: 34px; text-align: left;
+    columns: 2 300px; column-gap: 48px; column-rule: 1px solid var(--rule);
+    font-size: var(--fs-lead); color: var(--ink);
+  }
+  html[data-layout="issue"] .fp-side {
+    display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: 0 48px;
+    align-items: start; margin-top: 56px; padding: 28px 0 0;
+    border-left: 0; border-top: 2px solid var(--ink);
+  }
+  html[data-layout="issue"] .fp-side-title { grid-column: 1 / -1; border-bottom: 0; padding-bottom: 0; }
+  html[data-layout="issue"] .fp-side .curve-card { grid-row: 2 / span 2; }
+  html[data-layout="issue"] .fp-side { grid-template-rows: auto auto 1fr; }
+  html[data-layout="issue"] .fp-about { margin-top: 0; font-size: var(--fs-lead); }
+  html[data-layout="issue"] .fp-side-link { align-self: start; }
+  html[data-layout="issue"] .fp-row-head { text-align: center; font-style: italic; }
+  html[data-layout="issue"] .fp-story { text-align: center; }
+  html[data-layout="issue"] .fp-story-deck { font-style: italic; }
+  @media (max-width: 920px) {
+    html[data-layout="issue"] .fp-side { grid-template-columns: 1fr; }
+    html[data-layout="issue"] .fp-side .curve-card { grid-row: auto; }
+    html[data-layout="issue"] .fp-about { margin-top: 24px; }
   }
 
   .fp-grid { padding-left: 0; padding-right: 0; padding-top: 80px; }
@@ -142,10 +247,13 @@
     .fp-story, .fp-story + .fp-story {
       padding: 22px 0; border-left: 0; border-bottom: 1px solid var(--rule);
     }
+    .fp-row { margin-inline: 0; }
+    .fp-row::before, .fp-row > .fp-row-head { margin-inline: 0; padding-inline: 0; }
     .fp-grid { padding-top: 56px; }
   }
   @media (max-width: 560px) {
     .fp { padding-top: 24px; }
+    .fp-lead { margin: -14px; padding: 14px; }
     .fp-ears { grid-template-columns: 1fr; gap: 6px; justify-items: center; }
     .fp-ear { justify-self: center; }
     .fp-ear-end { display: none; }
@@ -265,76 +373,71 @@
     .landing-bg, .landing-inner, .landing-cue, .landing-cue-arrow { animation: none !important; }
   }
 
-  /* ── DIRECTION 2: TEXTURES ──────────────────────────────── */
-  /* Three surfaces take a texture: the page itself (a repeating tile), and
-     two full-width bands, the top of the homepage and the footer, which take
-     one large image. Cards keep their solid fills, so they now sit on the
-     page rather than being flush with it. That contrast is the depth. */
-
-  .home-band-top { position: relative; padding-bottom: 8px; }
-
-  /* Grain is the base layer for every texture option. Each option sets the
-     page's background layers once, on body (and on the landing's sheet), so
-     the texture runs the whole length of every page rather than sitting in
-     one band. */
-  html[data-texture="grain"],
-  html[data-texture="wash"] {
-    --page-texture: url(/textures/grain.png);
-    --page-texture-size: 320px;
-  }
-  /* Bond-certificate lines: two faint engraved ribbons per 1400px tile,
-     repeating down the page over the grain. */
-  html[data-texture="guilloche"] {
-    --page-texture: url(/textures/guilloche-tile.svg), url(/textures/grain.png);
-    --page-texture-size: 1600px auto, 320px;
-  }
-  /* ALFIE's ChatGPT images (public/textures/gpt). The tiles are 1254px
-     squares, shown at half size so they stay crisp on retina screens. */
-  html[data-texture="gpt-guilloche"] {
-    --page-texture: url(/textures/gpt/guilloche.webp);
-    --page-texture-size: 627px;
-  }
-  html[data-texture="gpt-newsprint"],
-  html[data-texture="gpt-paper-wash"] {
-    --page-texture: url(/textures/gpt/newsprint.webp);
-    --page-texture-size: 627px;
-  }
-  html[data-texture]:not([data-texture="none"]) body,
-  html[data-hero="landing"][data-texture]:not([data-texture="none"]) .home-sheet {
-    background-image: var(--page-texture);
-    background-size: var(--page-texture-size);
-    background-repeat: repeat;
-    background-position: center top;
-  }
+  /* ── DIRECTION 2: BACKGROUNDS ───────────────────────────── */
+  /* Two families. "Bond" options borrow from a printed certificate: engraved
+     guilloche rosettes held in the corners of the screen, optionally inside a
+     ruled frame. "Gradient" options tint the paper itself. The corner layer is
+     fixed and sits behind the content, so it frames whatever is on screen
+     without ever covering text. */
+  /* The paper is painted on <html> and body is see-through, so the fixed
+     corner layer (z-index -1) shows between the two. */
+  html[data-texture]:not([data-texture="none"]) body { background: transparent; }
   html[data-texture]:not([data-texture="none"]) .foot { background-color: transparent; }
-  /* The archive filter row and article pages paint white panels; let the
-     texture through those too. */
   html[data-texture]:not([data-texture="none"]) .band-projects { background: transparent; }
 
-  /* Paper grain: a slightly warmer paper so the fibres read. */
-  html[data-texture="grain"] { --bg: #FDFCFA; --nav-bg: #FDFCFA; }
-
-  /* Raspberry wash: soft colour pooled at the top of the page and the foot. */
-  html[data-texture="wash"] .home-band-top {
+  html[data-texture="corners"] body::before,
+  html[data-texture="frame"] body::before,
+  html[data-texture="green"] body::before {
+    content: ""; position: fixed; inset: 0; z-index: -1; pointer-events: none;
     background:
-      radial-gradient(ellipse 60% 70% at 88% 18%, rgba(247, 217, 227, 0.75), transparent 70%),
-      radial-gradient(ellipse 50% 50% at 6% 4%, rgba(236, 234, 233, 0.9), transparent 70%);
+      url(/textures/bond/corner-tl.svg) left top / var(--corner-size) no-repeat,
+      url(/textures/bond/corner-tr.svg) right top / var(--corner-size) no-repeat,
+      url(/textures/bond/corner-bl.svg) left bottom / var(--corner-size) no-repeat,
+      url(/textures/bond/corner-br.svg) right bottom / var(--corner-size) no-repeat;
   }
-  html[data-texture="wash"] .foot {
-    background:
-      radial-gradient(ellipse 70% 80% at 15% 100%, rgba(247, 217, 227, 0.7), transparent 70%),
-      radial-gradient(ellipse 50% 60% at 95% 90%, rgba(178, 58, 99, 0.08), transparent 70%);
+  html[data-texture="corners"],
+  html[data-texture="frame"],
+  html[data-texture="green"] { --corner-size: clamp(170px, 22vw, 300px); }
+
+  /* Certificate frame: a double rule inset from the screen edge. */
+  html[data-texture="frame"] body::after {
+    content: ""; position: fixed; inset: 10px; z-index: -1; pointer-events: none;
+    border: 1px solid rgba(178, 58, 99, 0.28);
+    box-shadow: inset 0 0 0 4px #FFFFFF, inset 0 0 0 5px rgba(178, 58, 99, 0.16);
   }
 
-  /* ChatGPT paper + wash: the newsprint tile throughout, with the watercolour
-     pooled behind the opening section and fading out beneath it. */
-  html[data-texture="gpt-paper-wash"] .home-band-top { position: relative; isolation: isolate; }
-  html[data-texture="gpt-paper-wash"] .home-band-top::before {
-    content: ""; position: absolute; inset: 0 0 -80px; z-index: -1; pointer-events: none;
-    background: url(/textures/gpt/watercolour.webp) center top / cover no-repeat;
-    opacity: 0.85;
-    mask-image: linear-gradient(180deg, #000 0%, #000 45%, transparent 100%);
+  /* Certificate green: the pale green-grey of an engraved bond, with the
+     corners recoloured to match. */
+  html[data-texture="green"] { --bg: #F6F8F3; --nav-bg: #F6F8F3; }
+  html[data-texture="green"] { background: linear-gradient(180deg, #EEF3EA 0%, #F6F8F3 38%, #F9FAF7 100%); }
+  html[data-texture="green"] body::before { filter: hue-rotate(160deg) saturate(0.55) brightness(0.9); }
+
+  /* Paper: warm off-white that deepens very slightly towards the foot. */
+  html[data-texture="paper"] { --bg: #FCFAF6; --nav-bg: #FCFAF6; }
+  html[data-texture="paper"] {
+    background: linear-gradient(180deg, #FDFBF8 0%, #FAF6EF 100%);
   }
+
+  /* Dawn: raspberry and peach light pooled in the top corners, held fixed so
+     it stays with the reader as they scroll. */
+  html[data-texture="dawn"] {
+    background:
+      radial-gradient(ellipse 55% 45% at 100% 0%, rgba(247, 217, 227, 0.85), transparent 70%),
+      radial-gradient(ellipse 45% 40% at 0% 0%, rgba(252, 232, 214, 0.75), transparent 70%),
+      radial-gradient(ellipse 60% 40% at 50% 100%, rgba(178, 58, 99, 0.06), transparent 70%),
+      #FFFFFF;
+    background-attachment: fixed;
+  }
+
+  /* Ink to paper: a deep raspberry band at the very top that dissolves into
+     white within the first screen. */
+  html[data-texture="ink-fade"] {
+    background: linear-gradient(180deg, rgba(178, 58, 99, 0.14) 0, rgba(247, 217, 227, 0.35) 260px, #FFFFFF 720px) no-repeat, #FFFFFF;
+  }
+
+  /* Cards keep their own fills, so on tinted paper they sit on the page. */
+  html[data-texture="paper"] .fp-side .curve-card,
+  html[data-texture="green"] .fp-side .curve-card { background: #FFFFFF; }
 
   /* ── FOOTER BANDS ───────────────────────────────────────── */
   /* Doubled class so these win over the texture rules above, which clear the
@@ -405,7 +508,7 @@
     font-size: 12px; font-weight: 500; color: var(--ink-60);
   }
   .look-switch.is-closed .look-switch-toggle { color: var(--ink); padding: 10px 14px; }
-  .look-switch-body { display: grid; gap: 10px; }
+  .look-switch-body { display: grid; gap: 10px; max-height: calc(100vh - 140px); overflow-y: auto; }
   .look-switch fieldset { border: 0; margin: 0; padding: 0; display: grid; gap: 5px; }
   .look-switch legend {
     margin-bottom: 4px; font-weight: 600; font-size: 12.5px; color: var(--ink);

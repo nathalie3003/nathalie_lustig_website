@@ -26,18 +26,32 @@ export const HERO_OPTIONS = [
 
 export const TEXTURE_OPTIONS = [
   { value: "none", label: "Flat white (current)" },
-  { value: "grain", label: "Paper grain" },
-  { value: "guilloche", label: "Bond-certificate lines" },
-  { value: "wash", label: "Raspberry wash" },
-  { value: "gpt-guilloche", label: "ChatGPT engraving" },
-  { value: "gpt-newsprint", label: "ChatGPT newsprint" },
-  { value: "gpt-paper-wash", label: "ChatGPT paper + wash" },
+  { value: "corners", label: "Bond corners" },
+  { value: "frame", label: "Bond corners + frame" },
+  { value: "green", label: "Certificate green" },
+  { value: "paper", label: "Gradient: warm paper" },
+  { value: "dawn", label: "Gradient: raspberry dawn" },
+  { value: "ink-fade", label: "Gradient: ink to paper" },
 ] as const;
 
 export const FOOTER_OPTIONS = [
   { value: "plain", label: "White (current)" },
   { value: "ink", label: "Ink band" },
   { value: "certificate", label: "Certificate band" },
+] as const;
+
+export const MAST_OPTIONS = [
+  { value: "serif", label: "Source Serif (current)" },
+  { value: "didone", label: "Bodoni, high contrast" },
+  { value: "playfair", label: "Playfair, heavy" },
+  { value: "italic", label: "Instrument Serif italic" },
+  { value: "engraved", label: "Engraved capitals" },
+  { value: "blackletter", label: "Newspaper blackletter" },
+] as const;
+
+export const LAYOUT_OPTIONS = [
+  { value: "standard", label: "Front page" },
+  { value: "issue", label: "Issue / article style" },
 ] as const;
 
 export type HeroLook = (typeof HERO_OPTIONS)[number]["value"];
@@ -48,6 +62,8 @@ export const LOOK_KEYS = {
   hero: "bp-look-hero",
   texture: "bp-look-texture",
   footer: "bp-look-footer",
+  mast: "bp-look-mast",
+  layout: "bp-look-layout",
 } as const;
 
 // Plain ES5, inline in <head>. Also picks the landing hero's painting for this

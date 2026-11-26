@@ -78,6 +78,7 @@ export default async function HomePage() {
     cat: noteCat(n.category).cat,
     date: formatDateShort(n.publishedAt),
     read: readTimeFromChars(n.readChars),
+    image: n.coverImage ? urlFor(n.coverImage).width(720).height(450).url() : undefined,
   });
   // The front page prefers the note's own first figure over its cover.
   const leadFigure = leadExtras?.figure?.asset ? leadExtras.figure : null;
@@ -139,6 +140,7 @@ export default async function HomePage() {
       {latest ? (
         <FrontPage
           today={today}
+          issueNo={notes.length}
           lead={toStory(latest)}
           leadExtras={leadExtras}
           leadImage={leadImage}
