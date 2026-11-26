@@ -95,21 +95,73 @@
   }
 
   .fp-side { padding-left: 40px; border-left: 1px solid var(--rule); }
-  .fp-side-title {
-    margin: 0 0 16px; padding-bottom: 10px; border-bottom: 2px solid var(--ink);
-    font-family: var(--font-serif), Georgia, serif; font-weight: 600;
+  /* Markets box: the curve today against a year ago, key yields, spreads. */
+  .mk-head {
+    display: flex; align-items: baseline; justify-content: space-between; gap: 12px;
+    padding-bottom: 10px; border-bottom: 2px solid var(--ink);
+  }
+  .mk-title {
+    margin: 0; font-family: var(--font-serif), Georgia, serif; font-weight: 600;
     font-size: var(--fs-title); letter-spacing: -0.02em;
   }
-  /* The card is narrow here, so the SVG labels need bigger units. */
-  .fp-side .curve-tick { font-size: 15px; }
-  .fp-side .curve-xlabel { font-size: 15px; }
-  .fp-about {
-    margin: 28px 0 0; text-wrap: pretty;
-    font-family: var(--font-serif), Georgia, serif;
-    font-size: var(--fs-body-s); line-height: 1.6; color: var(--ink-72);
+  .mk-asof, .mk-source, .mk-legend, .mk-xlabels, .mk-table, .mk-spreads dt {
+    font-family: var(--font-mono), ui-monospace, monospace; color: var(--ink-60);
   }
+  .mk-asof { font-size: var(--fs-meta); letter-spacing: 0.1em; text-transform: uppercase; text-align: right; }
+  .mk-chart { position: relative; margin: 18px 0 0; }
+  .mk-svg { display: block; width: 100%; height: 132px; overflow: visible; }
+  .mk-grid { stroke: var(--rule); stroke-width: 1; vector-effect: non-scaling-stroke; }
+  .mk-area { fill: var(--accent); opacity: 0.07; }
+  .mk-now { fill: none; stroke: var(--accent); stroke-width: 2.25; vector-effect: non-scaling-stroke; stroke-linejoin: round; }
+  .mk-then { fill: none; stroke: var(--ink); stroke-opacity: 0.5; stroke-width: 1.25; stroke-dasharray: 4 4; vector-effect: non-scaling-stroke; }
+  .mk-dot { fill: var(--accent); }
+  .mk-xlabels { position: relative; height: 18px; margin-top: 4px; font-size: var(--fs-meta); letter-spacing: 0.06em; }
+  .mk-xlabels span { position: absolute; top: 0; transform: translateX(-50%); }
+  .mk-xlabels span:first-child { transform: none; }
+  .mk-xlabels span:last-child { transform: translateX(-100%); }
+  .mk-legend { display: flex; gap: 18px; margin-top: 8px; font-size: var(--fs-meta); letter-spacing: 0.06em; }
+  .mk-key { display: inline-flex; align-items: center; gap: 7px; }
+  .mk-key::before { content: ""; width: 18px; border-top: 2px solid var(--accent); }
+  .mk-key-then::before { border-top: 1.5px dashed rgba(25, 19, 22, 0.55); }
+  .mk-table {
+    width: 100%; margin-top: 18px; border-collapse: collapse;
+    font-size: var(--fs-small); font-variant-numeric: tabular-nums;
+  }
+  .mk-table th, .mk-table td { padding: 8px 0; text-align: right; border-bottom: 1px solid var(--rule); }
+  .mk-table thead th {
+    padding-top: 0; font-weight: 400; font-size: var(--fs-meta);
+    letter-spacing: 0.1em; text-transform: uppercase; border-bottom-color: var(--ink-20);
+  }
+  .mk-table th:first-child { text-align: left; }
+  .mk-table tbody th { font-weight: 500; color: var(--ink); }
+  .mk-table td { color: var(--ink); }
+  .mk-table td.is-down { color: var(--accent); }
+  .mk-spreads { display: grid; grid-template-columns: 1fr 1fr; margin: 18px 0 0; }
+  .mk-spreads > div { padding-right: 14px; }
+  .mk-spreads > div + div { padding: 0 0 0 16px; border-left: 1px solid var(--rule); }
+  .mk-spreads dt { font-size: var(--fs-caption); letter-spacing: 0.02em; }
+  .mk-spreads dd {
+    margin: 4px 0 0; font-family: var(--font-serif), Georgia, serif; font-weight: 600;
+    font-size: var(--fs-headline-s); letter-spacing: -0.02em; color: var(--ink);
+    font-variant-numeric: lining-nums tabular-nums;
+  }
+  .mk-source { margin: 14px 0 0; font-size: var(--fs-caption); line-height: 1.5; }
+  .sr-only {
+    position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+    overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+  }
+
+  .fp-about {
+    margin: 32px 0 0; padding-top: 20px; border-top: 1px solid var(--ink);
+  }
+  .fp-about p {
+    margin: 0; text-wrap: pretty;
+    font-family: var(--font-serif), Georgia, serif; font-style: italic;
+    font-size: var(--fs-lead); line-height: 1.5; color: var(--ink);
+  }
+  .fp-about footer { margin-top: 8px; }
   .fp-side-link {
-    display: inline-block; margin-top: 10px; padding: 6px 0;
+    display: inline-block; padding: 6px 0;
     font-family: var(--font-sans), system-ui, sans-serif;
     font-size: var(--fs-small); font-weight: 500; color: var(--accent);
   }
@@ -218,22 +270,18 @@
     font-size: var(--fs-lead); color: var(--ink);
   }
   html[data-layout="issue"] .fp-side {
-    display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: 0 48px;
-    align-items: start; margin-top: 56px; padding: 28px 0 0;
+    display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); gap: 0 56px;
+    align-items: start; margin-top: 56px; padding: 32px 0 0;
     border-left: 0; border-top: 2px solid var(--ink);
   }
-  html[data-layout="issue"] .fp-side-title { grid-column: 1 / -1; border-bottom: 0; padding-bottom: 0; }
-  html[data-layout="issue"] .fp-side .curve-card { grid-row: 2 / span 2; }
-  html[data-layout="issue"] .fp-side { grid-template-rows: auto auto 1fr; }
-  html[data-layout="issue"] .fp-about { margin-top: 0; font-size: var(--fs-lead); }
-  html[data-layout="issue"] .fp-side-link { align-self: start; }
+  html[data-layout="issue"] .fp-about { margin-top: 0; padding-top: 0; border-top: 0; }
+  html[data-layout="issue"] .fp-about p { font-size: var(--fs-standfirst); }
   html[data-layout="issue"] .fp-row-head { text-align: center; font-style: italic; }
   html[data-layout="issue"] .fp-story { text-align: center; }
   html[data-layout="issue"] .fp-story-deck { font-style: italic; }
   @media (max-width: 920px) {
     html[data-layout="issue"] .fp-side { grid-template-columns: 1fr; }
-    html[data-layout="issue"] .fp-side .curve-card { grid-row: auto; }
-    html[data-layout="issue"] .fp-about { margin-top: 24px; }
+    html[data-layout="issue"] .fp-about { margin-top: 32px; }
   }
 
   .fp-grid { padding-left: 0; padding-right: 0; padding-top: 80px; }
@@ -436,8 +484,7 @@
   }
 
   /* Cards keep their own fills, so on tinted paper they sit on the page. */
-  html[data-texture="paper"] .fp-side .curve-card,
-  html[data-texture="green"] .fp-side .curve-card { background: #FFFFFF; }
+
 
   /* ── FOOTER BANDS ───────────────────────────────────────── */
   /* Doubled class so these win over the texture rules above, which clear the
