@@ -50,6 +50,43 @@ function useFittedWordmark() {
   return { boxRef, textRef };
 }
 
+/** The wordmark's full stop as a splash of raspberry ink: a body, a few
+ *  thrown droplets, and a short drip line. It lands once the wipe reaches it. */
+const SPLAT_BODY =
+  "M69.0 50.0C69.1 52.2 72.9 54.8 72.6 56.6C72.3 58.5 67.8 58.5 67.2 61.1C66.6 63.6 70.3 70.4 69.0 72.0C67.7 73.6 62.1 70.7 59.4 70.6C56.7 70.5 55.1 71.5 53.1 71.4C51.0 71.4 49.2 70.6 47.1 70.4C45.0 70.3 42.5 71.2 40.5 70.7C38.5 70.2 37.5 68.1 35.1 67.2C32.7 66.3 27.4 67.1 26.3 65.3C25.2 63.4 28.2 58.9 28.5 56.3C28.7 53.8 27.9 52.1 27.8 50.0C27.7 47.9 27.0 45.3 27.9 43.5C28.7 41.7 31.6 40.6 33.0 39.1C34.4 37.5 35.9 37.7 36.3 34.2C36.7 30.8 33.7 19.3 35.5 18.2C37.2 17.1 43.9 25.6 46.8 27.7C49.7 29.9 50.7 30.6 52.7 30.9C54.8 31.2 56.9 29.8 59.3 29.6C61.8 29.4 65.7 28.6 67.5 29.8C69.2 31.1 69.1 35.0 69.9 37.2C70.6 39.5 72.2 41.4 72.1 43.5C72.0 45.6 68.9 47.8 69.0 50.0Z";
+const SPLAT_DROPS = [
+  { cx: 84, cy: 34, r: 4.2 },
+  { cx: 91, cy: 52, r: 2.4 },
+  { cx: 79, cy: 74, r: 3.1 },
+  { cx: 22, cy: 24, r: 2.6 },
+  { cx: 13, cy: 58, r: 3.4 },
+  { cx: 58, cy: 13, r: 2.0 },
+];
+
+function InkPoint() {
+  return (
+    <svg className="foot-mark-dot" viewBox="0 0 100 100" aria-hidden="true">
+      <path className="ink-body" d={SPLAT_BODY} />
+      {SPLAT_DROPS.map((d, i) => (
+        <circle
+          key={i}
+          className="ink-drop"
+          cx={d.cx}
+          cy={d.cy}
+          r={d.r}
+          style={
+            {
+              "--dx": `${50 - d.cx}px`,
+              "--dy": `${50 - d.cy}px`,
+              animationDelay: `${860 + i * 18}ms`,
+            } as React.CSSProperties
+          }
+        />
+      ))}
+    </svg>
+  );
+}
+
 export function ContactFooter() {
   const [copied, setCopied] = useState(false);
   const { boxRef, textRef } = useFittedWordmark();
@@ -120,7 +157,7 @@ export function ContactFooter() {
 
         <div className="foot-mark" ref={boxRef} aria-hidden="true">
           <span className="foot-mark-text" ref={textRef}>
-            The Basis Point<span className="foot-mark-dot">.</span>
+            The Basis Point<InkPoint />
           </span>
         </div>
 
