@@ -43,7 +43,7 @@ export function LogoMarquee({
               alt=""
               width={28}
               height={28}
-              loading="lazy"
+              decoding="async"
               className="marquee-icon"
             />
             <span className="marquee-name">{item.name}</span>
