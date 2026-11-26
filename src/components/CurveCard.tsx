@@ -12,7 +12,7 @@ type Props = {
 // Viewbox is fixed; the card scales it to whatever width the hero column gets.
 const VW = 520;
 const VH = 210;
-const PAD_L = 40;
+const PAD_L = 46;
 const PAD_R = 12;
 const PAD_T = 12;
 const PAD_B = 26;

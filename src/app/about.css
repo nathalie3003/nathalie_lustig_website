@@ -15,7 +15,7 @@
   .about-eyebrow {
     display: block;
     font-family: var(--font-mono), ui-monospace, monospace;
-    font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase;
+    font-size: var(--fs-caption); letter-spacing: 0.16em; text-transform: uppercase;
     color: var(--accent);
   }
   .about-heading {
@@ -25,7 +25,7 @@
   }
   .about-bio-text p {
     font-family: var(--font-serif), Georgia, serif;
-    font-size: 20px; line-height: 1.75; color: var(--ink-72);
+    font-size: var(--fs-body); line-height: 1.75; color: var(--ink-72);
     margin: 28px 0 0; max-width: 60ch; text-wrap: pretty;
   }
 
@@ -36,7 +36,7 @@
   .about-now-label {
     display: block;
     font-family: var(--font-mono), ui-monospace, monospace;
-    font-size: 10.5px; letter-spacing: 0.14em; text-transform: uppercase;
+    font-size: var(--fs-meta); letter-spacing: 0.14em; text-transform: uppercase;
     color: var(--ink-60);
   }
   .about-now-grid {
@@ -61,17 +61,17 @@
   .about-now-card-label {
     display: block;
     font-family: var(--font-sans), system-ui, sans-serif;
-    font-size: 12px; color: var(--ink-60);
+    font-size: var(--fs-caption); color: var(--ink-60);
   }
   .about-now-card-value {
     display: block;
     font-family: var(--font-serif), Georgia, serif;
-    font-size: 17px; line-height: 1.45; margin-top: 3px; text-wrap: pretty;
+    font-size: var(--fs-body-s); line-height: 1.45; margin-top: 3px; text-wrap: pretty;
   }
   .about-now-hint {
     display: block;
     font-family: var(--font-sans), system-ui, sans-serif;
-    font-size: 12.5px; font-style: italic; color: var(--ink-60); margin-top: 6px;
+    font-size: var(--fs-caption); font-style: italic; color: var(--ink-60); margin-top: 6px;
   }
   .about-now-card:hover .about-now-hint { color: var(--accent); }
 
@@ -103,19 +103,20 @@
   .life-count {
     display: block;
     font-family: var(--font-mono), ui-monospace, monospace;
-    font-size: 10.5px; letter-spacing: 0.14em; text-transform: uppercase;
+    font-size: var(--fs-meta); letter-spacing: 0.14em; text-transform: uppercase;
     color: var(--ink-60);
   }
   .life-caption {
     font-family: var(--font-serif), Georgia, serif;
-    font-size: 16.5px; line-height: 1.45; color: var(--ink-72);
+    font-size: var(--fs-body-s); line-height: 1.45; color: var(--ink-72);
     margin: 5px 0 0; text-wrap: pretty;
   }
   .life-nav { display: flex; gap: 6px; flex: none; padding-top: 2px; }
   .life-btn {
+    display: inline-grid; place-items: center;
     width: 30px; height: 30px; border-radius: 50%;
     border: 1px solid var(--ink-20); background: #FFFFFF; color: var(--ink);
-    font-size: 13px; line-height: 1; cursor: pointer;
+    font-size: var(--fs-small); line-height: 1; cursor: pointer;
     transition: border-color 160ms ease, color 160ms ease;
   }
   .life-btn:hover { border-color: var(--accent); color: var(--accent); }
@@ -145,18 +146,18 @@
   .about-contact-label {
     display: block;
     font-family: var(--font-mono), ui-monospace, monospace;
-    font-size: 10.5px; letter-spacing: 0.14em; text-transform: uppercase;
+    font-size: var(--fs-meta); letter-spacing: 0.14em; text-transform: uppercase;
     color: var(--ink-60);
   }
   .about-contact-email {
     display: block;
     font-family: var(--font-serif), Georgia, serif;
-    font-size: 17px; margin-top: 12px; color: var(--ink); word-break: break-word;
+    font-size: var(--fs-body-s); margin-top: 12px; color: var(--ink); word-break: break-word;
   }
   .about-contact-link {
     display: inline-block; margin-top: 14px;
     font-family: var(--font-sans), system-ui, sans-serif;
-    font-size: 14px; font-weight: 500;
+    font-size: var(--fs-small); font-weight: 500;
   }
 
   @media (max-width: 940px) {
@@ -165,6 +166,6 @@
   }
   @media (max-width: 560px) {
     .about-now-grid { grid-template-columns: 1fr; }
-    .about-bio-text p { font-size: 18px; }
+    .about-bio-text p { font-size: var(--fs-lead); }
   }
 }

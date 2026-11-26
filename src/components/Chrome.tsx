@@ -1,7 +1,6 @@
 "use client";
 import { usePathname } from "next/navigation";
 import { TopBar } from "./Nav";
-import { Intro } from "./Intro";
 import { LookSwitcher } from "./LookSwitcher";
 
 export function Chrome({
@@ -16,9 +15,11 @@ export function Chrome({
   if (isStudio) return <>{children}</>;
   return (
     <>
-      <Intro />
+      <a href="#main" className="skip-link">
+        Skip to content
+      </a>
       <TopBar />
-      <main className="main">{children}</main>
+      <main className="main" id="main" tabIndex={-1}>{children}</main>
       {footer}
       <LookSwitcher />
     </>

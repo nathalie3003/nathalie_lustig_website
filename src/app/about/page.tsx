@@ -25,7 +25,6 @@ export default async function AboutPage() {
     <>
     <div className="about-page">
       <div className="about-bio">
-        <span className="about-eyebrow">{about.headline}</span>
         <h1 className="about-heading">A bit more about me</h1>
         <div className="about-bio-text">
           {paragraphs.map((p, i) => (

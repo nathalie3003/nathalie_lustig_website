@@ -6,7 +6,6 @@ import { RightRail } from "@/components/RightRail";
 import { RailScroll } from "@/components/RailScroll";
 import { HashScroll } from "@/components/HashScroll";
 import { CATEGORIES, noteCat } from "@/lib/noteCat";
-import { TypedTopics } from "@/components/TypedTopics";
 import { CurveCard } from "@/components/CurveCard";
 import { HomeNotes, type HomeNote } from "@/components/HomeNotes";
 import { LogoMarquee } from "@/components/LogoMarquee";
@@ -101,20 +100,12 @@ export default async function HomePage() {
       <div className="home-band-top">
       <section className="hero-grid" id="top">
         <div className="hero-copy">
-          <span className="hero-eyebrow">
-            <span className="hero-eyebrow-rule" aria-hidden="true" />
-            Bond notes since 2026
-          </span>
           <h1 className="hero-display">The Basis Point<span className="bp-point">.</span></h1>
           <p className="hero-standfirst">
             Bond markets are the most honest real-time read on the economy. I
             write these notes to work out what the market is pricing in, and
             what it might be missing.
           </p>
-          <TypedTopics
-            lead="Notes on"
-            words={CATEGORIES.map((c) => c.label.toLowerCase().replace("&", "and"))}
-          />
           <div className="hero-cta">
             {latest ? (
               <Link href={`/notes/${latest.slug}`} className="l-btn l-btn-primary">

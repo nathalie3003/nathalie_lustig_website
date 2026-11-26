@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, type ReactNode } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 
 // Idle drift speed (px/s).
 const IDLE_SPEED = 38;
@@ -16,8 +16,8 @@ const DRAG_THRESHOLD = 6;
 // screen, or swiped sideways on a trackpad. Letting go flings it with the
 // release speed, which then eases back into the drift. A drag never triggers
 // the link underneath it. Keyboard focus inside holds it still so a focused
-// link stays put. With prefers-reduced-motion nothing runs and the CSS shows a
-// static list.
+// link stays put. A Pause button stops it outright (WCAG 2.2.2). With
+// prefers-reduced-motion nothing runs and the CSS shows a static list.
 export function MarqueeTrack({
   reverse = false,
   children,
@@ -27,6 +27,8 @@ export function MarqueeTrack({
 }) {
   const wrapRef = useRef<HTMLDivElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
+  const pausedRef = useRef(false);
+  const [paused, setPaused] = useState(false);
 
   useEffect(() => {
     const wrap = wrapRef.current;
@@ -111,13 +113,15 @@ export function MarqueeTrack({
     const onFocusOut = (e: FocusEvent) => {
       if (!wrap.contains(e.relatedTarget as Node | null)) target = idle;
     };
+    // The Pause button flips pausedRef; the loop reads it every frame.
+    const aim = () => (pausedRef.current ? 0 : target);
 
     const tick = (now: number) => {
       // Cap the step so returning to a background tab does not jump.
       const dt = Math.min(0.05, (now - last) / 1000);
       last = now;
       if (!dragging) {
-        speed += (target - speed) * Math.min(1, dt * GLIDE);
+        speed += (aim() - speed) * Math.min(1, dt * GLIDE);
         x += speed * dt;
         render();
       }
@@ -147,10 +151,23 @@ export function MarqueeTrack({
   }, [reverse]);
 
   return (
-    <div className="marquee" ref={wrapRef}>
-      <div className="marquee-track" ref={trackRef}>
-        {children}
+    <>
+      <button
+        type="button"
+        className="marquee-pause"
+        aria-pressed={paused}
+        onClick={() => {
+          pausedRef.current = !paused;
+          setPaused(!paused);
+        }}
+      >
+        {paused ? "Play" : "Pause"}
+      </button>
+      <div className="marquee" ref={wrapRef}>
+        <div className="marquee-track" ref={trackRef}>
+          {children}
+        </div>
       </div>
-    </div>
+    </>
   );
 }

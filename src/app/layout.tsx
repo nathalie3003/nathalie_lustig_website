@@ -5,7 +5,6 @@ import "./intro.css";
 import { Chrome } from "@/components/Chrome";
 import { ContactFooter } from "@/components/Footer";
 import { Analytics } from "@vercel/analytics/next";
-import { INTRO_SCRIPT } from "@/lib/introScript";
 import { LOOK_SCRIPT } from "@/lib/look";
 
 const serif = Source_Serif_4({
@@ -68,9 +67,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       suppressHydrationWarning
     >
       <head>
-        {/* LOOK_SCRIPT must run first: the intro skips itself under the landing hero. */}
         <script dangerouslySetInnerHTML={{ __html: LOOK_SCRIPT }} />
-        <script dangerouslySetInnerHTML={{ __html: INTRO_SCRIPT }} />
       </head>
       <body className="site">
         <noscript>
