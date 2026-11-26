@@ -56,7 +56,7 @@ export default async function OpengraphImage() {
         style={{
           width: "100%",
           height: "100%",
-          background: "#FCFAF9",
+          background: "#FFFFFF",
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
