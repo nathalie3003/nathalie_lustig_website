@@ -27,7 +27,10 @@ const TIGHT_AT_STACKED = 0.42;
 
 export function RailScroll() {
   useEffect(() => {
-    const rail = document.querySelector<HTMLElement>(".home-rail");
+    // The front-page preview renders a second rail; use whichever is shown.
+    const rail = Array.from(document.querySelectorAll<HTMLElement>(".home-rail")).find(
+      (r) => r.offsetParent !== null,
+    );
     if (!rail) return;
 
     let tight: boolean | null = null;

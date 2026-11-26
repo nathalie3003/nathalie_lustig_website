@@ -1,6 +1,8 @@
 import Image from "next/image";
+import { TypedTopics } from "@/components/TypedTopics";
 import Link from "next/link";
-import { getAllNotes } from "@/lib/queries";
+import { getAllNotes, getLeadExtras } from "@/lib/queries";
+import { FrontPage, type FrontStory } from "@/components/FrontPage";
 import { urlFor } from "@/lib/sanity.client";
 import { RightRail } from "@/components/RightRail";
 import { RailScroll } from "@/components/RailScroll";
@@ -33,6 +35,7 @@ export default async function HomePage() {
 
   const curve = liveCurve ?? FALLBACK_CURVE;
   const latest = notes[0];
+  const leadExtras = latest ? await getLeadExtras(latest.slug) : null;
 
   // The latest note already leads the page as the featured card, so it is not
   // repeated in the list directly beneath it. The rest are capped: the homepage
@@ -54,6 +57,42 @@ export default async function HomePage() {
       ? urlFor(n.coverImage).width(192).height(192).url()
       : undefined,
   }));
+
+  const toRow = (n: (typeof notes)[number]): HomeNote => ({
+    id: n._id,
+    slug: n.slug,
+    title: n.title,
+    excerpt: n.excerpt,
+    category: n.category ?? "",
+    catLabel: noteCat(n.category).cat,
+    date: formatDateShort(n.publishedAt),
+    read: readTimeFromChars(n.readChars),
+    thumbUrl: n.coverImage
+      ? urlFor(n.coverImage).width(192).height(192).url()
+      : undefined,
+  });
+  const toStory = (n: (typeof notes)[number]): FrontStory => ({
+    slug: n.slug,
+    title: n.title,
+    excerpt: n.excerpt,
+    cat: noteCat(n.category).cat,
+    date: formatDateShort(n.publishedAt),
+    read: readTimeFromChars(n.readChars),
+  });
+  // The front page prefers the note's own first figure over its cover.
+  const leadFigure = leadExtras?.figure?.asset ? leadExtras.figure : null;
+  const leadImage = leadFigure
+    ? urlFor(leadFigure).width(1400).url()
+    : latest?.coverImage
+      ? urlFor(latest.coverImage).width(1400).height(840).url()
+      : null;
+  const today = new Date().toLocaleDateString("en-GB", {
+    weekday: "long",
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+    timeZone: "Europe/London",
+  });
 
   const latestCover = latest?.coverImage
     ? urlFor(latest.coverImage).width(900).height(760).url()
@@ -97,6 +136,20 @@ export default async function HomePage() {
       </section>
 
       <div className="home-sheet">
+      {latest ? (
+        <FrontPage
+          today={today}
+          lead={toStory(latest)}
+          leadExtras={leadExtras}
+          leadImage={leadImage}
+          leadImageAlt={leadFigure?.alt ?? ""}
+          leadImageCaption={leadFigure?.caption}
+          secondary={notes.slice(1, 4).map(toStory)}
+          more={notes.slice(4, 10).map(toRow)}
+          curve={<CurveCard snapshot={curve.points} asOf={curve.asOf} histories={histories} />}
+          rail={<RightRail />}
+        />
+      ) : null}
       <div className="home-band-top">
       <section className="hero-grid" id="top">
         <div className="hero-copy">
@@ -106,6 +159,10 @@ export default async function HomePage() {
             write these notes to work out what the market is pricing in, and
             what it might be missing.
           </p>
+          <TypedTopics
+            lead="Notes on"
+            words={CATEGORIES.map((c) => c.label.toLowerCase().replace("&", "and"))}
+          />
           <div className="hero-cta">
             {latest ? (
               <Link href={`/notes/${latest.slug}`} className="l-btn l-btn-primary">

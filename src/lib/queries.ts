@@ -221,3 +221,25 @@ export async function getGlossaryTerms(): Promise<GlossaryEntry[]> {
     { next: { revalidate: 60, tags: ["glossaryTerm"] } },
   );
 }
+
+// --- Front page lead -------------------------------------------------------
+
+export type LeadExtras = {
+  strip: { value?: string; label?: string }[] | null;
+  summary: string | null;
+  figure: { asset?: { _ref?: string }; caption?: string; alt?: string } | null;
+};
+
+// What the front page shows of the lead note beyond its card: the first data
+// strip, the exec summary and the first figure in the body.
+export async function getLeadExtras(slug: string): Promise<LeadExtras | null> {
+  return sanityClient.fetch(
+    `*[_type == "bondNote" && slug.current == $slug][0]{
+      "strip": body[_type == "dataStrip"][0].items,
+      "summary": body[_type == "execSummary"][0].text,
+      "figure": body[_type == "image"][0]{ asset, caption, alt }
+    }`,
+    { slug },
+    { next: { revalidate: 60, tags: ["bondNote"] } },
+  );
+}

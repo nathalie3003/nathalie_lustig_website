@@ -4,7 +4,9 @@ import { INTRO_PAINTINGS } from "@/content/introPaintings";
 // comparing before choosing one.
 //
 //   hero:    "classic" is today's homepage; "landing" opens on a full-screen
-//            painting hero and the notes slide up over it on scroll.
+//            painting hero and the notes slide up over it on scroll;
+//            "frontpage" sets the homepage as a publication front page led by
+//            the latest note and its own figures.
 //   texture: "none" is today's flat white; the rest add a background texture
 //            that runs the length of the page.
 //   footer:  "plain" is today's footer; the others set it apart as a band.
@@ -19,6 +21,7 @@ export const LOOK_HOST_LIVE = "thebasispoint.finance";
 export const HERO_OPTIONS = [
   { value: "classic", label: "Current" },
   { value: "landing", label: "Full-screen landing" },
+  { value: "frontpage", label: "Front page" },
 ] as const;
 
 export const TEXTURE_OPTIONS = [

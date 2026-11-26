@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState, useId } from "react";
 import type { CurveHistory, YieldCurvePoint } from "@/lib/marketData";
 
 type Props = {
@@ -106,6 +106,9 @@ function formatAsOf(iso: string): string {
 }
 
 export function CurveCard({ snapshot, asOf, histories }: Props) {
+  // Unique per instance: the front-page preview renders a second card, and a
+  // shared gradient id would resolve to the hidden one.
+  const fillId = `curve-fill-${useId().replace(/:/g, "")}`;
   const [selected, setSelected] = useState<string>("all");
   const [open, setOpen] = useState(false);
   const [hoverIdx, setHoverIdx] = useState<number | null>(null);
@@ -287,7 +290,7 @@ export function CurveCard({ snapshot, asOf, histories }: Props) {
           }
         >
           <defs>
-            <linearGradient id="curve-fill" x1="0" y1="0" x2="0" y2="1">
+            <linearGradient id={fillId} x1="0" y1="0" x2="0" y2="1">
               <stop offset="0%" stopColor="var(--accent)" stopOpacity="0.16" />
               <stop offset="100%" stopColor="var(--accent)" stopOpacity="0" />
             </linearGradient>
@@ -332,7 +335,7 @@ export function CurveCard({ snapshot, asOf, histories }: Props) {
             className="curve-area"
             style={{ animationDuration: `${DRAW_MS}ms` }}
             d={`${chart.d} L ${sx(chart.n - 1, chart.n).toFixed(1)} ${VH - PAD_B} L ${sx(0, chart.n).toFixed(1)} ${VH - PAD_B} Z`}
-            fill="url(#curve-fill)"
+            fill={`url(#${fillId})`}
           />
           <path
             key={`line-${drawKey}`}

@@ -5,6 +5,159 @@
    ============================================================ */
 
 @layer components {
+  /* ── DIRECTION 3: FRONT PAGE ────────────────────────────── */
+  .fp { display: none; }
+  html[data-hero="frontpage"] .fp { display: block; }
+  html[data-hero="frontpage"] .home-band-top,
+  html[data-hero="frontpage"] #notes { display: none; }
+
+  .fp { max-width: var(--maxw); margin: 0 auto; padding: 36px var(--pad) 0; }
+
+  .fp-mast { text-align: center; }
+  .fp-name {
+    margin: 0; font-family: var(--font-serif), Georgia, serif; font-weight: 600;
+    font-size: clamp(46px, 8.4vw, 96px); line-height: 1; letter-spacing: -0.038em;
+    color: var(--ink);
+  }
+  .fp-ears {
+    display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 24px;
+    margin-top: 20px; padding: 10px 0;
+    border-top: 1px solid var(--ink); border-bottom: 3px double var(--ink);
+  }
+  .fp-ear {
+    justify-self: start;
+    font-family: var(--font-mono), ui-monospace, monospace;
+    font-size: var(--fs-meta); letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--ink-60);
+  }
+  .fp-ear-end { justify-self: end; }
+  .fp-ears .typed { margin: 0; font-size: var(--fs-lead); min-height: 0; white-space: nowrap; }
+
+  .fp-top {
+    display: grid; grid-template-columns: minmax(0, 1.85fr) minmax(0, 1fr);
+    gap: 48px; margin-top: 40px; align-items: start;
+  }
+  .fp-lead-title {
+    margin: 0; max-width: 20ch; text-wrap: balance;
+    font-family: var(--font-serif), Georgia, serif; font-weight: 600;
+    font-size: clamp(36px, 4.4vw, 58px); line-height: 1.04; letter-spacing: -0.032em;
+  }
+  .fp-lead-title a, .fp-story-title a { color: var(--ink); transition: color 140ms ease; }
+  .fp-lead-title a:hover, .fp-story-title a:hover { color: var(--accent); }
+  .fp-dateline {
+    margin: 16px 0 0;
+    font-family: var(--font-mono), ui-monospace, monospace;
+    font-size: var(--fs-meta); letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--ink-60);
+  }
+  .fp-lead-deck {
+    margin: 18px 0 0; max-width: 46ch; text-wrap: pretty;
+    font-family: var(--font-serif), Georgia, serif;
+    font-size: var(--fs-standfirst); line-height: 1.5; color: var(--ink-72);
+  }
+  .fp-strip {
+    display: grid; grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr);
+    margin: 30px 0 0; border-top: 2px solid var(--accent);
+  }
+  .fp-stat {
+    display: flex; flex-direction: column-reverse; justify-content: flex-end; gap: 6px;
+    padding: 16px 20px 0 0;
+  }
+  .fp-stat + .fp-stat { padding-left: 20px; border-left: 1px solid var(--rule); }
+  .fp-stat dd {
+    margin: 0; font-family: var(--font-mono), ui-monospace, monospace;
+    font-size: var(--fs-headline-s); line-height: 1.1; letter-spacing: -0.03em; color: var(--ink);
+    font-variant-numeric: tabular-nums;
+  }
+  .fp-stat dt {
+    font-family: var(--font-sans), system-ui, sans-serif;
+    font-size: var(--fs-caption); line-height: 1.4; color: var(--ink-60);
+  }
+  .fp-figure { margin: 32px 0 0; }
+  .fp-figure img { display: block; width: 100%; height: auto; background: var(--tint); }
+  .fp-figure figcaption {
+    margin-top: 10px; font-family: var(--font-sans), system-ui, sans-serif;
+    font-size: var(--fs-small); line-height: 1.5; color: var(--ink-60);
+  }
+  .fp-summary {
+    margin: 26px 0 0; max-width: 62ch; text-wrap: pretty;
+    font-family: var(--font-serif), Georgia, serif;
+    font-size: var(--fs-lead); line-height: 1.68; color: var(--ink-72);
+  }
+  .fp-summary::first-letter {
+    float: left; margin: 6px 10px 0 0;
+    font-size: 3.5em; line-height: 0.8; font-weight: 600; color: var(--accent);
+  }
+  .fp-more {
+    display: inline-block; margin-top: 22px; padding: 6px 0;
+    font-family: var(--font-sans), system-ui, sans-serif;
+    font-size: var(--fs-ui); font-weight: 500; color: var(--accent);
+  }
+
+  .fp-side { padding-left: 40px; border-left: 1px solid var(--rule); }
+  .fp-side-title {
+    margin: 0 0 16px; padding-bottom: 10px; border-bottom: 2px solid var(--ink);
+    font-family: var(--font-serif), Georgia, serif; font-weight: 600;
+    font-size: var(--fs-title); letter-spacing: -0.02em;
+  }
+  /* The card is narrow here, so the SVG labels need bigger units. */
+  .fp-side .curve-tick { font-size: 15px; }
+  .fp-side .curve-xlabel { font-size: 15px; }
+  .fp-about {
+    margin: 28px 0 0; text-wrap: pretty;
+    font-family: var(--font-serif), Georgia, serif;
+    font-size: var(--fs-body-s); line-height: 1.6; color: var(--ink-72);
+  }
+  .fp-side-link {
+    display: inline-block; margin-top: 10px; padding: 6px 0;
+    font-family: var(--font-sans), system-ui, sans-serif;
+    font-size: var(--fs-small); font-weight: 500; color: var(--accent);
+  }
+
+  .fp-row {
+    display: grid; grid-template-columns: repeat(3, minmax(0, 1fr));
+    margin-top: 60px; padding-top: 26px; border-top: 2px solid var(--ink);
+  }
+  .fp-story { padding-right: 28px; }
+  .fp-story + .fp-story { padding-left: 28px; border-left: 1px solid var(--rule); }
+  .fp-story-title {
+    margin: 0; text-wrap: balance;
+    font-family: var(--font-serif), Georgia, serif; font-weight: 600;
+    font-size: var(--fs-title); line-height: 1.15; letter-spacing: -0.022em;
+  }
+  .fp-story-deck {
+    margin: 12px 0 0; text-wrap: pretty;
+    font-family: var(--font-serif), Georgia, serif;
+    font-size: var(--fs-body-s); line-height: 1.55; color: var(--ink-60);
+  }
+
+  .fp-grid { padding-left: 0; padding-right: 0; padding-top: 80px; }
+
+  @media (max-width: 920px) {
+    .fp-top { grid-template-columns: 1fr; gap: 0; }
+    .fp-side {
+      margin-top: 48px; padding: 0; border-left: 0;
+    }
+    .fp-row { grid-template-columns: 1fr; margin-top: 48px; padding-top: 0; }
+    .fp-story, .fp-story + .fp-story {
+      padding: 22px 0; border-left: 0; border-bottom: 1px solid var(--rule);
+    }
+    .fp-grid { padding-top: 56px; }
+  }
+  @media (max-width: 560px) {
+    .fp { padding-top: 24px; }
+    .fp-ears { grid-template-columns: 1fr; gap: 6px; justify-items: center; }
+    .fp-ear { justify-self: center; }
+    .fp-ear-end { display: none; }
+    .fp-ears .typed { font-size: var(--fs-body-s); }
+    .fp-strip { grid-auto-flow: row; }
+    .fp-stat, .fp-stat + .fp-stat {
+      flex-direction: row-reverse; justify-content: space-between; align-items: baseline;
+      padding: 12px 0; border-left: 0; border-bottom: 1px solid var(--rule);
+    }
+    .fp-stat dd { font-size: var(--fs-title); }
+  }
+
   /* ── DIRECTION 1: FULL-SCREEN LANDING ───────────────────── */
   .landing { display: none; }
 
