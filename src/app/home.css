@@ -395,20 +395,19 @@
   .marquee.is-dragging, .marquee.is-dragging a { cursor: grabbing; }
   .marquee img, .marquee a { -webkit-user-drag: none; }
   .marquee-row {
-    display: flex; align-items: center; gap: 52px;
-    list-style: none; margin: 0; padding: 0 52px 0 0;
+    display: flex; align-items: flex-start; gap: 44px;
+    list-style: none; margin: 0; padding: 0 44px 0 0;
   }
+  /* Logo on top, name beneath: bare logos with no tile, so each mark stands on
+     the page by itself. */
   .marquee-item {
-    display: inline-flex; align-items: center; gap: 12px;
-    white-space: nowrap; color: var(--ink);
+    display: flex; flex-direction: column; align-items: center; gap: 10px;
+    width: 112px; text-align: center; color: var(--ink);
   }
-  .marquee-icon {
-    width: 28px; height: 28px; flex: none; border-radius: 6px;
-    background: #fff; box-shadow: 0 0 0 1px var(--rule);
-  }
+  .marquee-icon { width: 52px; height: 52px; flex: none; object-fit: contain; }
   .marquee-name {
     font-family: var(--font-display, var(--font-serif)), Georgia, serif;
-    font-size: 24px; font-weight: 600; letter-spacing: -0.01em;
+    font-size: 14px; font-weight: 600; line-height: 1.25; letter-spacing: -0.005em;
     transition: color 140ms ease;
   }
   a.marquee-item:hover .marquee-name,
@@ -416,7 +415,7 @@
   @media (prefers-reduced-motion: reduce) {
     .marquee { mask-image: none; cursor: auto; touch-action: auto; user-select: auto; -webkit-user-select: auto; }
     .marquee-track { width: auto; will-change: auto; }
-    .marquee-row { flex-wrap: wrap; row-gap: 18px; gap: 18px 40px; padding-right: 0; }
+    .marquee-row { flex-wrap: wrap; gap: 28px 32px; padding-right: 0; }
     .marquee-row[aria-hidden] { display: none; }
   }
 

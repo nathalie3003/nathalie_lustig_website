@@ -12,7 +12,7 @@ export type MarqueeItem = {
 // Company icons come from Google's favicon service (the same source
 // preipomedia.com uses), so there are no logo files to keep in the repo.
 const iconUrl = (domain: string) =>
-  `https://www.google.com/s2/favicons?domain=${encodeURIComponent(domain)}&sz=64`;
+  `https://www.google.com/s2/favicons?domain=${encodeURIComponent(domain)}&sz=128`;
 
 // A scrolling strip of company icons and names. The list is rendered twice
 // side by side so the loop is seamless; the second copy is hidden from screen
@@ -40,8 +40,8 @@ export function LogoMarquee({
             <img
               src={iconUrl(item.domain)}
               alt=""
-              width={28}
-              height={28}
+              width={52}
+              height={52}
               decoding="async"
               draggable={false}
               className="marquee-icon"
