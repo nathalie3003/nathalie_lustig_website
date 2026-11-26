@@ -1,23 +1,23 @@
 ---
 name: The Basis Point
-description: "Editorial bond-market notes site: publication grammar, raspberry masthead, serif-first reading experience on blush paper"
+description: "Editorial bond-market notes site: publication grammar, raspberry masthead, serif-first reading experience on white paper"
 colors:
   raspberry: "#B23A63"
   plum: "#7A2246"
-  accent-soft: "#F7ECEF"
+  accent-soft: "#F5F3F4"
   petal: "#F7D9E3"
-  blush-paper: "#FCFAF9"
-  card: "#FFF7F9"
-  tint: "#F5EBEA"
+  paper: "#FFFFFF"
+  card: "#FAFAFA"
+  tint: "#F4F3F3"
   ink: "#191316"
   ink-72: "rgba(25, 19, 22, 0.72)"
   ink-60: "rgba(25, 19, 22, 0.60)"
   ink-45: "rgba(25, 19, 22, 0.45)"
   ink-20: "rgba(25, 19, 22, 0.18)"
   accent-tint: "rgba(178, 58, 99, 0.09)"
-  hairline: "#EADFDD"
-  hairline-strong: "#E0C6CE"
-  band-base: "#EFE6DC"
+  hairline: "#E8E6E6"
+  hairline-strong: "#D9D6D7"
+  band-base: "#ECEAE9"
   state-live: "#4C7A54"
   state-progress: "#C8A96A"
 typography:
@@ -132,9 +132,11 @@ serif body copy set to be read closely rather than skimmed. Density is editorial
 with generous line-height, real paragraphs and a right rail for supporting context.
 Never dashboard-dense, never marketing-sparse.
 
-The paper is warm. Blush rather than cool grey is the single decision that most
-changes the site's temperature: it reads as a printed page rather than an interface,
-and it lets one saturated colour do all the signalling without ever feeling clinical.
+The paper is white. It used to be blush, and that tint, repeated on every card,
+hairline and photo wash, made the whole site read as pink rather than professional.
+On white with neutral greys, raspberry stays exactly where it was but now reads as
+an accent rather than a theme. Do not reintroduce a warm or pink tint to the
+neutrals: that is what the November 2026 change removed.
 
 This system explicitly rejects the fintech-SaaS look: no glossy dashboards, no
 gradient hero sections, no hero-metric templates, no stock trading-floor
@@ -146,13 +148,13 @@ page, not visual decoration.
 - One working accent colour (raspberry) used sparingly, with plum as its hover and depth partner
 - Three type voices with strict jobs: serif reads, sans navigates, mono counts
 - Publication grammar: masthead rule, section hairlines, mono department labels
-- Warm blush paper throughout; white is reserved for genuinely raised surfaces
+- White paper with neutral greys; raspberry is the only colour on the page
 - Flat by default; the only shadows are soft ambient lifts on interactive cards and popovers, never structural
 
 ## 2. Colors
 
-A warm, near-white blush paper carries most of the surface. One raspberry accent and
-a near-black warm ink do all the signalling work.
+White paper carries most of the surface, with neutral greys for surfaces and
+rules. One raspberry accent and a near-black ink do all the signalling work.
 
 ### Primary
 - **Raspberry** (#B23A63): The system's one working colour. Used for the masthead
@@ -163,27 +165,28 @@ a near-black warm ink do all the signalling work.
   where raspberry has not already established the meaning.
 
 ### Neutral
-- **Blush Paper** (#FCFAF9): Page background.
-- **Card** (#FFF7F9): Raised surfaces, note covers, the contact band's warm tone.
-  Distinct from pure white, which is reserved for the rail card and the footer bar.
-- **Tint** (#F5EBEA): Image placeholders, thumbnail backgrounds, quiet bands.
+- **Paper** (#FFFFFF): Page background.
+- **Card** (#FAFAFA): Raised surfaces and note covers. A step off white, so a card
+  reads against the page; the rail card and footer bar stay pure white and rely on
+  their hairline.
+- **Tint** (#F4F3F3): Image placeholders, thumbnail backgrounds, quiet bands.
 - **Ink** (#191316): Primary text colour, headlines, body copy, the brand disc.
 - **Ink 72 / 60** (rgba(25,19,22, .72/.60)): The two text steps. Standfirsts and
   excerpts at 72% (7.2:1), everything secondary at 60% (4.7:1). 60% is the
   lightest ink the system may set text in.
 - **Ink 45** (rgba(25,19,22,0.45)): **Decoration only, never text.** It measures
-  2.96:1 on blush, which fails WCAG AA, and `PRODUCT.md` commits to AA. It is for
+  2.96:1 on white, which fails WCAG AA, and `PRODUCT.md` commits to AA. It is for
   hairlines, borders and list-marker glyphs.
 
   Metadata used to sit at 45% and was the largest source of that failure. It now
   shares 60% with other secondary text, and loses nothing by it: dates, read
   times and department labels are already set apart by being mono, small, tracked
   and uppercase. They never needed to be lighter as well.
-- **Hairline** (#EADFDD): Every rule, border, and divider in the system.
-- **Hairline Strong** (#E0C6CE): The emphasised variant, for dropdown borders and
+- **Hairline** (#E8E6E6): Every rule, border, and divider in the system.
+- **Hairline Strong** (#D9D6D7): The emphasised variant, for dropdown borders and
   rules that need to read as a step up from an ordinary divider.
-- **Band Base** (#EFE6DC): Sits beneath the contact band's photograph. It is what
-  shows if the image fails, so it is warmer than the page and close enough to the
+- **Band Base** (#ECEAE9): Sits beneath the contact band's photograph. It is what
+  shows if the image fails, so it is a step darker than the page and close enough to the
   wash that a missing photo reads as a deliberate band rather than a hole. Nothing
   else uses it.
 
@@ -192,7 +195,8 @@ a near-black warm ink do all the signalling work.
   fill. It is a tint, never a text or border colour. It previously also formed a
   gradient bar in the rail; that was removed for repeating the masthead stripe,
   and it should not come back.
-- **Accent Soft** (#F7ECEF): Hover fills behind nav links and dropdown rows.
+- **Accent Soft** (#F5F3F4): Hover fills behind nav links and dropdown rows. Despite
+  the name it is now a neutral grey; it was pink and is one of the tints removed.
 
 ### State
 Two colours exist outside the palette because they encode state rather than
@@ -301,7 +305,7 @@ published, so a style named for it only invites someone to add one back.
 - **Corner Style:** 16px radius for rail cards and popovers; 20px for project stack
   cards; 4px or less for editorial frames (note covers, the curve card, the contact
   band's inner blocks) where a printed-page squareness is wanted.
-- **Background:** Card or white on the blush-paper page. The contrast between the two
+- **Background:** Card or white on the white page. The contrast between the two
   is the only elevation most cards need.
 - **Border:** 1px hairline on every card, always.
 - **Internal Padding:** 22px standard rail-card padding; larger stack cards use 36 to
@@ -330,7 +334,7 @@ The site previously had zero `:focus-visible` rules and two controls that remove
 their outline outright, which left keyboard users with nothing.
 
 ### Navigation
-- **Style:** Sticky top bar on blurred blush (`color-mix(in oklab, var(--nav-bg) 92%,
+- **Style:** Sticky top bar on blurred white (`color-mix(in oklab, var(--nav-bg) 92%,
   transparent)`, `backdrop-filter: blur(10px)`), topped with the signature 3px
   raspberry masthead rule and a 1px hairline beneath. The bar is a three-zone grid:
   brand mark and wordmark left, nav centred, primary action right. Nav links are
@@ -351,7 +355,7 @@ previous aurora-rim version ran blue through orange and was the single most
 off-system element on the old site.
 
 ### Signature Component: The Contact Band
-A full-bleed photograph under a blush gradient wash, sitting above the footer on
+A full-bleed photograph under a white gradient wash, sitting above the footer on
 every page, with its content folding up into place on scroll. This is the only
 photographic surface in the system and the only place a background image is
 permitted. It works because the wash pulls the image almost entirely into the
