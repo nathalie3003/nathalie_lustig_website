@@ -1,5 +1,5 @@
-import type { CSSProperties } from "react";
 import Link from "next/link";
+import { MarqueeTrack } from "./MarqueeTrack";
 
 export type MarqueeItem = {
   name: string;
@@ -14,11 +14,10 @@ export type MarqueeItem = {
 const iconUrl = (domain: string) =>
   `https://www.google.com/s2/favicons?domain=${encodeURIComponent(domain)}&sz=64`;
 
-// A slowly scrolling strip of company icons and names. The list is rendered
-// twice side by side and the track slides left by exactly one copy, so the
-// loop is seamless. The second copy is hidden from screen readers and taken
-// out of the tab order. Hover or keyboard focus pauses it, and with
-// prefers-reduced-motion it becomes a static wrapped list.
+// A scrolling strip of company icons and names. The list is rendered twice
+// side by side so the loop is seamless; the second copy is hidden from screen
+// readers and taken out of the tab order. MarqueeTrack moves it (and lets the
+// cursor steer it); with prefers-reduced-motion it is a static wrapped list.
 export function LogoMarquee({
   id,
   title,
@@ -69,9 +68,6 @@ export function LogoMarquee({
     </ul>
   );
 
-  // Roughly constant speed whatever the list length: ~4.5s per item.
-  const style = { "--marquee-duration": `${items.length * 4.5}s` } as CSSProperties;
-
   return (
     <section className="marquee-section" aria-labelledby={id}>
       <div className="home-head">
@@ -79,12 +75,10 @@ export function LogoMarquee({
           {title}
         </h2>
       </div>
-      <div className={`marquee${reverse ? " marquee-reverse" : ""}`} style={style}>
-        <div className="marquee-track">
-          {row(false)}
-          {row(true)}
-        </div>
-      </div>
+      <MarqueeTrack reverse={reverse}>
+        {row(false)}
+        {row(true)}
+      </MarqueeTrack>
     </section>
   );
 }
