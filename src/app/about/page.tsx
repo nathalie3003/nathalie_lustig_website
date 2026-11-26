@@ -36,25 +36,17 @@ export default async function AboutPage() {
 
   return (
     <>
-      <section className="about-hero">
-        <LifeCarousel shots={shots} />
-        <h1 className="about-hello">Hi, I&rsquo;m Nathalie.</h1>
-      </section>
+    <div className="about-page">
+      <div className="about-bio">
+        <h1 className="about-heading">A bit more about me</h1>
+        <div className="about-bio-text">
+          {paragraphs.map((p, i) => (
+            <p key={i}>{p}</p>
+          ))}
+        </div>
 
-      <div className="about-rows">
-        <section className="about-row" aria-labelledby="about-title">
-          <h2 id="about-title" className="about-row-title">About</h2>
-          <div className="about-bio-text">
-            {paragraphs.map((p, i) => (
-              <p key={i}>{p}</p>
-            ))}
-          </div>
-        </section>
-
-        <section className="about-row" aria-labelledby="now-title">
-          <h2 id="now-title" className="about-row-title">
-            {rightNowMeta.eyebrow}
-          </h2>
+        <section className="about-now" aria-label={rightNowMeta.eyebrow}>
+          <span className="about-now-label">{rightNowMeta.eyebrow}</span>
           <div className="about-now-grid">
             {aboutNow.map((row) => {
               const inner = (
@@ -86,32 +78,35 @@ export default async function AboutPage() {
             })}
           </div>
         </section>
-
-        <section className="about-row" aria-labelledby="contact-title">
-          <h2 id="contact-title" className="about-row-title">Get in touch</h2>
-          <div className="about-contact">
-            {email ? (
-              <a className="about-contact-email" href={email.href}>
-                {email.value}
-              </a>
-            ) : null}
-            {linkedIn ? (
-              <a
-                className="about-contact-link"
-                href={linkedIn.href}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                {linkedIn.value} &rarr;
-              </a>
-            ) : null}
-          </div>
-        </section>
       </div>
 
-      {/* Side projects live here rather than on the homepage, which is kept
-          for the notes. */}
-      <ProjectsSection />
+      <aside className="about-side">
+        <LifeCarousel shots={shots} />
+
+        <div className="about-contact">
+          <span className="about-contact-label">Get in touch</span>
+          {email ? (
+            <a className="about-contact-email" href={email.href}>
+              {email.value}
+            </a>
+          ) : null}
+          {linkedIn ? (
+            <a
+              className="about-contact-link"
+              href={linkedIn.href}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {linkedIn.value} →
+            </a>
+          ) : null}
+        </div>
+      </aside>
+    </div>
+
+    {/* Side projects live here rather than on the homepage, which is kept
+        for the notes. */}
+    <ProjectsSection />
     </>
   );
 }

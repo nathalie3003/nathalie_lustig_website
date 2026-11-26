@@ -1,127 +1,65 @@
 /* ============================================================
-   ABOUT PAGE
-   Hero: a band of three photos (middle one larger) that swap one at a time,
-   with "Hi, I'm Nathalie." beneath. Then ruled rows, title on the left and
-   content on the right: About, Right now, Get in touch.
-   Photo treatment follows alfierees.com/about.
+   ABOUT PAGE: bio, Right now grid, life carousel, contact card.
+   Fresh .about-page-* / .life-* names so nothing here collides with
+   rules elsewhere in globals.css.
    ============================================================ */
 
 @layer components {
-  /* ── HERO ───────────────────────────────────────────────── */
-  .about-hero {
+  .about-page {
     max-width: var(--maxw); margin: 0 auto;
-    padding: 80px var(--pad) 96px;
-    display: flex; flex-direction: column; align-items: center; gap: 72px;
-  }
-  .about-hello {
-    margin: 0; text-align: center;
-    font-family: var(--font-serif), Georgia, serif;
-    font-size: clamp(34px, 4.4vw, 52px); line-height: 1.1; font-weight: 600;
-    letter-spacing: -0.03em; color: var(--ink);
+    padding: 72px var(--pad) 96px;
+    display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 400px);
+    gap: 80px; align-items: start;
   }
 
-  /* ── PHOTO BAND ─────────────────────────────────────────── */
-  .pband { position: relative; display: flex; flex-direction: column; align-items: center; }
-  .pband-row {
-    display: flex; align-items: flex-end; justify-content: center;
-    gap: min(34px, 2.4vw);
-  }
-  .pband-slot {
-    position: relative; margin: 0; flex: 0 0 auto;
-    width: min(245px, 17vw); aspect-ratio: 245 / 310;
-    outline: none;
-  }
-  .pband-slot[data-slot="1"] { width: min(280px, 19.5vw); aspect-ratio: 280 / 360; }
-  .pband-frame {
-    position: absolute; inset: 0; overflow: hidden;
-    border-radius: 12px; background: var(--tint);
-    box-shadow: 0 8px 22px rgba(25, 19, 22, 0.13);
-  }
-  .pband-slot:focus-visible .pband-frame { box-shadow: 0 0 0 2px #FFFFFF, 0 0 0 4px var(--accent); }
-
-  /* Every photo sits in every frame. The lit one wipes up from the bottom
-     while settling from a 1.12 zoom; the rest wait clipped away. A layer that
-     goes dark keeps showing until the new one has covered it, then snaps
-     back, so a frame is never empty mid-swap. */
-  .pband-layer {
-    object-fit: cover; z-index: 0;
-    clip-path: inset(100% 0 0 0); transform: scale(1.12);
-    transition: clip-path 0s linear 0.9s, transform 0s linear 0.9s;
-  }
-  .pband-layer[data-lit="true"] {
-    z-index: 1; clip-path: inset(0); transform: scale(1);
-    transition: clip-path 0.9s cubic-bezier(0.76, 0, 0.24, 1),
-                transform 0.9s cubic-bezier(0.22, 0.9, 0.3, 1);
-  }
-
-  .pband-cap {
-    position: absolute; top: calc(100% + 14px); left: 50%;
-    transform: translate(-50%, 4px);
-    white-space: nowrap;
+  .about-eyebrow {
+    display: block;
     font-family: var(--font-mono), ui-monospace, monospace;
-    font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase;
-    color: var(--ink-60);
-    opacity: 0; pointer-events: none;
-    transition: opacity 250ms ease, transform 300ms cubic-bezier(0.22, 0.9, 0.3, 1);
+    font-size: var(--fs-caption); letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--accent);
   }
-  .pband-slot:hover .pband-cap,
-  .pband-slot:focus .pband-cap { opacity: 1; transform: translate(-50%, 0); }
-  /* Outer captions hang inward so long ones stay on screen. */
-  .pband-slot[data-slot="0"] .pband-cap { left: 0; transform: translate(0, 4px); }
-  .pband-slot[data-slot="2"] .pband-cap { left: auto; right: 0; transform: translate(0, 4px); }
-  .pband-slot[data-slot="0"]:hover .pband-cap, .pband-slot[data-slot="0"]:focus .pband-cap,
-  .pband-slot[data-slot="2"]:hover .pband-cap, .pband-slot[data-slot="2"]:focus .pband-cap { transform: none; }
-
-  .pband-toggle {
-    position: absolute; right: -64px; bottom: 0;
-    padding: 6px 0; border: 0; background: none; cursor: pointer;
-    font-family: var(--font-mono), ui-monospace, monospace;
-    font-size: var(--fs-meta); letter-spacing: 0.14em; text-transform: uppercase;
-    color: var(--ink-60);
-    transition: color 160ms ease;
-  }
-  .pband-toggle:hover { color: var(--accent); }
-
-  .pband.is-still .pband-layer,
-  .pband.is-still .pband-layer[data-lit="true"] { transition: none; transform: none; }
-  @media (prefers-reduced-motion: reduce) {
-    .pband-layer, .pband-layer[data-lit="true"] { transition: none; transform: none; }
-  }
-
-  /* ── ROWS ───────────────────────────────────────────────── */
-  .about-rows { max-width: var(--maxw); margin: 0 auto; padding: 0 var(--pad) 96px; }
-  .about-row {
-    display: grid; grid-template-columns: minmax(160px, 260px) minmax(0, 1fr);
-    column-gap: clamp(32px, 5.5vw, 80px); align-items: start;
-    border-top: 1px solid var(--rule); padding: 56px 0;
-  }
-  .about-row-title {
-    margin: 0;
+  .about-heading {
     font-family: var(--font-serif), Georgia, serif;
-    font-size: var(--fs-headline-s); line-height: 1.1; font-weight: 600;
-    letter-spacing: -0.024em; color: var(--ink);
+    font-size: clamp(34px, 5vw, 50px); line-height: 1.06; font-weight: 600;
+    letter-spacing: -0.032em; margin: 16px 0 0; max-width: 22ch;
   }
-  .about-bio-text { max-width: 64ch; }
   .about-bio-text p {
     font-family: var(--font-serif), Georgia, serif;
     font-size: var(--fs-body); line-height: 1.75; color: var(--ink-72);
-    margin: 0 0 24px; text-wrap: pretty;
+    margin: 28px 0 0; max-width: 60ch; text-wrap: pretty;
   }
-  .about-bio-text p:last-child { margin-bottom: 0; }
 
   /* ── RIGHT NOW GRID ─────────────────────────────────────── */
+  .about-now {
+    margin-top: 48px; padding-top: 28px; border-top: 1px solid var(--rule);
+  }
+  .about-now-label {
+    display: block;
+    font-family: var(--font-mono), ui-monospace, monospace;
+    font-size: var(--fs-meta); letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--ink-60);
+  }
   .about-now-grid {
     display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 14px; max-width: 760px;
+    /* Equal gaps so two columns read as a grid, not one long list. */
+    gap: 12px; margin-top: 16px; align-items: stretch;
   }
   /* An odd number of cards would strand the last one beside dead space, so it
-     takes the full width instead. */
+     takes the full width instead. Reads as a closing line rather than a gap. */
   .about-now-grid > :last-child:nth-child(odd) { grid-column: 1 / -1; }
   .about-now-card {
-    display: block; padding: 14px 16px;
-    border: 1px solid var(--tint); border-radius: var(--radius-sm); background: #FFFFFF;
+    position: relative; display: flex; flex-direction: column;
+    padding: 20px 20px 18px;
+    background: var(--surface); border: 1px solid var(--rule);
+    border-radius: var(--radius-sm);
     color: var(--ink); text-decoration: none;
     transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
+  }
+  /* A short accent rule on each card ties the set to the site's raspberry
+     without colouring the whole box. */
+  .about-now-card::before {
+    content: ""; position: absolute; top: -1px; left: 20px;
+    width: 24px; height: 2px; background: var(--accent);
   }
   .about-now-card:hover {
     transform: translateY(-2px); border-color: var(--rule-strong);
@@ -129,13 +67,15 @@
   }
   .about-now-card-label {
     display: block;
-    font-family: var(--font-sans), system-ui, sans-serif;
-    font-size: var(--fs-caption); color: var(--ink-60);
+    font-family: var(--font-mono), ui-monospace, monospace;
+    font-size: var(--fs-meta); letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--accent);
   }
   .about-now-card-value {
     display: block;
     font-family: var(--font-serif), Georgia, serif;
-    font-size: var(--fs-body-s); line-height: 1.45; margin-top: 3px; text-wrap: pretty;
+    font-size: var(--fs-body-s); line-height: 1.5; margin-top: 10px;
+    color: var(--ink-72); text-wrap: pretty;
   }
   .about-now-hint {
     display: block;
@@ -143,37 +83,104 @@
     font-size: var(--fs-caption); font-style: italic; color: var(--ink-60); margin-top: 6px;
   }
   .about-now-card:hover .about-now-hint { color: var(--accent); }
+
   @media (prefers-reduced-motion: reduce) {
     .about-now-card, .about-now-card:hover { transform: none; transition: none; }
   }
 
-  /* ── CONTACT ────────────────────────────────────────────── */
-  .about-contact { display: flex; flex-direction: column; align-items: flex-start; gap: 12px; }
-  .about-contact-email {
+  /* ── SIDE COLUMN ────────────────────────────────────────── */
+  .about-side { position: sticky; top: 110px; }
+
+  /* ── LIFE SLIDESHOW ─────────────────────────────────────
+     Two frames side by side. One changes per tick, alternating, with the new
+     photo rising a few pixels as it fades in over the old one. The caption
+     sits on the photo and only comes up on hover or keyboard focus; on touch
+     screens, where there is no hover, it stays up. */
+  .life-pair { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+  .life-pair[data-frames="1"] { grid-template-columns: 1fr; }
+  /* Offset the right frame so the pair reads as two prints laid down, not a
+     grid of thumbnails. */
+  .life-pair[data-frames="2"] .life-frame:nth-child(2) { margin-top: 36px; }
+
+  .life-frame {
+    position: relative; margin: 0; aspect-ratio: 4 / 5;
+    overflow: hidden; border-radius: var(--radius-hair); background: var(--tint);
+    outline: none;
+  }
+  .life-frame:focus-visible { box-shadow: 0 0 0 2px var(--paper, #fff), 0 0 0 4px var(--accent); }
+
+  /* The lit photo wipes up from the bottom while settling from a 1.12 zoom
+     (as on alfierees.com/about). A photo that goes dark stays visible until
+     the new one has covered it, then snaps back out of sight, so a frame is
+     never empty mid-swap. */
+  .life-img {
+    object-fit: cover; filter: saturate(0.95); z-index: 0;
+    clip-path: inset(100% 0 0 0); transform: scale(1.12);
+    transition: clip-path 0s linear 0.9s, transform 0s linear 0.9s;
+  }
+  .life-img[data-lit="true"] {
+    z-index: 1; clip-path: inset(0); transform: scale(1);
+    transition: clip-path 0.9s cubic-bezier(0.76, 0, 0.24, 1),
+                transform 0.9s cubic-bezier(0.22, 0.9, 0.3, 1);
+  }
+
+  .life-caption {
+    position: absolute; inset: auto 0 0 0; z-index: 3;
+    padding: 36px 12px 11px;
+    background: linear-gradient(to top, rgba(25, 19, 22, 0.72), rgba(25, 19, 22, 0));
+    color: #FFFFFF;
     font-family: var(--font-serif), Georgia, serif;
-    font-size: var(--fs-standfirst); color: var(--ink); word-break: break-word;
+    font-size: var(--fs-small); line-height: 1.35; text-wrap: pretty;
+    opacity: 0; transform: translateY(6px);
+    transition: opacity 220ms ease, transform 260ms ease;
+    pointer-events: none;
+  }
+  .life-frame:hover .life-caption,
+  .life-frame:focus-visible .life-caption { opacity: 1; transform: none; }
+
+  .life-hint {
+    margin: 12px 0 0;
+    font-family: var(--font-sans), system-ui, sans-serif;
+    font-size: var(--fs-caption); color: var(--ink-60);
+  }
+
+  @media (hover: none) {
+    .life-caption { opacity: 1; transform: none; }
+    .life-hint { display: none; }
+  }
+  .life.is-still .life-img,
+  .life.is-still .life-img[data-lit="true"] { transform: none; transition: none; }
+  .life.is-still .life-caption { transform: none; }
+
+  /* ── CONTACT CARD ───────────────────────────────────────── */
+  .about-contact {
+    margin-top: 20px; padding: 20px;
+    background: var(--surface); border: 1px solid var(--rule);
+    border-radius: var(--radius-hair);
+  }
+  .about-contact-label {
+    display: block;
+    font-family: var(--font-mono), ui-monospace, monospace;
+    font-size: var(--fs-meta); letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--ink-60);
+  }
+  .about-contact-email {
+    display: block;
+    font-family: var(--font-serif), Georgia, serif;
+    font-size: var(--fs-body-s); margin-top: 12px; color: var(--ink); word-break: break-word;
   }
   .about-contact-link {
+    display: inline-block; margin-top: 14px;
     font-family: var(--font-sans), system-ui, sans-serif;
     font-size: var(--fs-small); font-weight: 500;
   }
 
-  /* ── SMALL SCREENS ──────────────────────────────────────── */
-  @media (max-width: 1100px) {
-    .pband-toggle { position: static; margin-top: 44px; }
-  }
-  @media (max-width: 767px) {
-    .about-hero { padding-top: 48px; padding-bottom: 64px; gap: 56px; }
-    .pband-row { gap: min(12px, 3vw); }
-    .pband-slot { width: min(94px, 24vw); aspect-ratio: 94 / 146; }
-    .pband-slot[data-slot="1"] { width: min(136px, 35vw); aspect-ratio: 136 / 200; }
-    .pband-frame { border-radius: 10px; }
-    .pband-cap { font-size: 10px; top: calc(100% + 10px); }
-    .about-row { display: block; padding: 40px 0; }
-    .about-row-title { margin-bottom: 20px; }
-    .about-bio-text p { font-size: var(--fs-lead); }
+  @media (max-width: 940px) {
+    .about-page { grid-template-columns: 1fr; gap: 48px; padding-top: 56px; }
+    .about-side { position: static; max-width: 560px; }
   }
   @media (max-width: 560px) {
     .about-now-grid { grid-template-columns: 1fr; }
+    .about-bio-text p { font-size: var(--fs-lead); }
   }
 }
