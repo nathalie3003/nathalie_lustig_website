@@ -22,10 +22,12 @@ export function LogoMarquee({
   id,
   title,
   items,
+  subtitle,
   reverse = false,
 }: {
   id: string;
   title: string;
+  subtitle?: string;
   items: MarqueeItem[];
   reverse?: boolean;
 }) {
@@ -40,8 +42,8 @@ export function LogoMarquee({
             <img
               src={iconUrl(item.domain)}
               alt=""
-              width={52}
-              height={52}
+              width={26}
+              height={26}
               decoding="async"
               draggable={false}
               className="marquee-icon"
@@ -72,10 +74,11 @@ export function LogoMarquee({
 
   return (
     <section className="marquee-section" aria-labelledby={id}>
-      <div className="home-head">
-        <h2 className="home-head-title" id={id}>
+      <div className="marquee-head">
+        <h2 className="marquee-title" id={id}>
           {title}
         </h2>
+        {subtitle ? <p className="marquee-sub">{subtitle}</p> : null}
       </div>
       <MarqueeTrack reverse={reverse}>
         {row(false)}

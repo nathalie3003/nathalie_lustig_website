@@ -380,11 +380,34 @@
   }
 
   /* ── LOGO MARQUEES (companies covered, readers from) ───── */
-  .marquee-section { max-width: var(--maxw); margin: 0 auto; padding: 0 var(--pad) 64px; }
-  .marquee-section:last-of-type { padding-bottom: 96px; }
+  /* One grey band holds both strips. The heads sit on the page column; the
+     strips run the full band width and fade out at the edges. */
+  .logo-band {
+    background: #EEF0F2; color: var(--ink);
+    padding: 88px 0 96px;
+    display: flex; flex-direction: column; gap: 40px;
+  }
+  .marquee-section { display: flex; flex-direction: column; gap: 28px; }
+  .marquee-head {
+    max-width: var(--maxw); width: 100%; margin: 0 auto; padding: 0 var(--pad);
+    box-sizing: border-box;
+    display: flex; align-items: baseline; justify-content: space-between;
+    gap: 12px 24px; flex-wrap: wrap;
+  }
+  .marquee-title {
+    font-family: var(--font-serif), Georgia, serif;
+    font-size: 38px; font-weight: 600; letter-spacing: -0.022em; line-height: 1.1; margin: 0;
+  }
+  .marquee-sub { margin: 0; font-family: var(--font-sans), system-ui, sans-serif; font-size: 14.5px; line-height: 1.5; color: var(--ink-60); }
+  .logo-rule {
+    height: 1px; background: #D5D9DE;
+    width: calc(100% - 2 * var(--pad)); max-width: calc(var(--maxw) - 2 * var(--pad));
+    margin: 0 auto;
+  }
   .marquee {
-    overflow: hidden; padding: 26px 0 4px;
-    mask-image: linear-gradient(to right, transparent, #000 7%, #000 93%, transparent);
+    overflow: hidden; padding: 6px 0 10px;
+    -webkit-mask-image: linear-gradient(to right, transparent, #000 6%, #000 94%, transparent);
+            mask-image: linear-gradient(to right, transparent, #000 6%, #000 94%, transparent);
   }
   .marquee-track {
     display: flex; width: max-content; will-change: transform;
@@ -395,27 +418,35 @@
   .marquee.is-dragging, .marquee.is-dragging a { cursor: grabbing; }
   .marquee img, .marquee a { -webkit-user-drag: none; }
   .marquee-row {
-    display: flex; align-items: flex-start; gap: 44px;
-    list-style: none; margin: 0; padding: 0 44px 0 0;
+    display: flex; align-items: center; gap: 14px;
+    list-style: none; margin: 0; padding: 0 14px 0 0;
   }
-  /* Logo on top, name beneath: bare logos with no tile, so each mark stands on
-     the page by itself. */
+  /* White pill: round icon on the left, name beside it. */
   .marquee-item {
-    display: flex; flex-direction: column; align-items: center; gap: 10px;
-    width: 112px; text-align: center; color: var(--ink);
+    display: inline-flex; align-items: center; gap: 12px;
+    padding: 12px 20px 12px 12px;
+    background: #FFFFFF; border: 1px solid #DDE0E4; border-radius: var(--radius-pill);
+    white-space: nowrap; color: var(--ink); text-decoration: none;
+    font-family: var(--font-sans), system-ui, sans-serif;
   }
-  .marquee-icon { width: 52px; height: 52px; flex: none; object-fit: contain; }
-  .marquee-name {
-    font-family: var(--font-display, var(--font-serif)), Georgia, serif;
-    font-size: 14px; font-weight: 600; line-height: 1.25; letter-spacing: -0.005em;
-    transition: color 140ms ease;
+  a.marquee-item { transition: border-color .3s, box-shadow .3s; }
+  a.marquee-item:hover, a.marquee-item:focus-visible {
+    border-color: var(--accent); box-shadow: 0 6px 18px rgba(178, 58, 99, 0.14);
   }
-  a.marquee-item:hover .marquee-name,
-  a.marquee-item:focus-visible .marquee-name { color: var(--accent); }
+  .marquee-icon { width: 26px; height: 26px; flex: none; border-radius: 50%; object-fit: contain; }
+  .marquee-name { font-size: 15px; font-weight: 500; line-height: 1.2; }
+  @media (max-width: 760px) {
+    .logo-band { padding: 64px 0 72px; gap: 32px; }
+    .marquee-section { gap: 22px; }
+    .marquee-head { flex-direction: column; align-items: flex-start; }
+    .marquee-title { font-size: 34px; }
+    .marquee-sub { font-size: 16px; }
+    .marquee-item { padding: 10px 18px 10px 10px; }
+  }
   @media (prefers-reduced-motion: reduce) {
-    .marquee { mask-image: none; cursor: auto; touch-action: auto; user-select: auto; -webkit-user-select: auto; }
+    .marquee { mask-image: none; -webkit-mask-image: none; cursor: auto; touch-action: auto; user-select: auto; -webkit-user-select: auto; }
     .marquee-track { width: auto; will-change: auto; }
-    .marquee-row { flex-wrap: wrap; gap: 28px 32px; padding-right: 0; }
+    .marquee-row { flex-wrap: wrap; gap: 12px; padding: 0 var(--pad); }
     .marquee-row[aria-hidden] { display: none; }
   }
 
