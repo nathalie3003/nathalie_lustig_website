@@ -398,7 +398,7 @@
     font-family: var(--font-serif), Georgia, serif;
     font-size: 38px; font-weight: 600; letter-spacing: -0.022em; line-height: 1.1; margin: 0;
   }
-  .marquee-sub { margin: 0; font-size: 14.5px; line-height: 1.5; color: var(--ink-60); }
+  .marquee-sub { margin: 0; font-family: var(--font-sans), system-ui, sans-serif; font-size: 14.5px; line-height: 1.5; color: var(--ink-60); }
   .logo-rule {
     height: 1px; background: #D5D9DE;
     width: calc(100% - 2 * var(--pad)); max-width: calc(var(--maxw) - 2 * var(--pad));
@@ -427,6 +427,7 @@
     padding: 12px 20px 12px 12px;
     background: #FFFFFF; border: 1px solid #DDE0E4; border-radius: var(--radius-pill);
     white-space: nowrap; color: var(--ink); text-decoration: none;
+    font-family: var(--font-sans), system-ui, sans-serif;
   }
   a.marquee-item { transition: border-color .3s, box-shadow .3s; }
   a.marquee-item:hover, a.marquee-item:focus-visible {
