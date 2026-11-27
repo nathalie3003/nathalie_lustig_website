@@ -238,76 +238,12 @@
     margin-top: 26px; font-family: var(--font-sans), system-ui, sans-serif;
     font-size: 14.5px; font-weight: 500; color: var(--accent);
   }
-  .featured-media { position: relative; background: var(--tint); min-height: 380px; overflow: hidden; }
-  /* Contain, not cover: covers are often charts and figures, which must show whole. */
-  .featured-media img {
-    position: absolute; inset: 24px;
-    width: calc(100% - 48px); height: calc(100% - 48px);
-    object-fit: contain; display: block;
-  }
+  /* The cover runs edge to edge at its own shape: no grey frame, and nothing
+     cropped, since covers are often charts and figures that must show whole. */
+  .featured-media { display: flex; align-items: center; overflow: hidden; }
+  .featured-media img { display: block; width: 100%; height: auto; }
   @media (prefers-reduced-motion: reduce) {
     .featured, .featured:hover { transform: none; }
-  }
-
-  /* Latest note beside two ink boxes. In the narrower column the note card
-     stacks: cover on top, copy beneath. */
-  .featured-row {
-    display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
-    gap: 24px; align-items: stretch;
-  }
-  .featured-row .featured { grid-template-columns: 1fr; grid-template-rows: auto 1fr; }
-  /* Cover A: the image runs edge to edge at its own shape, so there is no
-     grey frame around it and nothing is cropped (charts stay whole). */
-  .featured-row .featured-media { order: -1; min-height: 0; background: none; }
-  .featured-row .featured-media img {
-    position: static; inset: auto; width: 100%; height: auto; object-fit: initial;
-  }
-  .featured-row .featured-copy { padding: 32px 40px 40px; justify-content: flex-start; }
-
-  /* Boxes keep their natural height; the space under them is left open. */
-  .early-boxes { display: flex; flex-direction: column; gap: 24px; align-self: start; }
-  .ink-box {
-    background: #191316; color: #FFFFFF;
-    border-radius: var(--radius-card); padding: 32px 30px;
-  }
-  .ink-box-ask { display: flex; flex-direction: column; align-items: flex-start; gap: 24px; }
-  .ink-box-contact { padding-bottom: 12px; container-type: inline-size; }
-  .ink-box-title {
-    font-family: var(--font-serif), Georgia, serif;
-    font-size: 28px; font-weight: 600; line-height: 1.18; letter-spacing: -0.02em;
-    margin: 0; text-wrap: balance;
-  }
-  .ink-box-contact .ink-box-title { margin-bottom: 16px; }
-  .ink-pill {
-    display: inline-flex; align-items: center; min-height: 48px; padding: 0 24px;
-    border-radius: var(--radius-pill); background: #F7D9E3; color: #191316;
-    font-family: var(--font-sans), system-ui, sans-serif; font-size: 17px; font-weight: 600;
-    text-decoration: none; transition: background 160ms ease;
-  }
-  .ink-pill:hover { background: #FFFFFF; color: #191316; }
-  .ink-row {
-    display: flex; align-items: center; justify-content: space-between; gap: 12px;
-    padding: 16px 0; border-top: 1px solid rgba(255, 255, 255, 0.16);
-    font-family: var(--font-sans), system-ui, sans-serif;
-  }
-  /* The address sits under its label rather than beside it, so it never
-     breaks mid-word in the narrow column. */
-  .ink-row-stack { flex-direction: column; align-items: flex-start; gap: 6px; }
-  .ink-row-label { font-size: 13px; color: rgba(255, 255, 255, 0.68); }
-  .ink-row-value {
-    font-size: min(17px, 6.1cqi); font-weight: 600; color: #F7D9E3; text-decoration: none;
-    overflow-wrap: anywhere;
-  }
-  .ink-row-value:hover { color: #FFFFFF; text-decoration: underline; text-underline-offset: 4px; }
-  .ink-row-link { display: inline-flex; align-items: center; gap: 6px; font-size: 16px; overflow-wrap: normal; }
-
-  @media (max-width: 1000px) {
-    .featured-row { grid-template-columns: 1fr; }
-    .early-boxes { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  }
-  @media (max-width: 640px) {
-    .early-boxes { grid-template-columns: 1fr; }
-    .featured-row .featured-copy { padding: 28px; }
   }
 
   /* ── NOTES + RAIL ───────────────────────────────────────── */
@@ -533,9 +469,8 @@
     .hero-grid { grid-template-columns: 1fr; gap: 40px; padding-top: 64px; }
     .featured { grid-template-columns: 1fr; }
     .featured-copy { padding: 36px 28px; }
-    /* Stacked: let the image set its own height so it shows whole at any width. */
-    .featured-media { min-height: 0; padding: 20px; }
-    .featured-media img { position: static; width: 100%; height: auto; }
+    /* Stacked: the cover sits on top of the copy. */
+    .featured-media { order: -1; }
   }
   @media (max-width: 920px) {
     .home-grid { grid-template-columns: 1fr; gap: 48px; padding-top: 56px; }

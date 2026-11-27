@@ -6,6 +6,7 @@ import { about } from "@/content/about";
 
 const EMAIL = about.contact.find((c) => c.label === "Email")?.value ?? "";
 const LINKEDIN = about.contact.find((c) => c.label === "LinkedIn");
+const SUGGEST_HREF = `mailto:${EMAIL}?subject=${encodeURIComponent("Topic suggestion")}`;
 
 /** Sizes the wordmark so its text exactly fills the footer column, and wipes
  *  it in once when it first scrolls into view. The CSS sets a vw-based size
@@ -146,6 +147,13 @@ export function ContactFooter() {
               </svg>
               <span aria-live="polite">{copied ? "Copied to clipboard" : "Or copy the address"}</span>
             </button>
+
+            <div className="foot-suggest">
+              <p className="foot-suggest-q">Want a market story explained?</p>
+              <a href={SUGGEST_HREF} className="foot-suggest-pill">
+                Suggest a topic
+              </a>
+            </div>
           </div>
 
           <nav className="foot-col" aria-label="Notes">
