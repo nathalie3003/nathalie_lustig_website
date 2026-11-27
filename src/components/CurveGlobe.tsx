@@ -55,8 +55,9 @@ export function CurveGlobe({ snapshot, asOf }: Props) {
     const canvas = canvasRef.current;
     const wrap = wrapRef.current;
     if (!canvas || !wrap) return;
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
+    const maybeCtx = canvas.getContext("2d");
+    if (!maybeCtx) return;
+    const ctx: CanvasRenderingContext2D = maybeCtx;
 
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const ys = snapshot.map((p) => p.yield);
