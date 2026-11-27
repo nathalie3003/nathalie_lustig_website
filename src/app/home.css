@@ -256,16 +256,22 @@
     gap: 24px; align-items: stretch;
   }
   .featured-row .featured { grid-template-columns: 1fr; grid-template-rows: auto 1fr; }
-  .featured-row .featured-media { order: -1; min-height: 300px; }
+  /* Cover A: the image runs edge to edge at its own shape, so there is no
+     grey frame around it and nothing is cropped (charts stay whole). */
+  .featured-row .featured-media { order: -1; min-height: 0; background: none; }
+  .featured-row .featured-media img {
+    position: static; inset: auto; width: 100%; height: auto; object-fit: initial;
+  }
   .featured-row .featured-copy { padding: 32px 40px 40px; justify-content: flex-start; }
 
-  .early-boxes { display: flex; flex-direction: column; gap: 24px; }
+  /* Boxes keep their natural height; the space under them is left open. */
+  .early-boxes { display: flex; flex-direction: column; gap: 24px; align-self: start; }
   .ink-box {
     background: #191316; color: #FFFFFF;
     border-radius: var(--radius-card); padding: 32px 30px;
   }
   .ink-box-ask { display: flex; flex-direction: column; align-items: flex-start; gap: 24px; }
-  .ink-box-contact { flex-grow: 1; padding-bottom: 12px; container-type: inline-size; }
+  .ink-box-contact { padding-bottom: 12px; container-type: inline-size; }
   .ink-box-title {
     font-family: var(--font-serif), Georgia, serif;
     font-size: 28px; font-weight: 600; line-height: 1.18; letter-spacing: -0.02em;
@@ -297,7 +303,6 @@
 
   @media (max-width: 1000px) {
     .featured-row { grid-template-columns: 1fr; }
-    .featured-row .featured-media { min-height: 0; }
     .early-boxes { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
   }
   @media (max-width: 640px) {
