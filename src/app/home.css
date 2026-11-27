@@ -249,6 +249,62 @@
     .featured, .featured:hover { transform: none; }
   }
 
+  /* Latest note beside two ink boxes. In the narrower column the note card
+     stacks: cover on top, copy beneath. */
+  .featured-row {
+    display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+    gap: 24px; align-items: stretch;
+  }
+  .featured-row .featured { grid-template-columns: 1fr; grid-template-rows: auto 1fr; }
+  .featured-row .featured-media { order: -1; min-height: 300px; }
+  .featured-row .featured-copy { padding: 32px 40px 40px; justify-content: flex-start; }
+
+  .early-boxes { display: flex; flex-direction: column; gap: 24px; }
+  .ink-box {
+    background: #191316; color: #FFFFFF;
+    border-radius: var(--radius-card); padding: 32px 30px;
+  }
+  .ink-box-ask { display: flex; flex-direction: column; align-items: flex-start; gap: 24px; }
+  .ink-box-contact { flex-grow: 1; padding-bottom: 12px; container-type: inline-size; }
+  .ink-box-title {
+    font-family: var(--font-serif), Georgia, serif;
+    font-size: 28px; font-weight: 600; line-height: 1.18; letter-spacing: -0.02em;
+    margin: 0; text-wrap: balance;
+  }
+  .ink-box-contact .ink-box-title { margin-bottom: 16px; }
+  .ink-pill {
+    display: inline-flex; align-items: center; min-height: 48px; padding: 0 24px;
+    border-radius: var(--radius-pill); background: #F7D9E3; color: #191316;
+    font-family: var(--font-sans), system-ui, sans-serif; font-size: 17px; font-weight: 600;
+    text-decoration: none; transition: background 160ms ease;
+  }
+  .ink-pill:hover { background: #FFFFFF; color: #191316; }
+  .ink-row {
+    display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    padding: 16px 0; border-top: 1px solid rgba(255, 255, 255, 0.16);
+    font-family: var(--font-sans), system-ui, sans-serif;
+  }
+  /* The address sits under its label rather than beside it, so it never
+     breaks mid-word in the narrow column. */
+  .ink-row-stack { flex-direction: column; align-items: flex-start; gap: 6px; }
+  .ink-row-label { font-size: 13px; color: rgba(255, 255, 255, 0.68); }
+  .ink-row-value {
+    font-size: min(17px, 6.1cqi); font-weight: 600; color: #F7D9E3; text-decoration: none;
+    overflow-wrap: anywhere;
+  }
+  .ink-row-value:hover { color: #FFFFFF; text-decoration: underline; text-underline-offset: 4px; }
+  .ink-row-link { display: inline-flex; align-items: center; gap: 6px; font-size: 16px; overflow-wrap: normal; }
+
+  @media (max-width: 1000px) {
+    .featured-row { grid-template-columns: 1fr; }
+    .featured-row .featured-media { min-height: 0; }
+    .early-boxes { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+  @media (max-width: 640px) {
+    .early-boxes { grid-template-columns: 1fr; }
+    .featured-row .featured-copy { padding: 28px; }
+  }
+
   /* ── NOTES + RAIL ───────────────────────────────────────── */
   .home-grid {
     max-width: var(--maxw); margin: 0 auto;

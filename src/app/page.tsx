@@ -10,6 +10,7 @@ import { TypedTopics } from "@/components/TypedTopics";
 import { CurveCard } from "@/components/CurveCard";
 import { HomeNotes, type HomeNote } from "@/components/HomeNotes";
 import { LogoMarquee } from "@/components/LogoMarquee";
+import { EarlyBoxes } from "@/components/EarlyBoxes";
 import { companiesCovered } from "@/content/companiesCovered";
 import { readersFrom } from "@/content/readersFrom";
 import { getYieldCurve, getAllTenorHistories } from "@/lib/marketData";
@@ -106,7 +107,7 @@ export default async function HomePage() {
       </section>
 
       {latest ? (
-        <section className="featured-wrap">
+        <section className="featured-wrap featured-row">
           <Link href={`/notes/${latest.slug}`} className="featured">
             <div className="featured-copy">
               <span className="featured-kicker">
@@ -130,6 +131,7 @@ export default async function HomePage() {
               ) : null}
             </div>
           </Link>
+          <EarlyBoxes />
         </section>
       ) : null}
 
