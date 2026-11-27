@@ -140,6 +140,9 @@
   .l-btn-outline:hover {
     background: var(--accent); color: var(--surface); box-shadow: none;
   }
+  /* The header action is a pill, so it reads as the one button in the bar
+     rather than another squared-off nav item. */
+  .top-cta { border-radius: var(--radius-pill); padding-left: 18px; padding-right: 18px; }
   /* Category labels: mono small-caps raspberry, no pill, no fill — the editorial
      read of "department label" rather than a SaaS badge. */
   .l-tag {
