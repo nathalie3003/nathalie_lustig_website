@@ -200,15 +200,20 @@
 
   /* ── FEATURED NOTE ──────────────────────────────────────── */
   .featured-wrap { max-width: var(--maxw); margin: 0 auto; padding: 72px var(--pad) 0; }
+  /* Framed plate: a white mount with an even 14px margin, the cover set
+     like a print on the left in its own rounded, petal-tinted panel. */
   .featured {
-    display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
-    align-items: stretch; color: var(--ink);
-    background: var(--surface); border: 1px solid var(--rule);
-    overflow: hidden; transition: color 160ms ease, border-color 160ms ease;
+    display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+    gap: 14px; padding: 14px; align-items: stretch; color: var(--ink);
+    background: var(--bg); border: 1px solid var(--rule);
+    border-radius: var(--radius-stack);
+    transition: box-shadow 220ms ease, border-color 220ms ease;
   }
-  .featured:hover { color: var(--accent); border-color: var(--rule-strong); }
+  .featured:hover { border-color: var(--rule-strong); box-shadow: 0 0 0 4px var(--accent-soft); }
+  .featured:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+  .featured:hover .featured-media img { transform: scale(1.03); }
   .featured-copy {
-    padding: 52px 48px; display: flex; flex-direction: column; justify-content: center;
+    padding: 40px 34px 40px 20px; display: flex; flex-direction: column; justify-content: center;
   }
   .featured-kicker {
     font-family: var(--font-mono), ui-monospace, monospace;
@@ -229,12 +234,21 @@
     margin-top: 26px; font-family: var(--font-sans), system-ui, sans-serif;
     font-size: 14.5px; font-weight: 500; color: var(--accent);
   }
-  .featured-media { position: relative; background: var(--tint); min-height: 380px; overflow: hidden; }
+  .featured-media {
+    order: -1; position: relative; background: var(--accent-soft);
+    min-height: 380px; overflow: hidden; border-radius: var(--radius);
+    box-shadow: inset 0 0 0 1px rgba(122, 34, 70, 0.06);
+  }
   /* Contain, not cover: covers are often charts and figures, which must show whole. */
   .featured-media img {
     position: absolute; inset: 24px;
     width: calc(100% - 48px); height: calc(100% - 48px);
     object-fit: contain; display: block;
+    transition: transform 500ms cubic-bezier(0.2, 0.7, 0.2, 1);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .featured-media img { transition: none; }
+    .featured:hover .featured-media img { transform: none; }
   }
 
   /* ── NOTES + RAIL ───────────────────────────────────────── */
@@ -459,9 +473,10 @@
   @media (max-width: 1000px) {
     .hero-grid { grid-template-columns: 1fr; gap: 40px; padding-top: 64px; }
     .featured { grid-template-columns: 1fr; }
-    .featured-copy { padding: 36px 28px; }
-    /* Stacked: let the image set its own height so it shows whole at any width. */
-    .featured-media { min-height: 0; padding: 20px; }
+    .featured-copy { padding: 22px 12px 18px; }
+    /* Stacked: copy first, then the plate; let the image set its own height
+       so it shows whole at any width. */
+    .featured-media { order: 0; min-height: 0; padding: 20px; }
     .featured-media img { position: static; width: 100%; height: auto; }
   }
   @media (max-width: 920px) {
