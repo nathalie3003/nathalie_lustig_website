@@ -1,7 +1,6 @@
 "use client";
 import { usePathname } from "next/navigation";
 import { TopBar } from "./Nav";
-import { Intro } from "./Intro";
 
 export function Chrome({
   children,
@@ -15,7 +14,6 @@ export function Chrome({
   if (isStudio) return <>{children}</>;
   return (
     <>
-      <Intro />
       <TopBar />
       <main className="main">{children}</main>
       {footer}

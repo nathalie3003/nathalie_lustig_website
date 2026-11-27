@@ -1,11 +1,9 @@
 import type { Metadata } from "next";
 import { Source_Serif_4, Instrument_Sans, IBM_Plex_Mono, DM_Serif_Display } from "next/font/google";
 import "./globals.css";
-import "./intro.css";
 import { Chrome } from "@/components/Chrome";
 import { ContactFooter } from "@/components/Footer";
 import { Analytics } from "@vercel/analytics/next";
-import { INTRO_SCRIPT } from "@/lib/introScript";
 
 const serif = Source_Serif_4({
   subsets: ["latin"],
@@ -66,9 +64,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       className={`${serif.variable} ${sans.variable} ${mono.variable} ${display.variable}`}
       suppressHydrationWarning
     >
-      <head>
-        <script dangerouslySetInnerHTML={{ __html: INTRO_SCRIPT }} />
-      </head>
       <body className="site">
         <noscript>
           <style>{`.top-name-mark .bp-mark{opacity:1;transform:none}.scroll-reveal .sr-char{transform:none}.article-reveal .ap-back,.article-reveal .trade-back,.article-reveal .ap-meta,.article-reveal .article-meta-top,.article-reveal .ap-deck,.article-reveal .article-deck,.article-reveal .ap-col>p:first-of-type,.article-reveal .article-body>p:first-of-type{opacity:1;transform:none}.article-reveal .trade-rule{transform:scaleX(1)}`}</style>
