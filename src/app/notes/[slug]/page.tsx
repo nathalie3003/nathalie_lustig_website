@@ -22,7 +22,6 @@ import { ArticleShell } from "@/components/ArticleShell";
 import { ArticleToc } from "@/components/ArticleToc";
 import { extractHeadings } from "@/lib/toc";
 import { ArticleReveal } from "@/components/ArticleReveal";
-import { ScrollReveal } from "@/components/ScrollReveal";
 import { Replies } from "@/components/Replies";
 
 export async function generateStaticParams() {
@@ -179,9 +178,7 @@ export default async function NotePage({
                 {formatDateLong(note.publishedAt)} · {minutes} read
               </span>
             </div>
-            <ScrollReveal key={slug} as="h1" className="ap-title" trigger="mount" delay={520}>
-              {note.title}
-            </ScrollReveal>
+            <h1 className="ap-title">{note.title}</h1>
             {note.excerpt && <p className="ap-deck">{note.excerpt}</p>}
             <p className="ap-byline">
               By <Link href="/about">{about.author}</Link>
