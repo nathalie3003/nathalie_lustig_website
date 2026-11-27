@@ -140,6 +140,9 @@
   .l-btn-outline:hover {
     background: var(--accent); color: var(--surface); box-shadow: none;
   }
+  /* The header action is a pill, so it reads as the one button in the bar
+     rather than another squared-off nav item. */
+  .top-cta { border-radius: var(--radius-pill); padding-left: 18px; padding-right: 18px; }
   /* Category labels: mono small-caps raspberry, no pill, no fill — the editorial
      read of "department label" rather than a SaaS badge. */
   .l-tag {
@@ -1687,6 +1690,29 @@
    a hex fallback in its fill attribute; these rules keep both on the token. */
 .bp-mark-point { fill: var(--accent); }
 .bp-point { color: var(--accent); }
+
+/* --- Ink-to-raspberry top bar ----------------------------------------
+   The bar opens in the footer's ink behind the mark and warms to deep
+   raspberry towards the button, so the page is bookended by the same ink
+   without the top reading as a flat dark slab. Solid, not translucent, so
+   the ink end matches the footer exactly. Unlayered on purpose: .bp-mark
+   above is unlayered too, and the mark has to flip to white here.
+   Text colours are set per element rather than by re-pointing --ink, so
+   the Notes dropdown (which lives inside .top) keeps its dark-on-light. */
+.top {
+  background: linear-gradient(90deg, #191316 0%, #7A2246 100%);
+  backdrop-filter: none;
+  border-bottom-color: transparent;
+}
+.top .top-name,
+.top .bp-mark,
+.top .top-link,
+.top .top-link:hover,
+.top .notes-trigger[aria-expanded="true"] .notes-caret { color: #FFFFFF; }
+.top .notes-caret { color: rgba(255, 255, 255, 0.62); }
+.top .top-link:hover { background: rgba(255, 255, 255, 0.10); }
+.top .top-cta { color: #191316; background: #FFFFFF; border-color: #FFFFFF; }
+.top .top-cta:hover { color: #191316; background: #F7D9E3; border-color: #F7D9E3; }
 
 @media (max-width: 720px) {
   .band-stack {
