@@ -480,9 +480,17 @@
 
   /* FOOTER: link columns over a full-width "The Basis Point" wordmark.
      Footer.tsx fits the wordmark to the column and adds .is-in on first view. */
+  /* Ink footer: the page closes on its one dark block. The tokens are
+     re-pointed inside .foot so every rule below flips to light-on-ink; the
+     accent lightens for hovers so it stays readable on the dark ground. */
   .foot {
-    flex-shrink: 0; border-top: 1px solid var(--rule);
-    background: #FFFFFF; margin-top: 0;
+    flex-shrink: 0; border-top: 0;
+    background: #191316; margin-top: 0; color: #FFFFFF;
+    --ink: #FFFFFF;
+    --ink-72: rgba(255, 255, 255, 0.78);
+    --ink-60: rgba(255, 255, 255, 0.62);
+    --rule-strong: rgba(255, 255, 255, 0.24);
+    --accent: #F08FB0;
   }
   .foot-inner {
     max-width: var(--maxw); margin: 0 auto; padding: 72px var(--pad) 32px;
@@ -536,7 +544,7 @@
   .foot-mark-dot {
     display: inline-block; width: 0.3em; height: 0.3em;
     margin-left: 0.01em; vertical-align: -0.04em;
-    fill: var(--accent); overflow: visible;
+    fill: #B23A63; overflow: visible; /* brand raspberry, not the lightened hover accent */
   }
   .foot-mark-dot .ink-body,
   .foot-mark-dot .ink-drop,
