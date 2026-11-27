@@ -200,13 +200,22 @@
 
   /* ── FEATURED NOTE ──────────────────────────────────────── */
   .featured-wrap { max-width: var(--maxw); margin: 0 auto; padding: 72px var(--pad) 0; }
+  /* Rounded to match the site's other cards; the hover mirrors the note
+     rows below (raspberry text, a small lift, white ground, soft shadow). */
   .featured {
     display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
     align-items: stretch; color: var(--ink);
     background: var(--surface); border: 1px solid var(--rule);
-    overflow: hidden; transition: color 160ms ease, border-color 160ms ease;
+    border-radius: var(--radius-stack); overflow: hidden;
+    transition: transform 180ms ease, box-shadow 180ms ease,
+                background 180ms ease, color 160ms ease, border-color 160ms ease;
   }
-  .featured:hover { color: var(--accent); border-color: var(--rule-strong); }
+  .featured:hover {
+    color: var(--accent); transform: translateY(-2px);
+    background: #FFFFFF; border-color: var(--rule-strong);
+    box-shadow: 0 8px 20px rgba(25, 19, 22, 0.08);
+  }
+  .featured:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
   .featured-copy {
     padding: 52px 48px; display: flex; flex-direction: column; justify-content: center;
   }
@@ -229,8 +238,16 @@
     margin-top: 26px; font-family: var(--font-sans), system-ui, sans-serif;
     font-size: 14.5px; font-weight: 500; color: var(--accent);
   }
-  .featured-media { background: var(--tint); min-height: 380px; overflow: hidden; }
-  .featured-media img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .featured-media { position: relative; background: var(--tint); min-height: 380px; overflow: hidden; }
+  /* Contain, not cover: covers are often charts and figures, which must show whole. */
+  .featured-media img {
+    position: absolute; inset: 24px;
+    width: calc(100% - 48px); height: calc(100% - 48px);
+    object-fit: contain; display: block;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .featured, .featured:hover { transform: none; }
+  }
 
   /* ── NOTES + RAIL ───────────────────────────────────────── */
   .home-grid {
@@ -455,7 +472,9 @@
     .hero-grid { grid-template-columns: 1fr; gap: 40px; padding-top: 64px; }
     .featured { grid-template-columns: 1fr; }
     .featured-copy { padding: 36px 28px; }
-    .featured-media { min-height: 240px; }
+    /* Stacked: let the image set its own height so it shows whole at any width. */
+    .featured-media { min-height: 0; padding: 20px; }
+    .featured-media img { position: static; width: 100%; height: auto; }
   }
   @media (max-width: 920px) {
     .home-grid { grid-template-columns: 1fr; gap: 48px; padding-top: 56px; }

@@ -10,7 +10,6 @@ import { extractHeadings } from "@/lib/toc";
 import type { BondNote } from "@/lib/queries";
 import { about } from "@/content/about";
 import { ArticleReveal } from "@/components/ArticleReveal";
-import { ScrollReveal } from "@/components/ScrollReveal";
 
 function Stars({ n }: { n: number }) {
   return (
@@ -66,9 +65,7 @@ export function TradeIdeaArticle({
               {dateLabel} · {readLabel}
             </span>
           </div>
-          <ScrollReveal key={resetKey} as="h1" className="article-h1" trigger="mount" delay={520}>
-            {note.title}
-          </ScrollReveal>
+          <h1 className="article-h1">{note.title}</h1>
           {note.excerpt && <p className="article-deck">{note.excerpt}</p>}
           <p className="ap-byline">
             By <Link href="/about">{about.author}</Link>
