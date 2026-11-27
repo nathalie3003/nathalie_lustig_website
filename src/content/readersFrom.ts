@@ -1,8 +1,8 @@
 // Firms whose people read the notes, taken from LinkedIn post and follower
 // analytics (company breakdown). Only list a firm that actually appears in
-// those analytics. The section is worded "Readers from", which is exactly what
-// the data supports: people at these firms read the notes, not that the firm
-// subscribes. `domain` is the firm's website, used to fetch its icon.
+// those analytics. People at these firms are subscribers, which is how the
+// section's subtitle words it. `domain` is the firm's website, used to fetch
+// its icon.
 export type ReaderFirm = { name: string; domain: string };
 
 export const readersFrom: ReaderFirm[] = [

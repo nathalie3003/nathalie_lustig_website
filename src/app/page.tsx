@@ -157,7 +157,7 @@ export default async function HomePage() {
         <LogoMarquee
           id="readers-title"
           title="Readers from"
-          subtitle="People at these firms read the notes, from LinkedIn analytics."
+          subtitle="Subscribers at these firms get every note."
           items={readersFrom}
           reverse
         />

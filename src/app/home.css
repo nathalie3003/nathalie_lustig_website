@@ -380,10 +380,12 @@
   }
 
   /* ── LOGO MARQUEES (companies covered, readers from) ───── */
-  /* One grey band holds both strips. The heads sit on the page column; the
-     strips run the full band width and fade out at the edges. */
+  /* One ink band holds both strips: the page's block of contrast before the
+     footer. The heads sit on the page column; the strips run the full band
+     width and fade out at the edges. The pills stay white, which also keeps
+     the black marks (Bloomberg, Lazard, Anthropic) legible. */
   .logo-band {
-    background: #EEF0F2; color: var(--ink);
+    background: var(--ink); color: #FFFFFF;
     padding: 88px 0 96px;
     display: flex; flex-direction: column; gap: 40px;
   }
@@ -398,9 +400,9 @@
     font-family: var(--font-serif), Georgia, serif;
     font-size: 38px; font-weight: 600; letter-spacing: -0.022em; line-height: 1.1; margin: 0;
   }
-  .marquee-sub { margin: 0; font-family: var(--font-sans), system-ui, sans-serif; font-size: 14.5px; line-height: 1.5; color: var(--ink-60); }
+  .marquee-sub { margin: 0; font-family: var(--font-sans), system-ui, sans-serif; font-size: 14.5px; line-height: 1.5; color: rgba(255, 255, 255, 0.64); }
   .logo-rule {
-    height: 1px; background: #D5D9DE;
+    height: 1px; background: rgba(255, 255, 255, 0.14);
     width: calc(100% - 2 * var(--pad)); max-width: calc(var(--maxw) - 2 * var(--pad));
     margin: 0 auto;
   }
@@ -425,13 +427,13 @@
   .marquee-item {
     display: inline-flex; align-items: center; gap: 12px;
     padding: 12px 20px 12px 12px;
-    background: #FFFFFF; border: 1px solid #DDE0E4; border-radius: var(--radius-pill);
+    background: #FFFFFF; border: 1px solid #FFFFFF; border-radius: var(--radius-pill);
     white-space: nowrap; color: var(--ink); text-decoration: none;
     font-family: var(--font-sans), system-ui, sans-serif;
   }
   a.marquee-item { transition: border-color .3s, box-shadow .3s; }
   a.marquee-item:hover, a.marquee-item:focus-visible {
-    border-color: var(--accent); box-shadow: 0 6px 18px rgba(178, 58, 99, 0.14);
+    border-color: var(--accent); box-shadow: 0 0 0 2px var(--accent);
   }
   .marquee-icon { width: 26px; height: 26px; flex: none; border-radius: 50%; object-fit: contain; }
   .marquee-name { font-size: 15px; font-weight: 500; line-height: 1.2; }
