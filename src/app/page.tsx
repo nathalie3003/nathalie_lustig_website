@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { getAllNotes } from "@/lib/queries";
-import { urlFor } from "@/lib/sanity.client";
+import { imageDimensions, urlFor } from "@/lib/sanity.client";
 import { RightRail } from "@/components/RightRail";
 import { RailScroll } from "@/components/RailScroll";
 import { HashScroll } from "@/components/HashScroll";
@@ -56,7 +56,7 @@ export default async function HomePage() {
   }));
 
   const latestCover = latest?.coverImage
-    ? urlFor(latest.coverImage).width(900).height(760).url()
+    ? urlFor(latest.coverImage).width(1200).fit("max").url()
     : null;
 
   // Companies covered link to the note about them; an entry whose note is no
@@ -121,7 +121,12 @@ export default async function HomePage() {
             </div>
             <div className="featured-media">
               {latestCover ? (
-                <Image src={latestCover} alt="" width={900} height={760} />
+                <Image
+                  src={latestCover}
+                  alt=""
+                  width={imageDimensions(latest.coverImage)?.width ?? 1200}
+                  height={imageDimensions(latest.coverImage)?.height ?? 760}
+                />
               ) : null}
             </div>
           </Link>
