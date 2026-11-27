@@ -8,6 +8,7 @@ import { HashScroll } from "@/components/HashScroll";
 import { CATEGORIES, noteCat } from "@/lib/noteCat";
 import { TypedTopics } from "@/components/TypedTopics";
 import { CurveCard } from "@/components/CurveCard";
+import { CurveGlobe } from "@/components/CurveGlobe";
 import { HomeNotes, type HomeNote } from "@/components/HomeNotes";
 import { LogoMarquee } from "@/components/LogoMarquee";
 import { companiesCovered } from "@/content/companiesCovered";
@@ -15,6 +16,10 @@ import { readersFrom } from "@/content/readersFrom";
 import { getYieldCurve, getAllTenorHistories } from "@/lib/marketData";
 import { readTimeFromChars } from "@/lib/readTime";
 import { FALLBACK_CURVE } from "@/content/yieldCurveFallback";
+
+// Dot globe that morphs into the curve on hover. Flip to false to bring back
+// the interactive curve card.
+const USE_GLOBE = true;
 
 function formatDateShort(iso: string) {
   return new Date(iso).toLocaleDateString("en-GB", {
@@ -102,7 +107,11 @@ export default async function HomePage() {
           </div>
         </div>
 
-        <CurveCard snapshot={curve.points} asOf={curve.asOf} histories={histories} />
+        {USE_GLOBE ? (
+          <CurveGlobe snapshot={curve.points} asOf={curve.asOf} />
+        ) : (
+          <CurveCard snapshot={curve.points} asOf={curve.asOf} histories={histories} />
+        )}
       </section>
 
       {latest ? (
