@@ -238,13 +238,10 @@
     margin-top: 26px; font-family: var(--font-sans), system-ui, sans-serif;
     font-size: 14.5px; font-weight: 500; color: var(--accent);
   }
-  .featured-media { position: relative; background: var(--tint); min-height: 380px; overflow: hidden; }
-  /* Contain, not cover: covers are often charts and figures, which must show whole. */
-  .featured-media img {
-    position: absolute; inset: 24px;
-    width: calc(100% - 48px); height: calc(100% - 48px);
-    object-fit: contain; display: block;
-  }
+  /* The cover runs edge to edge at its own shape: no grey frame, and nothing
+     cropped, since covers are often charts and figures that must show whole. */
+  .featured-media { display: flex; align-items: center; overflow: hidden; }
+  .featured-media img { display: block; width: 100%; height: auto; }
   @media (prefers-reduced-motion: reduce) {
     .featured, .featured:hover { transform: none; }
   }
@@ -472,9 +469,8 @@
     .hero-grid { grid-template-columns: 1fr; gap: 40px; padding-top: 64px; }
     .featured { grid-template-columns: 1fr; }
     .featured-copy { padding: 36px 28px; }
-    /* Stacked: let the image set its own height so it shows whole at any width. */
-    .featured-media { min-height: 0; padding: 20px; }
-    .featured-media img { position: static; width: 100%; height: auto; }
+    /* Stacked: the cover sits on top of the copy. */
+    .featured-media { order: -1; }
   }
   @media (max-width: 920px) {
     .home-grid { grid-template-columns: 1fr; gap: 48px; padding-top: 56px; }

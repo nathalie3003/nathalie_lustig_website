@@ -500,7 +500,7 @@
     font-family: var(--font-sans), system-ui, sans-serif;
   }
   .foot-cols {
-    display: grid; grid-template-columns: minmax(0, 1.6fr) repeat(3, minmax(0, 1fr));
+    display: grid; grid-template-columns: minmax(0, 2.4fr) repeat(3, minmax(0, 1fr));
     gap: 48px;
   }
   .foot-h {
@@ -513,21 +513,52 @@
     font-size: 18px; line-height: 1.45; color: var(--ink-60);
     margin: 0 0 22px; max-width: 34ch;
   }
-  .foot-copy {
-    display: flex; align-items: center; justify-content: space-between; gap: 16px;
-    width: 100%; max-width: 360px; padding: 12px 0;
-    background: none; border: 0; border-bottom: 1px solid var(--rule-strong);
-    font: inherit; font-size: 15px; color: var(--ink-72); text-align: left;
-    cursor: pointer; transition: color 160ms ease, border-color 160ms ease;
+  /* The email is the footer's one call to action: a petal pill, with a
+     quiet copy control beneath for people who would rather paste it. */
+  .foot-contact { display: flex; flex-direction: column; align-items: flex-start; }
+  .foot-contact .foot-h {
+    font-family: var(--font-serif), Georgia, serif;
+    font-size: 30px; font-weight: 600; letter-spacing: -0.02em; margin-bottom: 14px;
   }
-  .foot-copy:hover { color: var(--accent); border-bottom-color: var(--accent); }
-  .foot-copy-cue { font-size: 13px; color: var(--ink-60); }
-  .foot-copy:hover .foot-copy-cue { color: inherit; }
+  .foot-pill {
+    display: inline-flex; align-items: center; gap: 14px; max-width: 100%;
+    padding: 15px 22px 15px 26px; border-radius: 999px;
+    background: #F7D9E3; color: #191316;
+    font-size: 17px; font-weight: 600; text-decoration: none;
+    overflow-wrap: anywhere; transition: background 160ms ease;
+  }
+  .foot-pill:hover { background: #FFFFFF; color: #191316; }
+  .foot-pill svg { flex-shrink: 0; }
+  .foot-copy {
+    display: inline-flex; align-items: center; gap: 8px; min-height: 44px;
+    margin-top: 8px; padding: 0 4px;
+    background: none; border: 0; font: inherit; font-size: 14px;
+    color: var(--ink-60); cursor: pointer; transition: color 160ms ease;
+  }
+  .foot-copy:hover { color: var(--accent); }
+  /* A second, quieter ask under the email: an outline pill so the email
+     stays the footer's main call to action. */
+  .foot-suggest {
+    display: flex; align-items: center; flex-wrap: wrap; gap: 12px 16px;
+    margin-top: 24px;
+    width: 100%;
+  }
+  .foot-suggest-q {
+    margin: 0; font-family: var(--font-serif), Georgia, serif;
+    font-size: 19px; font-weight: 600; letter-spacing: -0.01em; color: var(--ink);
+  }
+  .foot-suggest-pill {
+    display: inline-flex; align-items: center; min-height: 44px; padding: 0 20px;
+    border-radius: 999px; border: 1px solid #F7D9E3; color: #F7D9E3;
+    font-size: 15px; font-weight: 600; text-decoration: none;
+    transition: background 160ms ease, color 160ms ease;
+  }
+  .foot-suggest-pill:hover { background: #F7D9E3; color: #191316; }
   .foot-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
   .foot-list a { color: var(--ink-60); font-size: 15px; text-decoration: none; }
   .foot-list a:hover { color: var(--accent); }
 
-  .foot-mark { margin: 120px 0 64px; line-height: 0.82; overflow: hidden; }
+  .foot-mark { margin: 64px 0 56px; line-height: 0.82; overflow: hidden; }
   .foot-mark-text {
     display: block; width: max-content; white-space: nowrap;
     font-family: var(--font-display), Georgia, serif; font-weight: 400;
@@ -599,7 +630,8 @@
     .foot-inner { padding-top: 56px; }
     .foot-cols { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 36px 24px; }
     .foot-contact { grid-column: 1 / -1; }
-    .foot-mark { margin: 72px 0 40px; }
+    .foot-mark { margin: 48px 0 36px; }
+    .foot-pill { font-size: 15px; padding: 14px 18px 14px 22px; }
   }
 
   /* ============================================================

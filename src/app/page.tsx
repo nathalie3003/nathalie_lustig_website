@@ -155,14 +155,12 @@ export default async function HomePage() {
         <LogoMarquee
           id="covered-title"
           title="Companies covered"
-          subtitle="Issuers and borrowers the notes have taken apart. Each opens its note."
           items={covered}
         />
         <div className="logo-rule" aria-hidden="true" />
         <LogoMarquee
           id="readers-title"
           title="Readers from"
-          subtitle="Subscribers at these firms get every note."
           items={readersFrom}
           reverse
         />

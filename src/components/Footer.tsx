@@ -6,6 +6,7 @@ import { about } from "@/content/about";
 
 const EMAIL = about.contact.find((c) => c.label === "Email")?.value ?? "";
 const LINKEDIN = about.contact.find((c) => c.label === "LinkedIn");
+const SUGGEST_HREF = `mailto:${EMAIL}?subject=${encodeURIComponent("Topic suggestion")}`;
 
 /** Sizes the wordmark so its text exactly fills the footer column, and wipes
  *  it in once when it first scrolls into view. The CSS sets a vw-based size
@@ -121,17 +122,38 @@ export function ContactFooter() {
             <p className="foot-lede">
               Happy to talk bonds, books, or anything in between.
             </p>
+            <a href={`mailto:${EMAIL}`} className="foot-pill">
+              {EMAIL}
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <path d="M7 17L17 7" />
+                <path d="M8 7h9v9" />
+              </svg>
+            </a>
             <button
               type="button"
               className="foot-copy"
               onClick={onCopy}
-              aria-label={`Copy email address ${EMAIL}`}
+              aria-label={copied ? "Email address copied" : `Copy email address ${EMAIL}`}
             >
-              <span>{copied ? "Copied to clipboard" : EMAIL}</span>
-              <span className="foot-copy-cue" aria-hidden="true">
-                {copied ? "✓" : "Copy"}
-              </span>
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                {copied ? (
+                  <path d="M5 12l5 5L20 7" />
+                ) : (
+                  <>
+                    <rect x="9" y="9" width="12" height="12" rx="2" />
+                    <path d="M5 15V5a2 2 0 0 1 2-2h10" />
+                  </>
+                )}
+              </svg>
+              <span aria-live="polite">{copied ? "Copied to clipboard" : "Or copy the address"}</span>
             </button>
+
+            <div className="foot-suggest">
+              <p className="foot-suggest-q">Want a market story explained?</p>
+              <a href={SUGGEST_HREF} className="foot-suggest-pill">
+                Suggest a topic
+              </a>
+            </div>
           </div>
 
           <nav className="foot-col" aria-label="Notes">
