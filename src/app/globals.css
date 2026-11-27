@@ -540,7 +540,7 @@
   .foot-list a { color: var(--ink-60); font-size: 15px; text-decoration: none; }
   .foot-list a:hover { color: var(--accent); }
 
-  .foot-mark { margin: 120px 0 64px; line-height: 0.82; overflow: hidden; }
+  .foot-mark { margin: 64px 0 56px; line-height: 0.82; overflow: hidden; }
   .foot-mark-text {
     display: block; width: max-content; white-space: nowrap;
     font-family: var(--font-display), Georgia, serif; font-weight: 400;
@@ -612,7 +612,7 @@
     .foot-inner { padding-top: 56px; }
     .foot-cols { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 36px 24px; }
     .foot-contact { grid-column: 1 / -1; }
-    .foot-mark { margin: 72px 0 40px; }
+    .foot-mark { margin: 48px 0 36px; }
     .foot-pill { font-size: 15px; padding: 14px 18px 14px 22px; }
   }
 
