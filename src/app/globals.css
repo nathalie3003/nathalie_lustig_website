@@ -518,7 +518,7 @@
   .foot-contact { display: flex; flex-direction: column; align-items: flex-start; }
   .foot-contact .foot-h {
     font-family: var(--font-serif), Georgia, serif;
-    font-size: 30px; font-weight: 600; letter-spacing: -0.02em; margin-bottom: 14px;
+    font-size: 26px; font-weight: 600; letter-spacing: -0.02em; margin-bottom: 14px;
   }
   .foot-pill {
     display: inline-flex; align-items: center; gap: 14px; max-width: 100%;
@@ -536,29 +536,31 @@
     color: var(--ink-60); cursor: pointer; transition: color 160ms ease;
   }
   .foot-copy:hover { color: var(--accent); }
-  /* A second, quieter ask under the email: an outline pill so the email
-     stays the footer's main call to action. */
+  /* Market-story band across the top of the footer: a slightly lifted strip
+     so the ask spans the full width and the columns below stay level. */
   .foot-suggest {
-    display: flex; align-items: center; flex-wrap: wrap; gap: 12px 16px;
-    margin-top: 24px;
-    width: 100%;
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 16px 32px;
+    padding: 26px 32px; margin-bottom: 44px; border-radius: 16px;
+    background: rgba(255, 255, 255, 0.06); border: 1px solid rgba(255, 255, 255, 0.12);
   }
   .foot-suggest-q {
     margin: 0; font-family: var(--font-serif), Georgia, serif;
-    font-size: 19px; font-weight: 600; letter-spacing: -0.01em; color: var(--ink);
+    font-size: 28px; font-weight: 600; letter-spacing: -0.02em; line-height: 1.2;
+    color: var(--ink);
   }
   .foot-suggest-pill {
-    display: inline-flex; align-items: center; min-height: 44px; padding: 0 20px;
-    border-radius: 999px; border: 1px solid #F7D9E3; color: #F7D9E3;
-    font-size: 15px; font-weight: 600; text-decoration: none;
-    transition: background 160ms ease, color 160ms ease;
+    display: inline-flex; align-items: center; min-height: 48px; padding: 0 24px;
+    border-radius: 999px; background: #F7D9E3; color: #191316;
+    font-size: 16px; font-weight: 600; text-decoration: none;
+    transition: background 160ms ease;
   }
-  .foot-suggest-pill:hover { background: #F7D9E3; color: #191316; }
+  .foot-suggest-pill:hover { background: #FFFFFF; color: #191316; }
   .foot-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
   .foot-list a { color: var(--ink-60); font-size: 15px; text-decoration: none; }
   .foot-list a:hover { color: var(--accent); }
 
-  .foot-mark { margin: 64px 0 56px; line-height: 0.82; overflow: hidden; }
+  .foot-mark { margin: 32px 0 56px; line-height: 0.82; overflow: hidden; }
   .foot-mark-text {
     display: block; width: max-content; white-space: nowrap;
     font-family: var(--font-display), Georgia, serif; font-weight: 400;
@@ -630,7 +632,9 @@
     .foot-inner { padding-top: 56px; }
     .foot-cols { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 36px 24px; }
     .foot-contact { grid-column: 1 / -1; }
-    .foot-mark { margin: 48px 0 36px; }
+    .foot-mark { margin: 24px 0 36px; }
+    .foot-suggest { padding: 22px 22px; margin-bottom: 36px; }
+    .foot-suggest-q { font-size: 23px; }
     .foot-pill { font-size: 15px; padding: 14px 18px 14px 22px; }
   }
 

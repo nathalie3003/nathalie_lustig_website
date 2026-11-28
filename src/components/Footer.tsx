@@ -116,12 +116,16 @@ export function ContactFooter() {
   return (
     <footer className="foot" id="contact">
       <div className="foot-inner">
+        <div className="foot-suggest">
+          <h2 className="foot-suggest-q">Want a market story explained?</h2>
+          <a href={SUGGEST_HREF} className="foot-suggest-pill">
+            Suggest a topic
+          </a>
+        </div>
+
         <div className="foot-cols">
           <div className="foot-contact">
             <h2 className="foot-h">Get in touch</h2>
-            <p className="foot-lede">
-              Happy to talk bonds, books, or anything in between.
-            </p>
             <a href={`mailto:${EMAIL}`} className="foot-pill">
               {EMAIL}
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
@@ -147,13 +151,6 @@ export function ContactFooter() {
               </svg>
               <span aria-live="polite">{copied ? "Copied to clipboard" : "Or copy the address"}</span>
             </button>
-
-            <div className="foot-suggest">
-              <p className="foot-suggest-q">Want a market story explained?</p>
-              <a href={SUGGEST_HREF} className="foot-suggest-pill">
-                Suggest a topic
-              </a>
-            </div>
           </div>
 
           <nav className="foot-col" aria-label="Notes">
