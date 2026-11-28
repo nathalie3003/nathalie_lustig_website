@@ -536,26 +536,6 @@
     color: var(--ink-60); cursor: pointer; transition: color 160ms ease;
   }
   .foot-copy:hover { color: var(--accent); }
-  /* Market-story band across the top of the footer: a slightly lifted strip
-     so the ask spans the full width and the columns below stay level. */
-  .foot-suggest {
-    display: flex; align-items: center; justify-content: space-between;
-    flex-wrap: wrap; gap: 16px 32px;
-    padding: 26px 32px; margin-bottom: 44px; border-radius: 16px;
-    background: rgba(255, 255, 255, 0.06); border: 1px solid rgba(255, 255, 255, 0.12);
-  }
-  .foot-suggest-q {
-    margin: 0; font-family: var(--font-serif), Georgia, serif;
-    font-size: 28px; font-weight: 600; letter-spacing: -0.02em; line-height: 1.2;
-    color: var(--ink);
-  }
-  .foot-suggest-pill {
-    display: inline-flex; align-items: center; min-height: 48px; padding: 0 24px;
-    border-radius: 999px; background: #F7D9E3; color: #191316;
-    font-size: 16px; font-weight: 600; text-decoration: none;
-    transition: background 160ms ease;
-  }
-  .foot-suggest-pill:hover { background: #FFFFFF; color: #191316; }
   .foot-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
   .foot-list a { color: var(--ink-60); font-size: 15px; text-decoration: none; }
   .foot-list a:hover { color: var(--accent); }
@@ -633,8 +613,6 @@
     .foot-cols { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 36px 24px; }
     .foot-contact { grid-column: 1 / -1; }
     .foot-mark { margin: 24px 0 36px; }
-    .foot-suggest { padding: 22px 22px; margin-bottom: 36px; }
-    .foot-suggest-q { font-size: 23px; }
     .foot-pill { font-size: 15px; padding: 14px 18px 14px 22px; }
   }
 
